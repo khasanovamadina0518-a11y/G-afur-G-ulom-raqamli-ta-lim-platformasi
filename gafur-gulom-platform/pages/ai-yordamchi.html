@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI yordamchi - G'afur G'ulom</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="ai-yordamchi.css?v=1">
+</head>
+<body class="page-ai">
+    <div id="header-container"></div>
+
+    <main class="ai-page">
+        <div class="ai-layout">
+            <aside class="ai-sidebar" id="ai-sidebar" aria-label="Suhbatlar tarixi">
+                <div class="ai-sidebar__head">
+                    <h2 class="ai-sidebar__title">Suhbatlar</h2>
+                    <button type="button" class="ai-new-chat" id="ai-new-chat">+ Yangi</button>
+                </div>
+                <div class="ai-history" id="ai-history"></div>
+            </aside>
+
+            <section class="ai-chat" aria-label="AI yordamchi chat">
+                <header class="ai-chat__header">
+                    <div class="ai-chat__brand">
+                        <span class="ai-chat__avatar" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M12 2v4"></path><circle cx="8" cy="14" r="1"></circle><circle cx="16" cy="14" r="1"></circle></svg>
+                        </span>
+                        <h1 class="ai-chat__title">AI yordamchi</h1>
+                    </div>
+                    <div class="ai-chat__actions">
+                        <button type="button" class="ai-history-toggle" id="ai-history-toggle">Tarix</button>
+                        <button type="button" class="ai-clear-btn" id="ai-clear-btn">Tozalash</button>
+                    </div>
+                </header>
+
+                <div class="ai-chat__body">
+                    <div class="ai-empty" id="ai-empty">
+                        <span class="ai-empty__icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M12 2v4"></path><circle cx="8" cy="14" r="1"></circle><circle cx="16" cy="14" r="1"></circle></svg>
+                        </span>
+                        <h2 class="ai-empty__title">Salom! Men sizning AI yordamchingizman</h2>
+                        <p class="ai-empty__text">G'afur G'ulom hayoti, asarlari, she'rlari va testlar bo'yicha savollaringizga javob berishga tayyorman.</p>
+                        <div class="ai-prompts" id="ai-prompts"></div>
+                    </div>
+
+                    <div class="ai-messages" id="ai-messages" aria-live="polite"></div>
+
+                    <div class="ai-typing is-hidden" id="ai-typing" aria-label="AI javob yozmoqda">
+                        <span class="ai-message__avatar" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M12 2v4"></path><circle cx="8" cy="14" r="1"></circle><circle cx="16" cy="14" r="1"></circle></svg>
+                        </span>
+                        <span class="ai-typing__dots"><span></span><span></span><span></span></span>
+                    </div>
+
+                    <div class="ai-followups is-hidden" id="ai-followups"></div>
+                </div>
+
+                <footer class="ai-composer">
+                    <input
+                        type="text"
+                        class="ai-composer__input"
+                        id="ai-input"
+                        placeholder="Savolingizni yozing..."
+                        maxlength="500"
+                        autocomplete="off"
+                        aria-label="Savol kiriting">
+                    <button type="button" class="ai-send-btn" id="ai-send-btn" aria-label="Yuborish">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </button>
+                    <button type="button" class="ai-mic-btn" aria-label="Ovozli kiritish (tez kunda)" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+                    </button>
+                </footer>
+            </section>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../components/header.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script src="ai-yordamchi-page.js?v=1"></script>
+</body>
+</html>
