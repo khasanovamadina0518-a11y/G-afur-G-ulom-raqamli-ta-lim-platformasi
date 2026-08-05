@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yutuqlar - G'afur G'ulom</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="yutuqlar.css?v=1">
+</head>
+<body class="page-yutuqlar">
+    <div id="header-container"></div>
+
+    <main class="ach-page">
+        <header class="ach-header">
+            <div class="ach-header__left">
+                <a href="dashboard.html" class="ach-back" aria-label="Dashboardga qaytish">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+                </a>
+                <h1 class="ach-title">Yutuqlar</h1>
+            </div>
+            <a href="dashboard.html" class="ach-header__link">Dashboard</a>
+        </header>
+
+        <div class="ach-grid">
+            <!-- 1. User Level -->
+            <section class="ach-span-12 ach-level" aria-labelledby="ach-level-heading">
+                <span class="ach-level__medal" aria-hidden="true">🏅</span>
+                <div class="ach-level__body">
+                    <p class="ach-level__label" id="ach-level-heading">Darajangiz · <span id="ach-level-num">12</span></p>
+                    <h2 class="ach-level__name" id="ach-level-title">Yaxshi</h2>
+                    <p class="ach-level__xp-text" id="ach-level-xp">2400 / 5000 XP</p>
+                    <div class="ach-progress" role="progressbar" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100">
+                        <div class="ach-progress__fill" id="ach-xp-fill"></div>
+                    </div>
+                    <p class="ach-level__next" id="ach-level-next">Keyingi daraja: A'lo</p>
+                </div>
+            </section>
+
+            <!-- 4. Statistics -->
+            <section class="ach-card ach-span-12" aria-labelledby="ach-stats-title">
+                <div class="ach-card__head">
+                    <h2 class="ach-card__title" id="ach-stats-title">Statistika</h2>
+                </div>
+                <div class="ach-stats" id="ach-stats-grid"></div>
+            </section>
+
+            <!-- 5. Daily Streak -->
+            <section class="ach-card ach-span-6" aria-labelledby="ach-streak-title">
+                <div class="ach-card__head">
+                    <h2 class="ach-card__title" id="ach-streak-title">Kunlik streak</h2>
+                </div>
+                <div class="ach-streak-nums">
+                    <div>
+                        <p class="ach-streak-num__val" id="ach-streak-current">28</p>
+                        <p class="ach-streak-num__label">Joriy streak</p>
+                    </div>
+                    <div>
+                        <p class="ach-streak-num__val" id="ach-streak-longest">35</p>
+                        <p class="ach-streak-num__label">Eng uzoq streak</p>
+                    </div>
+                </div>
+                <div class="ach-calendar" id="ach-calendar" aria-label="Streak kalendari"></div>
+            </section>
+
+            <!-- 8. Motivation -->
+            <section class="ach-card ach-span-6 ach-motivation" aria-labelledby="ach-motivation-title">
+                <div class="ach-card__head">
+                    <h2 class="ach-card__title" id="ach-motivation-title">Motivatsiya</h2>
+                </div>
+                <blockquote class="ach-quote" id="ach-quote">"Ilm – inson kamolotining yo'lidir."</blockquote>
+                <p class="ach-quote__author" id="ach-quote-author">— G'afur G'ulom</p>
+                <p class="ach-encourage" id="ach-encourage"></p>
+            </section>
+
+            <!-- 2. Badge Collection -->
+            <section class="ach-card ach-span-12" aria-labelledby="ach-badges-title">
+                <div class="ach-card__head">
+                    <h2 class="ach-card__title" id="ach-badges-title">Ochilgan badjlar</h2>
+                </div>
+                <div class="ach-badges" id="ach-badges-grid"></div>
+            </section>
+
+            <!-- 3. Locked Achievements -->
+            <section class="ach-card ach-span-12" aria-labelledby="ach-locked-title">
+                <div class="ach-card__head">
+                    <h2 class="ach-card__title" id="ach-locked-title">Qulflangan yutuqlar</h2>
+                </div>
+                <div class="ach-locked-grid" id="ach-locked-grid"></div>
+            </section>
+
+            <!-- 6. Recent Achievements -->
+            <section class="ach-card ach-span-6" aria-labelledby="ach-recent-title">
+                <div class="ach-card__head">
+                    <h2 class="ach-card__title" id="ach-recent-title">So'nggi yutuqlar</h2>
+                </div>
+                <ul class="ach-timeline" id="ach-timeline"></ul>
+            </section>
+
+            <!-- 7. Certificates -->
+            <section class="ach-card ach-span-6" aria-labelledby="ach-certs-title">
+                <div class="ach-card__head">
+                    <h2 class="ach-card__title" id="ach-certs-title">Sertifikatlar</h2>
+                </div>
+                <div class="ach-certs" id="ach-certs-list"></div>
+            </section>
+
+            <!-- Certificate promo -->
+            <section class="ach-span-12 ach-cert-promo" aria-labelledby="ach-promo-title">
+                <div>
+                    <h2 class="ach-cert-promo__title" id="ach-promo-title">Sertifikat oling</h2>
+                    <p class="ach-cert-promo__text">Kurslarni bitirib, o'z sertifikatingizni yuklab oling.</p>
+                    <button type="button" class="ach-download" disabled title="Tez kunda">Sertifikatlarim</button>
+                </div>
+                <span class="ach-cert-promo__art" aria-hidden="true">📜</span>
+            </section>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../components/header.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script src="yutuqlar-page.js?v=1"></script>
+</body>
+</html>

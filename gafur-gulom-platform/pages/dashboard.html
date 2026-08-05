@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - G'afur G'ulom</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="dashboard.css?v=1">
+</head>
+<body class="page-dashboard">
+    <div id="header-container"></div>
+
+    <main class="dash-page">
+        <div class="dash-layout">
+            <aside class="dash-sidebar" id="dash-sidebar" aria-label="Dashboard navigatsiyasi">
+                <div class="dash-profile" id="profile">
+                    <span class="dash-profile__avatar" id="dash-profile-avatar" aria-hidden="true">UK</span>
+                    <h2 class="dash-profile__name" id="dash-profile-name">Umida Karimova</h2>
+                    <p class="dash-profile__meta" id="dash-profile-meta">umida@example.uz</p>
+                </div>
+
+                <nav class="dash-nav" aria-label="Dashboard menyu">
+                    <a href="dashboard.html" class="dash-nav__link is-active">
+                        <span class="dash-nav__icon" aria-hidden="true">🏠</span>
+                        Bosh sahifa
+                    </a>
+                    <a href="asarlar.html" class="dash-nav__link">
+                        <span class="dash-nav__icon" aria-hidden="true">📚</span>
+                        Kutubxona
+                    </a>
+                    <a href="multimedia.html" class="dash-nav__link">
+                        <span class="dash-nav__icon" aria-hidden="true">🎬</span>
+                        Video darslar
+                    </a>
+                    <a href="asarlar.html" class="dash-nav__link">
+                        <span class="dash-nav__icon" aria-hidden="true">🎧</span>
+                        Audiokitob
+                    </a>
+                    <a href="interaktiv.html" class="dash-nav__link">
+                        <span class="dash-nav__icon" aria-hidden="true">📝</span>
+                        Testlar
+                    </a>
+                    <a href="ai-yordamchi.html" class="dash-nav__link">
+                        <span class="dash-nav__icon" aria-hidden="true">🤖</span>
+                        AI yordamchi
+                    </a>
+                    <a href="#achievements" class="dash-nav__link">
+                        <span class="dash-nav__icon" aria-hidden="true">🏆</span>
+                        Yutuqlar
+                    </a>
+                    <a href="#profile" class="dash-nav__link">
+                        <span class="dash-nav__icon" aria-hidden="true">👤</span>
+                        Profil
+                    </a>
+                </nav>
+
+                <a href="../index.html" class="dash-logout">Chiqish</a>
+            </aside>
+
+            <div class="dash-main">
+                <header class="dash-main__head">
+                    <div>
+                        <button type="button" class="dash-sidebar-toggle" id="dash-sidebar-toggle">Menyu</button>
+                        <h1 class="dash-greeting" id="dash-greeting">Assalomu alaykum, Umida!</h1>
+                    </div>
+                    <button type="button" class="dash-notify" aria-label="Bildirishnomalar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    </button>
+                </header>
+
+                <div class="dash-grid">
+                    <!-- 2. Learning progress -->
+                    <section class="dash-card dash-span-8" aria-labelledby="dash-progress-title">
+                        <div class="dash-card__head">
+                            <h2 class="dash-card__title" id="dash-progress-title">O'qish darajangiz</h2>
+                        </div>
+                        <div class="dash-progress__top">
+                            <span class="dash-progress__pct" id="dash-progress-pct">78%</span>
+                        </div>
+                        <div class="dash-progress__bar" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100">
+                            <div class="dash-progress__fill" id="dash-progress-fill" style="width: 78%"></div>
+                        </div>
+                        <p class="dash-progress__hint" id="dash-progress-hint">Keyingi maqsad: "Netay" hikoyasini o'qishni yakunlash</p>
+                    </section>
+
+                    <!-- 6. XP / Level -->
+                    <section class="dash-card dash-span-4" aria-labelledby="dash-xp-title-label">
+                        <div class="dash-card__head">
+                            <h2 class="dash-card__title" id="dash-xp-title-label">Daraja va XP</h2>
+                        </div>
+                        <div class="dash-xp">
+                            <div class="dash-xp__level">
+                                <span class="dash-xp__badge" id="dash-xp-level">12</span>
+                                <div>
+                                    <p class="dash-xp__label">Joriy daraja</p>
+                                    <p class="dash-xp__value" id="dash-xp-title">Faol o'quvchi</p>
+                                </div>
+                            </div>
+                            <div class="dash-progress__bar" role="progressbar">
+                                <div class="dash-progress__fill" id="dash-xp-fill" style="width: 80%"></div>
+                            </div>
+                            <p class="dash-xp__points" id="dash-xp-points">2400 / 3000 XP</p>
+                        </div>
+                    </section>
+
+                    <!-- 3. Continue learning -->
+                    <section class="dash-card dash-span-6" aria-labelledby="dash-continue-title-label">
+                        <div class="dash-card__head">
+                            <h2 class="dash-card__title" id="dash-continue-title-label">O'qishni davom eting</h2>
+                        </div>
+                        <div class="dash-continue">
+                            <span class="dash-continue__thumb" aria-hidden="true">📖</span>
+                            <div>
+                                <p class="dash-continue__title" id="dash-continue-title">Shum bola</p>
+                                <p class="dash-continue__meta" id="dash-continue-meta">Roman · 64% o'qilgan</p>
+                                <a href="asarlar.html" class="dash-btn" id="dash-continue-btn">Davom etish</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 4. Today's goals -->
+                    <section class="dash-card dash-span-6" aria-labelledby="dash-goals-title">
+                        <div class="dash-card__head">
+                            <h2 class="dash-card__title" id="dash-goals-title">Bugungi vazifalar</h2>
+                            <a href="#" class="dash-card__link">Barchasi</a>
+                        </div>
+                        <ul class="dash-goals" id="dash-goals-list"></ul>
+                    </section>
+
+                    <!-- 5. Achievements -->
+                    <section class="dash-card dash-span-6" id="achievements" aria-labelledby="dash-ach-title">
+                        <div class="dash-card__head">
+                            <h2 class="dash-card__title" id="dash-ach-title">Yutuqlarim</h2>
+                            <a href="yutuqlar.html" class="dash-card__link">Barcha yutuqlar</a>
+                        </div>
+                        <div class="dash-badges">
+                            <div class="dash-badge-stat">
+                                <span class="dash-badge-stat__icon dash-badge-stat__icon--gold" aria-hidden="true">🏆</span>
+                                <p class="dash-badge-stat__num" id="dash-stat-certs">5</p>
+                                <p class="dash-badge-stat__label">Sertifikat</p>
+                            </div>
+                            <div class="dash-badge-stat">
+                                <span class="dash-badge-stat__icon dash-badge-stat__icon--blue" aria-hidden="true">⭐</span>
+                                <p class="dash-badge-stat__num" id="dash-stat-badges">12</p>
+                                <p class="dash-badge-stat__label">Badjlar</p>
+                            </div>
+                            <div class="dash-badge-stat">
+                                <span class="dash-badge-stat__icon dash-badge-stat__icon--green" aria-hidden="true">🔥</span>
+                                <p class="dash-badge-stat__num" id="dash-stat-streak">28</p>
+                                <p class="dash-badge-stat__label">Ketma-ket kun</p>
+                            </div>
+                            <div class="dash-badge-stat">
+                                <span class="dash-badge-stat__icon dash-badge-stat__icon--purple" aria-hidden="true">👑</span>
+                                <p class="dash-badge-stat__num" id="dash-stat-xp">2400</p>
+                                <p class="dash-badge-stat__label">XP ball</p>
+                            </div>
+                        </div>
+                        <div class="dash-badge-list" id="dash-badge-list"></div>
+                    </section>
+
+                    <!-- 7. AI recommendations -->
+                    <section class="dash-card dash-span-6" aria-labelledby="dash-rec-title">
+                        <div class="dash-card__head">
+                            <h2 class="dash-card__title" id="dash-rec-title">AI tavsiyalari</h2>
+                            <a href="ai-yordamchi.html" class="dash-card__link">AI yordamchi</a>
+                        </div>
+                        <ul class="dash-recs" id="dash-recs-list"></ul>
+                    </section>
+
+                    <!-- 8. Certificates -->
+                    <section class="dash-card dash-span-6" aria-labelledby="dash-cert-title">
+                        <div class="dash-card__head">
+                            <h2 class="dash-card__title" id="dash-cert-title">Sertifikatlar</h2>
+                            <a href="#" class="dash-card__link">Barchasi</a>
+                        </div>
+                        <ul class="dash-certs" id="dash-certs-list"></ul>
+                    </section>
+
+                    <!-- 9. Recent activity -->
+                    <section class="dash-card dash-span-6" aria-labelledby="dash-activity-title">
+                        <div class="dash-card__head">
+                            <h2 class="dash-card__title" id="dash-activity-title">So'nggi faoliyat</h2>
+                        </div>
+                        <ul class="dash-activity" id="dash-activity-list"></ul>
+                    </section>
+
+                    <!-- 10. Favorites summary -->
+                    <section class="dash-card dash-span-12" aria-labelledby="dash-fav-title">
+                        <div class="dash-card__head">
+                            <h2 class="dash-card__title" id="dash-fav-title">Sevimlilar xulosasi</h2>
+                            <a href="asarlar.html" class="dash-card__link">Kutubxona</a>
+                        </div>
+                        <div class="dash-favorites" id="dash-favorites-grid"></div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../components/header.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script src="dashboard-page.js?v=1"></script>
+</body>
+</html>
