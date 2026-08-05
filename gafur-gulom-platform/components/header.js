@@ -108,7 +108,7 @@ function renderHeader() {
                 </div>
             </div>
 
-            <button class="login-btn" type="button">Kirish</button>
+            <a href="${base}pages/dashboard.html" class="login-btn">Kirish</a>
 
             <button
                 class="header-icon-btn dark-mode-toggle"
@@ -165,10 +165,10 @@ function renderHeader() {
                 <button class="drawer-lang-btn active" type="button">O'Z</button>
                 <button class="drawer-lang-btn" type="button">EN</button>
             </div>
-            <button class="drawer-login-btn" type="button">
+            <a href="${base}pages/dashboard.html" class="drawer-login-btn">
                 <span>👤</span>
                 <span>Kirish</span>
-            </button>
+            </a>
         </div>
     </div>
 </div>

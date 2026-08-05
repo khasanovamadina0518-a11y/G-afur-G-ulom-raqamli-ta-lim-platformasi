@@ -31,8 +31,17 @@ const LocalAIProvider = {
     async sendMessage(messages) {
         const lastUser = [...messages].reverse().find(m => m.role === 'user');
         const text = lastUser ? lastUser.content : '';
-        await delay(900 + Math.random() * 500);
-        return getLocalResponse(text, messages);
+        await delay(600 + Math.random() * 400);
+
+        if (typeof window.AIKnowledge?.queryKnowledgeBase === 'function') {
+            try {
+                return await window.AIKnowledge.queryKnowledgeBase(text, messages);
+            } catch (err) {
+                console.warn('Knowledge base error:', err);
+            }
+        }
+
+        return getFallbackResponse(text);
     }
 };
 
@@ -44,85 +53,10 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function normalizeText(text) {
-    return text.toLowerCase().trim().replace(/\s+/g, ' ');
-}
-
-function getLocalResponse(userText, messages) {
-    const q = normalizeText(userText);
-
-    if ((q.includes('kim') && q.includes('g\'afur')) || q.includes('g\'afur g\'ulom kim')) {
-        return {
-            content: "G'afur G'ulom (1889–1966) — o'zbek adabiyotining buyuk shoiri, yozuvchisi va dramaturg. U o'zbek she'riyati va nasrining yangi bosqichini yaratgan ijodkorlardan biri. Hayoti, ijodi va ta'limiy merosi bugungi kunda ham o'rganish va o'qitish uchun muhim manba hisoblanadi.",
-            followups: FOLLOWUP_CHIPS
-        };
-    }
-
-    if (q.includes('shum bola')) {
-        return {
-            content: "\"Shum bola\" — G'afur G'ulomning mashhur romani. Asar 1920-yillardagi ijtimoiy hayot, kambag'allik va inson qadriyatlarini ko'rsatadi. Bosh qahramonning taqdiri orqali muallif davrning murakkab muammolarini ochib beradi. Bu asar o'quvchilar uchun G'afur G'ulom ijodini chuqurroq tushunish uchun ajoyib boshlang'ich nuqta.",
-            followups: FOLLOWUP_CHIPS
-        };
-    }
-
-    if (q.includes('she\'r') || q.includes('sheʼr') || q.includes('sher')) {
-        return {
-            content: "G'afur G'ulom she'riyati xalq hayoti, vatan muhabbati, mehnat va insoniy qadriyatlarga bag'ishlangan. \"Yillar sadosi\" kabi to'plamlari o'zbek she'riyat tarixida muhim o'rin tutadi. She'rlarida sodda til, samimiy ohang va chuqur ma'no uyg'unlashgan.",
-            followups: ['She\'r misollari', 'Asar haqida qisqacha', 'Boshqa asarlar']
-        };
-    }
-
-    if (q.includes('test') && q.includes('tavsiya')) {
-        return {
-            content: "Sizga \"G'afur G'ulom hayoti\" yoki \"Yakuniy test\" bo'limlarini tavsiya qilaman. Agar asarlarni yaxshiroq bilmoqchi bo'lsangiz, \"G'afur G'ulom asarlari\" testini boshlang. Testlar sahifasida har bir mavzu bo'yicha alohida baholash mavjud.",
-            followups: ['Testlar sahifasiga o\'tish', 'Asar haqida qisqacha', 'Batafsilroq ayting']
-        };
-    }
-
-    if (q.includes('o\'qish') || q.includes('bugun')) {
-        return {
-            content: "Bugun \"Shum bola\" romani yoki G'afur G'ulom she'rlaridan bir to'plamni o'qishingizni tavsiya qilaman. Keyin qisqa test yechib bilimingizni mustahkamlang. Video darslar bo'limida hayoti va ijodi haqida qisqa materiallar ham bor.",
-            followups: ['Elektron kutubxona', 'Video darslar', 'Menga test tavsiya qil']
-        };
-    }
-
-    if (q.includes('mashhur') || q.includes('asarlari')) {
-        return {
-            content: "G'afur G'ulomning eng mashhur asarlari: \"Shum bola\" romani, \"Yillar sadosi\" she'rlar to'plami, hikoya va qissalar to'plamlari. Ushbu asarlar o'zbek adabiyotini o'rganishda asosiy manbalardan hisoblanadi.",
-            followups: FOLLOWUP_CHIPS
-        };
-    }
-
-    if (q.includes('batafsil')) {
-        const prevAssistant = [...messages].reverse().find(m => m.role === 'assistant');
-        if (prevAssistant && prevAssistant.content.includes('Shum bola')) {
-            return {
-                content: "Roman qahramonlari orqali muallif jamiyatdagi adolatsizlik, ta'lim va tarbiya masalalarini ko'rsatadi. Asar tilining soddaligi va voqealar dinamikasi uni maktab dasturida ham o'qitish uchun qulay qiladi.",
-                followups: ['Asar haqida qisqacha', 'Boshqa asarlar']
-            };
-        }
-        return {
-            content: "Albatta. Qaysi mavzu yoki asar haqida batafsil ma'lumot kerakligini aniqlashtirsangiz, mos ravishda tushuntirib beraman.",
-            followups: FOLLOWUP_CHIPS
-        };
-    }
-
-    if (q.includes('qisqacha')) {
-        return {
-            content: "Qisqacha: G'afur G'ulom — o'zbek adabiyotining klassik muallifi; she'r, hikoya va romanlar orqali xalq hayotini aks ettirgan. Eng tanilgan asari — \"Shum bola\".",
-            followups: ['Batafsilroq ayting', 'Boshqa asarlar']
-        };
-    }
-
-    if (q.includes('boshqa asar')) {
-        return {
-            content: "G'afur G'ulom ijodida shuningdek hikoyalar, qissalar, dramatik asarlar va she'rlar to'plamlari mavjud. Elektron kutubxonada asarlarni to'liq o'qishingiz mumkin.",
-            followups: ['Eng mashhur asarlari qaysilar?', 'G\'afur G\'ulomning she\'rlari.']
-        };
-    }
-
+function getFallbackResponse() {
     return {
-        content: "Savolingiz uchun rahmat. Hozircha men mahalliy yordamchi rejimida ishlayapman. G'afur G'ulom hayoti, asarlari, she'rlari yoki testlar haqida aniqroq savol bersangiz, yordam bera olaman.",
+        content: "Kechirasiz, bilim bazasiga hozircha ulanib bo'lmadi. " +
+            "G'afur G'ulom hayoti, asarlari, she'rlari yoki testlar haqida savol bering.",
         followups: SUGGESTED_PROMPTS.slice(0, 3)
     };
 }
@@ -380,9 +314,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Export hook for future API integration (no external usage yet)
+// Export hook for future API integration
 window.AIYordamchi = {
     provider: LocalAIProvider,
+    knowledge: () => window.AIKnowledge,
     setProvider(nextProvider) {
         if (nextProvider && typeof nextProvider.sendMessage === 'function') {
             LocalAIProvider.sendMessage = nextProvider.sendMessage.bind(nextProvider);
