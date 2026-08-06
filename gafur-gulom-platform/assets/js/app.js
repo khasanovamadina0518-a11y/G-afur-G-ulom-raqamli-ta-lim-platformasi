@@ -216,30 +216,6 @@ function initSmoothScroll() {
 }
 
 // ===================================
-// Search Funksiyasi
-// ===================================
-function initSearch() {
-    const searchInput = document.getElementById('search-input');
-    if (!searchInput) return;
-    
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            const query = this.value.trim();
-            if (query) {
-                performSearch(query);
-            }
-        }
-    });
-}
-
-function performSearch(query) {
-    console.log('Qidiruv:', query);
-    // Bu yerda qidiruv logikasini amalga oshirish mumkin
-    // Hozircha faqat console ga chiqaramiz
-    alert(`Qidiruv: "${query}"\nBu funksiya keyinroq qo'shiladi.`);
-}
-
-// ===================================
 // Utility Funksiyalar
 // ===================================
 
@@ -336,6 +312,12 @@ window.showSuccess = showSuccess;
 // Global Search
 // ===================================
 
+function getAsarlarSearchUrl(itemId) {
+    const isInPages = window.location.pathname.includes('/pages/');
+    const page = isInPages ? 'asarlar.html' : 'pages/asarlar.html';
+    return `${page}?id=${encodeURIComponent(itemId)}`;
+}
+
 async function initSearch() {
 
     const input = document.getElementById("searchInput");
@@ -353,14 +335,36 @@ async function initSearch() {
             return;
         }
 
-        const data = await searchContent(query);
+        if (typeof searchContent !== 'function') {
+            results.innerHTML = `
+                <div class="search-item">
+                    Qidiruv hozircha mavjud emas
+                </div>
+            `;
+            results.style.display = "block";
+            return;
+        }
+
+        let data;
+        try {
+            data = await searchContent(query);
+        } catch (err) {
+            console.error('Qidiruv xatoligi:', err);
+            results.innerHTML = `
+                <div class="search-item">
+                    Qidiruv vaqtida xatolik yuz berdi
+                </div>
+            `;
+            results.style.display = "block";
+            return;
+        }
 
         let html = "";
 
         data.sherlar.forEach(item => {
     html += `
         <div class="search-item"
-             onclick="window.location.href='pages/asarlar.html?id=${item.id}'">
+             onclick="window.location.href='${getAsarlarSearchUrl(item.id)}'">
             <div class="search-title">${item.sarlavha}</div>
             <div class="search-type">📖 She'r</div>
         </div>
@@ -370,7 +374,7 @@ async function initSearch() {
         data.dostonlar.forEach(item => {
     html += `
         <div class="search-item"
-             onclick="window.location.href='pages/asarlar.html?id=${item.id}'">
+             onclick="window.location.href='${getAsarlarSearchUrl(item.id)}'">
             <div class="search-title">${item.sarlavha}</div>
             <div class="search-type">📚 Doston</div>
         </div>

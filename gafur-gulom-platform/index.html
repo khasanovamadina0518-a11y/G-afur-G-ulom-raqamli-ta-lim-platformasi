@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="G'afur G'ulom - O'zbek adabiyotining buyuk shoiri va yozuvchisi haqida to'liq ta'limiy platforma. She'rlar, hayot tarixi, interaktiv o'yinlar va ilmiy manbalar.">
+    <meta name="keywords" content="G'afur G'ulom, she'rlar, o'zbek adabiyoti, doston, Shum bola, ta'lim, interaktiv o'yin, viktorina">
+    <meta name="author" content="G'afur G'ulom Ta'limiy Platformasi">
+    <link rel="canonical" href="https://gafurgulom.uz/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gafurgulom.uz/">
+    <meta property="og:title" content="G'afur G'ulom - Ta'limiy Platforma">
+    <meta property="og:description" content="O'zbek adabiyotining buyuk shoiri G'afur G'ulom haqida to'liq ta'limiy platforma">
+    <meta property="og:image" content="https://gafurgulom.uz/assets/images/gafur-gulom.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://gafurgulom.uz/">
+    <meta property="twitter:title" content="G'afur G'ulom - Ta'limiy Platforma">
+    <meta property="twitter:description" content="O'zbek adabiyotining buyuk shoiri G'afur G'ulom haqida to'liq ta'limiy platforma">
+    <meta property="twitter:image" content="https://gafurgulom.uz/assets/images/gafur-gulom.jpg">
+    
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json?v=3">
+    <meta name="theme-color" content="#c9a84c">
+    <link rel="icon" href="assets/images/gafur-gulom.jpg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="assets/images/gafur-gulom.jpg">
+    
+    <title>G'afur G'ulom - Ta'limiy Platforma</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/main.css?v=7">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <link rel="stylesheet" href="assets/css/home.css?v=4">
+    <style>
+        /* Homepage section styles (hero, features, stats → assets/css/home.css) */
+        
+        /* Today's Poem Widget */
+        .todays-poem {
+            padding: 80px 2rem;
+            background: white;
+        }
+        
+        .poem-widget {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem;
+            border: 4px solid var(--secondary);
+            border-radius: var(--radius);
+            background: var(--bg);
+        }
+        
+        .poem-widget h2 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        
+        .poem-title {
+            font-size: 1.75rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .poem-excerpt {
+            font-style: italic;
+            line-height: 2;
+            color: var(--text);
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .poem-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* User Categories */
+        .user-categories {
+            padding: 80px 2rem;
+            background: var(--bg);
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .category-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .category-icon {
+            font-size: 48px;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .category-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+        
+        .category-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .category-list li {
+            padding: 0.5rem 0;
+            color: var(--text-light);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .category-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .category-list li::before {
+            content: '✓';
+            color: var(--secondary);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 2rem;
+            background: linear-gradient(135deg, #1a3c5e 0%, #2a5a8a 100%);
+            text-align: center;
+            color: white;
+        }
+        
+        .cta-section h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1.5rem 3rem;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            background: var(--secondary-light);
+        }
+        
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* ==========================
+   DARK MODE
+========================== */
+
+body.dark-mode{
+    background:#0f172a;
+    color:#f1f5f9;
+}
+
+body.dark-mode .todays-poem,
+body.dark-mode .user-categories{
+    background:#0f172a;
+}
+
+body.dark-mode .category-card,
+body.dark-mode .poem-widget{
+    background:#1e293b;
+    color:white;
+    border:1px solid #334155;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode p,
+body.dark-mode li,
+body.dark-mode a{
+    color:white;
+}
+
+body.dark-mode .text-light{
+    color:#cbd5e1;
+}
+
+body.dark-mode .card-link{
+    color:#60a5fa;
+}        
+    </style>
+</head>
+<body class="home-page">
+    <!-- Header will be injected by header.js -->
+    <div id="header-container"></div>
+
+    <!-- Homepage Hero — Step 2 (academic / digital library) -->
+    <section class="home-hero" aria-label="Bosh sahifa hero">
+        <div class="container home-hero__inner">
+            <div class="home-hero__content">
+                <p class="home-hero__kicker">Raqamli ta'lim platformasi</p>
+                <h1 class="home-hero__title">G'AFUR G'ULOM</h1>
+                <blockquote class="home-hero__quotation">
+                    <p>«Ilm – inson kamolotining yo'lidir.»</p>
+                </blockquote>
+                <p class="home-hero__lead">
+                    O'zbekiston xalq shoiri G'afur G'ulom (1889–1966) merosini o'rganing — she'rlar,
+                    hayot tarixi, ilmiy arxiv va interaktiv ta'lim resurslari bir joyda.
+                </p>
+                <div class="home-hero__actions">
+                    <a href="pages/hayot.html" class="btn-primary home-hero__btn home-hero__btn--primary">
+                        O'rganishni boshlash
+                        <svg class="home-hero__btn-arrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </a>
+                    <a href="pages/asarlar.html" class="btn-secondary home-hero__btn home-hero__btn--secondary">
+                        <span class="home-hero__btn-play" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        </span>
+                        She'rlar to'plami
+                    </a>
+                </div>
+            </div>
+            <div class="home-hero__media">
+                <div class="home-hero__portrait-wrap">
+                    <div class="home-hero__portrait-wash" aria-hidden="true"></div>
+                    <img
+                        src="./assets/images/gafur-gulom.jpg"
+                        alt="G'afur G'ulom portreti"
+                        class="hero-portrait home-hero__portrait"
+                        id="hero-portrait"
+                        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22480%22%3E%3Crect fill=%22%231a3c5e%22 width=%22400%22 height=%22480%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Georgia%22 font-size=%2280%22 fill=%22%23c9a84c%22%3EG.G%3C/text%3E%3C/svg%3E'"
+                        loading="eager">
+                    <p class="home-hero__signature" aria-hidden="true">G'afur G'ulom</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+        LEGACY HERO — preserved for Phase 11 cleanup.
+        Hidden via .home-legacy-hero in home.css.
+        Portrait id moved to the new hero above so setupHeroPortrait() keeps working.
+    -->
+    <section class="hero-main home-legacy-hero" aria-hidden="true">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-left">
+                    <h1 class="hero-main-title">G'afur G'ulom</h1>
+
+<p class="hero-main-subtitle">
+    1903–1966 | O'zbekiston xalq shoiri, atoqli yozuvchi, tarjimon va jamoat arbobi
+</p>
+                    <div class="hero-main-buttons">
+                        <a href="pages/hayot.html" class="btn-primary">O'rganishni boshlash</a>
+                        <a href="pages/asarlar.html" class="btn-secondary">She'rlar to'plami</a>
+                    </div>
+                </div>
+                <div class="hero-right">
+                    <img src="./assets/images/gafur-gulom.jpg"
+                         alt="G'afur G'ulom"
+                         class="hero-portrait"
+                         loading="eager">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Grid (Step 3) -->
+    <section class="home-features" aria-label="Platform bo'limlari">
+        <div class="home-features__inner">
+            <a href="pages/hayot.html" class="home-feature-card">
+                <span class="home-feature-card__icon home-feature-card__icon--blue" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </span>
+                <span class="home-feature-card__title">Hayoti</span>
+                <span class="home-feature-card__meta">Hayot va ijodi</span>
+            </a>
+            <a href="pages/asarlar.html" class="home-feature-card">
+                <span class="home-feature-card__icon home-feature-card__icon--blue" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                </span>
+                <span class="home-feature-card__title">Asarlari</span>
+                <span class="home-feature-card__meta">500+ she'r</span>
+            </a>
+            <a href="pages/ilmiy.html" class="home-feature-card">
+                <span class="home-feature-card__icon home-feature-card__icon--navy" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M6 21V7l6-4 6 4v14"></path><path d="M10 21v-4h4v4"></path></svg>
+                </span>
+                <span class="home-feature-card__title">Ilmiy</span>
+                <span class="home-feature-card__meta">Ilmiy arxiv</span>
+            </a>
+            <a href="pages/talim.html" class="home-feature-card">
+                <span class="home-feature-card__icon home-feature-card__icon--gold" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5"></path></svg>
+                </span>
+                <span class="home-feature-card__title">Ta'lim</span>
+                <span class="home-feature-card__meta">Dars materiallari</span>
+            </a>
+            <a href="pages/multimedia.html" class="home-feature-card">
+                <span class="home-feature-card__icon home-feature-card__icon--green" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"></polygon></svg>
+                </span>
+                <span class="home-feature-card__title">Multimedia</span>
+                <span class="home-feature-card__meta">Video va audio</span>
+            </a>
+            <a href="pages/interaktiv.html" class="home-feature-card">
+                <span class="home-feature-card__icon home-feature-card__icon--rose" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1"></rect><path d="M9 14h6"></path><path d="M9 18h6"></path><path d="M9 10h6"></path></svg>
+                </span>
+                <span class="home-feature-card__title">Interaktiv</span>
+                <span class="home-feature-card__meta">Viktorinalar</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Statistics Bar (Step 3) -->
+    <section class="home-stats" aria-label="Platform statistikasi">
+        <div class="home-stats__inner">
+            <div class="home-stats__item">
+                <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                <div class="home-stats__value stat-number" data-target="500">0</div>
+                <div class="home-stats__label">She'r</div>
+            </div>
+            <div class="home-stats__item">
+                <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8"></path><path d="M12 17v4"></path></svg>
+                <div class="home-stats__value stat-number" data-target="12">0</div>
+                <div class="home-stats__label">Doston</div>
+            </div>
+            <div class="home-stats__item">
+                <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <div class="home-stats__value stat-number" data-target="60">0</div>
+                <div class="home-stats__label">Yil meros</div>
+            </div>
+            <div class="home-stats__item">
+                <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                <div class="home-stats__value stat-number" data-target="4">0</div>
+                <div class="home-stats__label">Foydalanuvchi toifasi</div>
+            </div>
+            <div class="home-stats__item">
+                <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <div class="home-stats__value stat-number" data-target="50">0</div>
+                <div class="home-stats__label">Viktorina savoli</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Today's Poem Widget -->
+    <section class="todays-poem">
+        <div class="poem-widget">
+            <h2>📖 Bugungi she'r</h2>
+            <h3 class="poem-title" id="poem-title">Yuklanmoqda...</h3>
+            <div class="poem-excerpt" id="poem-excerpt">
+                Iltimos kuting...
+            </div>
+            <div class="poem-buttons">
+                <a href="#" class="btn-primary" id="read-full-btn">To'liq o'qish</a>
+                <button class="btn-outline" id="new-poem-btn">Yangi she'r</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Categories -->
+    <section class="user-categories">
+        <h2 class="section-title">Foydalanuvchi toifalari</h2>
+        <div class="categories-grid">
+            <div class="category-card">
+                <span class="category-icon">👨‍🎓</span>
+                <h3>O'quvchilar</h3>
+                <p class="text-light" style="margin-bottom: 1rem;">5-11 sinf</p>
+                <ul class="category-list">
+                    <li>She'rlar tahlili</li>
+                    <li>Interaktiv testlar</li>
+                    <li>Video darslar</li>
+                </ul>
+            </div>
+            <div class="category-card">
+                <span class="category-icon">👨‍🏫</span>
+                <h3>O'qituvchilar</h3>
+                <p class="text-light" style="margin-bottom: 1rem;">Dars materiallari</p>
+                <ul class="category-list">
+                    <li>Dars ishlanmalari</li>
+                    <li>Prezentatsiyalar</li>
+                    <li>Metodikalar</li>
+                </ul>
+            </div>
+            <div class="category-card">
+                <span class="category-icon">🎓</span>
+                <h3>Talabalar</h3>
+                <p class="text-light" style="margin-bottom: 1rem;">Ilmiy ish</p>
+                <ul class="category-list">
+                    <li>Ilmiy maqolalar</li>
+                    <li>Dissertatsiyalar</li>
+                    <li>Adabiy tanqid</li>
+                </ul>
+            </div>
+            <div class="category-card">
+                <span class="category-icon">🔍</span>
+                <h3>Tadqiqotchilar</h3>
+                <p class="text-light" style="margin-bottom: 1rem;">Arxiv</p>
+                <ul class="category-list">
+                    <li>To'liq arxiv</li>
+                    <li>Qo'lyozmalar</li>
+                    <li>Tarixiy hujjatlar</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Bugunning buyuk she'rini o'qi</h2>
+            <a href="pages/asarlar.html" class="cta-button">She'rlar to'plamiga o'tish</a>
+        </div>
+    </section>
+
+    <!-- Footer will be injected by footer.js -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript Files -->
+    <script>
+        // INLINE DARK MODE - NO EXTERNAL FILES
+        window.toggleDarkMode = function() {
+            const body = document.body;
+            const btn = document.getElementById('darkBtn');
+            if (!btn) return;
+            
+            const isDark = body.classList.toggle('dark-mode');
+            btn.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            console.log('Dark mode:', isDark ? 'ON' : 'OFF');
+        };
+        
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                const btn = document.getElementById('darkBtn');
+                if (btn) btn.textContent = '☀️';
+            }
+        });
+    </script>
+    <script src="components/header.js?v=8"></script>
+    <script src="components/footer.js"></script>
+    <script src="assets/js/data.js?v=8"></script>
+    <script src="assets/js/app.js?v=8"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        // Service Worker ni o'chirish
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+        }
+    </script>
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "G'afur G'ulom Ta'limiy Platformasi",
+      "url": "https://gafurgulom.uz",
+      "description": "O'zbek adabiyotining buyuk shoiri G'afur G'ulom haqida to'liq ta'limiy platforma",
+      "inLanguage": "uz",
+      "about": {
+        "@type": "Person",
+        "name": "G'afur G'ulom",
+        "birthDate": "1889",
+        "deathDate": "1966",
+        "nationality": "O'zbek",
+        "jobTitle": "Shoir va yozuvchi"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://gafurgulom.uz/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+</body>
+</html>
