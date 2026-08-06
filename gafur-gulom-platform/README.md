@@ -1,274 +1,197 @@
-# 📖 G'afur G'ulom Ta'limiy Platformasi
+# G'afur G'ulom Raqamli Ta'lim Platformasi
 
-> O'zbek adabiyotining buyuk shoiri va yozuvchisi G'afur G'ulom haqida to'liq ta'limiy veb-platforma
+**G'afur G'ulom Raqamli Ta'lim Platformasi** — O'zbekiston xalq shoiri G'afur G'ulom (1903–1966) hayoti, ijodi va merosi haqida interaktiv ta'lim resurslarini bir joyga jamlagan zamonaviy veb-platforma. Loyiha o'quvchilar, talabalar, o'qituvchilar va adabiyot ixlosmandlari uchun mo'ljallangan.
 
-![G'afur G'ulom](assets/images/gafur-gulom.jpg)
+Platforma she'rlar va dostonlar kutubxonasi, biografik ma'lumotlar, ilmiy arxiv, video darslar, testlar, interaktiv o'yinlar, AI yordamchi, shaxsiy dashboard va yutuqlar tizimini o'z ichiga oladi. Barcha kontent JSON formatidagi ma'lumotlar bazasidan yuklanadi va markaziy `PlatformDataService` orqali boshqariladi.
 
-## 🎯 Loyiha haqida
+Loyiha frontend texnologiyalari asosida qurilgan: HTML5, CSS3 va JavaScript (ES6). Foydalanuvchi faolligi `localStorage` da saqlanadi, yutuqlar esa `AchievementEngine` orqali avtomatik ochiladi.
 
-Bu platforma G'afur G'ulomning hayoti, asarlari va ijodi bilan tanishish uchun yaratilgan zamonaviy ta'limiy veb-platforma. O'quvchilar, talabalar, o'qituvchilar va adabiyot ixlosmandlari uchun mo'ljallangan.
+---
 
-### ⭐ Asosiy xususiyatlar
+## Platforma haqida
 
-- **📜 Hayot tarixi** - Shoirning hayot yo'li va muhim voqealar interaktiv vaqt chizig'ida
-- **📚 Asarlar to'plami** - She'rlar, dostonlar va hikoyalar to'liq matnlari bilan
-- **📖 Ilmiy arxiv** - Maqolalar, dissertatsiyalar, bibliografiya generatori
-- **🎓 Ta'lim resurslari** - Darsliklar, viktorinalar va o'quv materiallari
-- **🎮 Interaktiv o'yinlar** - 5 xil ta'limiy o'yin: viktorina, she'r yodlash, xronologiya, so'z topish
-- **🎬 Multimedia** - Video, audio va interaktiv materiallar
-- **💬 Hamjamiyat** - Forum, muhokamalar va tadbirlar
-- **🌙 Dark Mode** - Ko'z sog'lig'ini asrash uchun tungi rejim
-- **🔍 Global qidiruv** - Barcha kontentni tezkor qidirish
-- **📱 PWA** - Offline rejimda ishlash imkoniyati
+G'afur G'ulom — o'zbek adabiyotining buyuk shoiri, dramaturg va tarjimon. Uning «Shum bola», «Yoshlik» kabi asarlari o'zbek maktab o'quv dasturlarining ajralmas qismidir. Ushbu platforma shoir merosini raqamli shaklda o'rganish, o'qish va sinash imkonini beradi.
 
-## 📁 Papka tuzilmasi
+Platformaning ta'limiy qiymati quyidagilarda namoyon bo'ladi:
+
+- Adabiy merosni tizimli va qulay shaklda taqdim etish
+- Interaktiv testlar va o'yinlar orqali bilimni mustahkamlash
+- O'qituvchilar va talabalar uchun tayyor materiallar bazasi
+- Foydalanuvchi progressini kuzatish va rag'batlantirish tizimi
+
+---
+
+## Asosiy imkoniyatlar
+
+- 📌 **Bosh sahifa** — hero bo'limi, platform statistikasi, bugungi she'r, tezkor havolalar
+- 👤 **Hayoti** — biografiya, voqealar xronologiyasi, mukofotlar, xotiralar va meros bo'limlari
+- 📚 **Elektron kutubxona** — she'rlar va dostonlar, filtrlash, sevimlilar, o'qish rejimi
+- 🔬 **Ilmiy arxiv** — maqolalar, dissertatsiyalar, lug'at va bibliografiya
+- 🎬 **Video darslar** — video materiallar katalogi va tomosha qilish interfeysi
+- 🎓 **Ta'lim markazi** — darslar, o'quv materiallari, vazifalar, progress va sertifikat
+- 🎮 **Interaktiv o'yinlar** — viktorina, she'r yodlash, xronologiya, so'z qidiruv o'yinlari
+- 📝 **Testlar** — kategoriyalar bo'yicha professional test markazi
+- 🤖 **AI yordamchi** — mahalliy bilim bazasi asosidagi chat interfeysi
+- 📊 **Dashboard** — jonli statistika, maqsadlar, tavsiyalar va faoliyat tarixi
+- 🏆 **Yutuqlar tizimi** — 20 ta avtomatik badge, XP, daraja va streak kuzatuvi
+- 🔍 **Global qidiruv** — she'rlar va dostonlar bo'yicha header qidiruvi
+- 🌙 **Dark Mode** — tungi/kunduzgi mavzu, `localStorage` da saqlanadi
+- 📱 **Responsive Design** — mobil menyu, pastki navigatsiya va moslashuvchan grid
+- 🗄️ **PlatformDataService** — markaziy JSON ma'lumotlar qatlami
+- 💾 **UserProgress** — o'qish, test, video va AI faolligini kuzatish
+- ⚙️ **Achievement Engine** — yutuqlarni avtomatik ochish va dashboard bilan integratsiya
+
+---
+
+## Platforma tuzilishi
 
 ```
 gafur-gulom-platform/
-├── index.html                 # Bosh sahifa
-├── manifest.json              # PWA manifest
-├── service-worker.js          # Service Worker (offline mode)
-├── offline.html               # Offline sahifa
-├── README.md                  # Loyiha hujjati
+├── index.html                  # Bosh sahifa
+├── manifest.json               # PWA manifest
+├── 404.html                    # Xato sahifasi
 │
-├── assets/                    # Statik resurslar
+├── assets/
 │   ├── css/
-│   │   ├── main.css          # Asosiy uslublar
-│   │   ├── components.css    # Komponent uslublari
-│   │   ├── responsive.css    # Responsive dizayn
-│   │   └── theme.css         # Rang temalari
+│   │   ├── main.css
+│   │   ├── components.css
+│   │   ├── responsive.css
+│   │   ├── theme.css
+│   │   └── home.css
 │   ├── js/
-│   │   ├── app.js            # Asosiy JavaScript
-│   │   ├── data.js           # Ma'lumotlar yuklash
-│   │   └── router.js         # Marshrutizatsiya
-│   └── images/               # Rasmlar
+│   │   ├── app.js
+│   │   ├── data.js
+│   │   ├── platform-base.js
+│   │   ├── platform-data-service.js
+│   │   ├── user-progress.js
+│   │   └── achievement-engine.js
+│   └── images/
 │       └── gafur-gulom.jpg
 │
-├── components/               # Qayta ishlatiladigan komponentlar
-│   ├── header.js            # Header komponenti
-│   └── footer.js            # Footer komponenti
+├── components/
+│   ├── header.js
+│   └── footer.js
 │
-├── data/                    # JSON ma'lumotlar bazasi
-│   ├── sherlar.json        # She'rlar to'plami
-│   ├── sherlar-full.json   # To'liq she'rlar
-│   ├── hayot.json          # Hayot voqealari
-│   ├── dostonlar.json      # Dostonlar
-│   ├── quiz.json           # Viktorina savollari (50 ta)
-│   └── ilmiy.json          # Ilmiy maqolalar, dissertatsiyalar, atamalar
+├── data/
+│   ├── hayot.json
+│   ├── sherlar.json
+│   ├── dostonlar.json
+│   ├── ilmiy.json
+│   ├── quiz.json
+│   ├── videolar.json
+│   └── asarlar.json
 │
-└── pages/                   # Sahifalar
-    ├── hayot.html          # Hayot tarixi
-    ├── hayot-page.js
-    ├── asarlar.html        # Asarlar to'plami
-    ├── asarlar-page.js
-    ├── ilmiy.html          # Ilmiy arxiv
-    ├── ilmiy-page.js
-    ├── talim.html          # Ta'lim resurslari
-    ├── talim-page.js
-    ├── interaktiv.html     # Interaktiv o'yinlar
-    ├── interaktiv-page.js
-    ├── multimedia.html     # Multimedia
-    └── hamjamiyat.html     # Hamjamiyat
+└── pages/
+    ├── hayot.html
+    ├── asarlar.html
+    ├── ilmiy.html
+    ├── multimedia.html
+    ├── talim.html
+    ├── interaktiv.html
+    ├── interaktiv-oyinlar.html
+    ├── ai-yordamchi.html
+    ├── dashboard.html
+    └── yutuqlar.html
 ```
 
-## 🚀 O'rnatish va ishga tushirish
+---
 
-### Lokal kompyuterda
+## Texnologiyalar
 
-1. **Loyihani yuklab oling**
+| Texnologiya | Qo'llanishi |
+|-------------|-------------|
+| HTML5 | Sahifa strukturasi va semantik markup |
+| CSS3 | Dizayn, animatsiya, dark mode, responsive layout |
+| JavaScript (ES6) | Interaktiv funksionallik va komponentlar |
+| JSON | Kontent va konfiguratsiya ma'lumotlari |
+| LocalStorage | Foydalanuvchi progressi, mavzu, AI suhbatlari |
+| PlatformDataService | Markaziy ma'lumotlar yuklash va qidiruv |
+| Git | Versiya nazorati |
+| GitHub | Manba kodini saqlash va GitHub Pages deploy |
+| Vercel | Production hosting |
+
+---
+
+## O'rnatish
+
+### 1. Repozitoriyani klonlash
+
 ```bash
-git clone https://github.com/username/gafur-gulom-platform.git
+git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
 cd gafur-gulom-platform
 ```
 
-2. **HTTP server ishga tushiring**
+### 2. Lokal serverni ishga tushirish
 
-**Python 3:**
+Platforma statik veb-loyiha bo'lgani uchun brauzerda to'g'ri ishlashi uchun HTTP server kerak.
+
+**Python orqali (tavsiya etiladi):**
+
 ```bash
 python -m http.server 8000
 ```
 
-**Node.js:**
-```bash
-npx http-server -p 8000
-```
+Brauzerda oching: `http://localhost:8000`
 
-**VS Code Live Server:**
-- Live Server extension o'rnating
-- index.html ni oching
-- "Go Live" tugmasini bosing
+**Visual Studio Code Live Server (muqobil):**
 
-3. **Brauzerda oching**
-```
-http://localhost:8000
-```
+1. VS Code da loyiha papkasini oching
+2. `index.html` faylini oching
+3. **Live Server** kengaytmasi orqali **Go Live** tugmasini bosing
 
-### GitHub Pages orqali joylashtirish
-
-1. **Repository yarating**
-   - GitHub da yangi repository yarating
-   - Loyihani repository ga push qiling
-
-2. **GitHub Pages sozlang**
-   - Repository Settings → Pages
-   - Source: `main` branch, root papka
-   - Save
-
-3. **Tayyor!**
-   - Sahifangiz: `https://username.github.io/gafur-gulom-platform/`
-
-## 📝 Kontent qo'shish yo'riqnomasi
-
-### She'r qo'shish
-
-`data/sherlar.json` faylini oching:
-
-```json
-{
-  "id": 11,
-  "sarlavha": "Yangi she'r nomi",
-  "muallif": "G'afur G'ulom",
-  "yil": 1940,
-  "mavzu": "tabiat",
-  "matn": "She'r matnini shu yerga yozing..."
-}
-```
-
-### Viktorina savoli qo'shish
-
-`data/quiz.json` faylini oching:
-
-```json
-{
-  "id": 51,
-  "savol": "Savolingiz?",
-  "variantlar": ["A variant", "B variant", "C variant", "D variant"],
-  "togri": 1,
-  "daraja": "oson",
-  "mavzu": "hayot"
-}
-```
-
-### Ilmiy maqola qo'shish
-
-`data/ilmiy.json` faylini oching:
-
-```json
-{
-  "id": 11,
-  "sarlavha": "Maqola sarlavhasi",
-  "mualliflar": ["Muallif ismi"],
-  "nashriyot": "Nashriyot nomi",
-  "yil": 2024,
-  "til": "o'zbek",
-  "kalitSozlar": ["kalit", "so'zlar"],
-  "annotatsiya": "Qisqa ta'rif...",
-  "pdfHavola": "#"
-}
-```
-
-## 🛠 Texnologiyalar
-
-- **HTML5** - Semantik markup
-- **CSS3** - Custom Properties, Grid, Flexbox, Animations
-- **JavaScript (ES6+)** - Vanilla JS, Async/Await, Fetch API
-- **JSON** - Ma'lumotlar bazasi
-- **PWA** - Progressive Web App
-- **Service Worker** - Offline ishlash
-- **LocalStorage** - Mahalliy ma'lumotlar saqlash
-- **Canvas API** - Sertifikat generatsiya
-- **Drag & Drop API** - Interaktiv o'yinlar
-- **Clipboard API** - Nusxa olish
-
-## 🎨 Dizayn tizimi
-
-### Ranglar
-
-```css
---primary: #1a3c5e;      /* To'q ko'k */
---secondary: #c9a84c;    /* Oltin */
---bg: #f9f6f0;           /* Qog'oz rangi */
---text: #2d2d2d;         /* Matn */
---success: #4caf50;      /* Yashil */
---error: #f44336;        /* Qizil */
-```
-
-### Shriftlar
-
-- **Sarlavhalar**: Playfair Display
-- **Asosiy matn**: Inter
-
-## 🌟 Xususiyatlar
-
-### ✅ Tayyor
-
-- [x] Responsive dizayn (mobil, planshet, desktop)
-- [x] Dark mode
-- [x] Global qidiruv
-- [x] PWA (Progressive Web App)
-- [x] Offline rejim
-- [x] 10 ta she'r to'liq matn bilan
-- [x] 50 ta viktorina savoli
-- [x] 5 ta interaktiv o'yin
-- [x] Bibliografiya generatori (4 format)
-- [x] 30 ta adabiyot atamasi
-- [x] LocalStorage integr atsiyasi
-- [x] SEO optimizatsiya
-- [x] Schema.org markup
-
-### 🔮 Kelajak rejalar
-
-- [ ] Backend (Node.js + MongoDB)
-- [ ] Foydalanuvchi autentifikatsiyasi
-- [ ] Administrator paneli
-- [ ] Kontent yuklash API
-- [ ] Ko'proq she'rlar (500+)
-- [ ] Audio she'rlar
-- [ ] Video darsliklar
-- [ ] Forum funksionali
-- [ ] Mobil ilova (React Native)
-- [ ] Ko'p tillilik (rus, ingliz)
-
-## 📊 Statistika
-
-- **She'rlar**: 10+ (to'liq matn bilan)
-- **Viktorina savollari**: 50
-- **O'yinlar**: 5
-- **Sahifalar**: 8
-- **Ilmiy maqolalar**: 10
-- **Dissertatsiyalar**: 10
-- **Atamalar**: 30
-- **Kod qatorlari**: ~8000+
-
-## 🤝 Hissa qo'shish
-
-Loyihani yaxshilash uchun takliflar va hissa qo'shishlar qabul qilinadi!
-
-1. Fork qiling
-2. Feature branch yarating (`git checkout -b feature/AmazingFeature`)
-3. Commit qiling (`git commit -m 'Add some AmazingFeature'`)
-4. Push qiling (`git push origin feature/AmazingFeature`)
-5. Pull Request oching
-
-## 📄 Litsenziya
-
-Bu loyiha ta'limiy maqsadlarda yaratilgan va O'zbek adabiyotini rivojlantirish uchun mo'ljallangan.
-
-## 📧 Aloqa
-
-- **Website**: [gafurgulom.uz](https://gafurgulom.uz)
-- **Email**: info@gafurgulom.uz
-- **Telegram**: @gafurgulom_platform
-
-## 🙏 Minnatdorchilik
-
-- G'afur G'ulom merosi fondi
-- O'zbekiston adabiyoti va san'ati nashriyoti
-- O'zbek tili va adabiyoti instituti
-- Barcha o'qituvchi va talabalar
+> **Eslatma:** Fayllarni to'g'ridan-to'g'ri `file://` protokoli orqali ochish ba'zi funksiyalarda (JSON yuklash, modullar) xatolikka olib kelishi mumkin.
 
 ---
 
-**© 2024 G'afur G'ulom Ta'limiy Platformasi. Barcha huquqlar himoyalangan.**
+## Demo
 
-Made with ❤️ for O'zbek adabiyoti
+| Platforma | Havola |
+|-----------|--------|
+| 🌐 Vercel | https://YOUR-VERCEL-URL |
+| 📦 GitHub | https://github.com/YOUR_USERNAME/YOUR_REPOSITORY |
+
+---
+
+## Platforma imkoniyatlari
+
+| Modul | Tavsif |
+|-------|--------|
+| 🏠 Bosh sahifa | Hero bo'limi, platform statistikasi, bugungi she'r, foydalanuvchi toifalari va tezkor havolalar |
+| 👤 Hayoti | G'afur G'ulom biografiyasi, interaktiv vaqt chizig'i, mukofotlar, zamondoshlar xotirasi va meros bo'limi |
+| 📚 Elektron kutubxona | She'rlar va dostonlar, mavzu/yil filtri, sevimlilar, modal o'qish, ulashish va nusxa olish |
+| 🔬 Ilmiy arxiv | Ilmiy maqolalar, dissertatsiyalar, adabiy lug'at va bibliografiya generatori |
+| 🎬 Video darslar | Video darslar katalogi, tomosha interfeysi va progress kuzatuvi |
+| 🎓 Ta'lim markazi | Sinflar bo'yicha darslar, o'quv materiallari, vazifalar, viktorina va sertifikat yuklab olish |
+| 🎮 Interaktiv o'yinlar | «Kim ko'p biladi?», she'r yodlash, xronologiya va so'z qidiruv o'yinlari |
+| 📝 Testlar | Hayot, asarlar va boshqa mavzular bo'yicha kategoriyali test markazi |
+| 🤖 AI yordamchi | Mahalliy bilim bazasi (`ai-knowledge.js`) asosida suhbat, tavsiya va tezkor savollar |
+| 📊 Dashboard | XP, streak, o'qish progressi, kunlik maqsadlar, tavsiyalar va faoliyat tarixi |
+| 🏆 Yutuqlar | 20 ta badge, daraja tizimi, ochilgan/qulflangan yutuqlar va motivatsiya bo'limi |
+
+---
+
+## Kelajakdagi rivojlantirish
+
+Quyidagi yo'nalishlar kelajakda amalga oshirilishi mumkin:
+
+- 🛠️ **Admin Panel** — kontentni boshqarish uchun maxsus interfeys
+- 🔐 **Authentication** — ro'yxatdan o'tish va haqiqiy foydalanuvchi hisobi
+- 🗃️ **Database integration** — JSON o'rniga server-side ma'lumotlar bazasi
+- 🌍 **Multi-language support** — o'zbek va ingliz tillarida to'liq lokalizatsiya
+- 📈 **Analytics** — foydalanuvchi statistikasi va o'qitish samaradorligi tahlili
+- 📲 **Mobile App** — iOS va Android uchun native ilova
+- 🧠 **AI improvements** — tashqi AI API integratsiyasi va aqlliroq tavsiyalar
+
+---
+
+## Muallif
+
+**Madina Xasanova**
+
+Bitiruv malakaviy ishi
+
+2026
+
+---
+
+*G'afur G'ulom merosini kelajak avlodlarga yetkazish maqsadida yaratilgan.*
