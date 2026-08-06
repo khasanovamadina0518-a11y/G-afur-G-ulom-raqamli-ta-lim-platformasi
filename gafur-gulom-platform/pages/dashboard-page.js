@@ -1,80 +1,6 @@
 /**
- * Dashboard — local placeholder data
- * Future: replace loadDashboardData with API/auth provider.
+ * Dashboard — live user dashboard powered by PlatformDataService + UserProgress
  */
-
-const DASHBOARD_STORAGE_KEY = 'dashboard-user-data';
-
-const DEFAULT_DASHBOARD = {
-    user: {
-        name: 'Umida Karimova',
-        initials: 'UK',
-        email: 'umida@example.uz',
-        memberSince: '2025-yil yanvar'
-    },
-    progress: {
-        percent: 78,
-        nextGoal: "Keyingi maqsad: \"Netay\" hikoyasini o'qishni yakunlash"
-    },
-    xp: {
-        level: 12,
-        currentXp: 2400,
-        nextLevelXp: 3000,
-        title: 'Faol o\'quvchi'
-    },
-    continueLearning: {
-        title: 'Shum bola',
-        type: 'Roman',
-        progress: 64,
-        href: 'asarlar.html'
-    },
-    todayGoals: [
-        { icon: '🏆', title: "\"Shum bola\" hikoyasini o'qish", time: '20 daqiqa', done: true },
-        { icon: '📋', title: 'Test ishlash', time: '15 daqiqa', done: true },
-        { icon: '🤖', title: 'AI bilan suhbat', time: '10 daqiqa', done: false }
-    ],
-    achievements: {
-        certificates: 5,
-        badges: 12,
-        streak: 28,
-        xp: 2400,
-        badgeList: ['Birinchi test', 'Kitobxon', 'She\'rsevar', '7 kun streak', 'Video dars']
-    },
-    aiRecommendations: [
-        { icon: '📖', text: 'Bugun \"Yillar sadosi\" she\'rlar to\'plamidan 2 ta she\'r o\'qing.', link: 'ai-yordamchi.html', linkText: 'AI yordamchi' },
-        { icon: '🎯', text: '\"G\'afur G\'ulom hayoti\" testini yechib bilimingizni mustahkamlang.', link: 'interaktiv.html', linkText: 'Testlar' },
-        { icon: '🎬', text: 'Video dars: G\'afur G\'ulom hayoti va ijodi.', link: 'multimedia.html', linkText: 'Video darslar' }
-    ],
-    certificates: [
-        { title: 'G\'afur G\'ulom asarlari', date: '2026-yil 15-mart' },
-        { title: 'She\'riyat bo\'yicha test', date: '2026-yil 2-fevral' },
-        { title: 'Elektron kutubxona kursi', date: '2025-yil 20-dekabr' }
-    ],
-    recentActivity: [
-        { text: '\"Shum bola\" romani 3-bob o\'qildi', time: '2 soat oldin' },
-        { text: 'Test: G\'afur G\'ulom hayoti — 85%', time: 'Kecha' },
-        { text: 'AI yordamchi bilan suhbat boshlandi', time: 'Kecha' },
-        { text: 'Video dars ko\'rildi: Hayot va ijod', time: '3 kun oldin' }
-    ],
-    favorites: [
-        { label: 'Saqlangan asarlar', count: 8 },
-        { label: 'Sevimli she\'rlar', count: 14 },
-        { label: 'Video darslar', count: 5 }
-    ]
-};
-
-function loadDashboardData() {
-    try {
-        const raw = localStorage.getItem(DASHBOARD_STORAGE_KEY);
-        if (!raw) {
-            localStorage.setItem(DASHBOARD_STORAGE_KEY, JSON.stringify(DEFAULT_DASHBOARD));
-            return structuredClone(DEFAULT_DASHBOARD);
-        }
-        return { ...DEFAULT_DASHBOARD, ...JSON.parse(raw) };
-    } catch (e) {
-        return structuredClone(DEFAULT_DASHBOARD);
-    }
-}
 
 function escapeHtml(str) {
     return String(str)
@@ -110,6 +36,9 @@ function renderRecommendations(recs) {
 }
 
 function renderCertificates(certs) {
+    if (!certs.length) {
+        return '<li class="dash-cert"><span class="dash-cert__icon" aria-hidden="true">📜</span><div><p class="dash-cert__title">Hali sertifikat yo\'q</p><p class="dash-cert__date">Test ishlang (70%+)</p></div></li>';
+    }
     return certs.map(cert => `
         <li class="dash-cert">
             <span class="dash-cert__icon" aria-hidden="true">🏅</span>
@@ -122,6 +51,9 @@ function renderCertificates(certs) {
 }
 
 function renderActivity(items) {
+    if (!items.length) {
+        return '<li class="dash-activity__item"><span class="dash-activity__dot" aria-hidden="true"></span><div><p class="dash-activity__text">Hali faoliyat yo\'q</p><p class="dash-activity__time">Platformada o\'rganishni boshlang</p></div></li>';
+    }
     return items.map(item => `
         <li class="dash-activity__item">
             <span class="dash-activity__dot" aria-hidden="true"></span>
@@ -146,8 +78,7 @@ function renderBadgeChips(badges) {
     return badges.map(b => `<span class="dash-badge-chip">${escapeHtml(b)}</span>`).join('');
 }
 
-function renderDashboard() {
-    const data = loadDashboardData();
+function renderDashboard(data) {
     const xpPct = Math.round((data.xp.currentXp / data.xp.nextLevelXp) * 100);
 
     const greeting = document.getElementById('dash-greeting');
@@ -165,9 +96,13 @@ function renderDashboard() {
     const progressFill = document.getElementById('dash-progress-fill');
     const progressPct = document.getElementById('dash-progress-pct');
     const progressHint = document.getElementById('dash-progress-hint');
+    const progressBar = document.querySelector('[aria-labelledby="dash-progress-title"] .dash-progress__bar');
     if (progressFill) progressFill.style.width = `${data.progress.percent}%`;
     if (progressPct) progressPct.textContent = `${data.progress.percent}%`;
     if (progressHint) progressHint.textContent = data.progress.nextGoal;
+    if (progressBar) {
+        progressBar.setAttribute('aria-valuenow', String(data.progress.percent));
+    }
 
     const xpLevel = document.getElementById('dash-xp-level');
     const xpTitle = document.getElementById('dash-xp-title');
@@ -212,9 +147,62 @@ function renderDashboard() {
     if (favGrid) favGrid.innerHTML = renderFavorites(data.favorites);
 }
 
+async function loadPlatformDataForDashboard() {
+    if (window.platformDataReady) {
+        await window.platformDataReady;
+        return;
+    }
+    await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = '../assets/js/data.js';
+        script.onload = () => (window.platformDataReady || Promise.resolve()).then(resolve).catch(reject);
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
+
+async function refreshDashboard() {
+    await loadPlatformDataForDashboard();
+
+    let stats = null;
+    let recommendations = null;
+
+    if (typeof getPlatformStatistics === 'function') {
+        stats = await getPlatformStatistics();
+    }
+    if (typeof recommendPlatformContent === 'function') {
+        recommendations = await recommendPlatformContent({ limit: 3 });
+    }
+
+    if (window.UserProgress) {
+        const model = UserProgress.buildDashboardModel(stats, recommendations);
+        renderDashboard(model);
+    }
+}
+
+function bindDashboardEvents() {
+    const refresh = () => refreshDashboard();
+
+    if (window.PlatformDataService?.on) {
+        PlatformDataService.on('dataUpdated', refresh);
+        PlatformDataService.on('progressChanged', refresh);
+        PlatformDataService.on('contentOpened', refresh);
+        PlatformDataService.on('favoriteChanged', refresh);
+        PlatformDataService.on('achievementUnlocked', refresh);
+    }
+
+    ['platform:progressChanged', 'platform:contentOpened', 'platform:favoriteChanged', 'platform:achievementUnlocked'].forEach(evt => {
+        window.addEventListener(evt, refresh);
+    });
+
+    window.addEventListener('storage', (e) => {
+        if (e.key && e.key.includes('progress')) refresh();
+    });
+}
+
 document.addEventListener('DOMContentLoaded', async function () {
-    renderDashboard();
-    enrichDashboardFromPlatform();
+    await refreshDashboard();
+    bindDashboardEvents();
 
     document.getElementById('dash-sidebar-toggle')?.addEventListener('click', () => {
         document.getElementById('dash-sidebar')?.classList.toggle('is-open');
@@ -227,73 +215,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 });
 
-async function enrichDashboardFromPlatform() {
-    if (typeof recommendPlatformContent !== 'function') {
-        await loadPlatformDataForDashboard();
-    }
-    if (typeof recommendPlatformContent !== 'function') return;
-
-    try {
-        const recs = await recommendPlatformContent({ limit: 1 });
-        const poem = recs.featured[0] || recs.newest[0];
-        const video = recs.newest.find(r => r.kind === 'video') || recs.random.find(r => r.kind === 'video');
-
-        const continueTitle = document.getElementById('dash-continue-title');
-        if (continueTitle && poem?.title) {
-            continueTitle.textContent = poem.title;
-        }
-
-        const recsList = document.getElementById('dash-recs-list');
-        if (recsList && poem) {
-            const dynamicRecs = [
-                {
-                    icon: '📖',
-                    text: `Bugun "${poem.title}" bilan tanishing.`,
-                    link: 'asarlar.html',
-                    linkText: 'Kutubxona'
-                },
-                {
-                    icon: '🎯',
-                    text: 'G\'afur G\'ulom hayoti bo\'yicha viktorinani yeching.',
-                    link: 'talim.html',
-                    linkText: 'Testlar'
-                },
-                {
-                    icon: '🎬',
-                    text: video ? `Video dars: ${video.title}.` : 'Video darslar bo\'limini ko\'ring.',
-                    link: 'multimedia.html',
-                    linkText: 'Video darslar'
-                }
-            ];
-            recsList.innerHTML = renderRecommendations(dynamicRecs);
-        }
-
-        if (typeof PlatformDataService?.on === 'function') {
-            PlatformDataService.on('dataUpdated', () => enrichDashboardFromPlatform());
-        }
-    } catch (e) {
-        console.warn('Dashboard platform enrichment skipped:', e);
-    }
-}
-
-function loadPlatformDataForDashboard() {
-    return new Promise((resolve, reject) => {
-        if (window.platformDataReady) {
-            window.platformDataReady.then(resolve).catch(reject);
-            return;
-        }
-        const script = document.createElement('script');
-        script.src = '../assets/js/data.js';
-        script.onload = () => (window.platformDataReady || Promise.resolve()).then(resolve).catch(reject);
-        script.onerror = reject;
-        document.head.appendChild(script);
-    });
-}
-
 window.DashboardApp = {
-    getData: loadDashboardData,
-    setData(nextData) {
-        localStorage.setItem(DASHBOARD_STORAGE_KEY, JSON.stringify(nextData));
-        renderDashboard();
-    }
+    refresh: refreshDashboard,
+    getLiveData: () => window.UserProgress?.buildDashboardModel()
 };

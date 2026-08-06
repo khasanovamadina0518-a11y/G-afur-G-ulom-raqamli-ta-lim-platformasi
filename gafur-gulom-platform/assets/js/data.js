@@ -69,6 +69,34 @@
 
     platformDataReady.then(installFetchShim);
 
+    const PROGRESS_PATH = (function () {
+        const inPages = window.location.pathname.includes('/pages/');
+        return (inPages ? '../assets/js/' : 'assets/js/') + 'user-progress.js';
+    })();
+
+    function loadUserProgressScript() {
+        if (window.UserProgress) return Promise.resolve();
+        return new Promise((resolve, reject) => {
+            const existing = document.querySelector('script[data-user-progress]');
+            if (existing) {
+                existing.addEventListener('load', () => resolve());
+                existing.addEventListener('error', reject);
+                if (window.UserProgress) resolve();
+                return;
+            }
+            const script = document.createElement('script');
+            script.src = PROGRESS_PATH;
+            script.dataset.userProgress = '1';
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error('UserProgress script failed to load'));
+            document.head.appendChild(script);
+        });
+    }
+
+    platformDataReady.then(loadUserProgressScript).catch(err => {
+        console.warn('UserProgress load skipped:', err);
+    });
+
     async function withService(method) {
         await platformDataReady;
         return window.PlatformDataService[method]();
