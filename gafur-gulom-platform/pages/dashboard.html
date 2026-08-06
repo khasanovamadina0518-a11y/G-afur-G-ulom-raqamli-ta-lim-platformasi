@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
+    <script>
+    (function(){var p=location.pathname.replace(/\\/g,'/'),m='/gafur-gulom-platform/',b='/';if(p.indexOf(m)!==-1)b=p.slice(0,p.indexOf(m)+m.length);else if(p.indexOf('/pages/')!==-1)b=p.slice(0,p.indexOf('/pages/')+1);else{var i=p.lastIndexOf('/');b=i<=0?'/':p.slice(0,i+1);}var e=document.createElement('base');e.href=b;document.head.insertBefore(e,document.head.firstChild);window.PLATFORM_BASE=b;window.platformUrl=function(r){return b+String(r||'').replace(/^\//,'');};})();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - G'afur G'ulom</title>
@@ -9,10 +12,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link rel="stylesheet" href="dashboard.css?v=1">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="pages/dashboard.css?v=1">
 </head>
 <body class="page-dashboard">
     <div id="header-container"></div>
@@ -27,27 +30,27 @@
                 </div>
 
                 <nav class="dash-nav" aria-label="Dashboard menyu">
-                    <a href="dashboard.html" class="dash-nav__link is-active">
+                    <a href="pages/dashboard.html" class="dash-nav__link is-active">
                         <span class="dash-nav__icon" aria-hidden="true">🏠</span>
                         Bosh sahifa
                     </a>
-                    <a href="asarlar.html" class="dash-nav__link">
+                    <a href="pages/asarlar.html" class="dash-nav__link">
                         <span class="dash-nav__icon" aria-hidden="true">📚</span>
                         Kutubxona
                     </a>
-                    <a href="multimedia.html" class="dash-nav__link">
+                    <a href="pages/multimedia.html" class="dash-nav__link">
                         <span class="dash-nav__icon" aria-hidden="true">🎬</span>
                         Video darslar
                     </a>
-                    <a href="asarlar.html" class="dash-nav__link">
+                    <a href="pages/asarlar.html" class="dash-nav__link">
                         <span class="dash-nav__icon" aria-hidden="true">🎧</span>
                         Audiokitob
                     </a>
-                    <a href="interaktiv.html" class="dash-nav__link">
+                    <a href="pages/interaktiv.html" class="dash-nav__link">
                         <span class="dash-nav__icon" aria-hidden="true">📝</span>
                         Testlar
                     </a>
-                    <a href="ai-yordamchi.html" class="dash-nav__link">
+                    <a href="pages/ai-yordamchi.html" class="dash-nav__link">
                         <span class="dash-nav__icon" aria-hidden="true">🤖</span>
                         AI yordamchi
                     </a>
@@ -61,7 +64,7 @@
                     </a>
                 </nav>
 
-                <a href="../index.html" class="dash-logout">Chiqish</a>
+                <a href="pages/index.html" class="dash-logout">Chiqish</a>
             </aside>
 
             <div class="dash-main">
@@ -120,7 +123,7 @@
                             <div>
                                 <p class="dash-continue__title" id="dash-continue-title">Shum bola</p>
                                 <p class="dash-continue__meta" id="dash-continue-meta">Roman · 64% o'qilgan</p>
-                                <a href="asarlar.html" class="dash-btn" id="dash-continue-btn">Davom etish</a>
+                                <a href="pages/asarlar.html" class="dash-btn" id="dash-continue-btn">Davom etish</a>
                             </div>
                         </div>
                     </section>
@@ -138,7 +141,7 @@
                     <section class="dash-card dash-span-6" id="achievements" aria-labelledby="dash-ach-title">
                         <div class="dash-card__head">
                             <h2 class="dash-card__title" id="dash-ach-title">Yutuqlarim</h2>
-                            <a href="yutuqlar.html" class="dash-card__link">Barcha yutuqlar</a>
+                            <a href="pages/yutuqlar.html" class="dash-card__link">Barcha yutuqlar</a>
                         </div>
                         <div class="dash-badges">
                             <div class="dash-badge-stat">
@@ -169,7 +172,7 @@
                     <section class="dash-card dash-span-6" aria-labelledby="dash-rec-title">
                         <div class="dash-card__head">
                             <h2 class="dash-card__title" id="dash-rec-title">AI tavsiyalari</h2>
-                            <a href="ai-yordamchi.html" class="dash-card__link">AI yordamchi</a>
+                            <a href="pages/ai-yordamchi.html" class="dash-card__link">AI yordamchi</a>
                         </div>
                         <ul class="dash-recs" id="dash-recs-list"></ul>
                     </section>
@@ -195,7 +198,7 @@
                     <section class="dash-card dash-span-12" aria-labelledby="dash-fav-title">
                         <div class="dash-card__head">
                             <h2 class="dash-card__title" id="dash-fav-title">Sevimlilar xulosasi</h2>
-                            <a href="asarlar.html" class="dash-card__link">Kutubxona</a>
+                            <a href="pages/asarlar.html" class="dash-card__link">Kutubxona</a>
                         </div>
                         <div class="dash-favorites" id="dash-favorites-grid"></div>
                     </section>
@@ -206,10 +209,10 @@
 
     <div id="footer-container"></div>
 
-    <script src="../components/header.js"></script>
-    <script src="../components/footer.js"></script>
-    <script src="../assets/js/data.js?v=9"></script>
-    <script src="../assets/js/app.js"></script>
-    <script src="dashboard-page.js?v=2"></script>
+    <script src="components/header.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="assets/js/data.js?v=9"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="pages/dashboard-page.js?v=2"></script>
 </body>
 </html>

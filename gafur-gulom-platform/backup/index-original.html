@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G'afur G'ulom - Ta'limiy Platforma</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: #f9f6f0;
+            color: #2d2d2d;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background: #0f1923;
+            color: #e8e0d0;
+        }
+        
+        .header {
+            background: #1a3c5e;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        body.dark-mode .header {
+            background: #0a1f33;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .dark-btn {
+            background: #c9a84c;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #1a3c5e 0%, #2a5a8a 100%);
+            color: white;
+        }
+        
+        body.dark-mode .hero {
+            background: linear-gradient(135deg, #0a1f33 0%, #1a3c5e 100%);
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            margin: 2rem 0;
+            border: 5px solid white;
+        }
+        
+        .content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        
+        .card {
+            background: white;
+            padding: 2rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        body.dark-mode .card {
+            background: #1a2d3d;
+            color: #e8e0d0;
+        }
+        
+        .poems-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .poem-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        body.dark-mode .poem-card {
+            background: #1a2d3d;
+            color: #e8e0d0;
+        }
+        
+        .poem-card h3 {
+            color: #1a3c5e;
+            margin-bottom: 0.5rem;
+        }
+        
+        body.dark-mode .poem-card h3 {
+            color: #c9a84c;
+        }
+        
+        .status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .poems-grid { grid-template-columns: 1fr; }
+            .nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="#" class="logo">📖 G'afur G'ulom</a>
+        <nav>
+            <ul class="nav">
+                <li><a href="#" onclick="showSection('home')">Bosh sahifa</a></li>
+                <li><a href="#" onclick="showSection('poems')">She'rlar</a></li>
+            </ul>
+        </nav>
+        <button class="dark-btn" onclick="toggleDark()" id="darkBtn">🌙</button>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>G'afur G'ulom</h1>
+        <p>1889–1966 | O'zbek she'riyatining ulug' namoyandasi</p>
+        <img src="./assets/images/gafur-gulom.jpg" alt="G'afur G'ulom" 
+             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Crect fill=%22%231a3c5e%22 width=%22300%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2280%22 fill=%22white%22%3EG.G%3C/text%3E%3C/svg%3E'">
+    </section>
+    
+    <!-- Content -->
+    <main class="content">
+        <div class="card">
+            <h2>Platforma haqida</h2>
+            <p>G'afur G'ulom O'zbekiston xalq shoiri, yozuvchi va tarjimon. U 1889-yilda Toshkent viloyatining Qibray tumanida tug'ilgan.</p>
+        </div>
+        
+        <div class="card" id="poems" style="display: none;">
+            <h2>She'rlar to'plami</h2>
+            <div id="poemsContainer">Yuklanmoqda...</div>
+        </div>
+    </main>
+    
+    <div class="status" id="status"></div>
+    
+    <script>
+        // Dark Mode
+        function toggleDark() {
+            const body = document.body;
+            const btn = document.getElementById('darkBtn');
+            const isDark = body.classList.toggle('dark-mode');
+            
+            btn.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            showStatus(isDark ? 'Dark mode faollashtirildi' : 'Light mode faollashtirildi');
+            console.log('Dark mode:', isDark);
+        }
+        
+        // Load saved theme
+        window.addEventListener('load', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('darkBtn').textContent = '☀️';
+            }
+            loadPoems();
+        });
+        
+        // Show section
+        function showSection(section) {
+            document.getElementById('home').style.display = section === 'home' ? 'block' : 'none';
+            document.getElementById('poems').style.display = section === 'poems' ? 'block' : 'none';
+        }
+        
+        // Show status
+        function showStatus(message) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.style.display = 'block';
+            setTimeout(() => status.style.display = 'none', 3000);
+        }
+        
+        // Load poems
+        async function loadPoems() {
+            try {
+                const response = await fetch('./data/sherlar.json');
+                const data = await response.json();
+                const poems = data.sherlar || [];
+                
+                const container = document.getElementById('poemsContainer');
+                if (poems.length === 0) {
+                    container.innerHTML = '<p>She\'rlar topilmadi</p>';
+                    return;
+                }
+                
+                container.innerHTML = `
+                    <p style="margin-bottom: 1rem;"><strong>${poems.length} ta she'r mavjud</strong></p>
+                    <div class="poems-grid">
+                        ${poems.slice(0, 6).map(poem => `
+                            <div class="poem-card">
+                                <h3>${poem.sarlavha}</h3>
+                                <p style="color: #666; font-size: 0.9rem;">${poem.yil}</p>
+                                <p style="font-style: italic; margin-top: 0.5rem;">${poem.qisqa}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                showStatus(`${poems.length} ta she'r yuklandi`);
+                console.log('She\'rlar yuklandi:', poems.length);
+            } catch (error) {
+                document.getElementById('poemsContainer').innerHTML = 
+                    '<p style="color: red;">She\'rlarni yuklashda xatolik: ' + error.message + '</p>';
+                console.error('Xatolik:', error);
+            }
+        }
+    </script>
+</body>
+</html>

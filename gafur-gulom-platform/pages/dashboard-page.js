@@ -154,7 +154,7 @@ async function loadPlatformDataForDashboard() {
     }
     await new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = '../assets/js/data.js';
+        script.src = (window.platformUrl || function (r) { return r; })('assets/js/data.js');
         script.onload = () => (window.platformDataReady || Promise.resolve()).then(resolve).catch(reject);
         script.onerror = reject;
         document.head.appendChild(script);

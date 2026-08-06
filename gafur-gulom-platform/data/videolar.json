@@ -1,0 +1,25 @@
+{
+  "kurs": {
+    "id": 1,
+    "sarlavha": "1. G'afur G'ulom hayoti va ijodi",
+    "tavsif": "Ushbu darsda G'afur G'ulomning hayoti, ijodiy yo'li va adabiyotga qo'shgan hissasi batafsil yoritiladi.",
+    "thumbnail": "../assets/images/gafur-gulom.jpg",
+    "videoUrl": "#",
+    "downloadUrl": "#",
+    "currentTime": "04:35",
+    "totalTime": "18:45",
+    "progress": 0.25
+  },
+  "darslar": [
+    { "id": 1, "tartib": 1, "sarlavha": "Bolalik yillari", "davomiylik": "03:20" },
+    { "id": 2, "tartib": 2, "sarlavha": "Ta'lim va ilk ijodiy faoliyati", "davomiylik": "04:15" },
+    { "id": 3, "tartib": 3, "sarlavha": "Asarlari va ularning tahlili", "davomiylik": "07:45", "active": true },
+    { "id": 4, "tartib": 4, "sarlavha": "Adabiyotdagi o'rni", "davomiylik": "03:25" }
+  ],
+  "materiallar": [
+    { "id": 1, "sarlavha": "Dars qo'llanmasi (PDF)", "tur": "pdf", "hajm": "2.4 MB" },
+    { "id": 2, "sarlavha": "She'rlar to'plami", "tur": "doc", "hajm": "1.1 MB" },
+    { "id": 3, "sarlavha": "Taqdimot slaydlari", "tur": "ppt", "hajm": "4.8 MB" }
+  ],
+  "izohlar_soni": 32
+}

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
+    <script>
+    (function(){var p=location.pathname.replace(/\\/g,'/'),m='/gafur-gulom-platform/',b='/';if(p.indexOf(m)!==-1)b=p.slice(0,p.indexOf(m)+m.length);else if(p.indexOf('/pages/')!==-1)b=p.slice(0,p.indexOf('/pages/')+1);else{var i=p.lastIndexOf('/');b=i<=0?'/':p.slice(0,i+1);}var e=document.createElement('base');e.href=b;document.head.insertBefore(e,document.head.firstChild);window.PLATFORM_BASE=b;window.platformUrl=function(r){return b+String(r||'').replace(/^\//,'');};})();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yutuqlar - G'afur G'ulom</title>
@@ -9,10 +12,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link rel="stylesheet" href="yutuqlar.css?v=1">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="pages/yutuqlar.css?v=1">
 </head>
 <body class="page-yutuqlar">
     <div id="header-container"></div>
@@ -20,12 +23,12 @@
     <main class="ach-page">
         <header class="ach-header">
             <div class="ach-header__left">
-                <a href="dashboard.html" class="ach-back" aria-label="Dashboardga qaytish">
+                <a href="pages/dashboard.html" class="ach-back" aria-label="Dashboardga qaytish">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
                 </a>
                 <h1 class="ach-title">Yutuqlar</h1>
             </div>
-            <a href="dashboard.html" class="ach-header__link">Dashboard</a>
+            <a href="pages/dashboard.html" class="ach-header__link">Dashboard</a>
         </header>
 
         <div class="ach-grid">
@@ -125,10 +128,10 @@
 
     <div id="footer-container"></div>
 
-    <script src="../components/header.js"></script>
-    <script src="../components/footer.js"></script>
-    <script src="../assets/js/data.js"></script>
-    <script src="../assets/js/app.js"></script>
-    <script src="yutuqlar-page.js?v=1"></script>
+    <script src="components/header.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="pages/yutuqlar-page.js?v=1"></script>
 </body>
 </html>

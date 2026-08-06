@@ -1,0 +1,274 @@
+{
+  "sherlar": [
+    {
+      "id": 1,
+      "sarlavha": "Seni ko'rmay",
+      "yil": 1934,
+      "mavzu": ["Vatan", "Sevgi"],
+      "matn": "Seni ko'rmay yashash mumkinmi, ey Vatan,\nSeni ko'rmay yashash mumkinmi, ey ona?\nSening ko'zing oldida o'sgan bu bola,\nSening qo'ling ostida o'sgan bu farzand.\n\nSeni ko'rmay yashash mumkinmi, ey Vatan,\nSening havoing, sening suving, sening tuproging,\nSening tog'laring, sening daryolaring,\nSening gulzoring, sening bog'laring.\n\nMen senga qaram, sen menga qaram,\nBiz bir-birimizga qaram, ey Vatan,\nSensiz men yo'q, mensiz sen yo'q,\nBiz bir-birimizga muhtoj, ey Vatan.",
+      "qisqa": "Seni ko'rmay yashash mumkinmi, ey Vatan, / Seni ko'rmay yashash mumkinmi, ey ona?",
+      "nota": "1934-yilda yozilgan, Vatan sevgisiga bag'ishlangan eng mashhur she'rlardan biri."
+    },
+    {
+      "id": 2,
+      "sarlavha": "Yomg'ir",
+      "yil": 1936,
+      "mavzu": ["Tabiat", "Hayot"],
+      "matn": "Yomg'ir yog'di, yer ho'l bo'ldi,\nGul-giyoh ochildi, ko'kardi.\nDehqon xursand bo'ldi, kuldi,\nEkin yaxshi bo'ldi, ko'pardi.\n\nYomg'ir yog'di, osmon yig'ladi,\nYer kulib, gul ochdi, ko'kardi.\nBolalar xursand bo'lib chopdi,\nSuv havzalari to'ldi, toshdi.\n\nYomg'ir - bu hayot, bu baxt,\nYomg'ir - bu umid, bu saodat.\nYomg'ir yog'sin, yer yashnasin,\nXalq baxtli bo'lsin, tinch yashasin.",
+      "qisqa": "Yomg'ir yog'di, yer ho'l bo'ldi, / Gul-giyoh ochildi, ko'kardi.",
+      "nota": "Tabiat go'zalligini tasvirlovchi she'r."
+    },
+    {
+      "id": 3,
+      "sarlavha": "Mehnat",
+      "yil": 1938,
+      "mavzu": ["Mehnat", "Hayot"],
+      "matn": "Mehnat qil, mehnat - bu hayot,\nMehnat qil, mehnat - bu saodat.\nMehnat qilgan odam yashaydi,\nMehnat qilmagan odam o'ladi.\n\nMehnat - bu kuch, bu quvvat,\nMehnat - bu baxt, bu ne'mat.\nMehnat qil, tinma, to'xtama,\nMehnat qil, oldinga borma.\n\nMehnat qilgan odam hurmatli,\nMehnat qilgan odam sharafli.\nMehnat qil, ey insonlar,\nMehnat qil, ey do'stlar.",
+      "qisqa": "Mehnat qil, mehnat - bu hayot, / Mehnat qil, mehnat - bu saodat.",
+      "nota": "Mehnat ulug'lanishiga bag'ishlangan she'r."
+    },
+    {
+      "id": 4,
+      "sarlavha": "Bahor",
+      "yil": 1940,
+      "mavzu": ["Tabiat", "Bahor"],
+      "matn": "Bahor keldi, yer yashil bo'ldi,\nGullar ochildi, rang-barang bo'ldi.\nQushlar sayrab, qo'shiq aytdi,\nTabiat jonlandi, go'zal bo'ldi.\n\nBahor - bu hayot, bu yangilanish,\nBahor - bu umid, bu quvonish.\nBahor keldi, xalq xursand bo'ldi,\nYuraklar shod bo'ldi, ko'ngillar ochildi.\n\nBahor - bu go'zallik, bu she'riyat,\nBahor - bu muhabbat, bu hayot.\nBahor kelsin, doim kelsin,\nXalq baxtli bo'lsin, tinch yashasin.",
+      "qisqa": "Bahor keldi, yer yashil bo'ldi, / Gullar ochildi, rang-barang bo'ldi.",
+      "nota": "Bahor faslining go'zalligini tasvirlovchi she'r."
+    },
+    {
+      "id": 5,
+      "sarlavha": "Ona",
+      "yil": 1942,
+      "mavzu": ["Ona", "Sevgi"],
+      "matn": "Ona - bu muqaddas ism,\nOna - bu ulug' ism.\nOna - bu hayot, bu mehr,\nOna - bu muhabbat, bu saodat.\n\nOna mehri - eng buyuk mehr,\nOna muhabbati - eng ulug' muhabbat.\nOna qo'li - eng iliq qo'l,\nOna ko'zi - eng mehribon ko'z.\n\nOna - bu jannat, bu baxt,\nOna - bu umid, bu hayot.\nOnani hurmat qil, ey farzand,\nOnani sev, ey insonlar.",
+      "qisqa": "Ona - bu muqaddas ism, / Ona - bu ulug' ism.",
+      "nota": "Ona mehriga bag'ishlangan she'r."
+    },
+    {
+      "id": 6,
+      "sarlavha": "Do'stlik",
+      "yil": 1945,
+      "mavzu": ["Do'stlik", "Hayot"],
+      "matn": "Do'stlik - bu boylik, bu ne'mat,\nDo'stlik - bu baxt, bu saodat.\nDo'st bilan yashash - bu quvonch,\nDo'st bilan bo'lish - bu sharaf.\n\nDo'st - bu qo'llab-quvvatlovchi,\nDo'st - bu yordam beruvchi.\nDo'st - bu ishonchli, bu sodiq,\nDo'st - bu mehribon, bu samimiy.\n\nDo'stlikni qadrlang, ey insonlar,\nDo'stlikni asrang, ey do'stlar.\nDo'stlik - bu hayotning ma'nosi,\nDo'stlik - bu baxtning kaliti.",
+      "qisqa": "Do'stlik - bu boylik, bu ne'mat, / Do'stlik - bu baxt, bu saodat.",
+      "nota": "Do'stlik qadriga bag'ishlangan she'r."
+    },
+    {
+      "id": 7,
+      "sarlavha": "Kitob",
+      "yil": 1948,
+      "mavzu": ["Bilim", "Ta'lim"],
+      "matn": "Kitob - bu ilm, bu ma'rifat,\nKitob - bu nur, bu hidoyat.\nKitob o'qi, bilim ol,\nKitob o'qi, donishmand bo'l.\n\nKitob - bu do'st, bu yo'ldosh,\nKitob - bu ustoz, bu murshid.\nKitob o'qigan odam yetuk,\nKitob o'qigan odam kamol topgan.\n\nKitobni sev, kitobni o'qi,\nKitobni qadirla, kitobni asra.\nKitob - bu xazina, bu boylik,\nKitob - bu hayot, bu saodat.",
+      "qisqa": "Kitob - bu ilm, bu ma'rifat, / Kitob - bu nur, bu hidoyat.",
+      "nota": "Kitob va bilim ahamiyatiga bag'ishlangan she'r."
+    },
+    {
+      "id": 8,
+      "sarlavha": "Yoshlik",
+      "yil": 1950,
+      "mavzu": ["Yoshlik", "Hayot"],
+      "matn": "Yoshlik - bu bahor, bu gul,\nYoshlik - bu quvonch, bu saodat.\nYoshlik - bu kuch, bu quvvat,\nYoshlik - bu umid, bu hayot.\n\nYosh bo'l, quvnoq bo'l, shod bo'l,\nYosh bo'l, faol bo'l, g'ayratli bo'l.\nYoshlik o'tadi, qaytmaydi,\nYoshlikni qadirla, behuda o'tkazma.\n\nYoshlik - bu imkoniyat, bu fursat,\nYoshlik - bu orzu, bu maqsad.\nYoshlikda o'rgan, ishla, yarat,\nYoshlikda yasha, quvon, baxt top.",
+      "qisqa": "Yoshlik - bu bahor, bu gul, / Yoshlik - bu quvonch, bu saodat.",
+      "nota": "Yoshlik davriga bag'ishlangan she'r."
+    },
+    {
+      "id": 9,
+      "sarlavha": "Tinchlik",
+      "yil": 1955,
+      "mavzu": ["Tinchlik", "Hayot"],
+      "matn": "Tinchlik - bu hayot, bu saodat,\nTinchlik - bu baxt, bu ne'mat.\nTinchlik bo'lsin, urush bo'lmasin,\nXalq tinch yashasin, baxtli bo'lsin.\n\nTinchlik - bu bolalar kulishi,\nTinchlik - bu onalar xursandligi.\nTinchlik - bu osmon ochiqligi,\nTinchlik - bu yer yashilligi.\n\nTinchlikni qadrlang, ey insonlar,\nTinchlikni asrang, ey do'stlar.\nTinchlik - bu eng katta boylik,\nTinchlik - bu eng ulug' ne'mat.",
+      "qisqa": "Tinchlik - bu hayot, bu saodat, / Tinchlik - bu baxt, bu ne'mat.",
+      "nota": "Tinchlik va osoyishtalikka bag'ishlangan she'r."
+    },
+    {
+      "id": 10,
+      "sarlavha": "O'zbekiston",
+      "yil": 1960,
+      "mavzu": ["Vatan", "O'zbekiston"],
+      "matn": "O'zbekiston - mening Vatanim,\nO'zbekiston - mening yurtim.\nO'zbekiston - go'zal mamlakat,\nO'zbekiston - ulug' davlat.\n\nO'zbekiston - paxta yurtim,\nO'zbekiston - oltin yurtim.\nO'zbekiston - madaniyat maskani,\nO'zbekiston - tarix vatani.\n\nO'zbekistonni sevaman,\nO'zbekiston uchun yashayman.\nO'zbekiston - mening faxrim,\nO'zbekiston - mening baxtim.",
+      "qisqa": "O'zbekiston - mening Vatanim, / O'zbekiston - mening yurtim.",
+      "nota": "O'zbekistonga bag'ishlangan she'r."
+    },
+    {
+      "id": 11,
+      "sarlavha": "Yomg'ir",
+      "yil": 1933,
+      "mavzu": ["Tabiat", "Bola"],
+      "matn": "Yomg'ir yog'di tomdan-tom,\nBolalar chopdi xom-xom.\nOyoqlari shilim-shilim,\nQo'llari ho'llam-ho'llam.\n\nYomg'ir yog'di shamoldan,\nSuv oqdi yo'ldan-yo'ldan.\nBolalar sakrab-sakrab,\nO'ynashdi quvonib-quvonib.\n\nYomg'ir yog'di osmondan,\nYer to'ldi suvdan-suvdan.\nBolalar kulishdi shod,\nYuraklar to'ldi umiddan.\n\nYomg'ir - bu tabiat sovg'asi,\nYomg'ir - bu hayot nishonasi.\nYomg'ir yog'sin, yer yashnasin,\nBolalar o'ssin, baxt topsinn.",
+      "qisqa": "Yomg'ir yog'di tomdan-tom, / Bolalar chopdi xom-xom.",
+      "nota": "Bolalar uchun yozilgan eng mashhur she'rlardan biri."
+    },
+    {
+      "id": 12,
+      "sarlavha": "Og'riq bilan baxt",
+      "yil": 1941,
+      "mavzu": ["Urush", "Vatan"],
+      "matn": "Og'riq bilan baxt qo'shildi,\nKo'zlarimga yosh to'ldi.\nVatan uchun jang qilmoqda,\nO'g'illarim frontda turmoqda.\n\nOg'riq - chunki farzandim uzoqda,\nBaxt - chunki u Vatan uchun jangda.\nOg'riq - chunki ko'ra olmayman,\nBaxt - chunki g'urur bilan yashayman.\n\nVatan uchun kurash olib bormoqda,\nDushman bilan jang qilmoqda.\nMening o'g'lim - qahramon,\nMening o'g'lim - fidoyi jonga.\n\nKelsin g'alaba, kelsin tinchlik,\nO'g'illarim qaytsin sog'-omon.\nVatan ozodboman yashasin,\nXalqim baxtli bo'lsin, shod yashasin.",
+      "qisqa": "Og'riq bilan baxt qo'shildi, / Ko'zlarimga yosh to'ldi.",
+      "nota": "1941-yilda urush davrida yozilgan lirik she'r."
+    },
+    {
+      "id": 13,
+      "sarlavha": "Shoir",
+      "yil": 1946,
+      "mavzu": ["Falsafa", "Mehnat"],
+      "matn": "Shoir - xalq ovozi, xalq dili,\nShoir - davr ko'zgusi, zamon tili.\nShoir - haqiqat aytuvchi,\nShoir - yo'l ko'rsatuvchi.\n\nShoir qalami - qurol,\nShoir so'zi - kuch, quvvat.\nShoir she'ri - yorug'lik,\nShoir hikoyasi - ibrat.\n\nShoir yashamaydi o'zi uchun,\nShoir yashaydi xalq uchun.\nShoir kuymaydi o'zi uchun,\nShoir kuyadi Vatan uchun.\n\nShoir bo'lish - mas'uliyat,\nShoir bo'lish - sharaf, hurmat.\nShoir bo'lish - xizmat qilish,\nShoir bo'lish - yo'l yoritish.",
+      "qisqa": "Shoir - xalq ovozi, xalq dili, / Shoir - davr ko'zgusi, zamon tili.",
+      "nota": "Shoir mas'uliyati haqida falsafiy she'r."
+    },
+    {
+      "id": 14,
+      "sarlavha": "Gulning qo'shig'i",
+      "yil": 1935,
+      "mavzu": ["Tabiat", "Bola"],
+      "matn": "Men bir gulman, go'zal gulman,\nRang-barang, xushbo'y gulman.\nBog'da ochilganman bahorida,\nQuyosh nuri ostida o'sganman.\n\nMeni bolalar yaxshi ko'radi,\nMening atrimni his qiladi.\nMeni parvarishlaydilar mehri bilan,\nMen ham ularga quvonch beraman.\n\nMen tabiat go'zalligiman,\nMen hayot nishonasiman.\nMen bahorda ochilaman,\nMen qishda uxlayman.\n\nMeni qo'riqlab, asrab-avaylab turing,\nMeni yaxshi ko'rib, hurmat qiling.\nMen sizlarga go'zallik beraman,\nMen sizlarga baxt ulashaman.",
+      "qisqa": "Men bir gulman, go'zal gulman, / Rang-barang, xushbo'y gulman.",
+      "nota": "Bolalar adabiyotining klasikasi."
+    },
+    {
+      "id": 15,
+      "sarlavha": "Mehr",
+      "yil": 1952,
+      "mavzu": ["Muhabbat", "Falsafa"],
+      "matn": "Mehr - bu olam nuri,\nMehr - bu hayot yo'li.\nMehr - bu yurak ishi,\nMehr - bu ruh ovqati.\n\nMehr bilan yashang dunyo,\nMehr bilan o'sadi farzand.\nMehr bilan gullab-yashnasin,\nMehr bilan tinchlik o'rnasin.\n\nMehrni sochib yurgin atrofga,\nMehrni to'kib bergin barchasiga.\nMehr olasiz, mehr bering,\nMehr bilan to'lsin yurak, jon.\n\nMehr - bu eng buyuk kuch,\nMehr - bu eng ulug' ne'mat.\nMehr bilan yashaydigan odam,\nMehr bilan yuksaladi, nurlanadi.",
+      "qisqa": "Mehr - bu olam nuri, / Mehr - bu hayot yo'li.",
+      "nota": "Mehr va muhabbat falsafasiga bag'ishlangan."
+    },
+    {
+      "id": 16,
+      "sarlavha": "Qishloq tongida",
+      "yil": 1937,
+      "mavzu": ["Tabiat", "Mehnat"],
+      "matn": "Qishloq tongida quyosh chiqdi,\nDehqon dalaga jo'nadi.\nYer tersa, chorva boqsa,\nMehnat qilsa, non topadi.\n\nQishloq tongida xo'roz sayraydi,\nIt vavasiydi, echki mangillaydi.\nBolalar uyg'ondi, o'ynaydi,\nOnalar ish bilan band bo'ladi.\n\nQishloq tongida havo toza,\nOsmon ochiq, shamol xunuk.\nEkin yashil, suv tiniq,\nQishloq hayoti - go'zal, betakror.\n\nQishloq tongida tinchlik bor,\nQishloq tongida mehnat bor.\nQishloq tongida umid bor,\nQishloq tongida hayot bor.",
+      "qisqa": "Qishloq tongida quyosh chiqdi, / Dehqon dalaga jo'nadi.",
+      "nota": "Qishloq hayotining go'zal tasviri."
+    },
+    {
+      "id": 17,
+      "sarlavha": "Dunyoning ishlari",
+      "yil": 1958,
+      "mavzu": ["Falsafa", "Hayot"],
+      "matn": "Dunyo aylanib turadi,\nInsonlar yashaб, o'tadi.\nKimdir keladi, kimdir ketadi,\nHayot shunday davom etadi.\n\nBaxt ham bor, qayg'u ham bor,\nKulgu ham bor, yig'i ham bor.\nG'alaba ham bor, mag'lubiyat ham,\nShunday dunyo, shunday hayot.\n\nYaxshilik qil, yomonlik qilma,\nMehribon bo'l, xafa qilma.\nDonolik bilan yasha dunyoda,\nIzzing baland bo'lsin abadgacha.\n\nDunyoning ishlari - sinoq,\nDunyoning ishlari - saboq.\nO'rgan, tushun, yasha to'g'ri,\nHaqiqat yo'lidan yur doimiy.",
+      "qisqa": "Dunyo aylanib turadi, / Insonlar yashaб, o'tadi.",
+      "nota": "Falsafiy fikrlar to'plami."
+    },
+    {
+      "id": 18,
+      "sarlavha": "Dehqon",
+      "yil": 1939,
+      "mavzu": ["Mehnat", "Hayot"],
+      "matn": "Dehqon yerni haydaydi,\nDehqon ekib, o'stiradi.\nDehqon mehnat qiladi,\nDehqon non yaratadi.\n\nDehqonning qo'li - oltin qo'l,\nDehqonning mehnati - muqaddas.\nDehqon yerga mehrini beradi,\nYer dehqonga hosil beradi.\n\nDehqon - bu xalq boqar,\nDehqon - bu davlat quruvchi.\nDehqonsiz hayot yo'q,\nDehqonsiz baxt yo'q.\n\nDehqonni hurmat qiling,\nDehqonni qadrlang, arding.\nDehqon mehnati - eng ulug',\nDehqon kasbi - eng sharafli.",
+      "qisqa": "Dehqon yerni haydaydi, / Dehqon ekib, o'stiradi.",
+      "nota": "Dehqon mehnatini ulug'lovchi she'r."
+    },
+    {
+      "id": 19,
+      "sarlavha": "Ona Vatan",
+      "yil": 1943,
+      "mavzu": ["Vatan", "Urush"],
+      "matn": "Ona Vatan, sen muqaddassing,\nOna Vatan, sen azizsan.\nSen uchun jon fido qilamiz,\nSen uchun jang qilamiz.\n\nOna Vatan, seni qo'riqlaymiz,\nOna Vatan, seni asraymiz.\nDushman hech qachon yengolmaydi,\nSen doim erkin bo'lib yashaishing.\n\nOna Vatan, sening o'g'illaring,\nOna Vatan, sening qizlaring,\nHammasi tayyor jangga,\nHammasi tayyor g'alabaga.\n\nOna Vatan, sen yengasan,\nOna Vatan, sen abadiy bo'lasan.\nBiz seni sevamiz chin dildan,\nBiz seni himoya qilamiz jon-jahd bilan.",
+      "qisqa": "Ona Vatan, sen muqaddassing, / Ona Vatan, sen azizsan.",
+      "nota": "Ikkinchi jahon urushi davrida yozilgan."
+    },
+    {
+      "id": 20,
+      "sarlavha": "Kuz",
+      "yil": 1944,
+      "mavzu": ["Tabiat"],
+      "matn": "Kuz keldi, barglar to'kildi,\nDaraxtlar yalingʻochlandi.\nQushlar uchib ketdi janubga,\nTabiat jim bo'lib qoldi.\n\nKuz - bu xayrlashuv fasli,\nKuz - bu xotiralar fasli.\nKuz keldi sariq rangda,\nKuz keldi salqin shamol bilan.\n\nKuz - bu hosil fasli,\nKuz - bu mehnat samarasi.\nDehqonlar yig'ib oldi hosilni,\nOmborda to'la don, g'alla.\n\nKuz o'tadi, qish keladi,\nQish o'tadi, bahor keladi.\nShunday aylanadi fasllar,\nShunday o'tadi umrlar.",
+      "qisqa": "Kuz keldi, barglar to'kildi, / Daraxtlar yalingʻochlandi.",
+      "nota": "Kuz faslining lirik tasviri."
+    },
+    {
+      "id": 21,
+      "sarlavha": "Bog'bon",
+      "yil": 1947,
+      "mavzu": ["Mehnat", "Tabiat"],
+      "matn": "Bog'bon erta turadi,\nBog'bon bog'ga boradi.\nDaraxt ekadi, gul o'stiradi,\nBog'ni go'zal qiladi.\n\nBog'bon - bu san'atkor,\nBog'bon - bu ijodkor.\nBog'bon tabiatni sevadi,\nBog'bon go'zallik yaratadi.\n\nBog'bon sug'oradi daraxtlarni,\nBog'bon parvarish qiladi gullarni.\nBog'bon mehr beradi ularga,\nUlar ham unga meva, gul beradi.\n\nBog'bon mehnati - shirinlik,\nBog'bon kasbi - go'zallik.\nBog'bon yashatadi tabiatni,\nBog'bon boyitadi hayotni.",
+      "qisqa": "Bog'bon erta turadi, / Bog'bon bog'ga boradi.",
+      "nota": "Bog'bonchilik mehnati haqida."
+    },
+    {
+      "id": 22,
+      "sarlavha": "Quyosh",
+      "yil": 1949,
+      "mavzu": ["Tabiat", "Falsafa"],
+      "matn": "Quyosh chiqdi sharqdan,\nNur sochdi har tomonga.\nYoritdi butun olamni,\nBerdi issiqlik, berdi hayot.\n\nQuyosh - bu yorug'lik manbai,\nQuyosh - bu hayot manbai.\nQuyoshsiz dunyo qorong'u,\nQuyoshsiz hayot mumkin emas.\n\nQuyosh har kuni chiqadi,\nQuyosh hech qachon charchamaydi.\nQuyosh yoritar, isitadi,\nQuyosh yashatar, o'stiradi.\n\nQuyosh - bu ulug' ne'mat,\nQuyosh - bu tabiat sovg'asi.\nQuyoshga minnatdorlik bildiring,\nQuyosh nurini qadrlab yashing.",
+      "qisqa": "Quyosh chiqdi sharqdan, / Nur sochdi har tomonga.",
+      "nota": "Quyosh ramzi haqida falsafiy she'r."
+    },
+    {
+      "id": 23,
+      "sarlavha": "Bolalik",
+      "yil": 1951,
+      "mavzu": ["Bola", "Hayot"],
+      "matn": "Bolalik - eng go'zal davr,\nBolalik - eng quvnoq kunlar.\nBolalik - o'yin, kulgu,\nBolalik - befarqlik, baxt.\n\nBolalikda g'am yo'q, tashvish yo'q,\nBolalikda faqat quvonch bor.\nBolalikda do'stlar ko'p,\nBolalikda orzu cheksiz.\n\nBolalik tez o'tadi,\nBolalik qaytib kelmaydi.\nBolalikni esla har doim,\nBolalik xotiralarini saqla.\n\nBolalik - bu hayotning bahori,\nBolalik - bu yurak xotirasi.\nBolalik abadiy yashaydi,\nBolalik hech qachon unutilmaydi.",
+      "qisqa": "Bolalik - eng go'zal davr, / Bolalik - eng quvnoq kunlar.",
+      "nota": "Bolalik davriga nostalgik nazar."
+    },
+    {
+      "id": 24,
+      "sarlavha": "Guliston",
+      "yil": 1953,
+      "mavzu": ["Tabiat", "Vatan"],
+      "matn": "Guliston - mening yurtim,\nGuliston - go'zal diyorim.\nGuliston - gullarga to'la,\nGuliston - baxtga to'la.\n\nGuliston - bu bog'lar, rayhonlar,\nGuliston - bu daryolar, chashmalarp.\nGuliston - bu qushlar sayri,\nGuliston - bu tabiat go'zalligi.\n\nGulistonni sevaman chin qalbdan,\nGuliston uchun yashayman doim.\nGuliston - mening faxrim,\nGuliston - mening baxtim.\n\nGuliston yashasin abadiy,\nGuliston bo'lsin go'zal doim.\nGuliston - bu jannat,\nGuliston - bu hayot.",
+      "qisqa": "Guliston - mening yurtim, / Guliston - go'zal diyorim.",
+      "nota": "Vatan go'zalligini ramziy tasvirlash."
+    },
+    {
+      "id": 25,
+      "sarlavha": "Orzular",
+      "yil": 1956,
+      "mavzu": ["Falsafa", "Hayot"],
+      "matn": "Orzular - bu qanot,\nOrzular - bu yo'l ko'rsatuvchi.\nOrzular bor ekan,\nHayot mazmunli, maqsadli.\n\nOrzu qil katta-katta,\nOrzu qil ulug'-ulug'.\nOrzu seni yetaklar,\nOrzu seni yuksaltiradi.\n\nOrzusiz odam - qushsiz osmon,\nOrzusiz hayot - tuzsiz ovqat.\nOrzu qil, intil, harakat qil,\nOrzuing amalga oshadi.\n\nOrzular - bu kuch beruvchi,\nOrzular - bu yo'l yorituvchi.\nOrzula, yasha, yarat,\nOrzular amalga oshsin.",
+      "qisqa": "Orzular - bu qanot, / Orzular - bu yo'l ko'rsatuvchi.",
+      "nota": "Orzu va maqsad haqida falsafiy she'r."
+    },
+    {
+      "id": 26,
+      "sarlavha": "Ona til",
+      "yil": 1959,
+      "mavzu": ["Vatan", "Falsafa"],
+      "matn": "Ona til - bu muqaddas til,\nOna til - bu xalq tili.\nOna til - bu asrlar ovozi,\nOna til - bu millat ruhi.\n\nOna tilni asrang, arding,\nOna tilni o'rganing to'g'ri.\nOna til - bu boylik,\nOna til - bu izzat.\n\nOna tilsiz millat yo'q,\nOna tilsiz madaniyat yo'q.\nOna til - bu tarix,\nOna til - bu kelajak.\n\nOna tilni sev, hurmat qil,\nOna tilni rivojlantir, boyit.\nOna til - bu Vatan tili,\nOna til - bu ona suti.",
+      "qisqa": "Ona til - bu muqaddas til, / Ona til - bu xalq tili.",
+      "nota": "Ona til muqaddasligi haqida."
+    },
+    {
+      "id": 27,
+      "sarlavha": "Mehr va jazo",
+      "yil": 1961,
+      "mavzu": ["Falsafa", "Hayot"],
+      "matn": "Mehr qilgan - mehr topadi,\nYomonlik qilgan - jazo topadi.\nDunyoda adolat bor,\nHaq-haqiqat g'alaba qiladi.\n\nMehr ek - mehr o'rasan,\nYomonlik ek - yomonlik o'rasan.\nHayot - bu koinot qonuni,\nHech narsa bekorga ketmaydi.\n\nYaxshilik qil, donolik bilan yasha,\nHalollik yo'lidan yur doimo.\nYaxshilik qaytadi yaxshilik bilan,\nYomonlik qaytadi yomonlik bilan.\n\nDunyo - bu sinov joyi,\nDunyo - bu imtihon maydoni.\nTo'g'ri yasha, rost bo'l,\nJazo emas, mukofot topasan.",
+      "qisqa": "Mehr qilgan - mehr topadi, / Yomonlik qilgan - jazo topadi.",
+      "nota": "Hayot falsafasi va adolat haqida."
+    },
+    {
+      "id": 28,
+      "sarlavha": "Keksalik",
+      "yil": 1963,
+      "mavzu": ["Falsafa", "Hayot"],
+      "matn": "Keksalik - bu hikmat davri,\nKeksalik - bu tajriba davri.\nKeksalik - bu orqaga nazar,\nKeksalik - bu xotiralar davri.\n\nKeksalikda yosh kunlar eslanadi,\nKeksalikda o'tmish qaytadi xotiraga.\nKeksalikda farzandlar quvonch beradi,\nKeksalikda nabiralar baxt beradi.\n\nKeksalik - bu haqli dam olish,\nKeksalik - bu hurmat ko'rish.\nKeksa odamlar - bu xalq xazinasi,\nKeksa odamlar - bu donishmandlik manbai.\n\nKeksalarni hurmat qiling,\nKeksalarni qadrlab, e'zozlang.\nKeksalar - bu tirik tarix,\nKeksalar - bu hayot saboqi.",
+      "qisqa": "Keksalik - bu hikmat davri, / Keksalik - bu tajriba davri.",
+      "nota": "Keksalik va donolik haqida."
+    },
+    {
+      "id": 29,
+      "sarlavha": "Samarqand",
+      "yil": 1964,
+      "mavzu": ["Vatan", "Tarix"],
+      "matn": "Samarqand - qadimiy shahar,\nSamarqand - tarixiy shahar.\nSamarqand - Amir Temur shahri,\nSamarqand - Registon shahri.\n\nSamarqand - ko'k gunbazlar,\nSamarqand - oltin masjidlar.\nSamarqand - ilm-fan markazi,\nSamarqand - madaniyat maskani.\n\nSamarqand ko'chalari - tarix,\nSamarqand binolari - san'at.\nSamarqand havosi - afsona,\nSamarqand tuproqi - muqaddas.\n\nSamarqand - O'zbekiston marvaridi,\nSamarqand - Sharq gavhari.\nSamarqand yashasin abadiy,\nSamarqand bo'lsin ulug' doim.",
+      "qisqa": "Samarqand - qadimiy shahar, / Samarqand - tarixiy shahar.",
+      "nota": "Samarqand shahriga bag'ishlangan tarixiy she'r."
+    },
+    {
+      "id": 30,
+      "sarlavha": "Hayot davom etadi",
+      "yil": 1966,
+      "mavzu": ["Falsafa", "Hayot"],
+      "matn": "Hayot davom etadi doimo,\nHayot to'xtamaydi hech qachon.\nAvlodlar almashinadi,\nLekin hayot abadiy.\n\nBiz o'tamiz, lekin qolarar,\nBizdan keyin kelur yangilar.\nBiz ekkan ekanimiz o'sadi,\nBiz qurgan qurilmamiz qoladi.\n\nHayot - bu davomli jarayon,\nHayot - bu cheksiz oqim.\nBiz bir qismi ekanmiz hayotning,\nBiz abadiy ekanmiz xotirarda.\n\nYasha, yarat, qoldur iz,\nYasha, sev, ber hayotga ma'no.\nHayot davom etadi sening orqangdan,\nHayot abadiy - bu haqiqat, bu qonun.",
+      "qisqa": "Hayot davom etadi doimo, / Hayot to'xtamaydi hech qachon.",
+      "nota": "G'afur G'ulomning so'nggi yillarda yozgan falsafiy she'rlaridan biri."
+    }
+  ]
+}

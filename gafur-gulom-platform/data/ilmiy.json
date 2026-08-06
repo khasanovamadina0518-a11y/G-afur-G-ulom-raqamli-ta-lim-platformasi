@@ -1,0 +1,419 @@
+{
+  "maqolalar": [
+    {
+      "id": 1,
+      "sarlavha": "G'afur G'ulom she'riyatida Vatan mavzusi",
+      "mualliflar": ["Karimov A."],
+      "nashriyot": "O'zbekiston adabiyoti va san'ati",
+      "yil": 2020,
+      "til": "o'zbek",
+      "kalitSozlar": ["Vatan", "she'riyat", "vatanparvarlik", "badiiy obraz"],
+      "annotatsiya": "Ushbu maqolada G'afur G'ulom ijodida Vatan mavzusining badiiy talqini va shoirning vatanparvarlik g'oyalari tahlil qilinadi.",
+      "pdfHavola": "#"
+    },
+    {
+      "id": 2,
+      "sarlavha": "'Shum bola' dostonining g'oyaviy-badiiy xususiyatlari",
+      "mualliflar": ["Rahimova M.", "Qodirov S."],
+      "nashriyot": "Fan va turmush",
+      "yil": 2019,
+      "til": "o'zbek",
+      "kalitSozlar": ["doston", "bola obrazi", "sovet davri", "realizm"],
+      "annotatsiya": "Maqolada G'afur G'ulomning mashhur 'Shum bola' dostoni tahlil qilinib, uning g'oyaviy mazmuni va badiiy xususiyatlari ochib berilgan.",
+      "pdfHavola": "#"
+    },
+    {
+      "id": 3,
+      "sarlavha": "G'afur G'ulom she'rlarida tabiat tasvirlari",
+      "mualliflar": ["Yusupova N."],
+      "nashriyot": "Adabiyot va san'at",
+      "yil": 2021,
+      "til": "o'zbek",
+      "kalitSozlar": ["tabiat", "lirika", "badiiy tasvir", "she'riyat"],
+      "annotatsiya": "Tadqiqotda shoirning she'rlarida tabiat tasvirlarining o'rni va ahamiyati, tabiiy manzaralarning badiiy ifodasi ko'rib chiqiladi.",
+      "pdfHavola": "#"
+    },
+    {
+      "id": 4,
+      "sarlavha": "G'afur G'ulomning ijod yo'li",
+      "mualliflar": ["Mahmudov I."],
+      "nashriyot": "Toshkent: Fan",
+      "yil": 2018,
+      "til": "o'zbek",
+      "kalitSozlar": ["biografiya", "ijod bosqichlari", "adabiy meros"],
+      "annotatsiya": "Monografiyada G'afur G'ulomning hayoti va ijod yo'li, uning adabiyotga qo'shgan hissasi keng yoritilgan.",
+      "pdfHavola": "#"
+    },
+    {
+      "id": 5,
+      "sarlavha": "O'zbek türk adabiyotida G'afur G'ulomning o'rni",
+      "mualliflar": ["Ergashev T."],
+      "nashriyot": "Toshkent davlat universiteti",
+      "yil": 2017,
+      "til": "o'zbek",
+      "kalitSozlar": ["o'zbek adabiyoti", "XX asr", "adabiy jarayon"],
+      "annotatsiya": "Maqolada G'afur G'ulomning o'zbek va turkiy adabiyotdagi o'rni, uning ijodining milliy va xalqaro ahamiyati baholanadi.",
+      "pdfHavola": "#"
+    },
+    {
+      "id": 6,
+      "sarlavha": "G'afur G'ulom asarlarida bolalar tarbiyasi",
+      "mualliflar": ["Saidova G."],
+      "nashriyot": "Pedagogika jurnali",
+      "yil": 2022,
+      "til": "o'zbek",
+      "kalitSozlar": ["bolalar adabiyoti", "tarbiya", "axloq"],
+      "annotatsiya": "Maqolada shoirning bolalar uchun yozgan asarlari va ularning tarbiyaviy ahamiyati ko'rib chiqiladi.",
+      "pdfHavola": "#"
+    },
+    {
+      "id": 7,
+      "sarlavha": "Gafur Gulom's Poetry in Russian Translation",
+      "mualliflar": ["Ivanov P."],
+      "nashriyot": "Moscow Literary Review",
+      "yil": 2016,
+      "til": "ingliz",
+      "kalitSozlar": ["translation", "Russian", "poetry"],
+      "annotatsiya": "This article examines the challenges and achievements in translating Gafur Gulom's works into Russian.",
+      "pdfHavola": "#"
+    },
+    {
+      "id": 8,
+      "sarlavha": "G'afur G'ulom va klassik she'riyat an'analari",
+      "mualliflar": ["Normatov U."],
+      "nashriyot": "Sharq yulduzi",
+      "yil": 2023,
+      "til": "o'zbek",
+      "kalitSozlar": ["klassik adabiyot", "an'ana", "modernizm"],
+      "annotatsiya": "Tadqiqotda shoirning klassik adabiyot an'analarini davom ettirishi va yangicha talqin qilishi muhokama qilinadi.",
+      "pdfHavola": "#"
+    },
+    {
+      "id": 9,
+      "sarlavha": "Языковые особенности поэзии Гафура Гуляма",
+      "mualliflar": ["Петров В."],
+      "nashriyot": "Москва: Наука",
+      "yil": 2015,
+      "til": "rus",
+      "kalitSozlar": ["til", "uslub", "she'riy til"],
+      "annotatsiya": "Maqolada G'afur G'ulom she'rlarining til xususiyatlari rus tilida tahlil qilingan.",
+      "pdfHavola": "#"
+    },
+    {
+      "id": 10,
+      "sarlavha": "G'afur G'ulom va folklor",
+      "mualliflar": ["Tursunov O."],
+      "nashriyot": "Folklor tadqiqotlari",
+      "yil": 2024,
+      "til": "o'zbek",
+      "kalitSozlar": ["folklor", "xalq og'zaki ijodi", "maqol"],
+      "annotatsiya": "Ushbu maqolada shoirning folklor unsurlaridan foydalanishi va xalq og'zaki ijodiga munosabati o'rganiladi.",
+      "pdfHavola": "#"
+    }
+    ],
+  "dissertatsiyalar": [
+    {
+      "id": 1,
+      "muallif": "Abdullayev Komil",
+      "sarlavha": "G'afur G'ulom she'riyatida badiiy obraz va ramz",
+      "daraja": "Filologiya fanlari nomzodi",
+      "yil": 2015,
+      "ilmiyRahbar": "prof. Karimov A.",
+      "muassasa": "O'zMU"
+    },
+    {
+      "id": 2,
+      "muallif": "Rahmonova Dildora",
+      "sarlavha": "G'afur G'ulom dostonlarining til xususiyatlari",
+      "daraja": "Filologiya fanlari doktori",
+      "yil": 2018,
+      "ilmiyRahbar": "prof. Mahmudov N.",
+      "muassasa": "O'zDJTU"
+    },
+    {
+      "id": 3,
+      "muallif": "Toshmatov Javohir",
+      "sarlavha": "G'afur G'ulom ijodida bolalar obrazi",
+      "daraja": "Filologiya fanlari nomzodi",
+      "yil": 2020,
+      "ilmiyRahbar": "prof. Yusupova M.",
+      "muassasa": "O'zMU"
+    },
+    {
+      "id": 4,
+      "muallif": "Ergasheva Nigora",
+      "sarlavha": "G'afur G'ulom she'rlarining rus tiliga tarjimasi muammolari",
+      "daraja": "Filologiya fanlari nomzodi",
+      "yil": 2019,
+      "ilmiyRahbar": "prof. Ismoilov X.",
+      "muassasa": "SamDU"
+    },
+    {
+      "id": 5,
+      "muallif": "Karimov Sherzod",
+      "sarlavha": "G'afur G'ulom va XX asr o'zbek adabiyoti",
+      "daraja": "Filologiya fanlari doktori",
+      "yil": 2021,
+      "ilmiyRahbar": "akademik Quronov D.",
+      "muassasa": "O'zFA Til va adabiyot instituti"
+    },
+    {
+      "id": 6,
+      "muallif": "Yunusova Malika",
+      "sarlavha": "G'afur G'ulom she'rlarida metafora va uning funksiyalari",
+      "daraja": "Filologiya fanlari nomzodi",
+      "yil": 2022,
+      "ilmiyRahbar": "prof. Rahimov S.",
+      "muassasa": "BuxDU"
+    },
+    {
+      "id": 7,
+      "muallif": "Olimov Jasur",
+      "sarlavha": "G'afur G'ulom va jahon adabiyoti",
+      "daraja": "Filologiya fanlari nomzodi",
+      "yil": 2023,
+      "ilmiyRahbar": "prof. Karimova N.",
+      "muassasa": "SamDCHTI"
+    },
+    {
+      "id": 8,
+      "muallif": "Saidova Gulnora",
+      "sarlavha": "G'afur G'ulom bolalar adabiyotida",
+      "daraja": "Filologiya fanlari nomzodi",
+      "yil": 2016,
+      "ilmiyRahbar": "prof. Normatov U.",
+      "muassasa": "TDPU"
+    },
+    {
+      "id": 9,
+      "muallif": "Mirzayev Otabek",
+      "sarlavha": "G'afur G'ulom she'riyatida milliy o'zlik",
+      "daraja": "Filologiya fanlari doktori",
+      "yil": 2024,
+      "ilmiyRahbar": "akademik Sodiqov A.",
+      "muassasa": "O'zMU"
+    },
+    {
+      "id": 10,
+      "muallif": "Xolmatova Dildora",
+      "sarlavha": "G'afur G'ulom ijodida tarixiy shaxslar obrazi",
+      "daraja": "Filologiya fanlari nomzodi",
+      "yil": 2017,
+      "ilmiyRahbar": "prof. Tursunov O.",
+      "muassasa": "AndDU"
+    }
+  ]
+,
+  "atamalar": [
+    {
+      "id": 1,
+      "atama": "Aruz",
+      "tarif": "Arab-fors she'riyatidan o'zbek adabiyotiga o'tgan she'r o'lchovi. Qisqa va uzun bo'g'inlarning muayyan tartibda kelishiga asoslangan.",
+      "misol": "G'afur G'ulomning dastlabki she'rlari aruz vazni bilan yozilgan.",
+      "talaffuz": "a-ruz"
+    },
+    {
+      "id": 2,
+      "atama": "G'azal",
+      "tarif": "Klassik sharq she'riyatining eng mashhur janri. Odatda muhabbat, ishq, ayriliq mavzularida yoziladi.",
+      "misol": "G'afur G'ulom ham yoshligida g'azallar yozgan.",
+      "talaffuz": "g'a-zal"
+    },
+    {
+      "id": 3,
+      "atama": "Doston",
+      "tarif": "Katta hajmli she'riy asar. Odatda qahramonlik, tarixiy yoki fantastik voqealarni aks ettiradi.",
+      "misol": "'Shum bola' - G'afur G'ulomning eng mashhur dostoni.",
+      "talaffuz": "dos-ton"
+    },
+    {
+      "id": 4,
+      "atama": "Realizm",
+      "tarif": "Badiiy adabiyotda haqiqatni to'g'ri, real ko'rinishda aks ettirish yo'nalishi.",
+      "misol": "G'afur G'ulom realizm yo'nalishining yirik namoyandasi.",
+      "talaffuz": "re-a-lizm"
+    },
+    {
+      "id": 5,
+      "atama": "Lirika",
+      "tarif": "She'riyatning his-tuyg'ular, shaxsiy kechinmalarni ifodalash bilan bog'liq turi.",
+      "misol": "G'afur G'ulomning lirik she'rlari sevgi, vatan mavzularida.",
+      "talaffuz": "li-ri-ka"
+    },
+    {
+      "id": 6,
+      "atama": "Badiiy obraz",
+      "tarif": "Adabiy asarda yaratilgan hayotiy hodisa, shaxs yoki predmetning badiiy ifodasi.",
+      "misol": "'Shum bola' dostonidagi bosh qahramon - yorqin badiiy obraz.",
+      "talaffuz": "ba-di-iy o-braz"
+    },
+    {
+      "id": 7,
+      "atama": "Ruboiy",
+      "tarif": "To'rt misradan iborat she'riy shakl. Odatda falsafiy mazmunda bo'ladi.",
+      "misol": "G'afur G'ulomning bir qator ruboiylari bor.",
+      "talaffuz": "ru-bo-iy"
+    },
+    {
+      "id": 8,
+      "atama": "Qit'a",
+      "tarif": "Yaxlit mavzuga bag'ishlangan, to'rt yoki undan ortiq misradan iborat she'r.",
+      "misol": "G'afur G'ulomning ko'pgina qit'alari mavjud.",
+      "talaffuz": "qit-'a"
+    },
+    {
+      "id": 9,
+      "atama": "Metaphora",
+      "tarif": "Ko'chma ma'noda qo'llanadigan so'z yoki ifoda. Bir narsani boshqa narsa orqali ifodalash.",
+      "misol": "G'afur G'ulom she'rlarida boy metaphoralar uchraydi.",
+      "talaffuz": "me-ta-fo-ra"
+    },
+    {
+      "id": 10,
+      "atama": "Epitet",
+      "tarif": "Predmet yoki hodisaning belgisini ta'kidlab ko'rsatuvchi so'z.",
+      "misol": "'Go'zal Vatan', 'mehribon ona' - G'afur G'ulom ishlatgan epitetlar.",
+      "talaffuz": "e-pi-tet"
+    },
+    {
+      "id": 11,
+      "atama": "Talmeh",
+      "tarif": "Tarixiy voqea, shaxs yoki asarga ishora qilish.",
+      "misol": "G'afur G'ulom she'rlarida tarixiy voqealarga talmehlar bor.",
+      "talaffuz": "tal-meh"
+    },
+    {
+      "id": 12,
+      "atama": "Matla",
+      "tarif": "G'azalning birinchi baytı (ikki misrasi).",
+      "misol": "G'afur G'ulom g'azallarida matla alohida ahamiyatga ega.",
+      "talaffuz": "mat-la"
+    },
+    {
+      "id": 13,
+      "atama": "Radif",
+      "tarif": "She'r misralarining oxirida takrorlanadigan so'z yoki so'z birikmasi.",
+      "misol": "G'afur G'ulom she'rlarida radif ko'p ishlatilgan.",
+      "talaffuz": "ra-dif"
+    },
+    {
+      "id": 14,
+      "atama": "Qofiya",
+      "tarif": "She'r misralarining oxirida keluvchi uyg'un tovushlar.",
+      "misol": "G'afur G'ulom she'rlarida turli qofiya turlari uchraydi.",
+      "talaffuz": "qo-fi-ya"
+    },
+    {
+      "id": 15,
+      "atama": "Muxammas",
+      "tarif": "Besh misradan iborat she'riy shakl.",
+      "misol": "G'afur G'ulomning ba'zi she'rlari muxammas shaklida.",
+      "talaffuz": "mu-xam-mas"
+    },
+    {
+      "id": 16,
+      "atama": "Murabba",
+      "tarif": "To'rt misradan iborat she'riy shakl. Barcha misralari o'zaro qofiyalashadi.",
+      "misol": "Klassik she'riyatda keng tarqalgan shakl.",
+      "talaffuz": "mu-rab-ba"
+    },
+    {
+      "id": 17,
+      "atama": "Tuyuq",
+      "tarif": "To'rt misradan iborat qisqa she'riy shakl. Ko'pincha hikmatli mazmunda.",
+      "misol": "G'afur G'ulomning ba'zi tuyuqlari bor.",
+      "talaffuz": "tu-yuq"
+    },
+    {
+      "id": 18,
+      "atama": "Barmoq",
+      "tarif": "Aruz vaznida uzun bo'g'inlarning muayyan ketma-ketligi.",
+      "misol": "She'r vaznini aniqlashda barmoqlar muhim.",
+      "talaffuz": "bar-moq"
+    },
+    {
+      "id": 19,
+      "atama": "Simvol",
+      "tarif": "Chuqur ma'noni anglatuvchi belgi yoki obraz.",
+      "misol": "G'afur G'ulom she'rlarida ko'plab simvollar ishlatilgan.",
+      "talaffuz": "sim-vol"
+    },
+    {
+      "id": 20,
+      "atama": "Allegoria",
+      "tarif": "Bir narsani boshqa narsa orqali ramziy tarzda ifodalash.",
+      "misol": "Dostonlarda allegoriya ko'p uchraydi.",
+      "talaffuz": "al-le-go-ri-ya"
+    },
+    {
+      "id": 21,
+      "atama": "Antiteza",
+      "tarif": "Qarama-qarshi fikr va obrazlarni qo'shib ko'rsatish.",
+      "misol": "'Yaxshilik va yomonlik' - antiteza misoli.",
+      "talaffuz": "an-ti-te-za"
+    },
+    {
+      "id": 22,
+      "atama": "Parallelizm",
+      "tarif": "She'r misralarining o'xshash tuzilishi.",
+      "misol": "Folklorda parallelizm ko'p uchraydi.",
+      "talaffuz": "pa-ral-le-lizm"
+    },
+    {
+      "id": 23,
+      "atama": "Ritm",
+      "tarif": "She'rdagi tovushlarning muntazam takrorlanishi.",
+      "misol": "G'afur G'ulom she'rlarida ritm aniq seziladi.",
+      "talaffuz": "ritm"
+    },
+    {
+      "id": 24,
+      "atama": "Strofa",
+      "tarif": "She'rning bir necha misradan iborat qismi.",
+      "misol": "She'r bir necha strofalardan tashkil topadi.",
+      "talaffuz": "stro-fa"
+    },
+    {
+      "id": 25,
+      "atama": "Personifikatsiya",
+      "tarif": "Jonsiz narsalarga inson xususiyatlarini berish.",
+      "misol": "'Shamol kulib yubordi' - personifikatsiya.",
+      "talaffuz": "per-so-ni-fi-ka-tsi-ya"
+    },
+    {
+      "id": 26,
+      "atama": "Hiperbola",
+      "tarif": "Narsani haddan tashqari oshirib ko'rsatish.",
+      "misol": "'Ming yil kutdim' - hiperbola misoli.",
+      "talaffuz": "gi-per-bo-la"
+    },
+    {
+      "id": 27,
+      "atama": "Taqlid",
+      "tarif": "Tovushlarni so'zlar orqali taqlid qilish.",
+      "misol": "'Shar-shar', 'gup-gup' - taqlid so'zlar.",
+      "talaffuz": "taq-lid"
+    },
+    {
+      "id": 28,
+      "atama": "Ironiya",
+      "tarif": "Aytilgan so'zning teskari ma'nosi.",
+      "misol": "Tanqidiy maqsadlarda ironiya ishlatiladi.",
+      "talaffuz": "i-ro-ni-ya"
+    },
+    {
+      "id": 29,
+      "atama": "Kompozitsiya",
+      "tarif": "Asar qismlarining tartibli tuzilishi.",
+      "misol": "Roman kompozitsiyasi murakkab bo'ladi.",
+      "talaffuz": "kom-po-zi-tsi-ya"
+    },
+    {
+      "id": 30,
+      "atama": "Syujet",
+      "tarif": "Asardagi voqealar ketma-ketligi.",
+      "misol": "'Shum bola' dostonining syujeti qiziqarli.",
+      "talaffuz": "syu-jet"
+    }
+  ]
+}

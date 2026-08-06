@@ -1152,7 +1152,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     // Load quiz data
     try {
-        const response = await fetch('../data/quiz.json');
+        const response = await fetch((window.platformUrl || function (r) { return r; })('data/quiz.json'));
         const data = await response.json();
         quizData = data.savollar;
         console.log(`${quizData.length} ta savol yuklandi`);

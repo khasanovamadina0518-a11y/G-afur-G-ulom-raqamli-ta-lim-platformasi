@@ -1,0 +1,273 @@
+/*
+ * Design System Theme Bridge
+ * Aligned with main.css brand tokens.
+ * Keeps ds-* utilities without overriding platform palette.
+ */
+
+:root {
+  /* Bridge tokens used by ds-* components → brand system */
+  --background: var(--bg);
+  --foreground: var(--text);
+
+  --card: var(--card-bg);
+  --card-foreground: var(--text);
+
+  --primary-foreground: #f7f8fa;
+  --secondary-foreground: #ffffff;
+
+  --muted: #e8ecf1;
+  --muted-foreground: var(--text-light);
+
+  --accent: rgba(201, 168, 76, 0.14);
+  --accent-foreground: var(--primary);
+
+  --destructive: var(--error);
+  --destructive-foreground: #ffffff;
+
+  --input: var(--border);
+  --ring: rgba(201, 168, 76, 0.45);
+
+  /* Brand aliases (do not redefine --primary/--secondary/--radius from main.css) */
+  --brand-blue: #1a3c5e;
+  --brand-blue-light: #2a5a8a;
+  --brand-gold: #c9a84c;
+}
+
+body.dark-mode {
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--card-bg);
+  --card-foreground: var(--text);
+  --muted: #1c2c3c;
+  --muted-foreground: var(--text-light);
+  --accent: rgba(201, 168, 76, 0.14);
+  --accent-foreground: var(--secondary-light);
+  --input: var(--border);
+  --ring: rgba(201, 168, 76, 0.4);
+  --primary-foreground: #0e1620;
+  --secondary-foreground: #0e1620;
+}
+
+/*
+ * Button Component (ds-*)
+ * Optional utility classes — not required by current pages
+ */
+
+.ds-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-family: var(--font-body, inherit);
+  transition: var(--transition);
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  height: 2.5rem;
+  padding: 0 1rem;
+  font-size: 0.875rem;
+}
+
+.ds-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.ds-button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.ds-button:active {
+  transform: translateY(0);
+}
+
+.ds-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.ds-button--secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  border-color: var(--secondary);
+}
+
+.ds-button--destructive {
+  background-color: var(--destructive);
+  color: var(--destructive-foreground);
+}
+
+.ds-button--outline {
+  background-color: transparent;
+  color: var(--foreground);
+  border-color: var(--border);
+}
+
+.ds-button--outline:hover {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.ds-button--ghost {
+  background-color: transparent;
+  color: var(--foreground);
+  border-color: transparent;
+}
+
+.ds-button--ghost:hover {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.ds-button--sm {
+  height: 2rem;
+  padding: 0 0.75rem;
+  font-size: 0.8125rem;
+}
+
+.ds-button--lg {
+  height: 2.75rem;
+  padding: 0 2rem;
+  font-size: 1rem;
+}
+
+.ds-button--icon {
+  width: 2.5rem;
+  padding: 0;
+}
+
+.ds-button--icon.ds-button--sm {
+  width: 2rem;
+}
+
+.ds-button--icon.ds-button--lg {
+  width: 2.75rem;
+}
+
+.ds-card {
+  background-color: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  transition: var(--transition);
+}
+
+.ds-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.ds-card-header {
+  margin-bottom: 1rem;
+}
+
+.ds-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-family: var(--font-display, inherit);
+  color: var(--foreground);
+  margin: 0;
+}
+
+.ds-card-description {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  margin: 0.5rem 0 0;
+}
+
+.ds-card-content {
+  line-height: 1.65;
+}
+
+.ds-card-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Soft chrome helpers used by homepage dark rules */
+body.dark-mode .ds-card {
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+body.dark-mode .site-header {
+  background: var(--card-bg);
+}
+
+body.dark-mode .section-card,
+body.dark-mode .stat-card {
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+/* ===================================
+   Phase 12.1 — Page module token bridge
+   Maps page-scoped aliases to brand tokens
+   =================================== */
+html body.page-dashboard,
+html body.page-yutuqlar,
+html body.page-hayot,
+html body.page-ilmiy,
+html body.page-talim,
+html body.page-testlar,
+html body.page-video,
+html body.page-asarlar,
+html body.page-ai,
+html body.page-interaktiv {
+  --dash-royal: var(--accent-action);
+  --ach-royal: var(--accent-action);
+  --hy-royal: var(--accent-action);
+  --ilm-royal: var(--accent-action);
+  --tl-royal: var(--accent-action);
+  --test-royal: var(--accent-action);
+  --video-royal: var(--accent-action);
+  --ai-royal: var(--accent-action);
+  --dash-border: var(--gray-200);
+  --ach-border: var(--gray-200);
+  --hy-border: var(--gray-200);
+  --ilm-border: var(--gray-200);
+  --tl-border: var(--gray-200);
+  --test-border: var(--gray-200);
+  --video-border: var(--gray-200);
+  --ai-border: var(--gray-200);
+  --dash-muted: var(--gray-500);
+  --ach-muted: var(--gray-500);
+  --hy-muted: var(--gray-500);
+  --ilm-muted: var(--gray-500);
+  --tl-muted: var(--gray-500);
+  --test-muted: var(--gray-500);
+  --video-muted: var(--gray-500);
+  --ai-muted: var(--gray-500);
+  --dash-text: var(--gray-900);
+  --ach-text: var(--gray-900);
+  --hy-text: var(--gray-900);
+  --ilm-text: var(--gray-900);
+  --tl-text: var(--gray-900);
+  --test-text: var(--gray-900);
+  --video-text: var(--gray-900);
+  --ai-text: var(--gray-900);
+  --dash-shadow-soft: var(--shadow-sm);
+  --ach-shadow-soft: var(--shadow-sm);
+  --hy-shadow-soft: var(--shadow-sm);
+  --ilm-shadow-soft: var(--shadow-sm);
+  --tl-shadow-soft: var(--shadow-sm);
+  --test-shadow-soft: var(--shadow-sm);
+  --video-shadow-soft: var(--shadow-sm);
+  --ai-shadow-soft: var(--shadow-sm);
+  --dash-shadow: var(--shadow);
+  --ach-shadow: var(--shadow);
+  background: var(--surface-muted);
+}

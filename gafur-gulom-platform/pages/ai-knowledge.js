@@ -4,15 +4,17 @@
  * No external API. Never invents content — only returns matched JSON text.
  */
 
+const resolvePlatformPath = window.platformUrl || function (relativePath) { return relativePath; };
+
 const KB_PATHS = {
-    hayot: '../data/hayot.json',
-    sherlar: '../data/sherlar.json',
-    dostonlar: '../data/dostonlar.json',
-    ilmiy: '../data/ilmiy.json',
-    quiz: '../data/quiz.json'
+    hayot: resolvePlatformPath('data/hayot.json'),
+    sherlar: resolvePlatformPath('data/sherlar.json'),
+    dostonlar: resolvePlatformPath('data/dostonlar.json'),
+    ilmiy: resolvePlatformPath('data/ilmiy.json'),
+    quiz: resolvePlatformPath('data/quiz.json')
 };
 
-const SERVICE_SCRIPT = '../assets/js/platform-data-service.js';
+const SERVICE_SCRIPT = resolvePlatformPath('assets/js/platform-data-service.js');
 
 const STOP_WORDS = new Set([
     'va', 'yoki', 'bu', 'shu', 'u', 'men', 'siz', 'ber', 'haqida', 'nima', 'qanday',

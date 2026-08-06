@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G'afur G'ulom asarlari - Ta'limiy Platforma</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../assets/css/main.css?v=7">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    
+    <style>
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #1a3c5e 0%, #2a5a8a 100%);
+            color: white;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Filter Panel - Sticky */
+        .filter-panel {
+            position: sticky;
+            top: 70px;
+            background: white;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .filter-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--secondary);
+        }
+        
+        .filter-btn.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+        
+        .year-select {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            cursor: pointer;
+            background: white;
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .view-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: white;
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+        
+        .view-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .results-count {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* Poems Grid */
+        .poems-container {
+            padding: 2rem;
+        }
+        
+        .poems-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .poems-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+        
+        .poem-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .poem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .poem-badges {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .poem-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .poem-year {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .poem-excerpt {
+            font-style: italic;
+            color: var(--text);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .poem-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .favorite-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .favorite-btn:hover {
+            transform: scale(1.2);
+        }
+        
+        .favorite-btn.active {
+            color: #e74c3c;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            max-width: 900px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: var(--radius);
+            padding: 4rem;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--error);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+        
+        .modal-header {
+            margin-bottom: 2rem;
+        }
+        
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .modal-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            line-height: 2.2;
+            color: #2d3748;
+            white-space: pre-line;
+            margin-bottom: 2rem;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .modal-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .modal-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .modal-btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Tabs */
+        .tabs-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+        
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+        
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--secondary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        /* Dostonlar */
+        .dostonlar-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        .doston-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .doston-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .poems-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+            
+            .dostonlar-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs-nav {
+                overflow-x: auto;
+            }
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .modal-text, .modal-text * {
+                visibility: visible;
+            }
+            .modal-text {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+        
+        /* Share Notification */
+        .share-notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .share-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .share-notification.error {
+            background: var(--error);
+        }
+    </style>
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>G'afur G'ulom asarlari</h1>
+            <p>She'rlar, dostonlar va hikoyalar to'plami</p>
+        </div>
+    </section>
+
+    <!-- Tabs -->
+    <section class="poems-container">
+        <div class="container">
+            <div class="tabs-nav">
+                <button class="tab-btn active" data-tab="sherlar">She'rlar</button>
+                <button class="tab-btn" data-tab="dostonlar">Dostonlar</button>
+            </div>
+
+            <!-- She'rlar Tab -->
+            <div class="tab-content active" data-tab="sherlar">
+                <!-- Filter Panel -->
+                <div class="filter-panel">
+                    <div class="filter-row">
+                        <input type="text" class="search-input" id="search-input" placeholder="She'r qidirish...">
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="grid" title="Panjara">⊞</button>
+                            <button class="view-btn" data-view="list" title="Ro'yxat">☰</button>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <button class="filter-btn active" data-mavzu="all">Barchasi</button>
+                            <button class="filter-btn" data-mavzu="Vatan">Vatan</button>
+                            <button class="filter-btn" data-mavzu="Mehnat">Mehnat</button>
+                            <button class="filter-btn" data-mavzu="Tabiat">Tabiat</button>
+                            <button class="filter-btn" data-mavzu="Muhabbat">Muhabbat</button>
+                            <button class="filter-btn" data-mavzu="Sevgi">Sevgi</button>
+                            <button class="filter-btn" data-mavzu="Bilim">Bilim</button>
+                            <button class="filter-btn" data-mavzu="favorites">❤️ Sevimlilar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-row">
+                        <select class="year-select" id="year-filter">
+                            <option value="all">Barcha yillar</option>
+                            <option value="1920-1930">1920-1930</option>
+                            <option value="1930-1940">1930-1940</option>
+                            <option value="1940-1950">1940-1950</option>
+                            <option value="1950-1966">1950-1966</option>
+                        </select>
+                        <span class="results-count" id="results-count">0 ta she'r topildi</span>
+                    </div>
+                </div>
+
+                <!-- Poems Grid -->
+                <div class="poems-grid" id="poems-grid">
+                    <!-- Poems will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Dostonlar Tab -->
+            <div class="tab-content" data-tab="dostonlar">
+                <div class="dostonlar-grid" id="dostonlar-grid">
+                    <div class="doston-card">
+                        <h3>Yulduz</h3>
+                        <p class="poem-year">1935</p>
+                        <p>Yulduz ismli qizning hayoti haqida doston. G'afur G'ulomning eng mashhur asarlaridan biri.</p>
+                        <button class="btn-primary" style="margin-top: 1rem;">O'qish</button>
+                    </div>
+                    <div class="doston-card">
+                        <h3>Mening o'g'rigim</h3>
+                        <p class="poem-year">1940</p>
+                        <p>Bolalar uchun yozilgan qiziqarli doston. Tarbiyaviy ahamiyatga ega.</p>
+                        <button class="btn-primary" style="margin-top: 1rem;">O'qish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="poem-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">×</button>
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title"></h2>
+                <div class="modal-meta">
+                    <span class="poem-year" id="modal-year"></span>
+                    <div id="modal-badges"></div>
+                </div>
+            </div>
+            <div class="modal-text" id="modal-text"></div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" id="share-btn">🔗 Ulashish</button>
+                <button class="modal-btn modal-btn-primary" id="copy-btn">📋 Nusxa olish</button>
+                <button class="modal-btn modal-btn-primary" id="print-btn">🖨️ Chop etish</button>
+                <button class="modal-btn modal-btn-primary" id="favorite-modal-btn">❤️ Sevimlilar</button>
+                <button class="modal-btn modal-btn-secondary" id="close-btn">Yopish</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script>
+        // INLINE DARK MODE
+        window.toggleDarkMode = function() {
+            const body = document.body;
+            const btn = document.getElementById('darkBtn');
+            if (!btn) return;
+            
+            const isDark = body.classList.toggle('dark-mode');
+            btn.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                const btn = document.getElementById('darkBtn');
+                if (btn) btn.textContent = '☀️';
+            }
+        });
+    </script>
+    <script src="../components/header.js?v=8"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../assets/js/data.js?v=8"></script>
+    <script src="../assets/js/app.js?v=8"></script>
+    <script src="asarlar-page.js?v=8"></script>
+</body>
+</html>

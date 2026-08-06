@@ -1,0 +1,520 @@
+/* ===================================
+   G'afur G'ulom — Design System Foundation
+   Phase 1: Visual tokens (palette, type, spacing)
+   =================================== */
+
+/* ===================================
+   Design Tokens
+   =================================== */
+:root {
+    /* Brand identity — navy blue + elegant gold (university digital library) */
+    --primary: #1a3c5e;
+    --primary-light: #2a5a8a;
+    --primary-dark: #0f2438;
+    --secondary: #c9a84c;
+    --secondary-light: #d4b865;
+    --secondary-dark: #a88b35;
+
+    --bg: #f6f8fb;
+    --bg-elevated: #ffffff;
+    --card-bg: #ffffff;
+    --text: #2d2d2d;
+    --text-light: #666666;
+    --text-inverse: #ffffff;
+    --border: #e0e0e0;
+    --border-strong: #cfd6de;
+
+    --success: #4caf50;
+    --warning: #ff9800;
+    --error: #f44336;
+    --info: #2a5a8a;
+
+    /* Typography — brand fonts */
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+
+    --fs-xs: 0.8125rem;
+    --fs-sm: 0.875rem;
+    --fs-base: 1rem;
+    --fs-md: 1.125rem;
+    --fs-lg: 1.25rem;
+    --fs-xl: 1.5rem;
+    --fs-2xl: 1.875rem;
+    --fs-3xl: 2.375rem;
+    --fs-4xl: 3rem;
+    --fs-5xl: 3.75rem;
+
+    --lh-tight: 1.2;
+    --lh-snug: 1.35;
+    --lh-normal: 1.65;
+    --lh-relaxed: 1.8;
+
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+
+    /* Spacing scale */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-7: 2rem;
+    --space-8: 2.5rem;
+    --space-9: 3rem;
+    --space-10: 4rem;
+    --space-11: 5rem;
+    --space-12: 6rem;
+
+    /* Layout */
+    --container-sm: 720px;
+    --container-md: 960px;
+    --container-lg: 1200px;
+    --container-xl: 1400px;
+    --container-pad: var(--space-7);
+    --section-pad-y: var(--space-10);
+    --header-max: var(--container-xl);
+
+    /* Radius */
+    --radius-sm: 6px;
+    --radius: 10px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+
+    /* Shadows — single soft layers, no glow stacks */
+    --shadow-xs: 0 1px 2px rgba(26, 60, 94, 0.05);
+    --shadow-sm: 0 2px 8px rgba(26, 60, 94, 0.06);
+    --shadow: 0 4px 18px rgba(26, 60, 94, 0.08);
+    --shadow-md: 0 8px 28px rgba(26, 60, 94, 0.1);
+    --shadow-lg: 0 16px 40px rgba(26, 60, 94, 0.12);
+
+    /* Motion */
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --duration-fast: 150ms;
+    --duration: 250ms;
+    --duration-slow: 400ms;
+    --transition: background-color var(--duration) var(--ease),
+                  color var(--duration) var(--ease),
+                  border-color var(--duration) var(--ease),
+                  box-shadow var(--duration) var(--ease),
+                  transform var(--duration) var(--ease),
+                  opacity var(--duration) var(--ease);
+
+    /* Focus */
+    --focus-ring: 0 0 0 3px rgba(201, 168, 76, 0.35);
+
+    /* Neutral scale — shared across page modules */
+    --gray-50: #f8f9fb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-700: #374151;
+    --gray-900: #111827;
+
+    /* Unified surfaces & actions */
+    --surface-page: var(--bg);
+    --surface-muted: var(--gray-100);
+    --surface-subtle: var(--gray-50);
+    --accent-action: var(--primary);
+    --accent-action-hover: var(--primary-light);
+    --accent-link: var(--primary);
+    --accent-highlight: var(--secondary);
+
+    /* Control rhythm */
+    --control-height-sm: 2.125rem;
+    --control-height-md: 2.625rem;
+    --control-height-lg: 2.75rem;
+    --icon-btn-size: var(--control-height-md);
+    --app-header-height: 68px;
+}
+
+/* Dark Mode Variables — same class contract (body.dark-mode) */
+body.dark-mode {
+    --bg: #0f1923;
+    --bg-elevated: #1a2d3d;
+    --card-bg: #1a2d3d;
+    --text: #e8e0d0;
+    --text-light: #a89f91;
+    --text-inverse: #ffffff;
+    --primary: #2a5f8f;
+    --primary-light: #3a7faf;
+    --primary-dark: #1a3c5e;
+    --secondary: #c9a84c;
+    --secondary-light: #d4b865;
+    --secondary-dark: #a88b35;
+    --border: #2d3f4f;
+    --border-strong: #3a4f64;
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.25);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.28);
+    --shadow: 0 4px 18px rgba(0, 0, 0, 0.32);
+    --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.36);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.42);
+
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+/* ===================================
+   Global Reset
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ===================================
+   Base
+   =================================== */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--app-header-height) + var(--space-4));
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-normal);
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background-color var(--duration) var(--ease),
+                color var(--duration) var(--ease);
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ===================================
+   Typography
+   =================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-tight);
+    margin-bottom: var(--space-4);
+    color: var(--primary);
+    letter-spacing: -0.02em;
+}
+
+h1 { font-size: var(--fs-5xl); }
+h2 { font-size: var(--fs-3xl); }
+h3 { font-size: var(--fs-xl); letter-spacing: -0.015em; }
+h4 { font-size: var(--fs-lg); }
+h5 { font-size: var(--fs-md); }
+h6 { font-size: var(--fs-base); font-weight: var(--fw-semibold); }
+
+p {
+    margin-bottom: var(--space-4);
+    color: var(--text);
+    max-width: 70ch;
+}
+
+strong, b { font-weight: var(--fw-semibold); }
+em, i { font-style: italic; }
+
+/* ===================================
+   Links
+   =================================== */
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--secondary-dark);
+}
+
+a:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: var(--radius-sm);
+}
+
+/* ===================================
+   Native buttons (base)
+   =================================== */
+button:not([class]) {
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    font-weight: var(--fw-medium);
+    padding: 0.875rem 1.75rem;
+    min-height: var(--control-height-lg);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    background-color: var(--accent-action);
+    color: var(--text-inverse);
+}
+
+button:not([class]):hover {
+    background-color: var(--accent-action-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+button:not([class]):active {
+    transform: translateY(0);
+}
+
+button:not([class]):focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+button:not([class]):disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ===================================
+   Lists / Images
+   =================================== */
+ul, ol {
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-7);
+}
+
+li { margin-bottom: var(--space-2); }
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ===================================
+   Hero (shared class — layout unchanged)
+   =================================== */
+.hero {
+    background: linear-gradient(145deg, var(--primary-dark) 0%, var(--primary) 48%, var(--primary-light) 100%);
+    color: var(--text-inverse);
+    padding: var(--space-12) var(--container-pad) var(--space-11);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 60% at 20% 20%, rgba(201, 168, 76, 0.14), transparent 55%),
+        radial-gradient(ellipse 70% 50% at 90% 80%, rgba(255, 255, 255, 0.06), transparent 50%);
+    opacity: 1;
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: var(--container-sm);
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: var(--fs-5xl);
+    color: var(--text-inverse);
+    margin-bottom: var(--space-4);
+    text-shadow: none;
+}
+
+.hero-subtitle {
+    font-family: var(--font-body);
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-regular);
+    margin-bottom: var(--space-2);
+    opacity: 0.92;
+    letter-spacing: 0;
+}
+
+.hero-years {
+    font-size: var(--fs-md);
+    color: var(--secondary-light);
+    margin-bottom: var(--space-7);
+    font-weight: var(--fw-semibold);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ===================================
+   Sections
+   =================================== */
+section {
+    padding: var(--section-pad-y) var(--container-pad);
+}
+
+.quick-links {
+    background-color: var(--bg);
+}
+
+.featured-poems {
+    background-color: var(--card-bg);
+}
+
+/* ===================================
+   Utility Classes (existing names)
+   =================================== */
+.text-center { text-align: center; }
+.text-light { color: var(--text-light); }
+
+.mt-1 { margin-top: var(--space-2); }
+.mt-2 { margin-top: var(--space-4); }
+.mt-3 { margin-top: var(--space-6); }
+.mt-4 { margin-top: var(--space-7); }
+
+.mb-1 { margin-bottom: var(--space-2); }
+.mb-2 { margin-bottom: var(--space-4); }
+.mb-3 { margin-bottom: var(--space-6); }
+.mb-4 { margin-bottom: var(--space-7); }
+
+.p-1 { padding: var(--space-2); }
+.p-2 { padding: var(--space-4); }
+.p-3 { padding: var(--space-6); }
+.p-4 { padding: var(--space-7); }
+
+/* ===================================
+   Scrollbar / Selection / Focus
+   =================================== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-light);
+}
+
+::selection {
+    background-color: rgba(201, 168, 76, 0.3);
+    color: var(--text);
+}
+
+::-moz-selection {
+    background-color: rgba(201, 168, 76, 0.3);
+    color: var(--text);
+}
+
+:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+/* ===================================
+   Theme transition helpers
+   =================================== */
+body,
+.card,
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.site-header,
+.site-footer {
+    transition: background-color var(--duration) var(--ease),
+                color var(--duration) var(--ease),
+                border-color var(--duration) var(--ease),
+                box-shadow var(--duration) var(--ease);
+}
+
+/* Preserve existing system-preference dark tokens (no JS change) */
+@media (prefers-color-scheme: dark) {
+    body:not(.light-mode):not(.dark-mode) {
+        --bg: #0f1923;
+        --bg-elevated: #1a2d3d;
+        --card-bg: #1a2d3d;
+        --text: #e8e0d0;
+        --text-light: #a89f91;
+        --primary: #2a5f8f;
+        --primary-light: #3a7faf;
+        --border: #2d3f4f;
+        --shadow: 0 4px 18px rgba(0, 0, 0, 0.32);
+        background-color: var(--bg);
+        color: var(--text);
+    }
+}
+
+/* Dark mode toggle — keep class name; refined surface */
+.dark-mode-toggle {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--fs-lg);
+    transition: var(--transition);
+    color: var(--text);
+}
+
+.dark-mode-toggle:hover {
+    transform: translateY(-1px);
+    border-color: var(--secondary);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ===================================
+   Performance / A11y
+   =================================== */
+.card:hover,
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-outline:hover,
+.quiz-answer-card:hover,
+.game-card:hover,
+.article-card:hover {
+    will-change: transform;
+}
+
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity var(--duration) var(--ease);
+}
+
+img[loading="lazy"].loaded {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

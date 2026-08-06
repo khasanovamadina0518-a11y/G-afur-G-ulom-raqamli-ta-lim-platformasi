@@ -1,0 +1,20 @@
+{
+  "asarlar": [
+    {
+      "id": 1,
+      "nomi": "Shum bola",
+      "janr": "Qissa",
+      "yili": 1936,
+      "muallif": "G'afur G'ulom",
+      "qisqacha": "G'afur G'ulomning bolalar hayoti va sarguzashtlarini aks ettiruvchi mashhur qissasi.",
+      "rasm": "assets/images/asarlar/shum-bola.jpg",
+      "sahifa": "pages/asarlar.html?id=1",
+      "kalitSozlar": [
+        "qissa",
+        "bolalar",
+        "sarguzasht",
+        "adabiyot"
+      ]
+    }
+  ]
+}

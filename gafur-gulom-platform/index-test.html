@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="G'afur G'ulom - O'zbek adabiyotining buyuk shoiri va yozuvchisi haqida to'liq ta'limiy platforma. She'rlar, hayot tarixi, interaktiv o'yinlar va ilmiy manbalar.">
+    <meta name="keywords" content="G'afur G'ulom, she'rlar, o'zbek adabiyoti, doston, Shum bola, ta'lim, interaktiv o'yin, viktorina">
+    <meta name="author" content="G'afur G'ulom Ta'limiy Platformasi">
+    <link rel="canonical" href="https://gafurgulom.uz/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gafurgulom.uz/">
+    <meta property="og:title" content="G'afur G'ulom - Ta'limiy Platforma">
+    <meta property="og:description" content="O'zbek adabiyotining buyuk shoiri G'afur G'ulom haqida to'liq ta'limiy platforma">
+    <meta property="og:image" content="https://gafurgulom.uz/assets/images/gafur-gulom.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://gafurgulom.uz/">
+    <meta property="twitter:title" content="G'afur G'ulom - Ta'limiy Platforma">
+    <meta property="twitter:description" content="O'zbek adabiyotining buyuk shoiri G'afur G'ulom haqida to'liq ta'limiy platforma">
+    <meta property="twitter:image" content="https://gafurgulom.uz/assets/images/gafur-gulom.jpg">
+    
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json?v=3">
+    <meta name="theme-color" content="#c9a84c">
+    <link rel="apple-touch-icon" href="assets/images/icon-192x192.png">
+    
+    <title>G'afur G'ulom - Ta'limiy Platforma</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/main.css?v=7">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <style>
+        /* Hero Section Styles */
+        .hero-main {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a3c5e 0%, #2a5a8a 100%);
+            display: flex;
+            align-items: center;
+            padding: 80px 2rem 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><text x="20" y="60" font-size="60" opacity="0.05" fill="white">📖</text></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-main .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .hero-left {
+            animation: fadeInLeft 0.8s ease-out;
+        }
+        
+        .hero-main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+        
+        .hero-main-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .hero-main-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .hero-right {
+            display: flex;
+            justify-content: center;
+            animation: fadeInRight 0.8s ease-out;
+        }
+        
+        .hero-portrait {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 8px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            object-fit: cover;
+            object-position: 65% 5%;
+            transition: transform 0.3s ease;
+        }
+        
+        .hero-portrait:hover {
+            transform: scale(1.05);
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Statistics Panel */
+        .stats-panel {
+            background: white;
+            padding: 3rem 2rem;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: var(--bg);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        /* Sections Grid */
+        .sections-grid {
+            padding: 80px 2rem;
+            background: var(--bg);
+        }
+        
+        .sections-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .section-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .section-icon {
+            font-size: 64px;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .section-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .section-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        /* Today's Poem Widget */
+        .todays-poem {
+            padding: 80px 2rem;
+            background: white;
+        }
+        
+        .poem-widget {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem;
+            border: 4px solid var(--secondary);
+            border-radius: var(--radius);
+            background: var(--bg);
+        }
+        
+        .poem-widget h2 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        
+        .poem-title {
+            font-size: 1.75rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .poem-excerpt {
+            font-style: italic;
+            line-height: 2;
+            color: var(--text);
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .poem-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* User Categories */
+        .user-categories {
+            padding: 80px 2rem;
+            background: var(--bg);
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .category-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .category-icon {
+            font-size: 48px;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .category-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+        
+        .category-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .category-list li {
+            padding: 0.5rem 0;
+            color: var(--text-light);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .category-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .category-list li::before {
+            content: '✓';
+            color: var(--secondary);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 2rem;
+            background: linear-gradient(135deg, #1a3c5e 0%, #2a5a8a 100%);
+            text-align: center;
+            color: white;
+        }
+        
+        .cta-section h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1.5rem 3rem;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            background: var(--secondary-light);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .hero-main-title {
+                font-size: 40px;
+            }
+            
+            .hero-portrait {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .stats-grid,
+            .sections-cards,
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sections-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-main-title {
+                font-size: 32px;
+            }
+            
+            .hero-portrait {
+                width: 240px;
+                height: 240px;
+            }
+            
+            .stat-number {
+                font-size: 36px;
+            }
+        }
+/* ==========================
+   DARK MODE
+========================== */
+
+body.dark-mode{
+    background:#0f172a;
+    color:#f1f5f9;
+}
+
+body.dark-mode .stats-panel,
+body.dark-mode .sections-grid,
+body.dark-mode .todays-poem,
+body.dark-mode .user-categories{
+    background:#0f172a;
+}
+
+body.dark-mode .section-card,
+body.dark-mode .category-card,
+body.dark-mode .poem-widget,
+body.dark-mode .stat-card{
+    background:#1e293b;
+    color:white;
+    border:1px solid #334155;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode p,
+body.dark-mode li,
+body.dark-mode a{
+    color:white;
+}
+
+body.dark-mode .text-light{
+    color:#cbd5e1;
+}
+
+body.dark-mode .card-link{
+    color:#60a5fa;
+}        
+    </style>
+</head>
+<body>
+    <!-- Header will be injected by header.js -->
+    <div id="header-container"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-main">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-left">
+                    <h1 class="hero-main-title">G'afur G'ulom</h1>
+
+<p class="hero-main-subtitle">
+    1903–1966 | O'zbekiston xalq shoiri, atoqli yozuvchi, tarjimon va jamoat arbobi
+</p>
+                    <div class="hero-main-buttons">
+                        <a href="pages/hayot.html" class="btn-primary">O'rganishni boshlash</a>
+                        <a href="pages/asarlar.html" class="btn-secondary">She'rlar to'plami</a>
+                    </div>
+                </div>
+                <div class="hero-right">
+                    <img src="./assets/images/gafur-gulom.jpg" 
+                         alt="G'afur G'ulom" 
+                         class="hero-portrait" 
+                         id="hero-portrait" 
+                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect fill=%22%231a3c5e%22 width=%22400%22 height=%22400%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%22120%22 fill=%22white%22%3EG.G%3C/text%3E%3C/svg%3E'"
+                         loading="eager">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Panel -->
+    <section class="stats-panel">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" data-target="500">0</div>
+                <div class="stat-label">She'r</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="12">0</div>
+                <div class="stat-label">Doston</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="60">0</div>
+                <div class="stat-label">Yil Meros</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="4">0</div>
+                <div class="stat-label">Foydalanuvchi toifasi</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sections Grid -->
+    <section class="sections-grid">
+        <div class="sections-cards">
+            <div class="section-card">
+                <span class="section-icon">📜</span>
+                <h3>Hayot Tarixi</h3>
+                <p>Shoirning hayot yo'li va muhim voqealar vaqt chizig'ida</p>
+                <a href="pages/hayot.html" class="card-link">Ko'rish →</a>
+            </div>
+            <div class="section-card">
+                <span class="section-icon">📚</span>
+                <h3>Asarlar</h3>
+                <p>She'rlar, dostonlar va hikoyalar to'liq matnlari bilan</p>
+                <a href="pages/asarlar.html" class="card-link">Ko'rish →</a>
+            </div>
+            <div class="section-card">
+                <span class="section-icon">🔬</span>
+                <h3>Ilmiy Arxiv</h3>
+                <p>Tadqiqotlar, maqolalar va dissertatsiyalar to'plami</p>
+                <a href="pages/ilmiy.html" class="card-link">Ko'rish →</a>
+            </div>
+            <div class="section-card">
+                <span class="section-icon">🎓</span>
+                <h3>Ta'lim Resurslari</h3>
+                <p>Darsliklar, testlar va metodikalar o'qituvchilar uchun</p>
+                <a href="pages/talim.html" class="card-link">Ko'rish →</a>
+            </div>
+            <div class="section-card">
+                <span class="section-icon">🎬</span>
+                <h3>Multimedia</h3>
+                <p>Video darslar, audio she'rlar va foto galereya</p>
+                <a href="pages/multimedia.html" class="card-link">Ko'rish →</a>
+            </div>
+            <div class="section-card">
+                <span class="section-icon">🎮</span>
+                <h3>Interaktiv O'yin</h3>
+                <p>Viktorinalar va ta'limiy o'yinlar orqali o'rganing</p>
+                <a href="pages/interaktiv.html" class="card-link">Ko'rish →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Today's Poem Widget -->
+    <section class="todays-poem">
+        <div class="poem-widget">
+            <h2>📖 Bugungi she'r</h2>
+            <h3 class="poem-title" id="poem-title">Yuklanmoqda...</h3>
+            <div class="poem-excerpt" id="poem-excerpt">
+                Iltimos kuting...
+            </div>
+            <div class="poem-buttons">
+                <a href="#" class="btn-primary" id="read-full-btn">To'liq o'qish</a>
+                <button class="btn-outline" id="new-poem-btn">Yangi she'r</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Categories -->
+    <section class="user-categories">
+        <h2 class="section-title">Foydalanuvchi toifalari</h2>
+        <div class="categories-grid">
+            <div class="category-card">
+                <span class="category-icon">👨‍🎓</span>
+                <h3>O'quvchilar</h3>
+                <p class="text-light" style="margin-bottom: 1rem;">5-11 sinf</p>
+                <ul class="category-list">
+                    <li>She'rlar tahlili</li>
+                    <li>Interaktiv testlar</li>
+                    <li>Video darslar</li>
+                </ul>
+            </div>
+            <div class="category-card">
+                <span class="category-icon">👨‍🏫</span>
+                <h3>O'qituvchilar</h3>
+                <p class="text-light" style="margin-bottom: 1rem;">Dars materiallari</p>
+                <ul class="category-list">
+                    <li>Dars ishlanmalari</li>
+                    <li>Prezentatsiyalar</li>
+                    <li>Metodikalar</li>
+                </ul>
+            </div>
+            <div class="category-card">
+                <span class="category-icon">🎓</span>
+                <h3>Talabalar</h3>
+                <p class="text-light" style="margin-bottom: 1rem;">Ilmiy ish</p>
+                <ul class="category-list">
+                    <li>Ilmiy maqolalar</li>
+                    <li>Dissertatsiyalar</li>
+                    <li>Adabiy tanqid</li>
+                </ul>
+            </div>
+            <div class="category-card">
+                <span class="category-icon">🔍</span>
+                <h3>Tadqiqotchilar</h3>
+                <p class="text-light" style="margin-bottom: 1rem;">Arxiv</p>
+                <ul class="category-list">
+                    <li>To'liq arxiv</li>
+                    <li>Qo'lyozmalar</li>
+                    <li>Tarixiy hujjatlar</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Bugunning buyuk she'rini o'qi</h2>
+            <a href="pages/asarlar.html" class="cta-button">She'rlar to'plamiga o'tish</a>
+        </div>
+    </section>
+
+    <!-- Footer will be injected by footer.js -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript Files -->
+    <script>
+        // INLINE DARK MODE - NO EXTERNAL FILES
+        window.toggleDarkMode = function() {
+            const body = document.body;
+            const btn = document.getElementById('darkBtn');
+            if (!btn) return;
+            
+            const isDark = body.classList.toggle('dark-mode');
+            btn.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            console.log('Dark mode:', isDark ? 'ON' : 'OFF');
+        };
+        
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                const btn = document.getElementById('darkBtn');
+                if (btn) btn.textContent = '☀️';
+            }
+        });
+    </script>
+    <script src="components/header.js?v=8"></script>
+    <script src="components/footer.js"></script>
+    <script src="assets/js/data.js?v=8"></script>
+    <script src="assets/js/app.js?v=8"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        // Service Worker ni o'chirish
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+        }
+    </script>
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "G'afur G'ulom Ta'limiy Platformasi",
+      "url": "https://gafurgulom.uz",
+      "description": "O'zbek adabiyotining buyuk shoiri G'afur G'ulom haqida to'liq ta'limiy platforma",
+      "inLanguage": "uz",
+      "about": {
+        "@type": "Person",
+        "name": "G'afur G'ulom",
+        "birthDate": "1889",
+        "deathDate": "1966",
+        "nationality": "O'zbek",
+        "jobTitle": "Shoir va yozuvchi"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://gafurgulom.uz/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+</body>
+</html>

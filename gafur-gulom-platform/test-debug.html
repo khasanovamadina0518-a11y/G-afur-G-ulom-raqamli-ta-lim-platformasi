@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #f0f0f0; }
+        .test { padding: 15px; margin: 10px 0; background: white; border-radius: 8px; }
+        .pass { border-left: 5px solid #4caf50; }
+        .fail { border-left: 5px solid #f44336; }
+        .info { border-left: 5px solid #2196f3; }
+        h2 { margin-top: 30px; }
+        pre { background: #f5f5f5; padding: 10px; overflow-x: auto; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Debug Test Page</h1>
+    <p>Bu sahifa muammolarni aniqlash uchun</p>
+    
+    <button onclick="testAll()">🚀 Barcha Testlarni Boshlash</button>
+    <button onclick="location.reload()">🔄 Yangilash</button>
+    
+    <div id="results"></div>
+    
+    <script>
+        const results = document.getElementById('results');
+        
+        function addTest(title, status, details = '') {
+            const div = document.createElement('div');
+            div.className = `test ${status}`;
+            div.innerHTML = `
+                <strong>${status === 'pass' ? '✅' : status === 'fail' ? '❌' : 'ℹ️'} ${title}</strong>
+                ${details ? `<pre>${details}</pre>` : ''}
+            `;
+            results.appendChild(div);
+        }
+        
+        async function testAll() {
+            results.innerHTML = '<h2>Test natijalar</h2>';
+            
+            // Test 1: Check if data.js is loaded
+            addTest('Test 1: data.js yuklandi', 
+                typeof getSherlar === 'function' ? 'pass' : 'fail',
+                typeof getSherlar === 'function' ? 'getSherlar funksiyasi mavjud' : 'getSherlar funksiyasi topilmadi'
+            );
+            
+            // Test 2: Load poems
+            try {
+                const poems = await getSherlar();
+                addTest('Test 2: She\'rlar yuklandi',
+                    poems.length > 0 ? 'pass' : 'fail',
+                    `Jami ${poems.length} ta she'r topildi\nBirinchi she'r: ${poems[0]?.sarlavha || 'N/A'}\nSo'nggi she'r: ${poems[poems.length-1]?.sarlavha || 'N/A'}`
+                );
+                
+                // Show first 5 and last 5 poems
+                if (poems.length > 0) {
+                    const first5 = poems.slice(0, 5).map(p => `ID ${p.id}: ${p.sarlavha} (${p.yil})`).join('\n');
+                    const last5 = poems.slice(-5).map(p => `ID ${p.id}: ${p.sarlavha} (${p.yil})`).join('\n');
+                    addTest('Test 3: She\'rlar ro\'yxati',
+                        'info',
+                        `Birinchi 5 ta she'r:\n${first5}\n\nSo'nggi 5 ta she'r:\n${last5}`
+                    );
+                }
+            } catch (error) {
+                addTest('Test 2: She\'rlar yuklandi', 'fail', `Xatolik: ${error.message}`);
+            }
+            
+            // Test 4: Dark mode elements
+            const darkModeToggle = document.querySelector('#dark-mode-toggle') || 
+                                 document.querySelector('.dark-mode-toggle');
+            addTest('Test 4: Dark mode tugma',
+                darkModeToggle ? 'pass' : 'fail',
+                darkModeToggle ? `Tugma topildi: ${darkModeToggle.textContent}` : 'Tugma topilmadi'
+            );
+            
+            // Test 5: Dark mode functionality
+            if (darkModeToggle) {
+                const initialTheme = localStorage.getItem('theme');
+                addTest('Test 5: Dark mode localStorage',
+                    'info',
+                    `Saqlangan tema: ${initialTheme || 'mavjud emas'}`
+                );
+            }
+            
+            // Test 6: Check localStorage
+            addTest('Test 6: LocalStorage ishlayapti',
+                typeof localStorage !== 'undefined' ? 'pass' : 'fail',
+                `localStorage qo'llab-quvvatlanadi: ${typeof localStorage !== 'undefined'}`
+            );
+            
+            // Test 7: Check image
+            const img = document.querySelector('img[src*="gafur-gulom"]');
+            if (img) {
+                addTest('Test 7: G\'afur G\'ulom rasmi',
+                    'info',
+                    `Rasm manzili: ${img.src}\nYuklandi: ${img.complete && img.naturalWidth > 0 ? 'Ha' : 'Yo\'q'}`
+                );
+            } else {
+                addTest('Test 7: G\'afur G\'ulom rasmi', 'fail', 'Rasm elementi topilmadi');
+            }
+            
+            // Test 8: Check data files
+            const files = ['sherlar.json', 'hayot.json', 'quiz.json', 'ilmiy.json', 'dostonlar.json'];
+            for (const file of files) {
+                try {
+                    const response = await fetch(`data/${file}`);
+                    addTest(`Test 8: ${file}`,
+                        response.ok ? 'pass' : 'fail',
+                        `Status: ${response.status} ${response.statusText}`
+                    );
+                } catch (error) {
+                    addTest(`Test 8: ${file}`, 'fail', `Xatolik: ${error.message}`);
+                }
+            }
+            
+            // Test 9: Check CSS variables
+            const root = getComputedStyle(document.documentElement);
+            const primaryColor = root.getPropertyValue('--primary');
+            addTest('Test 9: CSS o\'zgaruvchilari',
+                primaryColor ? 'pass' : 'fail',
+                `--primary rang: ${primaryColor || 'topilmadi'}`
+            );
+            
+            // Test 10: Console messages
+            addTest('Test 10: Brauzer ma\'lumoti',
+                'info',
+                `User Agent: ${navigator.userAgent}\nEkran: ${screen.width}x${screen.height}\nViewport: ${window.innerWidth}x${window.innerHeight}`
+            );
+        }
+        
+        // Auto-run tests on load
+        window.addEventListener('load', () => {
+            setTimeout(testAll, 500);
+        });
+    </script>
+    
+    <script src="assets/js/data.js"></script>
+</body>
+</html>

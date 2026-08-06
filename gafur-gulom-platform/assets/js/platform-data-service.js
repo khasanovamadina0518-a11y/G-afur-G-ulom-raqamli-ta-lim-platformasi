@@ -18,6 +18,9 @@
     const EVENTS = ['dataUpdated', 'progressChanged', 'contentAdded'];
 
     function resolveBasePath() {
+        if (typeof global.platformUrl === 'function') {
+            return global.platformUrl('data/');
+        }
         const path = global.location?.pathname || '';
         return path.includes('/pages/') ? '../data/' : 'data/';
     }

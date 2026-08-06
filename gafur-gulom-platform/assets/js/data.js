@@ -6,10 +6,7 @@
 (function () {
     'use strict';
 
-    const SERVICE_PATH = (function () {
-        const inPages = window.location.pathname.includes('/pages/');
-        return (inPages ? '../assets/js/' : 'assets/js/') + 'platform-data-service.js';
-    })();
+    const SERVICE_PATH = (window.platformUrl || function (r) { return r; })('assets/js/platform-data-service.js');
 
     let nativeFetch = window.fetch.bind(window);
     let shimInstalled = false;
@@ -69,15 +66,9 @@
 
     platformDataReady.then(installFetchShim);
 
-    const PROGRESS_PATH = (function () {
-        const inPages = window.location.pathname.includes('/pages/');
-        return (inPages ? '../assets/js/' : 'assets/js/') + 'user-progress.js';
-    })();
-
-    const ACHIEVEMENT_PATH = (function () {
-        const inPages = window.location.pathname.includes('/pages/');
-        return (inPages ? '../assets/js/' : 'assets/js/') + 'achievement-engine.js';
-    })();
+    const resolveAsset = window.platformUrl || function (r) { return r; };
+    const PROGRESS_PATH = resolveAsset('assets/js/user-progress.js');
+    const ACHIEVEMENT_PATH = resolveAsset('assets/js/achievement-engine.js');
 
     function loadAchievementEngineScript() {
         if (window.AchievementEngine) return Promise.resolve();

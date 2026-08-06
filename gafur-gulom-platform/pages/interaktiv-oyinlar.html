@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <script>
+    (function(){var p=location.pathname.replace(/\\/g,'/'),m='/gafur-gulom-platform/',b='/';if(p.indexOf(m)!==-1)b=p.slice(0,p.indexOf(m)+m.length);else if(p.indexOf('/pages/')!==-1)b=p.slice(0,p.indexOf('/pages/')+1);else{var i=p.lastIndexOf('/');b=i<=0?'/':p.slice(0,i+1);}var e=document.createElement('base');e.href=b;document.head.insertBefore(e,document.head.firstChild);window.PLATFORM_BASE=b;window.platformUrl=function(r){return b+String(r||'').replace(/^\//,'');};})();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktiv - G'afur G'ulom</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="pages/interaktiv.css?v=2">
+</head>
+<body class="page-testlar page-interaktiv">
+    <div id="header-container"></div>
+
+    <main class="test-page">
+        <div class="test-page__inner">
+            <header class="test-header">
+                <a href="pages/index.html" class="test-header__back" aria-label="Bosh sahifaga qaytish">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+                </a>
+                <div class="test-header__copy">
+                    <h1 class="test-header__title">Interaktiv</h1>
+                    <p class="test-header__subtitle">O'yinlar va interaktiv mashg'ulotlar</p>
+                </div>
+            </header>
+
+            <section id="games-menu" class="games-grid games-grid--interactive">
+                <article class="game-card game-card--premium" onclick="showGame('quiz')">
+                    <div class="game-card__icon game-card__icon--quiz" aria-hidden="true">🎯</div>
+                    <h2 class="game-card__title">Kim ko'p biladi?</h2>
+                    <p class="game-card__desc">Tezkor savol-javob o'yini — bilimingizni sinab ko'ring!</p>
+                    <div class="game-card__meta">
+                        <span class="game-card__meta-item">O'rta</span>
+                        <span class="game-card__meta-item">10 daqiqa</span>
+                    </div>
+                    <button type="button" class="game-card__btn">Boshlash</button>
+                </article>
+
+                <article class="game-card game-card--premium" onclick="showGame('memory')">
+                    <div class="game-card__icon game-card__icon--memory" aria-hidden="true">📝</div>
+                    <h2 class="game-card__title">She'r yodlash</h2>
+                    <p class="game-card__desc">She'rni yodlang va bo'sh joylarni to'ldiring.</p>
+                    <div class="game-card__meta">
+                        <span class="game-card__meta-item">Oson</span>
+                        <span class="game-card__meta-item">8 daqiqa</span>
+                    </div>
+                    <button type="button" class="game-card__btn">Boshlash</button>
+                </article>
+
+                <article class="game-card game-card--premium" onclick="showGame('timeline')">
+                    <div class="game-card__icon game-card__icon--timeline" aria-hidden="true">⏱</div>
+                    <h2 class="game-card__title">Xronologiya</h2>
+                    <p class="game-card__desc">Tarixiy voqealarni to'g'ri tartibga soling.</p>
+                    <div class="game-card__meta">
+                        <span class="game-card__meta-item">O'rta</span>
+                        <span class="game-card__meta-item">12 daqiqa</span>
+                    </div>
+                    <button type="button" class="game-card__btn">Boshlash</button>
+                </article>
+
+                <article class="game-card game-card--premium" onclick="showGame('wordsearch')">
+                    <div class="game-card__icon game-card__icon--search" aria-hidden="true">🔍</div>
+                    <h2 class="game-card__title">So'z topish</h2>
+                    <p class="game-card__desc">Harflar to'ridan yashirin so'zlarni toping.</p>
+                    <div class="game-card__meta">
+                        <span class="game-card__meta-item">Qiyin</span>
+                        <span class="game-card__meta-item">5 daqiqa</span>
+                    </div>
+                    <button type="button" class="game-card__btn">Boshlash</button>
+                </article>
+
+                <article class="game-card game-card--premium game-card--soon" aria-disabled="true">
+                    <div class="game-card__icon game-card__icon--soon" aria-hidden="true">🧠</div>
+                    <span class="game-card__soon-badge">Tez kunda</span>
+                    <h2 class="game-card__title">Memory Game</h2>
+                    <p class="game-card__desc">Juft kartalarni topib xotirangizni mustahkamlang.</p>
+                    <div class="game-card__meta">
+                        <span class="game-card__meta-item">Oson</span>
+                        <span class="game-card__meta-item">6 daqiqa</span>
+                    </div>
+                    <button type="button" class="game-card__btn" disabled>Tez kunda</button>
+                </article>
+
+                <article class="game-card game-card--premium game-card--soon" aria-disabled="true">
+                    <div class="game-card__icon game-card__icon--soon" aria-hidden="true">🧩</div>
+                    <span class="game-card__soon-badge">Tez kunda</span>
+                    <h2 class="game-card__title">Puzzle</h2>
+                    <p class="game-card__desc">Rasmlardan mozaika yig'ing va muvaffaqiyat qozoning.</p>
+                    <div class="game-card__meta">
+                        <span class="game-card__meta-item">O'rta</span>
+                        <span class="game-card__meta-item">10 daqiqa</span>
+                    </div>
+                    <button type="button" class="game-card__btn" disabled>Tez kunda</button>
+                </article>
+
+                <article class="game-card game-card--premium game-card--soon" aria-disabled="true">
+                    <div class="game-card__icon game-card__icon--soon" aria-hidden="true">✏️</div>
+                    <span class="game-card__soon-badge">Tez kunda</span>
+                    <h2 class="game-card__title">Crossword</h2>
+                    <p class="game-card__desc">Krossvord yordamida so'z boyligingizni oshiring.</p>
+                    <div class="game-card__meta">
+                        <span class="game-card__meta-item">Qiyin</span>
+                        <span class="game-card__meta-item">15 daqiqa</span>
+                    </div>
+                    <button type="button" class="game-card__btn" disabled>Tez kunda</button>
+                </article>
+
+                <article class="game-card game-card--premium game-card--soon" aria-disabled="true">
+                    <div class="game-card__icon game-card__icon--soon" aria-hidden="true">↔️</div>
+                    <span class="game-card__soon-badge">Tez kunda</span>
+                    <h2 class="game-card__title">Drag &amp; Drop</h2>
+                    <p class="game-card__desc">Elementlarni sudrab to'g'ri joylashtiring.</p>
+                    <div class="game-card__meta">
+                        <span class="game-card__meta-item">O'rta</span>
+                        <span class="game-card__meta-item">8 daqiqa</span>
+                    </div>
+                    <button type="button" class="game-card__btn" disabled>Tez kunda</button>
+                </article>
+
+                <article class="game-card game-card--premium game-card--soon" aria-disabled="true">
+                    <div class="game-card__icon game-card__icon--soon" aria-hidden="true">🔗</div>
+                    <span class="game-card__soon-badge">Tez kunda</span>
+                    <h2 class="game-card__title">Matching Game</h2>
+                    <p class="game-card__desc">Mos keluvchi juftlarni toping va bog'lang.</p>
+                    <div class="game-card__meta">
+                        <span class="game-card__meta-item">Oson</span>
+                        <span class="game-card__meta-item">7 daqiqa</span>
+                    </div>
+                    <button type="button" class="game-card__btn" disabled>Tez kunda</button>
+                </article>
+            </section>
+
+            <section id="quiz-game" class="game-screen">
+                <button class="btn-outline" onclick="backToMenu()" style="margin-bottom: 2rem;">← Orqaga</button>
+                
+                <div id="quiz-start" class="start-screen">
+                    <h2>🎯 Kim ko'p biladi?</h2>
+                    <p class="text-light" style="font-size: 1.125rem;">20 ta savolga javob bering va ballingizni oshiring!</p>
+                    <input type="text" id="quiz-player-name" placeholder="Ismingizni kiriting" maxlength="30">
+                    <button class="btn-primary" style="width: 100%; padding: 1.5rem;" onclick="startQuizGame()">
+                        Boshlash 🚀
+                    </button>
+                    <div id="quiz-leaderboard-preview" class="leaderboard" style="margin-top: 2rem;"></div>
+                </div>
+                
+                <div id="quiz-playing" style="display: none;">
+                    <div class="quiz-session">
+                        <div class="quiz-session__toolbar">
+                            <div class="quiz-session__score">⭐ <span id="quiz-score">0</span> ball</div>
+                            <div class="quiz-session__meta">
+                                <div class="question-counter" id="quiz-counter">1 / 20</div>
+                                <div class="quiz-timer-badge" id="quiz-timer-badge">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    <span id="quiz-timer-text">00:00:20</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quiz-session__progress" aria-hidden="true">
+                            <span class="quiz-session__progress-fill" id="quiz-session-progress"></span>
+                        </div>
+                        <div class="quiz-timer-bar" aria-hidden="true">
+                            <div class="quiz-timer-fill" id="quiz-timer-fill"></div>
+                        </div>
+                        <div class="quiz-game-screen">
+                            <div class="quiz-question" id="quiz-question-text"></div>
+                            <div class="quiz-answers" id="quiz-answers"></div>
+                        </div>
+                        <div class="quiz-session__footer">
+                            <button type="button" class="quiz-nav-btn quiz-nav-btn--ghost" id="quiz-prev-btn" disabled>Oldingi</button>
+                            <button type="button" class="quiz-nav-btn quiz-nav-btn--flag" id="quiz-flag-btn" aria-pressed="false">Belgilash</button>
+                            <button type="button" class="quiz-nav-btn quiz-nav-btn--primary" id="quiz-next-btn" disabled>Keyingi</button>
+                            <button type="button" class="quiz-nav-btn quiz-nav-btn--submit" id="quiz-submit-btn" style="display: none;" disabled>Yakunlash</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="quiz-result" class="result-screen" style="display: none;">
+                    <h2>🎉 O'yin tugadi!</h2>
+                    <div class="result-stars" id="quiz-result-stars"></div>
+                    <div class="result-score"><span id="quiz-final-score">0</span> ball</div>
+                    <p id="quiz-result-message" style="font-size: 1.25rem; margin: 2rem 0;"></p>
+                    <div id="quiz-high-score" style="font-size: 1.125rem; color: var(--secondary); margin-bottom: 2rem;"></div>
+                    <button class="btn-primary" onclick="restartQuizGame()">Qaytadan o'ynash</button>
+                </div>
+            </section>
+
+            <section id="memory-game" class="game-screen">
+                <button class="btn-outline" onclick="backToMenu()" style="margin-bottom: 2rem;">← Orqaga</button>
+                <div id="memory-start" class="start-screen">
+                    <h2>📝 She'r yodlash trenajyori</h2>
+                    <p class="text-light" style="font-size: 1.125rem;">She'rni yodlang va bo'sh joylarni to'ldiring!</p>
+                    <div id="poem-selector" style="margin: 2rem 0;"></div>
+                    <button class="btn-primary" style="width: 100%; padding: 1.5rem;" onclick="startMemoryGame()">Boshlash 📖</button>
+                </div>
+                <div id="memory-playing" style="display: none;">
+                    <div class="game-header">
+                        <div class="score-display">Bosqich: <span id="memory-stage">1</span>/3</div>
+                        <div class="question-counter" id="memory-timer">30 soniya</div>
+                    </div>
+                    <div class="quiz-game-screen">
+                        <h3 id="memory-poem-title" style="text-align: center; color: var(--secondary); margin-bottom: 2rem;"></h3>
+                        <div class="poem-display" id="poem-display"></div>
+                        <div style="text-align: center;">
+                            <button class="btn-primary" id="memory-next-btn" onclick="memoryNextStage()">Keyingi bosqich</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="memory-result" class="result-screen" style="display: none;">
+                    <h2>✅ Natija</h2>
+                    <div class="result-score"><span id="memory-percentage">0</span>%</div>
+                    <p id="memory-result-message" style="font-size: 1.25rem; margin: 2rem 0;"></p>
+                    <button class="btn-primary" onclick="backToMenu()">Bosh sahifaga</button>
+                </div>
+            </section>
+
+            <section id="timeline-game" class="game-screen">
+                <button class="btn-outline" onclick="backToMenu()" style="margin-bottom: 2rem;">← Orqaga</button>
+                <div class="start-screen">
+                    <h2>⏱ Xronologiya o'yini</h2>
+                    <p class="text-light" style="font-size: 1.125rem;">Voqealarni to'g'ri tartibga soling!</p>
+                    <p style="margin: 2rem 0;">10 ta voqeani eng qadimgidan eng yangisiga qarab joylashtiring.</p>
+                    <button class="btn-primary" style="width: 100%; padding: 1.5rem;" onclick="startTimelineGame()">Boshlash ⏳</button>
+                </div>
+                <div id="timeline-playing" style="display: none;">
+                    <div class="game-header"><h3>Voqealarni sudrab to'g'ri tartibga qo'ying</h3></div>
+                    <div class="quiz-game-screen">
+                        <div class="timeline-items" id="timeline-items"></div>
+                        <div style="text-align: center; margin-top: 2rem;">
+                            <button class="btn-primary" onclick="checkTimeline()">Tekshirish ✓</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="timeline-result" class="result-screen" style="display: none;">
+                    <h2>📊 Natija</h2>
+                    <div class="result-score"><span id="timeline-score">0</span> ball</div>
+                    <p id="timeline-result-message" style="font-size: 1.25rem; margin: 2rem 0;"></p>
+                    <button class="btn-primary" onclick="backToMenu()">Bosh sahifaga</button>
+                </div>
+            </section>
+
+            <section id="wordsearch-game" class="game-screen">
+                <button class="btn-outline" onclick="backToMenu()" style="margin-bottom: 2rem;">← Orqaga</button>
+                <div id="wordsearch-playing">
+                    <div class="game-header">
+                        <div class="score-display">Topildi: <span id="words-found">0</span>/10</div>
+                        <div class="question-counter" id="wordsearch-timer">5:00</div>
+                    </div>
+                    <div class="quiz-game-screen">
+                        <div class="word-search-container">
+                            <div class="word-grid" id="word-grid"></div>
+                            <div class="words-list">
+                                <h3 style="margin-bottom: 1rem;">Topish kerak:</h3>
+                                <div id="words-to-find"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="wordsearch-result" class="result-screen" style="display: none;">
+                    <h2>🎉 O'yin tugadi!</h2>
+                    <div class="result-score"><span id="wordsearch-score">0</span>/10</div>
+                    <p id="wordsearch-result-message" style="font-size: 1.25rem; margin: 2rem 0;"></p>
+                    <button class="btn-primary" onclick="startWordSearchGame()">Qaytadan o'ynash</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="components/header.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="pages/interaktiv-page.js?v=2"></script>
+</body>
+</html>

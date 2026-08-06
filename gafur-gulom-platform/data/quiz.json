@@ -1,0 +1,404 @@
+{
+  "savollar": [
+    {
+      "id": 1,
+      "savol": "G'afur G'ulom qaysi yilda tug'ilgan?",
+      "variantlar": ["1885", "1889", "1892", "1900"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 2,
+      "savol": "G'afur G'ulomning mashhur romani qaysi?",
+      "variantlar": ["Shum bola", "Mehrobdan chayon", "Ikki eshik orasi", "Sinchalak"],
+      "togri": 0,
+      "daraja": "oson",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 3,
+      "savol": "G'afur G'ulom qaysi shaharda tug'ilgan?",
+      "variantlar": ["Samarqand", "Buxoro", "Toshkent", "Farg'ona"],
+      "togri": 2,
+      "daraja": "oson",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 4,
+      "savol": "G'afur G'ulom qaysi unvonga sazovor bo'lgan?",
+      "variantlar": ["Xalq yozuvchisi", "Xalq shoiri", "Mehnat qahramoni", "Davlat mukofoti laureati"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 5,
+      "savol": "G'afur G'ulom necha yil umr ko'rgan?",
+      "variantlar": ["75 yil", "77 yil", "80 yil", "85 yil"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 6,
+      "savol": "G'afur G'ulom qaysi yilda vafot etgan?",
+      "variantlar": ["1960", "1966", "1970", "1975"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 7,
+      "savol": "'Yillar sadosi' to'plami qachon nashr etilgan?",
+      "variantlar": ["1920", "1925", "1930", "1935"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 8,
+      "savol": "G'afur G'ulom qaysi maktabda o'qigan?",
+      "variantlar": ["Jadid maktabi", "Rus-tuzem maktabi", "Gimnaziya", "Medresa"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 9,
+      "savol": "G'afur G'ulomning otasining ismi nima?",
+      "variantlar": ["Nazar", "G'ulom Nazar", "Muhammad", "Abdulla"],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 10,
+      "savol": "G'afur G'ulom qaysi mahallada tug'ilgan?",
+      "variantlar": ["Eski shahar", "Bo'zsuv", "Chorsu", "Sebzor"],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 11,
+      "savol": "'Shum bola' romani qachon yozilgan?",
+      "variantlar": ["1935", "1939", "1940", "1945"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 12,
+      "savol": "G'afur G'ulom qaysi gazeta va jurnallarda ishlagan?",
+      "variantlar": ["Turkiston", "Ishtirokiyun", "Mushtum", "Hurriyat"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 13,
+      "savol": "G'afur G'ulom Xalq shoiri unvonini qachon olgan?",
+      "variantlar": ["1950", "1955", "1960", "1965"],
+      "togri": 2,
+      "daraja": "orta",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 14,
+      "savol": "G'afur G'ulomning qaysi she'ri Vatan sevgisiga bag'ishlangan?",
+      "variantlar": ["Yomg'ir", "Seni ko'rmay", "Mehnat", "Bahor"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 15,
+      "savol": "G'afur G'ulom qaysi davlatda yashagan?",
+      "variantlar": ["Rossiya imperiyasi", "Sovet Ittifoqi", "Mustaqil O'zbekiston", "A va B to'g'ri"],
+      "togri": 3,
+      "daraja": "orta",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 16,
+      "savol": "G'afur G'ulomning qaysi asari bolalar uchun yozilgan?",
+      "variantlar": ["O'zbekiston", "Shum bola", "Tinchlik", "Do'stlik"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 17,
+      "savol": "G'afur G'ulom qaysi tilda yozgan?",
+      "variantlar": ["Fors tilida", "Arab tilida", "O'zbek tilida", "Rus tilida"],
+      "togri": 2,
+      "daraja": "oson",
+      "mavzu": "umumiy"
+    },
+    {
+      "id": 18,
+      "savol": "G'afur G'ulom urush yillarida nima qilgan?",
+      "variantlar": ["Frontda jang qilgan", "She'rlar yozgan", "Tibbiyot bilan shug'ullangan", "Hech narsa qilmagan"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 19,
+      "savol": "G'afur G'ulom O'zbekiston Yozuvchilar uyushmasiga qachon a'zo bo'lgan?",
+      "variantlar": ["1925", "1930", "1935", "1940"],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 20,
+      "savol": "G'afur G'ulomning qaysi she'ri tabiatga bag'ishlangan?",
+      "variantlar": ["Ona", "Yomg'ir", "Mehnat", "Kitob"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 21,
+      "savol": "G'afur G'ulom nechta she'r yozgan?",
+      "variantlar": ["100 ga yaqin", "500 ga yaqin", "1000 ga yaqin", "50 ga yaqin"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 22,
+      "savol": "G'afur G'ulomning birinchi she'rlari qachon chop etilgan?",
+      "variantlar": ["1905", "1910", "1915", "1920"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 23,
+      "savol": "G'afur G'ulom qayerga dafn etilgan?",
+      "variantlar": ["Samarqand", "Buxoro", "Toshkent", "Andijon"],
+      "togri": 2,
+      "daraja": "orta",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 24,
+      "savol": "'Yulduz' dostoni qachon yozilgan?",
+      "variantlar": ["1930", "1935", "1940", "1945"],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 25,
+      "savol": "G'afur G'ulom qanday janrlarda yozgan?",
+      "variantlar": ["Faqat she'r", "She'r va roman", "She'r, doston, roman", "Faqat doston"],
+      "togri": 2,
+      "daraja": "oson",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 26,
+      "savol": "G'afur G'ulomning 75 yoshlik yubileyi qachon nishonlangan?",
+      "variantlar": ["1960", "1964", "1965", "1970"],
+      "togri": 2,
+      "daraja": "qiyin",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 27,
+      "savol": "G'afur G'ulom qaysi mavzularda she'r yozgan?",
+      "variantlar": ["Faqat Vatan", "Faqat tabiat", "Vatan, mehnat, tabiat, muhabbat", "Faqat urush"],
+      "togri": 2,
+      "daraja": "oson",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 28,
+      "savol": "G'afur G'ulomning 'Mehnat' she'ri qaysi mavzuga bag'ishlangan?",
+      "variantlar": ["Vatan", "Mehnat ulug'lanishi", "Tabiat", "Do'stlik"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 29,
+      "savol": "G'afur G'ulom inqilobni qo'llab-quvvatlaganmi?",
+      "variantlar": ["Ha", "Yo'q", "Bilmayman", "Ma'lumot yo'q"],
+      "togri": 0,
+      "daraja": "orta",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 30,
+      "savol": "G'afur G'ulom qaysi davr shoiri hisoblanadi?",
+      "variantlar": ["XVIII asr", "XIX asr", "XX asr", "XXI asr"],
+      "togri": 2,
+      "daraja": "oson",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 31,
+      "savol": "'Kitob' she'rida nima haqida so'z boradi?",
+      "variantlar": ["Vatan", "Bilim va ma'rifat", "Mehnat", "Sevgi"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 32,
+      "savol": "G'afur G'ulom yoshligida qaysi tillarni o'rgangan?",
+      "variantlar": ["Arab, fors", "Rus, arab, fors", "Ingliz, rus", "Faqat o'zbek"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 33,
+      "savol": "G'afur G'ulom Davlat mukofotini qachon olgan?",
+      "variantlar": ["1945", "1950", "1955", "1960"],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 34,
+      "savol": "'O'zbekiston' she'ri qaysi mavzuga bag'ishlangan?",
+      "variantlar": ["Tabiat", "Vatan", "Mehnat", "Do'stlik"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 35,
+      "savol": "G'afur G'ulom yosh yozuvchilarga nima bo'lgan?",
+      "variantlar": ["Raqib", "Ustoz", "Tanqidchi", "Obuna bo'luvchi"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 36,
+      "savol": "'Bahor' she'rida qaysi fasl tasvirlangan?",
+      "variantlar": ["Qish", "Bahor", "Yoz", "Kuz"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 37,
+      "savol": "G'afur G'ulom qaysi kasbda ishlagan?",
+      "variantlar": ["Shifokor", "Jurnalist va yozuvchi", "O'qituvchi", "Sotuvchi"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 38,
+      "savol": "G'afur G'ulomning 'Ona' she'ri kimga bag'ishlangan?",
+      "variantlar": ["Vatanga", "Onaga", "Do'stga", "O'qituvchiga"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 39,
+      "savol": "G'afur G'ulom urush yillarida qaysi mavzuda yozgan?",
+      "variantlar": ["Tabiat", "Vatanparvarlik va g'alaba", "Muhabbat", "Komeya"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 40,
+      "savol": "G'afur G'ulomning asarlari qaysi tilga tarjima qilingan?",
+      "variantlar": ["Faqat rus tiliga", "Ko'p tillarga", "Hech qaysi tilga", "Faqat ingliz tiliga"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "umumiy"
+    },
+    {
+      "id": 41,
+      "savol": "'Do'stlik' she'rida nima haqida so'z boradi?",
+      "variantlar": ["Vatan", "Do'stlik qadri", "Mehnat", "Tabiat"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 42,
+      "savol": "G'afur G'ulom qaysi adabiy oqimga mansub?",
+      "variantlar": ["Romantizm", "Realizm", "Modernizm", "Klassitsizm"],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "umumiy"
+    },
+    {
+      "id": 43,
+      "savol": "'Tinchlik' she'ri qaysi davr mahsulidir?",
+      "variantlar": ["Urush davri", "Tinchlik davri", "Urushdan keyin", "Inqilobdan oldin"],
+      "togri": 2,
+      "daraja": "orta",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 44,
+      "savol": "G'afur G'ulom qaysi yozuvchilar bilan hamkorlik qilgan?",
+      "variantlar": ["Oybek, Hamid Olimjon", "Cho'lpon", "Fitrat", "A va B"],
+      "togri": 0,
+      "daraja": "qiyin",
+      "mavzu": "hayot"
+    },
+    {
+      "id": 45,
+      "savol": "'Yoshlik' she'ri kimga manzur?",
+      "variantlar": ["Qariyalarga", "Yoshlarga", "Bolalarga", "Barcha avlodga"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 46,
+      "savol": "G'afur G'ulomning eng mashhur asari qaysi?",
+      "variantlar": ["Yulduz", "Shum bola", "Yillar sadosi", "Hammasi"],
+      "togri": 3,
+      "daraja": "orta",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 47,
+      "savol": "G'afur G'ulom bugungi kunda qanday esda qolinadi?",
+      "variantlar": ["Unutilgan", "Buyuk shoir sifatida", "Oddiy yozuvchi", "Noma'lum"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "umumiy"
+    },
+    {
+      "id": 48,
+      "savol": "G'afur G'ulom asarlarini kim o'qiydi?",
+      "variantlar": ["Faqat o'quvchilar", "Barcha yoshdagilar", "Faqat talabalar", "Hech kim"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "umumiy"
+    },
+    {
+      "id": 49,
+      "savol": "G'afur G'ulomning merosi nimadan iborat?",
+      "variantlar": ["Faqat she'rlar", "She'r, doston, roman, hikoyalar", "Faqat romanlar", "Maktublar"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar"
+    },
+    {
+      "id": 50,
+      "savol": "G'afur G'ulom o'zbek adabiyotiga qanday hissa qo'shgan?",
+      "variantlar": ["Hech qanday", "Kichik", "Katta va muhim", "O'rtacha"],
+      "togri": 2,
+      "daraja": "oson",
+      "mavzu": "umumiy"
+    }
+  ]
+}

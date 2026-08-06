@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <script>
+    (function(){var p=location.pathname.replace(/\\/g,'/'),m='/gafur-gulom-platform/',b='/';if(p.indexOf(m)!==-1)b=p.slice(0,p.indexOf(m)+m.length);else if(p.indexOf('/pages/')!==-1)b=p.slice(0,p.indexOf('/pages/')+1);else{var i=p.lastIndexOf('/');b=i<=0?'/':p.slice(0,i+1);}var e=document.createElement('base');e.href=b;document.head.insertBefore(e,document.head.firstChild);window.PLATFORM_BASE=b;window.platformUrl=function(r){return b+String(r||'').replace(/^\//,'');};})();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G'afur G'ulom hayoti — G'afur G'ulom</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="pages/hayot.css?v=1">
+</head>
+<body class="page-hayot">
+    <div id="header-container"></div>
+
+    <!-- 1. Biography Hero -->
+    <section class="hy-hero" id="hy-hero" aria-labelledby="hy-hero-title">
+        <div class="hy-hero__inner">
+            <div class="hy-hero__grid">
+                <div class="hy-hero__content">
+                    <p class="hy-hero__kicker">Raqamli biografiya</p>
+                    <h1 class="hy-hero__title" id="hy-hero-title">G'afur G'ulom hayoti</h1>
+                    <p class="hy-hero__years" id="hy-hero-years">1889 — 1966</p>
+                    <p class="hy-hero__intro" id="hy-hero-intro"></p>
+                    <blockquote class="hy-hero__quote" id="hy-hero-quote"></blockquote>
+                    <div class="hy-hero__stats" id="hy-hero-stats" aria-label="Hayot statistikasi"></div>
+                    <div class="hy-hero__actions">
+                        <a class="hy-btn-primary" href="#hy-timeline">Hayot yo'lini kashf etish</a>
+                        <a class="hy-btn-outline hy-btn-outline--light" href="pages/asarlar.html">Asarlarni ko'rish</a>
+                    </div>
+                </div>
+                <div class="hy-hero__portrait-wrap">
+                    <img src="assets/images/gafur-gulom.jpg" alt="G'afur G'ulom portreti" class="hy-hero__portrait" width="420" height="520" loading="eager">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <nav class="hy-jump" aria-label="Sahifa bo'limlari">
+        <div class="hy-jump__inner">
+            <a href="#hy-overview">Umumiy</a>
+            <a href="#hy-timeline">Voqea</a>
+            <a href="#hy-facts">Faktlar</a>
+            <a href="#hy-awards">Unvonlar</a>
+            <a href="#hy-xotiralar">Xotiralar</a>
+            <a href="#hy-documents">Hujjatlar</a>
+            <a href="#hy-legacy">Meros</a>
+            <a href="#hy-next">Davom eting</a>
+        </div>
+    </nav>
+
+    <main class="hy-page">
+        <div class="hy-page__inner">
+
+            <!-- 2. Quick Overview -->
+            <section class="hy-section" id="hy-overview" aria-labelledby="hy-overview-title">
+                <header class="hy-section__head">
+                    <h2 class="hy-section__title" id="hy-overview-title">Qisqa ko'rinish</h2>
+                    <p class="hy-section__lead">Hayotning asosiy bosqichlari bir nazarada</p>
+                </header>
+                <div class="hy-overview" id="hy-overview-grid"></div>
+            </section>
+
+            <!-- 3. Interactive Life Timeline -->
+            <section class="hy-section hy-section--timeline" id="hy-timeline" aria-labelledby="hy-timeline-title">
+                <header class="hy-section__head">
+                    <h2 class="hy-section__title" id="hy-timeline-title">Hayot yo'li</h2>
+                    <p class="hy-section__lead">Voqealar xronologiyasi — bosqichlar bo'yicha guruhlangan</p>
+                </header>
+                <div class="hy-filters" id="hy-timeline-filters" role="tablist" aria-label="Bosqich filtri"></div>
+                <div class="hy-timeline" id="hy-timeline-root"></div>
+            </section>
+
+            <!-- 4. Interesting Facts -->
+            <section class="hy-section" id="hy-facts" aria-labelledby="hy-facts-title">
+                <header class="hy-section__head">
+                    <h2 class="hy-section__title" id="hy-facts-title">Qiziqarli faktlar</h2>
+                    <p class="hy-section__lead">Faqat tasdiqlangan ma'lumotlar</p>
+                </header>
+                <div class="hy-facts" id="hy-facts-grid"></div>
+            </section>
+
+            <!-- 5. Awards & Recognition -->
+            <section class="hy-section" id="hy-awards" aria-labelledby="hy-awards-title">
+                <header class="hy-section__head">
+                    <h2 class="hy-section__title" id="hy-awards-title">Mukofotlar va e'tirof</h2>
+                    <p class="hy-section__lead">Rasmiy unvonlar va yubiley tadbirlari</p>
+                </header>
+                <div class="hy-awards" id="hy-awards-grid"></div>
+            </section>
+
+            <!-- 6. Zamondoshlar ovozi -->
+            <section class="hy-section" id="hy-xotiralar" aria-labelledby="hy-xotiralar-title">
+                <header class="hy-section__head">
+                    <h2 class="hy-section__title" id="hy-xotiralar-title">Zamondoshlar ovozi</h2>
+                    <p class="hy-section__lead">Adiblar va shoirlar xotirasi</p>
+                </header>
+                <div class="hy-quotes" id="hy-quotes-grid"></div>
+            </section>
+
+            <!-- 7. Historical Documents -->
+            <section class="hy-section" id="hy-documents" aria-labelledby="hy-documents-title">
+                <header class="hy-section__head">
+                    <h2 class="hy-section__title" id="hy-documents-title">Tarixiy hujjatlar</h2>
+                    <p class="hy-section__lead">Portret va kelajakdagi arxiv materiallari</p>
+                </header>
+                <div class="hy-documents" id="hy-documents-grid"></div>
+            </section>
+
+            <!-- 8. Meros (Legacy) -->
+            <section class="hy-section hy-section--legacy" id="hy-legacy" aria-labelledby="hy-legacy-title">
+                <header class="hy-section__head">
+                    <h2 class="hy-section__title" id="hy-legacy-title">Meros</h2>
+                    <p class="hy-section__lead">Abadiy qolgan adabiy meros</p>
+                </header>
+                <div class="hy-legacy" id="hy-legacy-content"></div>
+            </section>
+
+            <!-- 9. Keyingi qadam -->
+            <section class="hy-section" id="hy-next" aria-labelledby="hy-next-title">
+                <header class="hy-section__head">
+                    <h2 class="hy-section__title" id="hy-next-title">Keyingi qadam</h2>
+                    <p class="hy-section__lead">Biografiyadan keyin nima o'rganasiz?</p>
+                </header>
+                <div class="hy-next" id="hy-next-grid"></div>
+            </section>
+
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="components/header.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="pages/hayot-page.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobil Navigatsiya Demo - G'afur G'ulom</title>
+    <style>
+        :root {
+            --primary: #1a3c5e;
+            --secondary: #c9a84c;
+            --bg: #f9f6f0;
+            --text: #2d2d2d;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --radius: 12px;
+            --border: #e0e0e0;
+            --text-light: #666666;
+        }
+
+        body.dark-mode {
+            --bg: #0f1923;
+            --card-bg: #1a2d3d;
+            --text: #e8e0d0;
+            --text-light: #a89f91;
+            --border: #2d3f4f;
+            background-color: #0f1923;
+            color: #e8e0d0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 80px;
+            transition: all 0.3s ease;
+        }
+
+        .demo-header {
+            background: linear-gradient(135deg, var(--primary), #2a5a8a);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .demo-header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .demo-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #1a3c5e;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .demo-btn:active {
+            transform: scale(0.95);
+        }
+
+        .content {
+            padding: 2rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        /* Mobile Drawer */
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-drawer.open {
+            pointer-events: all;
+            opacity: 1;
+        }
+
+        .drawer-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+        }
+
+        .drawer-content {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 85%;
+            max-width: 320px;
+            height: 100%;
+            background: var(--card-bg);
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.2);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .mobile-drawer.open .drawer-content {
+            transform: translateX(0);
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, var(--primary), #2a5a8a);
+        }
+
+        .drawer-header h3 {
+            margin: 0;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .drawer-close {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .drawer-close:active {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0.95);
+        }
+
+        .drawer-menu {
+            padding: 16px;
+        }
+
+        .drawer-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .drawer-item:active {
+            transform: scale(0.98);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .drawer-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            border-radius: 12px;
+            font-size: 24px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+        }
+
+        .drawer-text {
+            flex: 1;
+        }
+
+        .drawer-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .drawer-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* Mobile Bottom Navigation */
+        .mobile-bottom-nav {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 8px 0;
+        }
+
+        .bottom-nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 4px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .bottom-nav-item .nav-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .bottom-nav-item.active {
+            color: #d4af37;
+        }
+
+        .bottom-nav-item.active .nav-icon {
+            stroke: #d4af37;
+            transform: scale(1.1);
+        }
+
+        .bottom-nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, #d4af37, #f4d03f);
+            border-radius: 0 0 3px 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-header">
+        <h1>📱 Mobil Navigatsiya Demo</h1>
+        <p>G'afur G'ulom Ta'limiy Platformasi</p>
+    </div>
+
+    <div class="demo-controls">
+        <button class="demo-btn" onclick="openDrawer()">🍔 Drawer Menyu</button>
+        <button class="demo-btn" onclick="toggleDark()">🌓 Dark Mode</button>
+    </div>
+
+    <div class="content">
+        <div class="feature-card">
+            <h3>🎯 Pastki Navigatsiya Bar</h3>
+            <p>Ekranning pastida 5 ta asosiy bo'lim joylashgan:</p>
+            <ul class="feature-list">
+                <li>Bosh sahifa - Asosiy sahifa</li>
+                <li>Asarlari - She'rlar va asarlar</li>
+                <li>Ta'lim - Ta'limiy materiallar</li>
+                <li>Multimedia - Video va audio</li>
+                <li>Hamjamiyat - Ijtimoiy bo'lim</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3>🍔 Drawer Menyu</h3>
+            <p>Hamburger tugmasi orqali ochiladi:</p>
+            <ul class="feature-list">
+                <li>Hayoti - Hayot va ijodi</li>
+                <li>Ilmiy - Ilmiy maqolalar</li>
+                <li>Interaktiv - O'yinlar va testlar</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3>✨ Dizayn Xususiyatlari</h3>
+            <ul class="feature-list">
+                <li>Karta uslubida elementlar</li>
+                <li>Yumaloq burchaklar (12px)</li>
+                <li>Yengil soyalar</li>
+                <li>Smooth animatsiyalar</li>
+                <li>Oltin aksent rang (#d4af37)</li>
+                <li>Dark mode qo'llab-quvvatlash</li>
+                <li>Touch-friendly o'lchamlar</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3>📐 Responsive</h3>
+            <p>Mobil qurilmalarda (< 768px) avtomatik faollashadi</p>
+        </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="drawer-overlay" onclick="closeDrawer()"></div>
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3>Menyu</h3>
+                <button class="drawer-close" onclick="closeDrawer()">✕</button>
+            </div>
+            <div class="drawer-menu">
+                <a href="#" class="drawer-item">
+                    <div class="drawer-icon">👤</div>
+                    <div class="drawer-text">
+                        <div class="drawer-title">Hayoti</div>
+                        <div class="drawer-desc">Hayot va ijodi</div>
+                    </div>
+                </a>
+                <a href="#" class="drawer-item">
+                    <div class="drawer-icon">📚</div>
+                    <div class="drawer-text">
+                        <div class="drawer-title">Ilmiy</div>
+                        <div class="drawer-desc">Ilmiy maqolalar</div>
+                    </div>
+                </a>
+                <a href="#" class="drawer-item">
+                    <div class="drawer-icon">🎮</div>
+                    <div class="drawer-text">
+                        <div class="drawer-title">Interaktiv</div>
+                        <div class="drawer-desc">O'yinlar va testlar</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <a href="#" class="bottom-nav-item active" onclick="setActive(event, 0)">
+            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>Bosh sahifa</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="setActive(event, 1)">
+            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span>Asarlari</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="setActive(event, 2)">
+            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+            <span>Ta'lim</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="setActive(event, 3)">
+            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span>Multimedia</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="setActive(event, 4)">
+            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Hamjamiyat</span>
+        </a>
+    </nav>
+
+    <script>
+        function openDrawer() {
+            document.getElementById('mobileDrawer').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDrawer() {
+            document.getElementById('mobileDrawer').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function toggleDark() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function setActive(event, index) {
+            event.preventDefault();
+            document.querySelectorAll('.bottom-nav-item').forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+        }
+    </script>
+</body>
+</html>

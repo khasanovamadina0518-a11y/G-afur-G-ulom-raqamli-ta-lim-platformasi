@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <script>
+    (function(){var p=location.pathname.replace(/\\/g,'/'),m='/gafur-gulom-platform/',b='/';if(p.indexOf(m)!==-1)b=p.slice(0,p.indexOf(m)+m.length);else if(p.indexOf('/pages/')!==-1)b=p.slice(0,p.indexOf('/pages/')+1);else{var i=p.lastIndexOf('/');b=i<=0?'/':p.slice(0,i+1);}var e=document.createElement('base');e.href=b;document.head.insertBefore(e,document.head.firstChild);window.PLATFORM_BASE=b;window.platformUrl=function(r){return b+String(r||'').replace(/^\//,'');};})();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ilmiy Arxiv - G'afur G'ulom</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="pages/ilmiy.css?v=1">
+</head>
+<body class="page-ilmiy">
+    <div id="header-container"></div>
+
+    <section class="ilm-hero" aria-labelledby="ilm-hero-title">
+        <div class="ilm-hero__inner">
+            <p class="ilm-hero__kicker">Ilmiy tadqiqotlar markazi</p>
+            <h1 class="ilm-hero__title" id="ilm-hero-title">Ilmiy Arxiv</h1>
+            <p class="ilm-hero__text">G'afur G'ulom ijodi bo'yicha ilmiy maqolalar, dissertatsiyalar, atamalar lug'ati va bibliografiya generatori.</p>
+            <div class="ilm-hero__stats" id="ilm-hero-stats" aria-label="Arxiv statistikasi"></div>
+        </div>
+    </section>
+
+    <main class="ilm-page">
+        <div class="ilm-page__inner">
+            <nav class="ilm-tabs" aria-label="Ilmiy arxiv bo'limlari">
+                <button class="tab-btn active" type="button" data-tab="maqolalar">Maqolalar</button>
+                <button class="tab-btn" type="button" data-tab="dissertatsiyalar">Dissertatsiyalar</button>
+                <button class="tab-btn" type="button" data-tab="lugat">Atamalar lug'ati</button>
+                <button class="tab-btn" type="button" data-tab="bibliografiya">Bibliografiya</button>
+            </nav>
+
+            <!-- Maqolalar Tab -->
+            <div class="tab-content active" data-tab="maqolalar">
+                <div class="filter-panel">
+                    <h2 class="filter-panel__title">Qidiruv va filtr</h2>
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="search-input">Qidiruv</label>
+                            <input type="text" id="search-input" placeholder="Sarlavha yoki muallif...">
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-lang">Til</label>
+                            <select id="filter-lang">
+                                <option value="all">Hammasi</option>
+                                <option value="o'zbek">O'zbek</option>
+                                <option value="rus">Rus</option>
+                                <option value="ingliz">Ingliz</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-year-from">Yil (dan)</label>
+                            <input type="number" id="filter-year-from" min="1960" max="2024" placeholder="1960">
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-year-to">Yil (gacha)</label>
+                            <input type="number" id="filter-year-to" min="1960" max="2024" placeholder="2024">
+                        </div>
+                    </div>
+                    <div class="filter-actions">
+                        <button class="ilm-btn-primary" type="button" onclick="applyFilters()">Qidirish</button>
+                        <button class="ilm-btn-outline" type="button" onclick="resetFilters()">Tozalash</button>
+                    </div>
+                </div>
+
+                <div class="ilm-papers" id="articles-container"></div>
+            </div>
+
+            <!-- Dissertatsiyalar Tab -->
+            <div class="tab-content" data-tab="dissertatsiyalar">
+                <div class="filter-panel">
+                    <h2 class="filter-panel__title">Qidiruv</h2>
+                    <div class="filter-group">
+                        <label for="diss-search">Muallif yoki sarlavha</label>
+                        <input type="text" id="diss-search" placeholder="Muallif yoki sarlavha...">
+                    </div>
+                </div>
+
+                <div class="ilm-papers" id="dissertations-container"></div>
+            </div>
+
+            <!-- Atamalar lug'ati Tab -->
+            <div class="tab-content" data-tab="lugat">
+                <div class="filter-panel">
+                    <h2 class="filter-panel__title">Qidiruv</h2>
+                    <div class="filter-group">
+                        <label for="term-search">Atama qidirish</label>
+                        <input type="text" id="term-search" placeholder="Atama qidirish...">
+                    </div>
+                </div>
+
+                <div class="alphabet-nav" id="alphabet-nav"></div>
+
+                <div id="terms-container"></div>
+            </div>
+
+            <!-- Bibliografiya Tab -->
+            <div class="tab-content" data-tab="bibliografiya">
+                <div class="bibliography-section">
+                    <h2>Bibliografiya generatori</h2>
+                    <p>Maqolalar bo'limidan kerakli manbalarni tanlang, so'ngra format tanlang va iqtiboslarni generatsiya qiling.</p>
+
+                    <div id="selected-count">
+                        Tanlangan manbalar: <span id="count">0</span>
+                    </div>
+
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1rem; color: var(--ilm-navy);">Format tanlang:</h3>
+                    <div class="format-selector">
+                        <button class="format-btn active" type="button" data-format="apa">APA</button>
+                        <button class="format-btn" type="button" data-format="mla">MLA</button>
+                        <button class="format-btn" type="button" data-format="gost">GOST</button>
+                        <button class="format-btn" type="button" data-format="uzbek">O'zbekcha akademik</button>
+                    </div>
+
+                    <button class="ilm-btn-primary" type="button" onclick="generateBibliography()">Generatsiya qilish</button>
+
+                    <div id="bibliography-output" class="bibliography-output" style="display: none;"></div>
+
+                    <div id="bibliography-actions" style="display: none; margin-top: 1rem;">
+                        <button class="ilm-btn-primary" type="button" onclick="copyToClipboard()">Hammasini nusxa olish</button>
+                        <button class="ilm-btn-outline" type="button" onclick="exportToWord()" style="margin-left: 0.75rem;">Word ga eksport</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="components/header.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="pages/ilmiy-page.js?v=2"></script>
+</body>
+</html>

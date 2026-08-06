@@ -1,0 +1,772 @@
+/* ===================================
+   Ta'lim — Learning Center (Phase 9)
+   Scoped under .page-talim
+   =================================== */
+
+.page-talim {
+    --tl-navy: #1a3c5e;
+    --tl-gold: #c9a84c;
+    --tl-royal: #2563eb;
+    --tl-border: #e5e7eb;
+    --tl-muted: #6b7280;
+    --tl-text: #111827;
+    --tl-bg: #f8f9fb;
+    --tl-card: #ffffff;
+    --tl-shadow: 0 4px 24px rgba(26, 60, 94, 0.08);
+    --tl-shadow-soft: 0 2px 12px rgba(17, 24, 39, 0.06);
+    background: var(--tl-bg);
+}
+
+.page-talim .tl-page {
+    padding: 0 0 3rem;
+}
+
+.page-talim .tl-page__inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 4vw, 1.5rem);
+}
+
+/* Hero */
+.page-talim .tl-hero {
+    background: linear-gradient(135deg, #1a3c5e 0%, #234a72 55%, #1a3c5e 100%);
+    color: #fff;
+    padding: clamp(2.5rem, 6vw, 3.5rem) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-talim .tl-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 90% 15%, rgba(201, 168, 76, 0.2), transparent 42%);
+    pointer-events: none;
+}
+
+.page-talim .tl-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 4vw, 1.5rem);
+}
+
+.page-talim .tl-hero__kicker {
+    margin: 0 0 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tl-gold);
+}
+
+.page-talim .tl-hero__title {
+    margin: 0 0 0.75rem;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 700;
+}
+
+.page-talim .tl-hero__text {
+    margin: 0 0 1.25rem;
+    max-width: 38rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.page-talim .tl-hero__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+}
+
+.page-talim .tl-hero__stat-num {
+    font-weight: 700;
+    color: var(--tl-gold);
+    font-size: 1.125rem;
+}
+
+/* Tabs */
+.page-talim .tl-tabs {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    margin: 1.5rem 0 1.25rem;
+    border-bottom: 1px solid var(--tl-border);
+    background: var(--tl-card);
+    padding: 0.5rem clamp(1rem, 4vw, 1.5rem) 0;
+    border-radius: 12px 12px 0 0;
+    box-shadow: var(--tl-shadow-soft);
+}
+
+.page-talim .tl-tabs .tab-btn {
+    padding: 0.85rem 1.15rem;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--tl-muted);
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.page-talim .tl-tabs .tab-btn:hover {
+    color: var(--tl-navy);
+}
+
+.page-talim .tl-tabs .tab-btn.active {
+    color: var(--tl-navy);
+    border-bottom-color: var(--tl-gold);
+}
+
+.page-talim .tab-content {
+    display: none;
+}
+
+.page-talim .tab-content.active {
+    display: block;
+}
+
+/* Layout */
+.page-talim .tl-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.page-talim .tl-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.page-talim .tl-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: sticky;
+    top: 88px;
+}
+
+/* Cards */
+.page-talim .tl-card {
+    background: var(--tl-card);
+    border: 1px solid var(--tl-border);
+    border-radius: 12px;
+    padding: 1.35rem;
+    box-shadow: var(--tl-shadow-soft);
+}
+
+.page-talim .tl-card__title {
+    margin: 0 0 0.85rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--tl-navy);
+}
+
+.page-talim .tl-section-title {
+    margin: 0 0 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--tl-navy);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.page-talim .tl-overview__text {
+    margin: 0;
+    color: var(--tl-muted);
+    line-height: 1.65;
+    font-size: 0.9375rem;
+}
+
+.page-talim .tl-overview__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-top: 0.85rem;
+    font-size: 0.8125rem;
+    color: var(--tl-muted);
+}
+
+.page-talim .tl-overview__meta strong {
+    color: var(--tl-navy);
+}
+
+/* Modules (class selector) */
+.page-talim .class-selector {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+.page-talim .class-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    background: #fff;
+    border: 1px solid var(--tl-border);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--tl-navy);
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.page-talim .class-btn:hover {
+    border-color: var(--tl-navy);
+}
+
+.page-talim .class-btn.active {
+    background: var(--tl-navy);
+    color: #fff;
+    border-color: var(--tl-navy);
+    transform: translateY(-1px);
+}
+
+/* Lesson cards */
+.page-talim .lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.page-talim .lesson-card {
+    position: relative;
+    background: var(--tl-card);
+    border: 1px solid var(--tl-border);
+    border-radius: 12px;
+    padding: 1.35rem 1.35rem 1.35rem 1.5rem;
+    box-shadow: var(--tl-shadow-soft);
+    overflow: hidden;
+}
+
+.page-talim .lesson-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--tl-gold), var(--tl-navy));
+}
+
+.page-talim .lesson-card h3 {
+    margin: 0 0 0.65rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.125rem;
+    color: var(--tl-navy);
+    line-height: 1.35;
+}
+
+.page-talim .lesson-card__meta {
+    font-size: 0.875rem;
+    color: var(--tl-muted);
+    margin-bottom: 0.65rem;
+}
+
+.page-talim .lesson-card__topics {
+    margin: 0.75rem 0 1rem;
+    padding-left: 1.1rem;
+    color: var(--tl-text);
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.page-talim .lesson-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* Path, materials, assignments */
+.page-talim .tl-path-list,
+.page-talim .tl-mini-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.page-talim .tl-path-list li,
+.page-talim .tl-mini-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--tl-border);
+    font-size: 0.875rem;
+    color: var(--tl-text);
+}
+
+.page-talim .tl-path-list li:last-child,
+.page-talim .tl-mini-list li:last-child {
+    border-bottom: none;
+}
+
+.page-talim .tl-path-num {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: rgba(26, 60, 94, 0.08);
+    color: var(--tl-navy);
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-talim .tl-materials {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+}
+
+.page-talim .tl-material {
+    padding: 0.85rem;
+    border: 1px solid var(--tl-border);
+    border-radius: 10px;
+    background: rgba(26, 60, 94, 0.02);
+}
+
+.page-talim .tl-material__title {
+    margin: 0 0 0.25rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--tl-navy);
+}
+
+.page-talim .tl-material__meta {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--tl-muted);
+}
+
+/* Sidebar */
+.page-talim .tl-progress__bar {
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 0.5rem 0 0.75rem;
+}
+
+.page-talim .tl-progress__fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--tl-gold), #d4b55a);
+    border-radius: 999px;
+    transition: width 0.35s ease;
+}
+
+.page-talim .tl-progress__label {
+    font-size: 0.8125rem;
+    color: var(--tl-muted);
+}
+
+.page-talim .tl-progress__pct {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--tl-navy);
+}
+
+.page-talim .tl-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.7rem 1.15rem;
+    background: var(--tl-royal);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s ease;
+    width: 100%;
+}
+
+.page-talim .tl-btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.page-talim .tl-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.65rem 1rem;
+    background: #fff;
+    color: var(--tl-navy);
+    border: 1px solid var(--tl-border);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.page-talim .tl-btn-outline:hover {
+    border-color: var(--tl-navy);
+    background: rgba(26, 60, 94, 0.04);
+}
+
+.page-talim .tl-btn-navy {
+    background: var(--tl-navy);
+    color: #fff;
+    border: none;
+}
+
+.page-talim .tl-btn-navy:hover {
+    background: #153049;
+}
+
+.page-talim .tl-cert-preview {
+    border: 2px dashed rgba(201, 168, 76, 0.45);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    background: rgba(201, 168, 76, 0.06);
+}
+
+.page-talim .tl-cert-preview__icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.35rem;
+}
+
+.page-talim .tl-cert-preview__text {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--tl-muted);
+    line-height: 1.5;
+}
+
+/* Quiz */
+.page-talim .quiz-start,
+.page-talim .quiz-question,
+.page-talim .quiz-result {
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--tl-card);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--tl-shadow-soft);
+    border: 1px solid var(--tl-border);
+}
+
+.page-talim .quiz-start input {
+    width: 100%;
+    padding: 0.75rem 0.85rem;
+    margin: 0.75rem 0 1rem;
+    border: 1px solid var(--tl-border);
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.page-talim .difficulty-btns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin: 1rem 0 1.25rem;
+}
+
+.page-talim .difficulty-btn {
+    padding: 1rem;
+    border: 1px solid var(--tl-border);
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--tl-navy);
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.page-talim .difficulty-btn.active {
+    background: var(--tl-navy);
+    color: #fff;
+    border-color: var(--tl-navy);
+}
+
+.page-talim .quiz-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.page-talim .progress-bar {
+    flex: 1;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.page-talim .progress-fill {
+    height: 100%;
+    background: var(--tl-gold);
+    transition: width 0.3s ease;
+}
+
+.page-talim .timer {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--tl-navy);
+    min-width: 2.5rem;
+    text-align: right;
+}
+
+.page-talim .timer.warning {
+    color: #dc2626;
+    animation: tl-pulse 1s infinite;
+}
+
+@keyframes tl-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+}
+
+.page-talim .question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.375rem;
+    color: var(--tl-navy);
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+}
+
+.page-talim .answers-grid {
+    display: grid;
+    gap: 0.65rem;
+    margin-bottom: 1rem;
+}
+
+.page-talim .answer-btn {
+    padding: 1rem 1.1rem;
+    text-align: left;
+    background: #fff;
+    border: 1px solid var(--tl-border);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.page-talim .answer-btn:hover:not(:disabled) {
+    border-color: var(--tl-royal);
+}
+
+.page-talim .answer-btn.correct {
+    background: #059669;
+    color: #fff;
+    border-color: #059669;
+}
+
+.page-talim .answer-btn.wrong {
+    background: #dc2626;
+    color: #fff;
+    border-color: #dc2626;
+}
+
+.page-talim .answer-btn:disabled {
+    cursor: not-allowed;
+}
+
+.page-talim .quiz-result {
+    text-align: center;
+}
+
+.page-talim .score-display {
+    font-size: 2.5rem;
+    color: var(--tl-gold);
+    font-weight: 700;
+    margin: 1rem 0;
+}
+
+.page-talim .stars {
+    font-size: 2rem;
+    margin: 1rem 0;
+}
+
+.page-talim .tl-quiz-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.page-talim #certificate-canvas {
+    border: 1px solid var(--tl-border);
+    border-radius: 10px;
+    max-width: 100%;
+    display: block;
+    margin: 1rem auto;
+}
+
+.page-talim .tl-empty {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--tl-muted);
+    background: var(--tl-card);
+    border-radius: 12px;
+    border: 1px dashed var(--tl-border);
+}
+
+.page-talim .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(17, 24, 39, 0.55);
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.page-talim .modal-content {
+    position: relative;
+    background: var(--tl-card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    max-width: 860px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--tl-shadow);
+    border: 1px solid var(--tl-border);
+}
+
+.page-talim .modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(26, 60, 94, 0.08);
+    color: var(--tl-navy);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.page-talim .modal-close:hover {
+    background: rgba(26, 60, 94, 0.14);
+}
+
+.page-talim .tl-bank-detail {
+    background: var(--tl-card);
+    border: 1px solid var(--tl-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.page-talim .tl-bank-item {
+    background: rgba(26, 60, 94, 0.03);
+    border: 1px solid var(--tl-border);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.page-talim .tl-bank-item__q {
+    font-weight: 600;
+    color: var(--tl-navy);
+    margin: 0 0 0.35rem;
+}
+
+.page-talim .tl-bank-item__meta {
+    font-size: 0.8125rem;
+    color: var(--tl-muted);
+    margin: 0 0 0.5rem;
+}
+
+.page-talim .tl-bank-item__a {
+    margin: 0.15rem 0;
+    font-size: 0.875rem;
+}
+
+.page-talim .tl-bank-item__a.is-correct {
+    color: #059669;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+    .page-talim .tl-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .page-talim .tl-aside {
+        position: static;
+        order: -1;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .page-talim .lessons-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-talim .difficulty-btns {
+        grid-template-columns: 1fr;
+    }
+
+    .page-talim .tl-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+
+    .page-talim .tl-tabs .tab-btn {
+        white-space: nowrap;
+    }
+}
+
+/* Dark mode */
+body.dark-mode.page-talim {
+    --tl-bg: #0f172a;
+    --tl-card: #1e293b;
+    --tl-border: #334155;
+    --tl-text: #e2e8f0;
+    --tl-muted: #94a3b8;
+}
+
+body.dark-mode.page-talim .class-btn,
+body.dark-mode.page-talim .difficulty-btn,
+body.dark-mode.page-talim .answer-btn,
+body.dark-mode.page-talim .tl-btn-outline {
+    background: #0f172a;
+    color: var(--tl-text);
+}
+
+body.dark-mode.page-talim .tl-card,
+body.dark-mode.page-talim .lesson-card,
+body.dark-mode.page-talim .quiz-start,
+body.dark-mode.page-talim .quiz-question,
+body.dark-mode.page-talim .quiz-result {
+    background: var(--tl-card);
+    border-color: var(--tl-border);
+}
+
+body.dark-mode.page-talim .tl-card__title,
+body.dark-mode.page-talim .lesson-card h3,
+body.dark-mode.page-talim .question-text,
+body.dark-mode.page-talim .tl-progress__pct {
+    color: #f1f5f9;
+}
+
+body.dark-mode.page-talim .tl-material {
+    background: rgba(15, 23, 42, 0.5);
+}

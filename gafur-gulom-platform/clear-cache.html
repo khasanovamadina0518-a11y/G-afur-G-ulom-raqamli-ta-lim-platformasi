@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cache Tozalash</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 { color: #1a3c5e; }
+        button {
+            background: #c9a84c;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #d4b865; }
+        .success { color: #4caf50; font-weight: bold; }
+        .error { color: #f44336; font-weight: bold; }
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>🧹 Cache va Storage Tozalash</h1>
+        <p>Agar sahifa yangilanmasa, quyidagi tugmalarni bosing:</p>
+        
+        <button onclick="clearAll()">🗑️ HAMMASINI TOZALASH</button>
+        <button onclick="clearLocalStorage()">📦 LocalStorage</button>
+        <button onclick="clearServiceWorker()">⚙️ Service Worker</button>
+        <button onclick="clearCookies()">🍪 Cookies</button>
+        <button onclick="window.location.reload(true)">🔄 Hard Reload</button>
+        
+        <div id="status" style="margin-top: 20px;"></div>
+    </div>
+    
+    <div class="box">
+        <h2>📊 Current Status</h2>
+        <pre id="info">Loading...</pre>
+    </div>
+    
+    <div class="box">
+        <h2>✅ Keyin Qiling:</h2>
+        <ol>
+            <li>Yuqoridagi "HAMMASINI TOZALASH" tugmasini bosing</li>
+            <li>Brauzer tabini yoping</li>
+            <li>Yangi tab oching</li>
+            <li><a href="index.html">Bosh sahifaga</a> yoki <a href="pages/asarlar.html">Asarlar sahifasiga</a> o'ting</li>
+        </ol>
+    </div>
+
+    <script>
+        async function showStatus(message, type = 'success') {
+            const status = document.getElementById('status');
+            status.innerHTML = `<p class="${type}">${message}</p>`;
+        }
+
+        async function clearLocalStorage() {
+            try {
+                localStorage.clear();
+                await showStatus('✅ LocalStorage tozalandi!');
+                updateInfo();
+            } catch (e) {
+                await showStatus('❌ Xatolik: ' + e.message, 'error');
+            }
+        }
+
+        async function clearServiceWorker() {
+            try {
+                if ('serviceWorker' in navigator) {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    for (let registration of registrations) {
+                        await registration.unregister();
+                    }
+                    await showStatus(`✅ ${registrations.length} ta Service Worker o'chirildi!`);
+                } else {
+                    await showStatus('ℹ️ Service Worker qo\'llab-quvvatlanmaydi');
+                }
+                updateInfo();
+            } catch (e) {
+                await showStatus('❌ Xatolik: ' + e.message, 'error');
+            }
+        }
+
+        async function clearCookies() {
+            try {
+                document.cookie.split(";").forEach(function(c) { 
+                    document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+                });
+                await showStatus('✅ Cookies tozalandi!');
+                updateInfo();
+            } catch (e) {
+                await showStatus('❌ Xatolik: ' + e.message, 'error');
+            }
+        }
+
+        async function clearAll() {
+            await showStatus('🔄 Tozalanmoqda...', 'info');
+            
+            // Clear localStorage
+            localStorage.clear();
+            
+            // Clear sessionStorage
+            sessionStorage.clear();
+            
+            // Clear service workers
+            if ('serviceWorker' in navigator) {
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                for (let registration of registrations) {
+                    await registration.unregister();
+                }
+            }
+            
+            // Clear cookies
+            document.cookie.split(";").forEach(function(c) { 
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+            });
+            
+            // Clear cache storage
+            if ('caches' in window) {
+                const cacheNames = await caches.keys();
+                await Promise.all(cacheNames.map(name => caches.delete(name)));
+            }
+            
+            await showStatus('✅ HAMMASI TOZALANDI! Endi sahifani yoping va qaytadan oching.');
+            updateInfo();
+        }
+
+        async function updateInfo() {
+            const info = document.getElementById('info');
+            let text = '';
+            
+            // LocalStorage
+            text += 'LocalStorage: ' + localStorage.length + ' ta element\n';
+            
+            // Service Worker
+            if ('serviceWorker' in navigator) {
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                text += 'Service Workers: ' + registrations.length + ' ta\n';
+            }
+            
+            // Cookies
+            text += 'Cookies: ' + document.cookie.split(';').length + ' ta\n';
+            
+            // Theme
+            text += '\nJoriy tema: ' + (localStorage.getItem('theme') || 'yo\'q') + '\n';
+            
+            // Cache
+            if ('caches' in window) {
+                const cacheNames = await caches.keys();
+                text += 'Cache storages: ' + cacheNames.length + ' ta\n';
+            }
+            
+            info.textContent = text;
+        }
+
+        // Initial load
+        updateInfo();
+        setInterval(updateInfo, 3000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+</head>
+<body>
+    <h1>Server ishlayapti! ✅</h1>
+    <p>Agar bu sahifani ko'rayotgan bo'lsangiz, server to'g'ri ishlayapti.</p>
+    <hr>
+    <h2>Havolalar:</h2>
+    <ul>
+        <li><a href="index.html">Bosh sahifa</a></li>
+        <li><a href="pages/hayot.html">Hayot tarixi</a></li>
+        <li><a href="pages/asarlar.html">Asarlar</a></li>
+    </ul>
+    <hr>
+    <h2>Test:</h2>
+    <button onclick="testFetch()">She'rlarni yuklash</button>
+    <div id="result"></div>
+    
+    <script>
+        async function testFetch() {
+            const result = document.getElementById('result');
+            result.innerHTML = 'Yuklanmoqda...';
+            
+            try {
+                const response = await fetch('data/sherlar.json');
+                const data = await response.json();
+                result.innerHTML = `
+                    <h3 style="color: green;">✅ Muvaffaqiyatli!</h3>
+                    <p>She'rlar soni: ${data.sherlar.length}</p>
+                    <pre>${JSON.stringify(data.sherlar[0], null, 2)}</pre>
+                `;
+            } catch (error) {
+                result.innerHTML = `
+                    <h3 style="color: red;">❌ Xato!</h3>
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

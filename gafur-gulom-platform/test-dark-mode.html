@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Dark Mode Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 50px;
+            transition: all 0.3s;
+        }
+        body.dark-mode {
+            background: #0f1923;
+            color: #e8e0d0;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            background: #c9a84c;
+            color: white;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+        body.dark-mode .status {
+            background: #1a2d3d;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dark Mode Test</h1>
+    
+    <button id="testBtn" onclick="toggleDark()">🌙 Toggle Dark Mode</button>
+    
+    <div class="status">
+        <h3>Status:</h3>
+        <p id="status">Light mode</p>
+        <p id="localStorage">LocalStorage: <span id="lsValue">none</span></p>
+        <p id="bodyClass">Body class: <span id="bcValue">none</span></p>
+    </div>
+    
+    <hr>
+    <h3>Instructions:</h3>
+    <ol>
+        <li>Click the button above</li>
+        <li>Background should change to dark</li>
+        <li>Button should show ☀️</li>
+        <li>Refresh page - dark mode should persist</li>
+    </ol>
+    
+    <script>
+        function toggleDark() {
+            console.log('Button clicked!');
+            
+            const isDark = document.body.classList.toggle('dark-mode');
+            const btn = document.getElementById('testBtn');
+            
+            if (isDark) {
+                btn.textContent = '☀️ Toggle Light Mode';
+                localStorage.setItem('theme', 'dark');
+                document.getElementById('status').textContent = 'Dark mode ACTIVE';
+            } else {
+                btn.textContent = '🌙 Toggle Dark Mode';
+                localStorage.setItem('theme', 'light');
+                document.getElementById('status').textContent = 'Light mode ACTIVE';
+            }
+            
+            updateStatus();
+        }
+        
+        function updateStatus() {
+            document.getElementById('lsValue').textContent = localStorage.getItem('theme') || 'none';
+            document.getElementById('bcValue').textContent = document.body.className || 'none';
+        }
+        
+        // Load saved theme
+        window.addEventListener('load', function() {
+            const savedTheme = localStorage.getItem('theme');
+            console.log('Saved theme:', savedTheme);
+            
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('testBtn').textContent = '☀️ Toggle Light Mode';
+                document.getElementById('status').textContent = 'Dark mode ACTIVE (loaded from storage)';
+            }
+            
+            updateStatus();
+        });
+    </script>
+</body>
+</html>

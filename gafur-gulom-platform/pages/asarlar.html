@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <script>
+    (function(){var p=location.pathname.replace(/\\/g,'/'),m='/gafur-gulom-platform/',b='/';if(p.indexOf(m)!==-1)b=p.slice(0,p.indexOf(m)+m.length);else if(p.indexOf('/pages/')!==-1)b=p.slice(0,p.indexOf('/pages/')+1);else{var i=p.lastIndexOf('/');b=i<=0?'/':p.slice(0,i+1);}var e=document.createElement('base');e.href=b;document.head.insertBefore(e,document.head.firstChild);window.PLATFORM_BASE=b;window.platformUrl=function(r){return b+String(r||'').replace(/^\//,'');};})();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elektron kutubxona - G'afur G'ulom</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/main.css?v=7">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="pages/asarlar.css?v=1">
+</head>
+<body class="page-asarlar">
+    <div id="header-container"></div>
+
+    <main class="library-page">
+        <div class="library-page__inner">
+            <header class="library-header">
+                <a href="pages/index.html" class="library-header__back" aria-label="Bosh sahifaga qaytish">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+                </a>
+                <h1 class="library-header__title">Elektron kutubxona</h1>
+            </header>
+
+            <div class="tabs-nav library-tabs">
+                <button class="tab-btn active" type="button" data-tab="sherlar">She'rlar</button>
+                <button class="tab-btn" type="button" data-tab="dostonlar">Dostonlar</button>
+            </div>
+
+            <!-- She'rlar -->
+            <div class="tab-content active" data-tab="sherlar">
+                <div class="library-toolbar">
+                    <div class="library-search-row">
+                        <label class="library-search" for="search-input">
+                            <svg class="library-search__icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+                            <input type="search" class="search-input" id="search-input" placeholder="Qidiruv..." autocomplete="off">
+                        </label>
+                        <button class="library-filter-btn" type="button" id="filter-toggle" aria-expanded="false" aria-controls="filter-panel">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                            Filtr
+                        </button>
+                    </div>
+
+                    <div class="library-filter-panel" id="filter-panel">
+                        <label for="year-filter" class="visually-hidden">Yil bo'yicha filtr</label>
+                        <select class="year-select" id="year-filter">
+                            <option value="all">Barcha yillar</option>
+                            <option value="1920-1930">1920-1930</option>
+                            <option value="1930-1940">1930-1940</option>
+                            <option value="1940-1950">1940-1950</option>
+                            <option value="1950-1966">1950-1966</option>
+                        </select>
+                    </div>
+
+                    <div class="library-chips filter-group">
+                        <button class="filter-btn active" type="button" data-mavzu="all">Barchasi</button>
+                        <button class="filter-btn" type="button" data-mavzu="Vatan">Vatan</button>
+                        <button class="filter-btn" type="button" data-mavzu="Mehnat">Mehnat</button>
+                        <button class="filter-btn" type="button" data-mavzu="Tabiat">Tabiat</button>
+                        <button class="filter-btn" type="button" data-mavzu="Muhabbat">Muhabbat</button>
+                        <button class="filter-btn" type="button" data-mavzu="Sevgi">Sevgi</button>
+                        <button class="filter-btn" type="button" data-mavzu="Bilim">Bilim</button>
+                        <button class="filter-btn" type="button" data-mavzu="favorites">Sevimlilar</button>
+                    </div>
+
+                    <div class="library-meta-row">
+                        <span class="results-count" id="results-count">0 ta she'r topildi</span>
+                        <div class="view-toggle">
+                            <button class="view-btn" type="button" data-view="grid" title="Panjara">⊞</button>
+                            <button class="view-btn active" type="button" data-view="list" title="Ro'yxat">☰</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="library-list" id="poems-grid"></div>
+
+                <button class="library-load-more is-hidden" type="button" id="load-more-btn" aria-label="Ko'proq asarlarni yuklash">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                    Yana yuklash
+                </button>
+            </div>
+
+            <!-- Dostonlar -->
+            <div class="tab-content" data-tab="dostonlar">
+                <div class="library-list" id="dostonlar-grid"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal" id="poem-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close" type="button" aria-label="Yopish">×</button>
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title"></h2>
+                <div class="modal-meta">
+                    <span class="poem-year" id="modal-year"></span>
+                    <div id="modal-badges"></div>
+                </div>
+            </div>
+            <div class="modal-text" id="modal-text"></div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" id="share-btn" type="button">Ulashish</button>
+                <button class="modal-btn modal-btn-primary" id="copy-btn" type="button">Nusxa olish</button>
+                <button class="modal-btn modal-btn-primary" id="print-btn" type="button">Chop etish</button>
+                <button class="modal-btn modal-btn-primary" id="favorite-modal-btn" type="button">Sevimlilar</button>
+                <button class="modal-btn modal-btn-secondary" id="close-btn" type="button">Yopish</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script>
+        window.toggleDarkMode = function() {
+            const body = document.body;
+            const btn = document.getElementById('darkBtn');
+            if (!btn) return;
+            const isDark = body.classList.toggle('dark-mode');
+            const icon = btn.querySelector('.dark-mode-toggle__icon');
+            if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                const btn = document.getElementById('darkBtn');
+                const icon = btn && btn.querySelector('.dark-mode-toggle__icon');
+                if (icon) icon.textContent = '☀️';
+            }
+        });
+    </script>
+    <script src="components/header.js?v=8"></script>
+    <script src="components/footer.js"></script>
+    <script src="assets/js/data.js?v=8"></script>
+    <script src="assets/js/app.js?v=8"></script>
+    <script src="pages/asarlar-page.js?v=9"></script>
+</body>
+</html>

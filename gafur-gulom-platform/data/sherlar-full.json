@@ -1,0 +1,31 @@
+{
+  "sherlar": [
+    {
+      "id": 1,
+      "sarlavha": "Seni ko'rmay",
+      "yil": 1934,
+      "mavzu": ["Vatan", "Muhabbat"],
+      "matn": "Seni ko'rmay yashash mumkinmi, ey Vatan,\nSeni ko'rmay yashash mumkinmi, ey ona?\nSening ko'zing oldida o'sgan bu bola,\nSening qo'ling ostida o'sgan bu farzand.\n\nSeni ko'rmay yashash mumkinmi, ey Vatan,\nSening havoing, sening suving, sening tuproging,\nSening tog'laring, sening daryolaring,\nSening gulzoring, sening bog'laring.\n\nMen senga qaram, sen menga qaram,\nBiz bir-birimizga qaram, ey Vatan,\nSensiz men yo'q, mensiz sen yo'q,\nBiz bir-birimizga muhtoj, ey Vatan.",
+      "qisqa": "Seni ko'rmay yashash mumkinmi, ey Vatan, / Seni ko'rmay yashash mumkinmi, ey ona?",
+      "nota": "1934-yilda yozilgan, Vatan sevgisiga bag'ishlangan eng mashhur she'rlardan biri."
+    },
+    {
+      "id": 2,
+      "sarlavha": "Yomg'ir",
+      "yil": 1936,
+      "mavzu": ["Tabiat"],
+      "matn": "Yomg'ir yog'di, yer ho'l bo'ldi,\nGul-giyoh ochildi, ko'kardi.\nDehqon xursand bo'ldi, kuldi,\nEkin yaxshi bo'ldi, ko'pardi.\n\nYomg'ir yog'di, osmon yig'ladi,\nYer kulib, gul ochdi, ko'kardi.\nBolalar xursand bo'lib chopdi,\nSuv havzalari to'ldi, toshdi.\n\nYomg'ir - bu hayot, bu baxt,\nYomg'ir - bu umid, bu saodat.\nYomg'ir yog'sin, yer yashnasin,\nXalq baxtli bo'lsin, tinch yashasin.",
+      "qisqa": "Yomg'ir yog'di, yer ho'l bo'ldi, / Gul-giyoh ochildi, ko'kardi.",
+      "nota": "Tabiat go'zalligini tasvirlovchi she'r."
+    },
+    {
+      "id": 3,
+      "sarlavha": "Mehnat",
+      "yil": 1938,
+      "mavzu": ["Mehnat"],
+      "matn": "Mehnat qil, mehnat - bu hayot,\nMehnat qil, mehnat - bu saodat.\nMehnat qilgan odam yashaydi,\nMehnat qilmagan odam o'ladi.\n\nMehnat - bu kuch, bu quvvat,\nMehnat - bu baxt, bu ne'mat.\nMehnat qil, tinma, to'xtama,\nMehnat qil, oldinga bor.\n\nMehnat qilgan odam hurmatli,\nMehnat qilgan odam sharafli.\nMehnat qil, ey insonlar,\nMehnat qil, ey do'stlar.",
+      "qisqa": "Mehnat qil, mehnat - bu hayot, / Mehnat qil, mehnat - bu saodat.",
+      "nota": "Mehnat ulug'lanishiga bag'ishlangan."
+    }
+  ]
+}

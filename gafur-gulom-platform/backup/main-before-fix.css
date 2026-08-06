@@ -1,0 +1,423 @@
+/* ===================================
+   CSS O'zgaruvchilar (Variables)
+   =================================== */
+:root {
+    --primary: #1a3c5e;
+    --secondary: #c9a84c;
+    --bg: #f9f6f0;
+    --text: #2d2d2d;
+    --card-bg: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --radius: 12px;
+    --transition: all 0.3s ease;
+    
+    /* Qo'shimcha ranglar */
+    --primary-light: #2a5a8a;
+    --primary-dark: #0f2438;
+    --secondary-light: #d4b865;
+    --text-light: #666666;
+    --border: #e0e0e0;
+    --success: #4caf50;
+    --warning: #ff9800;
+    --error: #f44336;
+}
+
+/* Dark Mode Variables */
+body.dark-mode {
+    background-color: #0f1923 !important;
+    color: #e8e0d0 !important;
+    
+    --bg: #0f1923;
+    --card-bg: #1a2d3d;
+    --text: #e8e0d0;
+    --text-light: #a89f91;
+    --primary: #2a5f8f;
+    --primary-light: #3a7faf;
+    --border: #2d3f4f;
+    --shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* ===================================
+   Global Reset
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ===================================
+   Body va Asosiy Elementlar
+   =================================== */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 16px;
+    transition: var(--transition);
+    overflow-x: hidden;
+}
+
+/* ===================================
+   Sarlavhalar (Headings)
+   =================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+h1 {
+    font-size: 3.5rem;
+    letter-spacing: -0.02em;
+}
+
+h2 {
+    font-size: 2.5rem;
+    letter-spacing: -0.01em;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+}
+
+h6 {
+    font-size: 1rem;
+}
+
+/* ===================================
+   Havolalar (Links)
+   =================================== */
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--secondary);
+}
+
+a:focus {
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
+}
+
+/* ===================================
+   Tugmalar (Buttons)
+   =================================== */
+button {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    background-color: var(--primary);
+    color: white;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:focus {
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===================================
+   Paragraflar va Matn
+   =================================== */
+p {
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+strong, b {
+    font-weight: 600;
+}
+
+em, i {
+    font-style: italic;
+}
+
+/* ===================================
+   Ro'yxatlar (Lists)
+   =================================== */
+ul, ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+/* ===================================
+   Rasmlar
+   =================================== */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ===================================
+   Hero Section
+   =================================== */
+.hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    padding: 8rem 2rem 6rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><text x="10" y="50" font-size="40" opacity="0.1" fill="white">📖</text></svg>');
+    opacity: 0.1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 4rem;
+    color: white;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.95;
+}
+
+.hero-years {
+    font-size: 1.25rem;
+    color: var(--secondary);
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ===================================
+   Sections
+   =================================== */
+section {
+    padding: 4rem 2rem;
+}
+
+.quick-links {
+    background-color: var(--bg);
+}
+
+.featured-poems {
+    background-color: var(--card-bg);
+}
+
+/* ===================================
+   Utility Classes
+   =================================== */
+.text-center {
+    text-align: center;
+}
+
+.text-light {
+    color: var(--text-light);
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+
+/* ===================================
+   Scrollbar Styling
+   =================================== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-light);
+}
+
+/* ===================================
+   Selection Styling
+   =================================== */
+::selection {
+    background-color: var(--secondary);
+    color: white;
+}
+
+::-moz-selection {
+    background-color: var(--secondary);
+    color: white;
+}
+
+/* ===================================
+   Focus Visible
+   =================================== */
+:focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
+}
+
+/* ===================================
+   Smooth Scroll
+   =================================== */
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* ===================================
+   Dark Mode Body Styles
+   =================================== */
+body.dark-mode {
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+/* Smooth transitions for theme switching */
+body, .card, .btn-primary, .btn-secondary, .btn-outline {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Auto dark mode based on system preference */
+@media (prefers-color-scheme: dark) {
+    body:not(.light-mode) {
+        --bg: #0f1923;
+        --card-bg: #1a2d3d;
+        --text: #e8e0d0;
+        --text-light: #a89f91;
+        --primary: #2a5f8f;
+        --border: #2d3f4f;
+        --shadow: 0 4px 20px rgba(0,0,0,0.3);
+        background-color: var(--bg);
+        color: var(--text);
+    }
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: var(--transition);
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1);
+    border-color: var(--secondary);
+}
+
+
+/* ===================================
+   Performance Optimizations
+   =================================== */
+
+/* Will-change for animations */
+.card:hover,
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-outline:hover,
+.quiz-answer-card:hover,
+.game-card:hover,
+.article-card:hover {
+    will-change: transform;
+}
+
+/* Lazy loading fade-in */
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+img[loading="lazy"].loaded {
+    opacity: 1;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

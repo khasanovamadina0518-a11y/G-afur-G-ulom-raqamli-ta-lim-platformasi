@@ -1,0 +1,12 @@
+{
+  "dostonlar": [
+    {
+      "id": 1,
+      "sarlavha": "Yulduz",
+      "yil": 1935,
+      "mavzu": ["Hayot", "Sevgi"],
+      "matn": "Yulduz dostoni - G'afur G'ulomning eng mashhur asarlaridan biri...",
+      "qisqa": "Yulduz ismli qizning hayoti haqida doston"
+    }
+  ]
+}

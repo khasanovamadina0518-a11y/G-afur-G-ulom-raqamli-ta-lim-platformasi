@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <script>
+    (function(){var p=location.pathname.replace(/\\/g,'/'),m='/gafur-gulom-platform/',b='/';if(p.indexOf(m)!==-1)b=p.slice(0,p.indexOf(m)+m.length);else if(p.indexOf('/pages/')!==-1)b=p.slice(0,p.indexOf('/pages/')+1);else{var i=p.lastIndexOf('/');b=i<=0?'/':p.slice(0,i+1);}var e=document.createElement('base');e.href=b;document.head.insertBefore(e,document.head.firstChild);window.PLATFORM_BASE=b;window.platformUrl=function(r){return b+String(r||'').replace(/^\//,'');};})();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ta'lim resurslari - G'afur G'ulom</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="pages/talim.css?v=1">
+</head>
+<body class="page-talim">
+    <div id="header-container"></div>
+
+    <section class="tl-hero" aria-labelledby="tl-hero-title">
+        <div class="tl-hero__inner">
+            <p class="tl-hero__kicker">O'quv markazi</p>
+            <h1 class="tl-hero__title" id="tl-hero-title">Ta'lim resurslari</h1>
+            <p class="tl-hero__text">Dars rejalar, viktorina va savol banki — o'qituvchilar va o'quvchilar uchun G'afur G'ulom bo'yicha strukturali ta'lim.</p>
+            <div class="tl-hero__stats" id="tl-hero-stats" aria-label="Ta'lim statistikasi"></div>
+        </div>
+    </section>
+
+    <main class="tl-page">
+        <div class="tl-page__inner">
+            <nav class="tl-tabs" aria-label="Ta'lim bo'limlari">
+                <button class="tab-btn active" type="button" data-tab="dars">Dars Rejalari</button>
+                <button class="tab-btn" type="button" data-tab="quiz">Viktorina</button>
+                <button class="tab-btn" type="button" data-tab="bank">Savol Banki</button>
+            </nav>
+
+            <!-- Dars Rejalari -->
+            <div class="tab-content active" data-tab="dars">
+                <div class="tl-layout">
+                    <div class="tl-main">
+                        <!-- Course Overview -->
+                        <section class="tl-card" aria-labelledby="tl-overview-title">
+                            <h2 class="tl-card__title" id="tl-overview-title">Kurs haqida</h2>
+                            <div id="tl-course-overview"></div>
+                        </section>
+
+                        <!-- Learning Modules -->
+                        <section class="tl-card" aria-labelledby="tl-modules-title">
+                            <h2 class="tl-card__title" id="tl-modules-title">O'quv modullari</h2>
+                            <p class="tl-overview__text" style="margin-bottom: 0.85rem;">Sinf darajasini tanlang:</p>
+                            <div class="class-selector">
+                                <button class="class-btn active" type="button" data-class="5">5</button>
+                                <button class="class-btn" type="button" data-class="6">6</button>
+                                <button class="class-btn" type="button" data-class="7">7</button>
+                                <button class="class-btn" type="button" data-class="8">8</button>
+                                <button class="class-btn" type="button" data-class="9">9</button>
+                                <button class="class-btn" type="button" data-class="10">10</button>
+                                <button class="class-btn" type="button" data-class="11">11</button>
+                            </div>
+                        </section>
+
+                        <!-- Lesson Cards -->
+                        <section class="tl-card" aria-labelledby="tl-lessons-title">
+                            <h2 class="tl-card__title" id="tl-lessons-title">Dars kartalari</h2>
+                            <div class="lessons-grid" id="lessons-container"></div>
+                        </section>
+
+                        <!-- Recommended Path -->
+                        <section class="tl-card" aria-labelledby="tl-path-title">
+                            <h2 class="tl-card__title" id="tl-path-title">Tavsiya etilgan o'quv yo'li</h2>
+                            <ol class="tl-path-list" id="tl-learning-path"></ol>
+                        </section>
+
+                        <!-- Downloadable Materials -->
+                        <section class="tl-card" aria-labelledby="tl-materials-title">
+                            <h2 class="tl-card__title" id="tl-materials-title">Yuklab olinadigan materiallar</h2>
+                            <div class="tl-materials" id="tl-materials"></div>
+                        </section>
+
+                        <!-- Practical Assignments -->
+                        <section class="tl-card" aria-labelledby="tl-assignments-title">
+                            <h2 class="tl-card__title" id="tl-assignments-title">Amaliy topshiriqlar</h2>
+                            <ul class="tl-mini-list" id="tl-assignments"></ul>
+                        </section>
+                    </div>
+
+                    <aside class="tl-aside">
+                        <!-- Progress Card -->
+                        <section class="tl-card" aria-labelledby="tl-progress-title">
+                            <h2 class="tl-card__title" id="tl-progress-title">Progress</h2>
+                            <p class="tl-progress__pct" id="tl-progress-pct">0%</p>
+                            <div class="tl-progress__bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <div class="tl-progress__fill" id="tl-progress-fill" style="width: 0%"></div>
+                            </div>
+                            <p class="tl-progress__label" id="tl-progress-label">Hali dars boshlanmagan</p>
+                        </section>
+
+                        <!-- Continue Learning -->
+                        <section class="tl-card">
+                            <button class="tl-btn-primary" type="button" id="tl-continue-btn">Davom etish</button>
+                        </section>
+
+                        <!-- Certificate Preview -->
+                        <section class="tl-card" aria-labelledby="tl-cert-preview-title">
+                            <h2 class="tl-card__title" id="tl-cert-preview-title">Sertifikat</h2>
+                            <div class="tl-cert-preview">
+                                <div class="tl-cert-preview__icon" aria-hidden="true">🏆</div>
+                                <p class="tl-cert-preview__text">Viktorinada 70% va undan yuqori natija bilan sertifikat oling.</p>
+                            </div>
+                            <button class="tl-btn-outline tl-btn-navy" type="button" id="tl-go-quiz-btn" style="width:100%; margin-top:0.75rem;">Viktorinaga o'tish</button>
+                        </section>
+                    </aside>
+                </div>
+            </div>
+
+            <!-- Viktorina -->
+            <div class="tab-content" data-tab="quiz">
+                <div class="quiz-start" id="quiz-start">
+                    <h2>Viktorinani boshlash</h2>
+                    <input type="text" id="user-name" placeholder="Ismingizni kiriting" maxlength="50">
+                    <h3>Qiyinlik darajasi:</h3>
+                    <div class="difficulty-btns">
+                        <button class="difficulty-btn active" type="button" data-level="oson">
+                            <div style="font-size: 1.75rem; margin-bottom: 0.35rem;">😊</div>
+                            <div>Oson</div>
+                        </button>
+                        <button class="difficulty-btn" type="button" data-level="orta">
+                            <div style="font-size: 1.75rem; margin-bottom: 0.35rem;">🤔</div>
+                            <div>O'rta</div>
+                        </button>
+                        <button class="difficulty-btn" type="button" data-level="qiyin">
+                            <div style="font-size: 1.75rem; margin-bottom: 0.35rem;">🔥</div>
+                            <div>Qiyin</div>
+                        </button>
+                    </div>
+                    <button class="tl-btn-primary tl-btn-navy" type="button" style="width:100%; padding: 1rem;" onclick="startQuiz()">Boshlash</button>
+                </div>
+
+                <div class="quiz-question" id="quiz-question" style="display: none;">
+                    <div class="quiz-header">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <div class="timer" id="timer">60</div>
+                    </div>
+                    <p style="text-align: center; color: var(--tl-muted);" id="question-number"></p>
+                    <div class="question-text" id="question-text"></div>
+                    <div class="answers-grid" id="answers-container"></div>
+                    <button class="tl-btn-primary tl-btn-navy" type="button" id="next-btn" style="display: none; width: 100%;" onclick="nextQuestion()">Keyingi savol →</button>
+                </div>
+
+                <div class="quiz-result" id="quiz-result" style="display: none;">
+                    <h2>Viktorina yakunlandi!</h2>
+                    <div class="stars" id="stars"></div>
+                    <div class="score-display" id="score-display"></div>
+                    <p id="result-message" style="font-size: 1.125rem; margin: 1.25rem 0;"></p>
+                    <div id="wrong-answers" style="text-align: left; margin: 1.25rem 0;"></div>
+                    <div class="tl-quiz-actions">
+                        <button class="tl-btn-primary tl-btn-navy" type="button" onclick="restartQuiz()">Qaytadan urinish</button>
+                        <button class="tl-btn-outline" type="button" onclick="newQuiz()">Boshqa test</button>
+                        <button class="tl-btn-primary" type="button" id="cert-btn" style="display: none;" onclick="showCertificate()">Sertifikat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Savol Banki -->
+            <div class="tab-content" data-tab="bank">
+                <section class="tl-card">
+                    <h2 class="tl-card__title">Savol banki</h2>
+                    <div id="bank-container" class="lessons-grid"></div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="cert-modal">
+        <div class="modal-content">
+            <button class="modal-close" type="button" onclick="closeCertModal()">×</button>
+            <h2 style="text-align: center; margin-bottom: 1.25rem;">Tabriklaymiz!</h2>
+            <canvas id="certificate-canvas" width="800" height="600"></canvas>
+            <div style="text-align: center; margin-top: 1.25rem;">
+                <button class="tl-btn-primary tl-btn-navy" type="button" onclick="downloadCertificate()">PNG yuklab olish</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script src="components/header.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="pages/talim-page.js?v=2"></script>
+</body>
+</html>

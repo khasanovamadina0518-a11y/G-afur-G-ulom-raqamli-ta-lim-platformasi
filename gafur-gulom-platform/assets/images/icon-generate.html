@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Icon Generator</title>
+</head>
+<body>
+    <h1>PWA Icon Generator</h1>
+    <canvas id="canvas" width="512" height="512"></canvas>
+    <br><br>
+    <button onclick="generate(144)">Generate 144x144</button>
+    <button onclick="generate(192)">Generate 192x192</button>
+    <button onclick="generate(512)">Generate 512x512</button>
+    
+    <script>
+        function generate(size) {
+            const canvas = document.getElementById('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#1a3c5e');
+            gradient.addColorStop(1, '#2a5a8a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Text
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size/3}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('📖', size/2, size/2.5);
+            
+            ctx.font = `bold ${size/8}px Arial`;
+            ctx.fillText('G.G', size/2, size/1.5);
+            
+            // Download
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `icon-${size}x${size}.png`;
+                a.click();
+            });
+        }
+    </script>
+</body>
+</html>

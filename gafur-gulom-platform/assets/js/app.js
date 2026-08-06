@@ -313,9 +313,7 @@ window.showSuccess = showSuccess;
 // ===================================
 
 function getAsarlarSearchUrl(itemId) {
-    const isInPages = window.location.pathname.includes('/pages/');
-    const page = isInPages ? 'asarlar.html' : 'pages/asarlar.html';
-    return `${page}?id=${encodeURIComponent(itemId)}`;
+    return `pages/asarlar.html?id=${encodeURIComponent(itemId)}`;
 }
 
 async function initSearch() {

@@ -30,8 +30,7 @@ function renderHeader() {
     const container = document.getElementById('header-container');
     if (!container) return;
 
-    const isInPages = window.location.pathname.includes('/pages/');
-    const base = isInPages ? '../' : '';
+    const base = '';
 
     container.innerHTML = `
 <header class="site-header site-header--premium">
