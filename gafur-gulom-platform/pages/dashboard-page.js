@@ -175,6 +175,7 @@ async function refreshDashboard() {
     }
 
     if (window.UserProgress) {
+        UserProgress.syncAchievements(stats);
         const model = UserProgress.buildDashboardModel(stats, recommendations);
         renderDashboard(model);
     }
@@ -183,16 +184,28 @@ async function refreshDashboard() {
 function bindDashboardEvents() {
     const refresh = () => refreshDashboard();
 
+    const onUnlock = (ach) => {
+        const ids = ach?.id ? [ach.id] : [];
+        refresh().then(() => {
+            if (ids.length && window.AchievementEngine) {
+                AchievementEngine.markNewBadgeElements(ids);
+            }
+        });
+    };
+
     if (window.PlatformDataService?.on) {
         PlatformDataService.on('dataUpdated', refresh);
         PlatformDataService.on('progressChanged', refresh);
         PlatformDataService.on('contentOpened', refresh);
         PlatformDataService.on('favoriteChanged', refresh);
-        PlatformDataService.on('achievementUnlocked', refresh);
+        PlatformDataService.on('achievementUnlocked', onUnlock);
     }
 
     ['platform:progressChanged', 'platform:contentOpened', 'platform:favoriteChanged', 'platform:achievementUnlocked'].forEach(evt => {
-        window.addEventListener(evt, refresh);
+        window.addEventListener(evt, (e) => {
+            if (evt === 'platform:achievementUnlocked') onUnlock(e.detail);
+            else refresh();
+        });
     });
 
     window.addEventListener('storage', (e) => {
@@ -200,7 +213,7 @@ function bindDashboardEvents() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', async function () {
+async function initDashboard() {
     await refreshDashboard();
     bindDashboardEvents();
 
@@ -213,7 +226,13 @@ document.addEventListener('DOMContentLoaded', async function () {
             document.getElementById('dash-sidebar')?.classList.remove('is-open');
         });
     });
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDashboard);
+} else {
+    initDashboard();
+}
 
 window.DashboardApp = {
     refresh: refreshDashboard,

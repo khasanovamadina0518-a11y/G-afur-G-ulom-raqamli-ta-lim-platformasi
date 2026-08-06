@@ -24,17 +24,6 @@
 
     const LEVEL_XP = 200;
 
-    const ACHIEVEMENT_DEFS = [
-        { id: 'first-step', title: 'Birinchi qadam', check: s => s.booksOpened.length >= 1 },
-        { id: 'bookworm', title: 'Kitobxon', check: s => s.booksOpened.length >= 5 },
-        { id: 'active', title: 'Faol ishtirokchi', check: s => s.streak.current >= 7 },
-        { id: 'test-expert', title: 'Test eksperti', check: s => s.testsCompleted.some(t => t.percentage >= 70) },
-        { id: 'video-master', title: 'Video ustasi', check: s => s.videosWatched.length >= 3 },
-        { id: 'ai-researcher', title: 'AI tadqiqotchisi', check: s => s.aiChats >= 10 },
-        { id: 'scholar', title: 'Bilimdon', check: s => s.totalXp >= 500 },
-        { id: 'game-master', title: 'Interaktiv ustasi', check: s => s.gamesCompleted >= 2 }
-    ];
-
     const LEVEL_TITLES = [
         { min: 1, title: 'Boshlang\'ich o\'quvchi' },
         { min: 4, title: 'Faol o\'quvchi' },
@@ -59,6 +48,7 @@
             favorites: { poems: [], books: [], videos: [] },
             activity: [],
             achievementsUnlocked: [],
+            achievementDates: {},
             totalXp: 0,
             timeSpentMin: 0,
             aiChats: 0,
@@ -145,15 +135,16 @@
         return { level, currentXp: totalXp - currentLevelBase, nextLevelXp: LEVEL_XP, title, totalXp };
     }
 
-    function checkAchievements(state) {
-        ACHIEVEMENT_DEFS.forEach(def => {
-            if (state.achievementsUnlocked.includes(def.id)) return;
-            if (def.check(state)) {
-                state.achievementsUnlocked.push(def.id);
-                pushActivity(state, `"${def.title}" badji qo'lga kiritildi`, 'achievement');
-                emitEvent('achievementUnlocked', { id: def.id, title: def.title });
-            }
+    function checkAchievements(state, platformStats) {
+        if (!global.AchievementEngine) return [];
+        const stats = platformStats || global.PlatformDataService?.getStatistics?.() || {};
+        const newly = AchievementEngine.evaluateAndUnlock(state, stats);
+        newly.forEach(ach => {
+            pushActivity(state, `"${ach.title}" badji qo'lga kiritildi`, 'achievement');
+            emitEvent('achievementUnlocked', ach);
+            AchievementEngine.showUnlockAnimation(ach);
         });
+        return newly;
     }
 
     function syncLegacy(state) {
@@ -202,6 +193,13 @@
     const UserProgress = {
         _state: loadState(),
         _hooksInstalled: false,
+
+        syncAchievements(platformStats) {
+            syncLegacy(this._state);
+            const newly = checkAchievements(this._state, platformStats);
+            if (newly.length) saveState(this._state);
+            return newly;
+        },
 
         getState() {
             syncLegacy(this._state);
@@ -360,8 +358,9 @@
                 href: 'asarlar.html'
             };
 
-            const unlocked = ACHIEVEMENT_DEFS.filter(d => state.achievementsUnlocked.includes(d.id));
-            const badgeList = unlocked.map(d => d.title);
+            const badgeList = global.AchievementEngine
+                ? AchievementEngine.getBadgeTitles(state)
+                : [];
 
             const certificates = [];
             state.testsCompleted.filter(t => t.percentage >= 70).slice(0, 3).forEach(t => {
@@ -408,7 +407,7 @@
                 ],
                 achievements: {
                     certificates: certificates.length,
-                    badges: unlocked.length,
+                    badges: badgeList.length,
                     streak: state.streak.current,
                     xp: state.totalXp,
                     badgeList: badgeList.length ? badgeList : ['Boshlang\'ich']

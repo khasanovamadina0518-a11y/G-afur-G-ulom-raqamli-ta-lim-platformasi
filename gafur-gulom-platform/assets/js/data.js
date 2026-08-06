@@ -74,6 +74,30 @@
         return (inPages ? '../assets/js/' : 'assets/js/') + 'user-progress.js';
     })();
 
+    const ACHIEVEMENT_PATH = (function () {
+        const inPages = window.location.pathname.includes('/pages/');
+        return (inPages ? '../assets/js/' : 'assets/js/') + 'achievement-engine.js';
+    })();
+
+    function loadAchievementEngineScript() {
+        if (window.AchievementEngine) return Promise.resolve();
+        return new Promise((resolve, reject) => {
+            const existing = document.querySelector('script[data-achievement-engine]');
+            if (existing) {
+                existing.addEventListener('load', () => resolve());
+                existing.addEventListener('error', reject);
+                if (window.AchievementEngine) resolve();
+                return;
+            }
+            const script = document.createElement('script');
+            script.src = ACHIEVEMENT_PATH;
+            script.dataset.achievementEngine = '1';
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error('AchievementEngine script failed to load'));
+            document.head.appendChild(script);
+        });
+    }
+
     function loadUserProgressScript() {
         if (window.UserProgress) return Promise.resolve();
         return new Promise((resolve, reject) => {
@@ -93,9 +117,12 @@
         });
     }
 
-    platformDataReady.then(loadUserProgressScript).catch(err => {
-        console.warn('UserProgress load skipped:', err);
-    });
+    platformDataReady
+        .then(loadAchievementEngineScript)
+        .then(loadUserProgressScript)
+        .catch(err => {
+            console.warn('UserProgress load skipped:', err);
+        });
 
     async function withService(method) {
         await platformDataReady;

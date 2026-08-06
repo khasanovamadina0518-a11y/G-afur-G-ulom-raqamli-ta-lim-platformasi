@@ -1,76 +1,6 @@
 /**
- * Yutuqlar (Achievements) — local placeholder data
- * Future: sync with DashboardApp / auth provider.
+ * Yutuqlar — live achievements via AchievementEngine + UserProgress
  */
-
-const YUTUQLAR_STORAGE_KEY = 'yutuqlar-data';
-
-const DEFAULT_YUTUQLAR = {
-    level: {
-        number: 12,
-        title: 'Yaxshi',
-        currentXp: 2400,
-        nextLevelXp: 5000,
-        nextLevelTitle: 'A\'lo'
-    },
-    unlockedBadges: [
-        { icon: '🛡️', title: 'Birinchi qadam', desc: 'Birinchi darsni yakunladingiz', date: '2025-yil 12-yanvar' },
-        { icon: '📚', title: 'Kitobxon', desc: '5 ta asar o\'qildi', date: '2025-yil 3-mart' },
-        { icon: '⭐', title: 'Faol ishtirokchi', desc: '7 kun ketma-ket faollik', date: '2025-yil 18-aprel' },
-        { icon: '📝', title: 'Test eksperti', desc: '10 ta test muvaffaqiyatli topshirildi', date: '2025-yil 22-iyun' },
-        { icon: '🎥', title: 'Video ustasi', desc: '8 ta video dars ko\'rildi', date: '2025-yil 5-avgust' },
-        { icon: '🤖', title: 'AI tadqiqotchisi', desc: 'AI yordamchi bilan 20 ta suhbat', date: '2026-yil 10-fevral' },
-        { icon: '🏅', title: 'Bilimdon', desc: 'Umumiy XP 2000 dan oshdi', date: '2026-yil 1-mart' },
-        { icon: '🎮', title: 'Interaktiv ustasi', desc: '4 ta o\'yin yakunlandi', date: '2026-yil 15-mart' }
-    ],
-    lockedBadges: [
-        { icon: '📖', title: '20 ta kitob o\'qing', desc: 'Elektron kutubxonada 20 ta asarni o\'qing', current: 8, target: 20 },
-        { icon: '📝', title: '100 ta test', desc: 'Jami 100 ta test savolini to\'g\'ri javoblang', current: 42, target: 100 },
-        { icon: '🎬', title: 'Barcha videolar', desc: 'Barcha video darslarni tomosha qiling', current: 5, target: 12 }
-    ],
-    stats: {
-        books: 8,
-        videos: 5,
-        tests: 42,
-        games: 4,
-        aiChats: 20,
-        studyHours: 36
-    },
-    streak: {
-        current: 28,
-        longest: 35,
-        calendarDays: 28
-    },
-    recent: [
-        { icon: '🏅', text: '"Bilimdon" badji qo\'lga kiritildi', time: '2 kun oldin' },
-        { icon: '📝', text: 'Test eksperti badji ochildi', time: '1 hafta oldin' },
-        { icon: '🔥', text: '28 kunlik streak davom etmoqda', time: 'Bugun' },
-        { icon: '📜', text: 'Yangi sertifikat: G\'afur G\'ulom asarlari', time: '2 hafta oldin' }
-    ],
-    certificates: [
-        { title: 'G\'afur G\'ulom asarlari', date: '2026-yil 15-mart' },
-        { title: 'She\'riyat bo\'yicha test', date: '2026-yil 2-fevral' },
-        { title: 'Elektron kutubxona kursi', date: '2025-yil 20-dekabr' }
-    ],
-    motivation: {
-        quote: '"Ilm – inson kamolotining yo\'lidir."',
-        author: 'G\'afur G\'ulom',
-        message: 'Siz ajoyib natija ko\'rsatyapsiz! Keyingi darajaga yetish uchun yana 2600 XP kerak. Bugun kamida bitta test yoki video dars bilan davom eting.'
-    }
-};
-
-function loadYutuqlarData() {
-    try {
-        const raw = localStorage.getItem(YUTUQLAR_STORAGE_KEY);
-        if (!raw) {
-            localStorage.setItem(YUTUQLAR_STORAGE_KEY, JSON.stringify(DEFAULT_YUTUQLAR));
-            return structuredClone(DEFAULT_YUTUQLAR);
-        }
-        return { ...DEFAULT_YUTUQLAR, ...JSON.parse(raw) };
-    } catch (e) {
-        return structuredClone(DEFAULT_YUTUQLAR);
-    }
-}
 
 function escapeHtml(str) {
     return String(str)
@@ -81,8 +11,11 @@ function escapeHtml(str) {
 }
 
 function renderBadges(badges) {
+    if (!badges.length) {
+        return '<p class="ach-empty">Hali badj ochilmagan. Kutubxona, testlar yoki video darslardan boshlang!</p>';
+    }
     return badges.map(b => `
-        <article class="ach-badge">
+        <article class="ach-badge" data-ach-id="${escapeHtml(b.id)}">
             <span class="ach-badge__icon" aria-hidden="true">${b.icon}</span>
             <h3 class="ach-badge__title">${escapeHtml(b.title)}</h3>
             <p class="ach-badge__desc">${escapeHtml(b.desc)}</p>
@@ -92,10 +25,13 @@ function renderBadges(badges) {
 }
 
 function renderLocked(items) {
+    if (!items.length) {
+        return '<p class="ach-empty">Barcha yutuqlar ochilgan — tabriklaymiz!</p>';
+    }
     return items.map(item => {
         const pct = Math.round((item.current / item.target) * 100);
         return `
-            <article class="ach-locked">
+            <article class="ach-locked" data-ach-id="${escapeHtml(item.id)}">
                 <div class="ach-locked__head">
                     <span class="ach-locked__icon" aria-hidden="true">${item.icon}</span>
                     <div>
@@ -141,6 +77,9 @@ function renderCalendar(activeDays) {
 }
 
 function renderTimeline(items) {
+    if (!items.length) {
+        return '<li class="ach-timeline__item"><span class="ach-timeline__icon" aria-hidden="true">🏅</span><div><p class="ach-timeline__text">Hali yutuq yo\'q</p><p class="ach-timeline__time">Faol bo\'ling!</p></div></li>';
+    }
     return items.map(item => `
         <li class="ach-timeline__item">
             <span class="ach-timeline__icon" aria-hidden="true">${item.icon}</span>
@@ -153,6 +92,9 @@ function renderTimeline(items) {
 }
 
 function renderCertificates(certs) {
+    if (!certs.length) {
+        return '<div class="ach-cert"><div class="ach-cert__info"><span class="ach-cert__icon" aria-hidden="true">📜</span><div><p class="ach-cert__title">Hali sertifikat yo\'q</p><p class="ach-cert__date">70%+ test natija kerak</p></div></div><button type="button" class="ach-download" disabled title="Tez kunda">Yuklab olish</button></div>';
+    }
     return certs.map(c => `
         <div class="ach-cert">
             <div class="ach-cert__info">
@@ -174,8 +116,7 @@ function animateXpBar(pct) {
     });
 }
 
-function renderYutuqlar() {
-    const data = loadYutuqlarData();
+function renderYutuqlar(data) {
     const xpPct = Math.round((data.level.currentXp / data.level.nextLevelXp) * 100);
 
     const levelNum = document.getElementById('ach-level-num');
@@ -220,28 +161,72 @@ function renderYutuqlar() {
     if (encourageEl) encourageEl.textContent = data.motivation.message;
 }
 
-document.addEventListener('DOMContentLoaded', renderYutuqlar);
+async function loadPlatformScripts() {
+    if (window.platformDataReady) {
+        await window.platformDataReady;
+        return;
+    }
+    await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = '../assets/js/data.js';
+        script.onload = () => (window.platformDataReady || Promise.resolve()).then(resolve).catch(reject);
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
+
+async function refreshYutuqlar(newUnlockIds) {
+    await loadPlatformScripts();
+
+    let stats = {};
+    if (typeof getPlatformStatistics === 'function') {
+        stats = await getPlatformStatistics();
+    }
+
+    if (window.UserProgress && window.AchievementEngine) {
+        if (!newUnlockIds?.length) {
+            UserProgress.syncAchievements(stats);
+        }
+        const model = AchievementEngine.buildYutuqlarModel(UserProgress.getState(), stats);
+        renderYutuqlar(model);
+        if (newUnlockIds?.length) {
+            AchievementEngine.markNewBadgeElements(newUnlockIds);
+        }
+    }
+}
+
+function bindYutuqlarEvents() {
+    const refresh = (detail) => {
+        const ids = detail?.id ? [detail.id] : detail?.map?.(d => d.id);
+        refreshYutuqlar(ids);
+    };
+
+    if (window.PlatformDataService?.on) {
+        PlatformDataService.on('progressChanged', refresh);
+        PlatformDataService.on('achievementUnlocked', ach => refresh(ach));
+        PlatformDataService.on('dataUpdated', refresh);
+    }
+
+    ['platform:progressChanged', 'platform:achievementUnlocked'].forEach(evt => {
+        window.addEventListener(evt, e => refresh(e.detail));
+    });
+
+    window.addEventListener('storage', e => {
+        if (e.key === 'platform-user-progress') refresh();
+    });
+}
+
+async function initYutuqlar() {
+    await refreshYutuqlar();
+    bindYutuqlarEvents();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initYutuqlar);
+} else {
+    initYutuqlar();
+}
 
 window.YutuqlarApp = {
-    getData: loadYutuqlarData,
-    setData(nextData) {
-        localStorage.setItem(YUTUQLAR_STORAGE_KEY, JSON.stringify(nextData));
-        renderYutuqlar();
-    },
-    syncFromDashboard(dashboardData) {
-        if (!dashboardData) return;
-        const merged = loadYutuqlarData();
-        if (dashboardData.xp) {
-            merged.level.currentXp = dashboardData.xp.currentXp;
-            merged.level.nextLevelXp = dashboardData.xp.nextLevelXp;
-            merged.level.number = dashboardData.xp.level;
-            merged.level.title = dashboardData.xp.title;
-        }
-        if (dashboardData.achievements) {
-            merged.stats.tests = dashboardData.achievements.badges || merged.stats.tests;
-            merged.streak.current = dashboardData.achievements.streak || merged.streak.current;
-        }
-        localStorage.setItem(YUTUQLAR_STORAGE_KEY, JSON.stringify(merged));
-        renderYutuqlar();
-    }
+    refresh: refreshYutuqlar
 };
