@@ -109,7 +109,9 @@ function animateStats() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const target = parseInt(entry.target.textContent) || parseInt(entry.target.getAttribute('data-target')) || 0;
+                const target = parseInt(entry.target.getAttribute('data-target'))
+                    || parseInt(entry.target.textContent)
+                    || 0;
                 animateCounter(entry.target, target);
                 observer.unobserve(entry.target);
             }
@@ -121,17 +123,18 @@ function animateStats() {
 
 function animateCounter(element, target) {
     let current = 0;
-    const increment = target / 50; // 50 qadamda
-    const duration = 2000; // 2 soniya
+    const increment = target / 50;
+    const duration = 2000;
     const stepTime = duration / 50;
-    
+    const suffix = element.getAttribute('data-suffix') || (target >= 60 ? '+' : '');
+
     const timer = setInterval(() => {
         current += increment;
         if (current >= target) {
-            element.textContent = target + (target >= 60 ? '+' : '');
+            element.textContent = target + suffix;
             clearInterval(timer);
         } else {
-            element.textContent = Math.floor(current) + (target >= 60 ? '+' : '');
+            element.textContent = Math.floor(current) + suffix;
         }
     }, stepTime);
 }
@@ -278,7 +281,7 @@ async function loadStatistics() {
             : null;
 
         if (stats) {
-            poems.textContent = stats.poems;
+            poems.textContent = stats.poems + (poems.getAttribute('data-suffix') || '');
             doston.textContent = stats.dostonlar;
             ilmiy.textContent = stats.scientificArticles;
             quiz.textContent = stats.quizQuestions;
@@ -292,7 +295,7 @@ async function loadStatistics() {
             getQuizlar()
         ]);
 
-        poems.textContent = sherlar.length;
+        poems.textContent = sherlar.length + (poems.getAttribute('data-suffix') || '');
         doston.textContent = dostonlar.length;
         ilmiy.textContent = ilmiyData.length;
         quiz.textContent = quizData.length;
