@@ -24,6 +24,12 @@
       "teglar": ["qissa", "adabiyot"],
       "qisqa": "Yozning qiziq kunlari. Egnimda elvagaygina, ko'ksi ochiq, yoqasiga pilta otgan surp yaktak.",
       "pdf": "assets/pdf/qissalar/Yodgor.pdf"
+    },
+    {
+      "id": 3,
+      "sarlavha": "Netay",
+      "muallif": "G'afur G'ulom",
+      "pdf": "assets/pdf/qissalar/netay.pdf"
     }
   ]
 }
