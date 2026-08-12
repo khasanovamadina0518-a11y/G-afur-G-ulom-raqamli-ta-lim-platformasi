@@ -351,9 +351,5 @@ html body.page-interaktiv {
   color: var(--text);
 }
 
-/* Subpage hero headings — global h1 { color: var(--primary) } breaks navy hero bands (Hayot only) */
-.page-hayot .hy-hero__title {
-  color: #ffffff;
-}
+/* Hayot hero title — themed in pages/hayot.css via --hy-hero-* variables */
 
-/*

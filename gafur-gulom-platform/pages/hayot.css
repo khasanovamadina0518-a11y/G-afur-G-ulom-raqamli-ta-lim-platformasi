@@ -15,23 +15,67 @@
     --hy-cream: #fcfbf7;
     --hy-shadow: 0 4px 24px rgba(26, 60, 94, 0.08);
     --hy-shadow-soft: 0 2px 12px rgba(17, 24, 39, 0.06);
+    --hy-stage-bg: var(--hy-card);
+    --hy-stage-text: var(--hy-navy);
+    --hy-stage-muted: var(--hy-muted);
+    --hy-stage-years: var(--hy-gold);
+    --hy-stage-border: var(--hy-border);
+    --hy-stage-tag-bg: rgba(201, 168, 76, 0.15);
+    --hy-stage-tag-color: #8a7230;
+    --hy-stage-toggle-bg: transparent;
+    --hy-stage-toggle-color: var(--hy-navy);
+    --hy-stage-toggle-border: var(--hy-border);
+    --hy-stage-toggle-hover-bg: rgba(26, 60, 94, 0.06);
+    --hy-stage-full-border: var(--hy-border);
+    --hy-stage-full-text: var(--hy-text);
+    --hy-legacy-bg: linear-gradient(135deg, #eef2f6 0%, #e8eef5 55%, #dfe8f2 100%);
+    --hy-legacy-text: var(--hy-text);
+    --hy-legacy-source: var(--hy-muted);
+    --hy-legacy-border: var(--hy-border);
+    --hy-timeline-line-end: var(--hy-navy);
+    --hy-hero-bg: linear-gradient(135deg, #e8eef5 0%, #dfe8f2 48%, #d4e0ed 100%);
+    --hy-hero-glow: radial-gradient(circle at 15% 85%, rgba(201, 168, 76, 0.14), transparent 45%);
+    --hy-hero-text: #0f2438;
+    --hy-hero-muted: #475569;
+    --hy-hero-accent: #1a3c5e;
+    --hy-hero-kicker: #a88b35;
+    --hy-hero-years: var(--hy-gold);
+    --hy-hero-quote: #475569;
+    --hy-hero-quote-cite: #64748b;
+    --hy-hero-stat-color: #475569;
+    --hy-hero-stat-num: #1a3c5e;
+    --hy-hero-border: rgba(26, 60, 94, 0.1);
+    --hy-hero-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 4px 24px rgba(26, 60, 94, 0.08);
+    --hy-hero-portrait-border: rgba(201, 168, 76, 0.55);
+    --hy-hero-portrait-shadow: 0 20px 50px rgba(26, 60, 94, 0.18);
+    --hy-hero-btn-primary-start: #4a90d9;
+    --hy-hero-btn-primary-end: #6db3f2;
+    --hy-hero-btn-primary-hover: #3b7ec4;
+    --hy-hero-btn-outline-bg: #ffffff;
+    --hy-hero-btn-outline-color: var(--hy-navy);
+    --hy-hero-btn-outline-border: var(--hy-border);
+    --hy-hero-btn-outline-hover-bg: rgba(26, 60, 94, 0.04);
+    --hy-hero-btn-outline-hover-border: var(--hy-navy);
     background: var(--hy-bg);
 }
 
 /* Hero */
 .page-hayot .hy-hero {
-    background: linear-gradient(135deg, #1a3c5e 0%, #234a72 55%, #1a3c5e 100%);
-    color: #fff;
+    background: var(--hy-hero-bg);
+    color: var(--hy-hero-text);
     padding: clamp(2.5rem, 6vw, 4rem) 0;
     position: relative;
     overflow: hidden;
+    border-bottom: 1px solid var(--hy-hero-border);
+    box-shadow: var(--hy-hero-shadow);
+    transition: background var(--transition, 0.25s ease), color var(--transition, 0.25s ease), border-color var(--transition, 0.25s ease), box-shadow var(--transition, 0.25s ease);
 }
 
 .page-hayot .hy-hero::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 15% 85%, rgba(201, 168, 76, 0.18), transparent 45%);
+    background: var(--hy-hero-glow);
     pointer-events: none;
 }
 
@@ -56,7 +100,7 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--hy-gold);
+    color: var(--hy-hero-kicker);
 }
 
 .page-hayot .hy-hero__title {
@@ -65,14 +109,14 @@
     font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 700;
     line-height: 1.12;
-    color: #ffffff;
+    color: var(--hy-hero-text);
 }
 
 .page-hayot .hy-hero__years {
     margin: 0 0 1rem;
     font-size: 1.25rem;
     font-weight: 600;
-    color: var(--hy-gold);
+    color: var(--hy-hero-years);
     letter-spacing: 0.04em;
 }
 
@@ -80,7 +124,7 @@
     margin: 0 0 1.25rem;
     max-width: 36rem;
     line-height: 1.7;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--hy-hero-muted);
     font-size: 1rem;
 }
 
@@ -92,7 +136,7 @@
     font-style: italic;
     font-size: 1.0625rem;
     line-height: 1.65;
-    color: rgba(255, 255, 255, 0.92);
+    color: var(--hy-hero-quote);
 }
 
 .page-hayot .hy-hero__quote cite {
@@ -101,7 +145,7 @@
     font-style: normal;
     font-family: 'Inter', sans-serif;
     font-size: 0.8125rem;
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--hy-hero-quote-cite);
 }
 
 .page-hayot .hy-hero__stats {
@@ -110,11 +154,12 @@
     gap: 0.65rem 1.25rem;
     margin-bottom: 1.35rem;
     font-size: 0.875rem;
+    color: var(--hy-hero-stat-color);
 }
 
 .page-hayot .hy-hero__stat-num {
     font-weight: 700;
-    color: var(--hy-gold);
+    color: var(--hy-hero-stat-num);
     font-size: 1.0625rem;
 }
 
@@ -127,8 +172,29 @@
 .page-hayot .hy-hero__portrait-wrap {
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-    border: 3px solid rgba(201, 168, 76, 0.45);
+    box-shadow: var(--hy-hero-portrait-shadow);
+    border: 3px solid var(--hy-hero-portrait-border);
+    transition: box-shadow var(--transition, 0.25s ease), border-color var(--transition, 0.25s ease);
+}
+
+.page-hayot .hy-hero .hy-btn-primary {
+    background: linear-gradient(135deg, var(--hy-hero-btn-primary-start) 0%, var(--hy-hero-btn-primary-end) 100%);
+    color: #fff;
+}
+
+.page-hayot .hy-hero .hy-btn-primary:hover {
+    background: var(--hy-hero-btn-primary-hover);
+}
+
+.page-hayot .hy-hero .hy-btn-outline--light {
+    background: var(--hy-hero-btn-outline-bg);
+    color: var(--hy-hero-btn-outline-color);
+    border-color: var(--hy-hero-btn-outline-border);
+}
+
+.page-hayot .hy-hero .hy-btn-outline--light:hover {
+    background: var(--hy-hero-btn-outline-hover-bg);
+    border-color: var(--hy-hero-btn-outline-hover-border);
 }
 
 .page-hayot .hy-hero__portrait {
@@ -361,7 +427,7 @@
     top: 0;
     bottom: 0;
     width: 3px;
-    background: linear-gradient(180deg, var(--hy-gold), var(--hy-navy));
+    background: linear-gradient(180deg, var(--hy-gold), var(--hy-timeline-line-end));
     border-radius: 999px;
 }
 
@@ -379,8 +445,10 @@
     gap: 0.85rem;
     margin: 0 0 1.25rem -1.5rem;
     padding: 1.15rem 1.25rem 1.15rem 1.75rem;
-    background: var(--hy-navy);
-    color: #fff;
+    background: var(--hy-stage-bg);
+    color: var(--hy-stage-text);
+    border: 1px solid var(--hy-stage-border);
+    border-left: 4px solid var(--hy-gold);
     border-radius: 0 12px 12px 0;
     box-shadow: var(--hy-shadow-soft);
 }
@@ -401,12 +469,13 @@
     font-family: 'Playfair Display', serif;
     font-size: 1.125rem;
     font-weight: 600;
+    color: var(--hy-stage-text);
 }
 
 .page-hayot .hy-stage-sep__years {
     margin: 0 0 0.45rem;
     font-size: 0.8125rem;
-    color: var(--hy-gold);
+    color: var(--hy-stage-years);
     font-weight: 600;
 }
 
@@ -414,7 +483,7 @@
     margin: 0 0 0.65rem;
     font-size: 0.875rem;
     line-height: 1.55;
-    color: rgba(255, 255, 255, 0.88);
+    color: var(--hy-stage-muted);
 }
 
 .page-hayot .hy-stage-tags {
@@ -428,15 +497,15 @@
     font-size: 0.6875rem;
     padding: 0.2rem 0.5rem;
     border-radius: 999px;
-    background: rgba(201, 168, 76, 0.2);
-    color: var(--hy-gold);
+    background: var(--hy-stage-tag-bg);
+    color: var(--hy-stage-tag-color);
     font-weight: 600;
 }
 
 .page-hayot .hy-stage-toggle {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    color: #fff;
+    background: var(--hy-stage-toggle-bg);
+    border: 1px solid var(--hy-stage-toggle-border);
+    color: var(--hy-stage-toggle-color);
     font-size: 0.8125rem;
     font-weight: 600;
     padding: 0.35rem 0.75rem;
@@ -445,17 +514,17 @@
 }
 
 .page-hayot .hy-stage-toggle:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--hy-stage-toggle-hover-bg);
 }
 
 .page-hayot .hy-stage-full {
     display: none;
     margin-top: 0.75rem;
     padding-top: 0.75rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 1px solid var(--hy-stage-full-border);
     font-size: 0.875rem;
     line-height: 1.65;
-    color: rgba(255, 255, 255, 0.92);
+    color: var(--hy-stage-full-text);
 }
 
 .page-hayot .hy-stage-full.is-open {
@@ -795,8 +864,9 @@
 
 /* Legacy */
 .page-hayot .hy-section--legacy .hy-legacy {
-    background: linear-gradient(135deg, var(--hy-navy) 0%, #234a72 100%);
-    color: #fff;
+    background: var(--hy-legacy-bg);
+    color: var(--hy-legacy-text);
+    border: 1px solid var(--hy-legacy-border);
     border-radius: 12px;
     padding: clamp(1.5rem, 4vw, 2.5rem);
     box-shadow: var(--hy-shadow);
@@ -807,13 +877,13 @@
     font-family: 'Playfair Display', serif;
     font-size: clamp(1.0625rem, 2.5vw, 1.25rem);
     line-height: 1.75;
-    color: rgba(255, 255, 255, 0.92);
+    color: var(--hy-legacy-text);
 }
 
 .page-hayot .hy-legacy__source {
     margin: 0 0 1.25rem;
     font-size: 0.8125rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--hy-legacy-source);
 }
 
 .page-hayot .hy-legacy__icon {
@@ -912,10 +982,61 @@ body.dark-mode.page-hayot {
     --hy-text: var(--text);
     --hy-muted: var(--text-light);
     --hy-cream: var(--card-bg);
+    --hy-stage-bg: linear-gradient(135deg, #1a3c5e 0%, #234a72 100%);
+    --hy-stage-text: #ffffff;
+    --hy-stage-muted: rgba(255, 255, 255, 0.88);
+    --hy-stage-years: var(--hy-gold);
+    --hy-stage-border: rgba(255, 255, 255, 0.1);
+    --hy-stage-tag-bg: rgba(201, 168, 76, 0.2);
+    --hy-stage-tag-color: var(--hy-gold);
+    --hy-stage-toggle-bg: transparent;
+    --hy-stage-toggle-color: #ffffff;
+    --hy-stage-toggle-border: rgba(255, 255, 255, 0.35);
+    --hy-stage-toggle-hover-bg: rgba(255, 255, 255, 0.1);
+    --hy-stage-full-border: rgba(255, 255, 255, 0.2);
+    --hy-stage-full-text: rgba(255, 255, 255, 0.92);
+    --hy-legacy-bg: linear-gradient(135deg, #1a3c5e 0%, #234a72 100%);
+    --hy-legacy-text: rgba(255, 255, 255, 0.92);
+    --hy-legacy-source: rgba(255, 255, 255, 0.6);
+    --hy-legacy-border: rgba(255, 255, 255, 0.1);
+    --hy-timeline-line-end: var(--hy-navy);
+    --hy-hero-bg: linear-gradient(135deg, #1a3c5e 0%, #234a72 55%, #1a3c5e 100%);
+    --hy-hero-glow: radial-gradient(circle at 15% 85%, rgba(201, 168, 76, 0.18), transparent 45%);
+    --hy-hero-text: #ffffff;
+    --hy-hero-muted: rgba(255, 255, 255, 0.9);
+    --hy-hero-accent: #c9a84c;
+    --hy-hero-kicker: var(--hy-gold);
+    --hy-hero-years: var(--hy-gold);
+    --hy-hero-quote: rgba(255, 255, 255, 0.92);
+    --hy-hero-quote-cite: rgba(255, 255, 255, 0.65);
+    --hy-hero-stat-color: rgba(255, 255, 255, 0.88);
+    --hy-hero-stat-num: var(--hy-gold);
+    --hy-hero-border: rgba(255, 255, 255, 0.08);
+    --hy-hero-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+    --hy-hero-portrait-border: rgba(201, 168, 76, 0.45);
+    --hy-hero-portrait-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    --hy-hero-btn-primary-start: #2563eb;
+    --hy-hero-btn-primary-end: #2563eb;
+    --hy-hero-btn-primary-hover: #1d4ed8;
+    --hy-hero-btn-outline-bg: transparent;
+    --hy-hero-btn-outline-color: #ffffff;
+    --hy-hero-btn-outline-border: rgba(255, 255, 255, 0.45);
+    --hy-hero-btn-outline-hover-bg: rgba(255, 255, 255, 0.08);
+    --hy-hero-btn-outline-hover-border: rgba(255, 255, 255, 0.7);
 }
 
 body.dark-mode.page-hayot .hy-jump {
     background: rgba(15, 23, 42, 0.95);
+}
+
+body.dark-mode.page-hayot .hy-jump a:hover {
+    color: var(--hy-gold);
+}
+
+body.dark-mode.page-hayot .hy-filter-btn:hover,
+body.dark-mode.page-hayot .hy-filter-btn.active {
+    background: var(--primary-light);
+    border-color: var(--primary-light);
 }
 
 body.dark-mode.page-hayot .hy-section__title,
@@ -923,7 +1044,8 @@ body.dark-mode.page-hayot .hy-event__title,
 body.dark-mode.page-hayot .hy-overview-card__title,
 body.dark-mode.page-hayot .hy-next-card__title,
 body.dark-mode.page-hayot .hy-quote-card__author,
-body.dark-mode.page-hayot .hy-award__title {
+body.dark-mode.page-hayot .hy-award__title,
+body.dark-mode.page-hayot .hy-work__title {
     color: var(--text);
 }
 

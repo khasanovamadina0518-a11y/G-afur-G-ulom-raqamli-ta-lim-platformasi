@@ -817,14 +817,7 @@ body.dark-mode .lang-switch__options {
     border-color: var(--border);
 }
 
-/* Subpage hero headings — override global h1 { color: var(--primary) } on navy bands */
-.page-hayot .hy-hero__title {
-    color: #ffffff;
-}
-
-.page-hayot .hy-hero__stat {
-    color: rgba(255, 255, 255, 0.88);
-}
+/* Hayot hero title/stats — themed in pages/hayot.css via --hy-hero-* variables */
 
 /* ===================================
    Footer Component
