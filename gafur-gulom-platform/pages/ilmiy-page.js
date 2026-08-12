@@ -207,7 +207,15 @@ function displayDissertations(dissertations) {
         return;
     }
 
-    container.innerHTML = dissertations.map(diss => `
+    container.innerHTML = dissertations.map(diss => {
+        const readAction = diss.pdf
+            ? `<div class="ilm-paper__actions"><button class="ilm-btn-primary" type="button" onclick="openDissertationPdf(${diss.id})">O'qish</button></div>`
+            : '';
+        const kafedraLine = diss.kafedraMudiri
+            ? `<strong>Kafedra mudiri:</strong> ${escapeHtml(diss.kafedraMudiri)}<br>`
+            : '';
+
+        return `
         <article class="ilm-paper">
             <h3 class="ilm-paper__title">${escapeHtml(diss.sarlavha)}</h3>
             <div class="ilm-paper__meta">
@@ -217,10 +225,18 @@ function displayDissertations(dissertations) {
             </div>
             <p class="ilm-paper__abstract">
                 <strong>Ilmiy rahbar:</strong> ${escapeHtml(diss.ilmiyRahbar)}<br>
-                <strong>Muassasa:</strong> ${escapeHtml(diss.muassasa)}
+                ${kafedraLine}
+                <strong>Muassasa:</strong> ${escapeHtml(diss.muassasa || diss.joy || '')}
             </p>
+            ${readAction}
         </article>
-    `).join('');
+    `;
+    }).join('');
+}
+
+function openDissertationPdf(id) {
+    const item = (ilmiyData.dissertatsiyalar || []).find(entry => entry.id === id);
+    openIlmPdfModal(item);
 }
 
 document.getElementById('diss-search')?.addEventListener('input', function() {
