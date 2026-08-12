@@ -546,6 +546,18 @@ async function loadQissalar() {
 
     try {
         allQissalar = await getQissalar();
+
+        if (allQissalar.length === 0) {
+            const dataUrl = (window.platformUrl || function (r) { return r; })('data/qissalar.json?v=20260812');
+            const res = await fetch(dataUrl, { cache: 'no-store' });
+            if (res.ok) {
+                const data = await res.json();
+                allQissalar = Array.isArray(data.qissalar) ? data.qissalar : [];
+            } else {
+                console.warn('Qissalar JSON yuklanmadi:', res.status, dataUrl);
+            }
+        }
+
         filteredQissalar = [...allQissalar];
         renderQissalarCategoryChips();
         displayQissalar();

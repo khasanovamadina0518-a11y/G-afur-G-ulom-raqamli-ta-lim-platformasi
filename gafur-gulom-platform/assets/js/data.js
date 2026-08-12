@@ -6,7 +6,7 @@
 (function () {
     'use strict';
 
-    const SERVICE_PATH = (window.platformUrl || function (r) { return r; })('assets/js/platform-data-service.js');
+    const SERVICE_PATH = (window.platformUrl || function (r) { return r; })('assets/js/platform-data-service.js?v=20260812');
 
     let nativeFetch = window.fetch.bind(window);
     let shimInstalled = false;

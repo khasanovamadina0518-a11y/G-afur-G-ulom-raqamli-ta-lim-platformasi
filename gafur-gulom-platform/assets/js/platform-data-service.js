@@ -13,8 +13,10 @@
         quiz: { file: 'quiz.json', optional: false },
         videolar: { file: 'videolar.json', optional: true },
         asarlar: { file: 'asarlar.json', optional: true },
-        qissalar: { file: 'qissalar.json', optional: true }
+        qissalar: { file: 'qissalar.json', optional: false }
     };
+
+    const DATA_CACHE_VERSION = '20260812';
 
     const EVENTS = ['dataUpdated', 'progressChanged', 'contentAdded'];
 
@@ -113,7 +115,7 @@
             const results = await Promise.all(
                 entries.map(async ([key, cfg]) => {
                     try {
-                        const res = await fetch(base + cfg.file);
+                        const res = await fetch(`${base}${cfg.file}?v=${DATA_CACHE_VERSION}`, { cache: 'no-store' });
                         if (!res.ok) {
                             if (cfg.optional) return [key, null];
                             throw new Error(`Failed ${cfg.file}: ${res.status}`);

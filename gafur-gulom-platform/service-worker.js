@@ -1,5 +1,5 @@
 // Service Worker for G'afur G'ulom Platform
-const CACHE_NAME = 'gafur-gulom-v2';
+const CACHE_NAME = 'gafur-gulom-v3';
 const OFFLINE_URL = 'offline.html';
 
 // Files to cache
@@ -67,10 +67,30 @@ self.addEventListener('activate', (event) => {
   return self.clients.claim();
 });
 
-// Fetch event - cache first strategy
+// Fetch event - network-first for JSON data, cache-first for static assets
 self.addEventListener('fetch', (event) => {
   // Skip cross-origin requests
   if (!event.request.url.startsWith(self.location.origin)) {
+    return;
+  }
+
+  const requestUrl = new URL(event.request.url);
+  const isDataJson = /\/data\/[^/]+\.json(\?.*)?$/i.test(requestUrl.pathname);
+
+  if (isDataJson) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
     return;
   }
   

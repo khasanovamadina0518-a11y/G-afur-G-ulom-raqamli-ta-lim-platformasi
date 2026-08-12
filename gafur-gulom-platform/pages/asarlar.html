@@ -187,10 +187,19 @@
             }
         });
     </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                registrations.forEach(function(registration) {
+                    registration.unregister();
+                });
+            });
+        }
+    </script>
     <script src="components/header.js?v=8"></script>
     <script src="components/footer.js"></script>
-    <script src="assets/js/data.js?v=8"></script>
+    <script src="assets/js/data.js?v=10"></script>
     <script src="assets/js/app.js?v=8"></script>
-    <script src="pages/asarlar-page.js?v=11"></script>
+    <script src="pages/asarlar-page.js?v=12"></script>
 </body>
 </html>
