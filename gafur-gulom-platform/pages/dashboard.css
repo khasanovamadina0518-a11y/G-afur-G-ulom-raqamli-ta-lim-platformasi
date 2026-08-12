@@ -11,12 +11,12 @@ a.drawer-login-btn {
     --dash-navy: #1a3c5e;
     --dash-gold: #c9a84c;
     --dash-royal: #2563eb;
-    --dash-border: #e5e7eb;
-    --dash-muted: #6b7280;
-    --dash-text: #111827;
+    --dash-border: var(--border);
+    --dash-muted: var(--text-light);
+    --dash-text: var(--text);
     --dash-shadow: 0 4px 24px rgba(26, 60, 94, 0.08);
     --dash-shadow-soft: 0 2px 12px rgba(17, 24, 39, 0.06);
-    background: #f3f4f6;
+    background: var(--bg);
 }
 
 .page-dashboard .dash-page {
@@ -168,7 +168,7 @@ a.drawer-login-btn {
     height: 42px;
     border-radius: 12px;
     border: 1px solid var(--dash-border);
-    background: #ffffff;
+    background: var(--bg);
     color: var(--dash-muted);
     display: inline-flex;
     align-items: center;
@@ -184,7 +184,7 @@ a.drawer-login-btn {
 }
 
 .page-dashboard .dash-card {
-    background: #ffffff;
+    background: var(--bg);
     border: 1px solid var(--dash-border);
     border-radius: 16px;
     box-shadow: var(--dash-shadow-soft);
@@ -243,7 +243,7 @@ a.drawer-login-btn {
 .page-dashboard .dash-progress__bar {
     height: 10px;
     border-radius: 999px;
-    background: #e5e7eb;
+    background: var(--border);
     overflow: hidden;
     margin-bottom: 0.625rem;
 }
@@ -393,7 +393,7 @@ a.drawer-login-btn {
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: #f3f4f6;
+    background: var(--bg);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -496,7 +496,7 @@ a.drawer-login-btn {
     gap: 0.375rem;
     padding: 0.375rem 0.625rem;
     border-radius: 999px;
-    background: #f8fafc;
+    background: var(--bg-elevated);
     border: 1px solid var(--dash-border);
     font-size: 0.75rem;
     font-weight: 600;
@@ -519,7 +519,7 @@ a.drawer-login-btn {
     gap: 0.625rem;
     padding: 0.75rem;
     border-radius: 12px;
-    background: #f8fafc;
+    background: var(--bg-elevated);
     border: 1px solid #eef2f7;
 }
 
@@ -634,7 +634,7 @@ a.drawer-login-btn {
 .page-dashboard .dash-fav {
     padding: 0.875rem;
     border-radius: 12px;
-    background: #f8fafc;
+    background: var(--bg-elevated);
     border: 1px solid #eef2f7;
     text-align: center;
 }
@@ -661,7 +661,7 @@ a.drawer-login-btn {
     padding: 0.375rem 0.75rem;
     border: 1px solid var(--dash-border);
     border-radius: 10px;
-    background: #ffffff;
+    background: var(--bg);
     color: var(--dash-navy);
     font-family: 'Inter', sans-serif;
     font-size: 0.8125rem;
@@ -671,7 +671,7 @@ a.drawer-login-btn {
 
 /* Dark mode */
 body.dark-mode.page-dashboard {
-    background: #0f172a;
+    background: var(--bg);
 }
 
 body.dark-mode.page-dashboard .dash-main {
@@ -679,14 +679,14 @@ body.dark-mode.page-dashboard .dash-main {
 }
 
 body.dark-mode.page-dashboard .dash-greeting {
-    color: #f1f5f9;
+    color: var(--text);
 }
 
 body.dark-mode.page-dashboard .dash-card,
 body.dark-mode.page-dashboard .dash-notify,
 body.dark-mode.page-dashboard .dash-sidebar-toggle {
-    background: #1e293b;
-    border-color: #334155;
+    background: var(--card-bg);
+    border-color: var(--border-strong);
 }
 
 body.dark-mode.page-dashboard .dash-card__title,
@@ -700,28 +700,28 @@ body.dark-mode.page-dashboard .dash-cert__title,
 body.dark-mode.page-dashboard .dash-activity__text,
 body.dark-mode.page-dashboard .dash-fav__num,
 body.dark-mode.page-dashboard .dash-badge-chip {
-    color: #f1f5f9;
+    color: var(--text);
 }
 
 body.dark-mode.page-dashboard .dash-progress__bar {
-    background: #334155;
+    background: var(--border-strong);
 }
 
 body.dark-mode.page-dashboard .dash-goal,
 body.dark-mode.page-dashboard .dash-badge-list {
-    border-color: #334155;
+    border-color: var(--border-strong);
 }
 
 body.dark-mode.page-dashboard .dash-goal__icon,
 body.dark-mode.page-dashboard .dash-rec,
 body.dark-mode.page-dashboard .dash-fav,
 body.dark-mode.page-dashboard .dash-badge-chip {
-    background: #0f172a;
-    border-color: #334155;
+    background: var(--bg);
+    border-color: var(--border-strong);
 }
 
 body.dark-mode.page-dashboard .dash-cert {
-    border-color: #334155;
+    border-color: var(--border-strong);
 }
 
 /* Responsive */

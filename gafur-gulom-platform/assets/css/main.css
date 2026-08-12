@@ -2,6 +2,7 @@
    G'afur G'ulom — Design System Foundation
    Phase 1: Visual tokens (palette, type, spacing)
    =================================== */
+@import url('theme.css');
 
 /* ===================================
    Design Tokens
@@ -15,7 +16,7 @@
     --secondary-light: #d4b865;
     --secondary-dark: #a88b35;
 
-    --bg: #f6f8fb;
+    --bg: #f5f7fa;
     --bg-elevated: #ffffff;
     --card-bg: #ffffff;
     --text: #2d2d2d;
@@ -446,21 +447,26 @@ body,
                 box-shadow var(--duration) var(--ease);
 }
 
-/* Preserve existing system-preference dark tokens (no JS change) */
-@media (prefers-color-scheme: dark) {
-    body:not(.light-mode):not(.dark-mode) {
-        --bg: #0f1923;
-        --bg-elevated: #1a2d3d;
-        --card-bg: #1a2d3d;
-        --text: #e8e0d0;
-        --text-light: #a89f91;
-        --primary: #2a5f8f;
-        --primary-light: #3a7faf;
-        --border: #2d3f4f;
-        --shadow: 0 4px 18px rgba(0, 0, 0, 0.32);
-        background-color: var(--bg);
-        color: var(--text);
-    }
+/* Explicit day mode when dark-mode class is off (toggle / saved light theme) */
+body:not(.dark-mode) {
+    --bg: #f5f7fa;
+    --bg-elevated: #ffffff;
+    --card-bg: #ffffff;
+    --text: #2d2d2d;
+    --text-light: #475569;
+    --text-inverse: #ffffff;
+    --primary: #1a3c5e;
+    --primary-light: #2a5a8a;
+    --primary-dark: #0f2438;
+    --border: #e0e0e0;
+    --border-strong: #cfd6de;
+    --shadow-xs: 0 1px 2px rgba(26, 60, 94, 0.05);
+    --shadow-sm: 0 2px 8px rgba(26, 60, 94, 0.06);
+    --shadow: 0 4px 18px rgba(26, 60, 94, 0.08);
+    --shadow-md: 0 8px 28px rgba(26, 60, 94, 0.1);
+    --shadow-lg: 0 16px 40px rgba(26, 60, 94, 0.12);
+    background-color: var(--bg);
+    color: var(--text);
 }
 
 /* Dark mode toggle — keep class name; refined surface */

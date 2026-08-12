@@ -7,12 +7,12 @@
     --ach-navy: #1a3c5e;
     --ach-gold: #c9a84c;
     --ach-royal: #2563eb;
-    --ach-border: #e5e7eb;
-    --ach-muted: #6b7280;
-    --ach-text: #111827;
+    --ach-border: var(--border);
+    --ach-muted: var(--text-light);
+    --ach-text: var(--text);
     --ach-shadow-soft: 0 2px 12px rgba(17, 24, 39, 0.06);
     --ach-shadow: 0 4px 24px rgba(26, 60, 94, 0.1);
-    background: #f3f4f6;
+    background: var(--bg);
 }
 
 .page-yutuqlar .ach-page {
@@ -45,7 +45,7 @@
     height: 40px;
     border-radius: 12px;
     border: 1px solid var(--ach-border);
-    background: #ffffff;
+    background: var(--bg);
     color: var(--ach-navy);
     text-decoration: none;
     box-shadow: var(--ach-shadow-soft);
@@ -53,7 +53,7 @@
 }
 
 .page-yutuqlar .ach-back:hover {
-    background: #f8fafc;
+    background: var(--bg-elevated);
 }
 
 .page-yutuqlar .ach-title {
@@ -89,7 +89,7 @@
 .page-yutuqlar .ach-span-4 { grid-column: span 4; }
 
 .page-yutuqlar .ach-card {
-    background: #ffffff;
+    background: var(--bg);
     border: 1px solid var(--ach-border);
     border-radius: 16px;
     box-shadow: var(--ach-shadow-soft);
@@ -194,7 +194,7 @@
 .page-yutuqlar .ach-stat {
     padding: 0.875rem 0.625rem;
     border-radius: 12px;
-    background: #f8fafc;
+    background: var(--bg-elevated);
     border: 1px solid #eef2f7;
     text-align: center;
 }
@@ -248,7 +248,7 @@
 .page-yutuqlar .ach-calendar__day {
     aspect-ratio: 1;
     border-radius: 8px;
-    background: #f3f4f6;
+    background: var(--bg);
     border: 1px solid var(--ach-border);
     display: flex;
     align-items: center;
@@ -284,7 +284,7 @@
     padding: 1rem 0.75rem;
     border-radius: 14px;
     border: 1px solid var(--ach-border);
-    background: #ffffff;
+    background: var(--bg);
     box-shadow: var(--ach-shadow-soft);
 }
 
@@ -296,7 +296,7 @@
     align-items: center;
     justify-content: center;
     font-size: 1.625rem;
-    background: #f8fafc;
+    background: var(--bg-elevated);
 }
 
 .page-yutuqlar .ach-badge__title {
@@ -331,7 +331,7 @@
     padding: 1rem;
     border-radius: 14px;
     border: 1px dashed #d1d5db;
-    background: #f9fafb;
+    background: var(--bg-elevated);
     opacity: 0.92;
 }
 
@@ -443,7 +443,7 @@
     padding: 0.875rem 1rem;
     border-radius: 12px;
     border: 1px solid var(--ach-border);
-    background: #f8fafc;
+    background: var(--bg-elevated);
 }
 
 .page-yutuqlar .ach-cert__info {
@@ -524,7 +524,7 @@
     margin: 0;
     padding: 0.875rem 1rem;
     border-radius: 12px;
-    background: #ffffff;
+    background: var(--bg);
     border: 1px solid var(--ach-border);
     font-size: 0.8125rem;
     color: var(--ach-text);
@@ -539,7 +539,7 @@
     gap: 1rem;
     padding: 1.25rem;
     border-radius: 16px;
-    background: #ffffff;
+    background: var(--bg);
     border: 1px solid var(--ach-border);
     box-shadow: var(--ach-shadow-soft);
 }
@@ -564,19 +564,19 @@
 
 /* Dark mode */
 body.dark-mode.page-yutuqlar {
-    background: #0f172a;
+    background: var(--bg);
 }
 
 body.dark-mode.page-yutuqlar .ach-title {
-    color: #f1f5f9;
+    color: var(--text);
 }
 
 body.dark-mode.page-yutuqlar .ach-back,
 body.dark-mode.page-yutuqlar .ach-card,
 body.dark-mode.page-yutuqlar .ach-badge,
 body.dark-mode.page-yutuqlar .ach-cert-promo {
-    background: #1e293b;
-    border-color: #334155;
+    background: var(--card-bg);
+    border-color: var(--border-strong);
 }
 
 body.dark-mode.page-yutuqlar .ach-card__title,
@@ -587,25 +587,25 @@ body.dark-mode.page-yutuqlar .ach-cert__title,
 body.dark-mode.page-yutuqlar .ach-cert-promo__title,
 body.dark-mode.page-yutuqlar .ach-timeline__text,
 body.dark-mode.page-yutuqlar .ach-quote {
-    color: #f1f5f9;
+    color: var(--text);
 }
 
 body.dark-mode.page-yutuqlar .ach-stat,
 body.dark-mode.page-yutuqlar .ach-cert,
 body.dark-mode.page-yutuqlar .ach-encourage {
-    background: #0f172a;
-    border-color: #334155;
+    background: var(--bg);
+    border-color: var(--border-strong);
 }
 
 body.dark-mode.page-yutuqlar .ach-locked {
-    background: #1e293b;
+    background: var(--card-bg);
     border-color: #475569;
 }
 
 body.dark-mode.page-yutuqlar .ach-calendar__day {
-    background: #334155;
+    background: var(--border-strong);
     border-color: #475569;
-    color: #94a3b8;
+    color: var(--text-light);
 }
 
 body.dark-mode.page-yutuqlar .ach-motivation {

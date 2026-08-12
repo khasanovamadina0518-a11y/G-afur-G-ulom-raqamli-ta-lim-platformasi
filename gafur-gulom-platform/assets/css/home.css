@@ -5,24 +5,86 @@
    =================================== */
 
 .home-page {
+    /* Day mode — default homepage palette */
+    --home-bg-start: #f5f7fa;
+    --home-bg-end: #e8eef5;
+    --home-bg-fold-end: #dfe8f2;
+    --home-accent: #1a3c5e;
+    --home-accent-light: #2a5a8a;
+    --home-text: #0f2438;
+    --home-text-muted: #475569;
+    --home-glass: rgba(255, 255, 255, 0.82);
+    --home-glass-border: rgba(26, 60, 94, 0.12);
+    --home-header-bg: rgba(255, 255, 255, 0.96);
+    --home-search-bg: #ffffff;
+    --home-dropdown-bg: #ffffff;
+    --home-hover-surface: rgba(26, 60, 94, 0.06);
+    --home-btn-primary-start: #1a3c5e;
+    --home-btn-primary-end: #2a5a8a;
+    --home-btn-primary-shadow: rgba(26, 60, 94, 0.28);
+    --home-btn-primary-shadow-hover: rgba(42, 90, 138, 0.35);
+    --home-btn-secondary-border: rgba(26, 60, 94, 0.24);
+    --home-btn-secondary-hover-bg: rgba(26, 60, 94, 0.05);
+    --home-portrait-ring: rgba(26, 60, 94, 0.1);
+    --home-portrait-shadow: rgba(26, 60, 94, 0.16);
+    --home-portrait-glow: rgba(42, 90, 138, 0.2);
+    --home-stats-divider: rgba(26, 60, 94, 0.12);
+    --home-fold-glow-1: rgba(42, 90, 138, 0.14);
+    --home-fold-glow-2: rgba(201, 168, 76, 0.1);
+    --home-login-shadow: rgba(26, 60, 94, 0.25);
+    --home-login-shadow-hover: rgba(42, 90, 138, 0.32);
+    --home-accent-soft: rgba(42, 90, 138, 0.12);
+    --home-container: 1200px;
+    --home-portrait-w: 300px;
+    --home-portrait-h: 320px;
+    --home-section-gap: clamp(1.5rem, 2.75vw, 2.25rem);
+    background: var(--bg);
+}
+
+body.home-page.dark-mode {
     --home-bg-start: #0b1220;
     --home-bg-end: #1e293b;
+    --home-bg-fold-end: #162032;
     --home-accent: #2563eb;
     --home-accent-light: #38bdf8;
     --home-text: #f8fafc;
     --home-text-muted: #cbd5e1;
     --home-glass: rgba(255, 255, 255, 0.05);
     --home-glass-border: rgba(255, 255, 255, 0.1);
-    --home-container: 1200px;
-    --home-portrait-w: 300px;
-    --home-portrait-h: 320px;
-    --home-section-gap: clamp(1.5rem, 2.75vw, 2.25rem);
+    --home-header-bg: rgba(11, 18, 32, 0.92);
+    --home-search-bg: rgba(15, 23, 42, 0.95);
+    --home-dropdown-bg: rgba(15, 23, 42, 0.98);
+    --home-hover-surface: rgba(255, 255, 255, 0.06);
+    --home-btn-primary-start: #2563eb;
+    --home-btn-primary-end: #38bdf8;
+    --home-btn-primary-shadow: rgba(37, 99, 235, 0.35);
+    --home-btn-primary-shadow-hover: rgba(56, 189, 248, 0.45);
+    --home-btn-secondary-border: rgba(255, 255, 255, 0.28);
+    --home-btn-secondary-hover-bg: rgba(255, 255, 255, 0.06);
+    --home-portrait-ring: rgba(255, 255, 255, 0.08);
+    --home-portrait-shadow: rgba(0, 0, 0, 0.45);
+    --home-portrait-glow: rgba(37, 99, 235, 0.25);
+    --home-stats-divider: rgba(255, 255, 255, 0.1);
+    --home-fold-glow-1: rgba(37, 99, 235, 0.18);
+    --home-fold-glow-2: rgba(56, 189, 248, 0.08);
+    --home-login-shadow: rgba(37, 99, 235, 0.35);
+    --home-login-shadow-hover: rgba(56, 189, 248, 0.4);
+    --home-accent-soft: rgba(56, 189, 248, 0.12);
     background: var(--home-bg-start);
 }
 
-/* ----- Dark integrated header (reference) ----- */
+body.home-page:not(.dark-mode) {
+    background: var(--bg);
+}
+
+body.home-page.dark-mode .site-header,
+body.home-page:not(.dark-mode) .site-header {
+    background: var(--home-header-bg);
+}
+
+/* ----- Integrated header (theme-aware) ----- */
 .home-page .site-header {
-    background: rgba(11, 18, 32, 0.92);
+    background: var(--home-header-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--home-glass-border);
@@ -55,11 +117,11 @@
 
 .home-page .header-icon-btn:hover {
     color: var(--home-accent-light);
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--home-hover-surface);
 }
 
 .home-page .site-header--premium .search-box {
-    background-color: rgba(15, 23, 42, 0.95);
+    background-color: var(--home-search-bg);
     border-color: var(--home-glass-border);
 }
 
@@ -78,11 +140,11 @@
 
 .home-page .lang-switch--compact .lang-picker:hover {
     color: var(--home-accent-light);
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--home-hover-surface);
 }
 
 .home-page .lang-switch__options {
-    background: rgba(15, 23, 42, 0.98);
+    background: var(--home-dropdown-bg);
     border-color: var(--home-glass-border);
 }
 
@@ -93,18 +155,18 @@
 .home-page .lang-switch__options .lang-btn.active,
 .home-page .lang-switch__options .lang-btn:hover {
     color: var(--home-accent-light);
-    background: rgba(56, 189, 248, 0.12);
+    background: var(--home-accent-soft);
 }
 
 .home-page .site-header--premium .login-btn {
-    background: linear-gradient(135deg, var(--home-accent) 0%, var(--home-accent-light) 100%);
+    background: linear-gradient(135deg, var(--home-btn-primary-start) 0%, var(--home-btn-primary-end) 100%);
     color: #fff;
     border: none;
-    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+    box-shadow: 0 4px 16px var(--home-login-shadow);
 }
 
 .home-page .site-header--premium .login-btn:hover {
-    box-shadow: 0 6px 24px rgba(56, 189, 248, 0.4);
+    box-shadow: 0 6px 24px var(--home-login-shadow-hover);
 }
 
 .home-page .site-header--premium .dark-mode-toggle {
@@ -113,12 +175,12 @@
 
 .home-page .site-header--premium .dark-mode-toggle:hover {
     color: var(--home-accent-light);
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--home-hover-surface);
 }
 
 /* ----- Above-the-fold canvas ----- */
 .home-page .home-above-fold {
-    background: linear-gradient(160deg, var(--home-bg-start) 0%, var(--home-bg-end) 55%, #162032 100%);
+    background: linear-gradient(160deg, var(--home-bg-start) 0%, var(--home-bg-end) 55%, var(--home-bg-fold-end) 100%);
     color: var(--home-text);
     min-height: auto;
     padding: clamp(1.25rem, 2.5vw, 2rem) 0 clamp(1.5rem, 3vw, 2.25rem);
@@ -131,8 +193,8 @@
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse 55% 45% at 85% 15%, rgba(37, 99, 235, 0.18), transparent 60%),
-        radial-gradient(ellipse 40% 35% at 10% 80%, rgba(56, 189, 248, 0.08), transparent 55%);
+        radial-gradient(ellipse 55% 45% at 85% 15%, var(--home-fold-glow-1), transparent 60%),
+        radial-gradient(ellipse 40% 35% at 10% 80%, var(--home-fold-glow-2), transparent 55%);
     pointer-events: none;
 }
 
@@ -232,26 +294,26 @@
 }
 
 .home-page .home-hero__btn--primary {
-    background: linear-gradient(135deg, var(--home-accent) 0%, var(--home-accent-light) 100%);
+    background: linear-gradient(135deg, var(--home-btn-primary-start) 0%, var(--home-btn-primary-end) 100%);
     color: #fff;
     border: none;
-    box-shadow: 0 4px 24px rgba(37, 99, 235, 0.35);
+    box-shadow: 0 4px 24px var(--home-btn-primary-shadow);
 }
 
 .home-page .home-hero__btn--primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(56, 189, 248, 0.45);
+    box-shadow: 0 8px 32px var(--home-btn-primary-shadow-hover);
 }
 
 .home-page .home-hero__btn--secondary {
     background: transparent;
     color: var(--home-text);
-    border: 1px solid rgba(255, 255, 255, 0.28);
+    border: 1px solid var(--home-btn-secondary-border);
 }
 
 .home-page .home-hero__btn--secondary:hover {
     border-color: var(--home-accent-light);
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--home-btn-secondary-hover-bg);
     transform: translateY(-2px);
 }
 
@@ -297,9 +359,9 @@
     object-position: center top;
     border-radius: 16px;
     box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.08),
-        0 20px 50px rgba(0, 0, 0, 0.45),
-        0 0 60px rgba(37, 99, 235, 0.25);
+        0 0 0 1px var(--home-portrait-ring),
+        0 20px 50px var(--home-portrait-shadow),
+        0 0 60px var(--home-portrait-glow);
 }
 
 .home-page .home-hero__portrait-wash,
@@ -342,7 +404,7 @@
     transform: translateY(-50%);
     width: 1px;
     height: 52px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--home-stats-divider);
 }
 
 .home-page .home-stats__icon {
@@ -577,4 +639,54 @@
     .home-page .home-hero__btn {
         transition: none;
     }
+}
+
+/* Homepage category section — override inline theme styles via specificity */
+body.home-page:not(.dark-mode) .user-categories {
+    background: var(--bg);
+}
+
+body.home-page.dark-mode .user-categories {
+    background: var(--bg);
+}
+
+body.home-page .category-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+body.home-page .category-card h3 {
+    color: var(--primary);
+}
+
+body.home-page .category-card .text-light,
+body.home-page .category-list li {
+    color: var(--text-light);
+}
+
+body.home-page.dark-mode .category-card {
+    background: var(--card-bg);
+    border-color: var(--border);
+}
+
+body.home-page:not(.dark-mode) h1,
+body.home-page:not(.dark-mode) h2,
+body.home-page:not(.dark-mode) h3,
+body.home-page:not(.dark-mode) p,
+body.home-page:not(.dark-mode) li,
+body.home-page:not(.dark-mode) a {
+    color: inherit;
+}
+
+body.home-page.dark-mode .user-categories h2,
+body.home-page.dark-mode .user-categories h3,
+body.home-page.dark-mode .user-categories p,
+body.home-page.dark-mode .user-categories li,
+body.home-page.dark-mode .user-categories a {
+    color: var(--text);
+}
+
+body.home-page .card-link {
+    color: var(--primary-light);
 }

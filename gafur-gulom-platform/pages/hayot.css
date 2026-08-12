@@ -7,11 +7,11 @@
     --hy-navy: #1a3c5e;
     --hy-gold: #c9a84c;
     --hy-royal: #2563eb;
-    --hy-border: #e5e7eb;
-    --hy-muted: #6b7280;
-    --hy-text: #111827;
-    --hy-bg: #f8f9fb;
-    --hy-card: #ffffff;
+    --hy-border: var(--border);
+    --hy-muted: var(--text-light);
+    --hy-text: var(--text);
+    --hy-bg: var(--bg);
+    --hy-card: var(--card-bg);
     --hy-cream: #fcfbf7;
     --hy-shadow: 0 4px 24px rgba(26, 60, 94, 0.08);
     --hy-shadow-soft: 0 2px 12px rgba(17, 24, 39, 0.06);
@@ -65,6 +65,7 @@
     font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 700;
     line-height: 1.12;
+    color: #ffffff;
 }
 
 .page-hayot .hy-hero__years {
@@ -905,12 +906,12 @@
 
 /* Dark mode */
 body.dark-mode.page-hayot {
-    --hy-bg: #0f172a;
-    --hy-card: #1e293b;
-    --hy-border: #334155;
-    --hy-text: #e2e8f0;
-    --hy-muted: #94a3b8;
-    --hy-cream: #1e293b;
+    --hy-bg: var(--bg);
+    --hy-card: var(--card-bg);
+    --hy-border: var(--border-strong);
+    --hy-text: var(--text);
+    --hy-muted: var(--text-light);
+    --hy-cream: var(--card-bg);
 }
 
 body.dark-mode.page-hayot .hy-jump {
@@ -923,16 +924,16 @@ body.dark-mode.page-hayot .hy-overview-card__title,
 body.dark-mode.page-hayot .hy-next-card__title,
 body.dark-mode.page-hayot .hy-quote-card__author,
 body.dark-mode.page-hayot .hy-award__title {
-    color: #f1f5f9;
+    color: var(--text);
 }
 
 body.dark-mode.page-hayot .hy-btn-outline {
-    background: #0f172a;
+    background: var(--bg);
     color: var(--hy-text);
 }
 
 body.dark-mode.page-hayot .hy-filter-btn {
-    background: #0f172a;
+    background: var(--bg);
 }
 
 body.dark-mode.page-hayot .hy-fact--quote p {

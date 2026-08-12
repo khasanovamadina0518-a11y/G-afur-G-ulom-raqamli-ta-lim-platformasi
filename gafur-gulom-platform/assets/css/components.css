@@ -766,6 +766,34 @@ body.dark-mode .site-header--premium {
     border-bottom-color: var(--border);
 }
 
+body:not(.dark-mode) .site-header--premium {
+    background-color: var(--card-bg);
+    border-bottom-color: var(--border);
+}
+
+body:not(.dark-mode) .brand-lockup__title {
+    color: var(--primary);
+}
+
+body:not(.dark-mode) .brand-lockup__subtitle {
+    color: var(--text-light);
+}
+
+body:not(.dark-mode) .site-header--premium .nav-menu a {
+    color: var(--gray-700);
+}
+
+body:not(.dark-mode) .site-header--premium .nav-menu a.active,
+body:not(.dark-mode) .site-header--premium .nav-menu a:hover {
+    color: var(--primary);
+}
+
+body:not(.dark-mode) .search-expand.is-open .search-box,
+body:not(.dark-mode) .lang-switch__options {
+    background: var(--card-bg);
+    border-color: var(--border);
+}
+
 body.dark-mode .brand-lockup__title {
     color: var(--text);
 }
@@ -789,6 +817,19 @@ body.dark-mode .lang-switch__options {
     border-color: var(--border);
 }
 
+/* Subpage hero headings — override global h1 { color: var(--primary) } on navy bands */
+.page-ilmiy .ilm-hero__title,
+.page-talim .tl-hero__title,
+.page-hayot .hy-hero__title {
+    color: #ffffff;
+}
+
+.page-ilmiy .ilm-hero__stat,
+.page-talim .tl-hero__stat,
+.page-hayot .hy-hero__stat {
+    color: rgba(255, 255, 255, 0.88);
+}
+
 /* ===================================
    Footer Component
    =================================== */
@@ -797,6 +838,22 @@ body.dark-mode .lang-switch__options {
     color: var(--text-inverse);
     padding: var(--space-9) var(--container-pad) var(--space-4);
     margin-top: var(--space-10);
+}
+
+body:not(.dark-mode) .site-footer {
+    background-color: #2a5a8a;
+    background-image: linear-gradient(165deg, #315f8f 0%, #2a5a8a 48%, #3d6fa8 100%);
+}
+
+body.dark-mode .site-footer {
+    background-color: #0a1219;
+    background-image: linear-gradient(165deg, #0f1923 0%, #0a1219 50%, #152535 100%);
+    border-top: 1px solid var(--border);
+}
+
+body.dark-mode .footer-bottom {
+    border-top-color: var(--border);
+    color: rgba(232, 224, 208, 0.72);
 }
 
 .footer-content {
@@ -842,6 +899,12 @@ body.dark-mode .lang-switch__options {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: rgba(247, 248, 250, 0.62);
     font-size: var(--fs-sm);
+}
+
+.footer-bottom p {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* ===================================

@@ -7,12 +7,12 @@
     --test-navy: #1a3c5e;
     --test-gold: #c9a84c;
     --test-royal: #2563eb;
-    --test-border: #e5e7eb;
-    --test-muted: #6b7280;
-    --test-text: #111827;
+    --test-border: var(--border);
+    --test-muted: var(--text-light);
+    --test-text: var(--text);
     --test-shadow: 0 4px 24px rgba(26, 60, 94, 0.08);
     --test-shadow-soft: 0 2px 12px rgba(17, 24, 39, 0.06);
-    background: #ffffff;
+    background: var(--bg);
 }
 
 .page-testlar .test-page {
@@ -83,7 +83,7 @@
 }
 
 .page-testlar .game-card {
-    background: #ffffff;
+    background: var(--bg);
     padding: 1.5rem;
     border-radius: 12px;
     border: 1px solid var(--test-border);
@@ -123,7 +123,7 @@
 }
 
 .page-testlar .game-header {
-    background: #ffffff;
+    background: var(--bg);
     padding: 1rem 1.25rem;
     border-radius: 12px;
     border: 1px solid var(--test-border);
@@ -150,7 +150,7 @@
 
 /* ----- Premium quiz session (reference layout) ----- */
 .page-testlar .quiz-session {
-    background: #ffffff;
+    background: var(--bg);
     border: 1px solid var(--test-border);
     border-radius: 16px;
     box-shadow: var(--test-shadow);
@@ -207,7 +207,7 @@
 
 .page-testlar .quiz-session__progress {
     height: 4px;
-    background: #f3f4f6;
+    background: var(--bg);
     margin: 0 1.25rem 0.5rem;
     border-radius: 999px;
     overflow: hidden;
@@ -269,7 +269,7 @@
     gap: 0.875rem;
     width: 100%;
     padding: 1rem 1.125rem;
-    background: #ffffff;
+    background: var(--bg);
     border: 1px solid var(--test-border);
     border-radius: 12px;
     box-shadow: var(--test-shadow-soft);
@@ -382,7 +382,7 @@
     gap: 0.625rem;
     padding: 1rem 1.25rem 1.25rem;
     border-top: 1px solid #f3f4f6;
-    background: #fafafa;
+    background: var(--bg-elevated);
 }
 
 .page-testlar .quiz-nav-btn {
@@ -411,7 +411,7 @@
     justify-self: start;
     color: var(--test-muted);
     border-color: var(--test-border);
-    background: #ffffff;
+    background: var(--bg);
 }
 
 .page-testlar .quiz-nav-btn--ghost:hover:not(:disabled) {
@@ -474,7 +474,7 @@
 
 /* ----- Other games (preserved) ----- */
 .page-testlar .poem-display {
-    background: #f9fafb;
+    background: var(--bg-elevated);
     padding: 1.5rem;
     border-radius: 12px;
     margin-bottom: 1.5rem;
@@ -496,7 +496,7 @@
 
 .page-testlar .poem-word input {
     border: none;
-    background: #ffffff;
+    background: var(--bg);
     border-bottom: 2px solid var(--test-gold);
     padding: 0.25rem 0.5rem;
     font-size: 1rem;
@@ -512,7 +512,7 @@
 }
 
 .page-testlar .timeline-item {
-    background: #ffffff;
+    background: var(--bg);
     padding: 1rem 1.25rem;
     border-radius: 10px;
     border: 1px solid var(--test-border);
@@ -528,7 +528,7 @@
 .page-testlar .word-cell {
     width: 36px;
     height: 36px;
-    background: #ffffff;
+    background: var(--bg);
     border: 1px solid var(--test-border);
     display: flex;
     align-items: center;
@@ -539,7 +539,7 @@
 }
 
 .page-testlar .leaderboard {
-    background: #ffffff;
+    background: var(--bg);
     padding: 1.25rem;
     border-radius: 12px;
     border: 1px solid var(--test-border);
@@ -557,7 +557,7 @@
 
 .page-testlar .start-screen,
 .page-testlar .result-screen {
-    background: #ffffff;
+    background: var(--bg);
     padding: 2rem 1.5rem;
     border-radius: 16px;
     border: 1px solid var(--test-border);
@@ -585,38 +585,38 @@
 
 /* ----- Dark mode ----- */
 body.dark-mode.page-testlar {
-    background: #0f172a;
+    background: var(--bg);
 }
 
 body.dark-mode.page-testlar .test-header__title,
 body.dark-mode.page-testlar .quiz-question {
-    color: #f1f5f9;
+    color: var(--text);
 }
 
 body.dark-mode.page-testlar .quiz-session,
 body.dark-mode.page-testlar .game-card,
 body.dark-mode.page-testlar .start-screen,
 body.dark-mode.page-testlar .result-screen {
-    background: #1e293b;
-    border-color: #334155;
+    background: var(--card-bg);
+    border-color: var(--border-strong);
 }
 
 body.dark-mode.page-testlar .quiz-answer-card {
-    background: #1e293b;
-    border-color: #334155;
-    color: #e2e8f0;
+    background: var(--card-bg);
+    border-color: var(--border-strong);
+    color: var(--text);
 }
 
 body.dark-mode.page-testlar .quiz-session__footer {
-    background: #172033;
-    border-top-color: #334155;
+    background: var(--bg-elevated);
+    border-top-color: var(--border-strong);
 }
 
 body.dark-mode.page-testlar .quiz-nav-btn--ghost,
 body.dark-mode.page-testlar .quiz-nav-btn--flag {
-    background: #1e293b;
-    border-color: #334155;
-    color: #e2e8f0;
+    background: var(--card-bg);
+    border-color: var(--border-strong);
+    color: var(--text);
 }
 
 /* ----- Responsive ----- */
@@ -662,7 +662,7 @@ body.dark-mode.page-testlar .quiz-nav-btn--flag {
     display: flex;
     flex-direction: column;
     gap: 0.875rem;
-    background: #ffffff;
+    background: var(--bg);
     border: 1px solid var(--test-border);
     border-radius: 16px;
     padding: 1.5rem;
@@ -778,12 +778,12 @@ body.dark-mode.page-testlar .quiz-nav-btn--flag {
     --test-navy: #1a3c5e;
     --test-gold: #c9a84c;
     --test-royal: #2563eb;
-    --test-border: #e5e7eb;
-    --test-muted: #6b7280;
-    --test-text: #111827;
+    --test-border: var(--border);
+    --test-muted: var(--text-light);
+    --test-text: var(--text);
     --test-shadow: 0 4px 24px rgba(26, 60, 94, 0.08);
     --test-shadow-soft: 0 2px 12px rgba(17, 24, 39, 0.06);
-    background: #ffffff;
+    background: var(--bg);
 }
 
 .page-interaktiv .test-page__inner {
@@ -820,7 +820,7 @@ body.dark-mode.page-testlar .quiz-nav-btn--flag {
 .page-interaktiv .game-card__icon--memory { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
 .page-interaktiv .game-card__icon--timeline { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
 .page-interaktiv .game-card__icon--search { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
-.page-interaktiv .game-card__icon--soon { background: #f3f4f6; filter: grayscale(0.35); }
+.page-interaktiv .game-card__icon--soon { background: var(--bg); filter: grayscale(0.35); }
 
 .page-interaktiv .game-card__title {
     margin: 0;
@@ -848,7 +848,7 @@ body.dark-mode.page-testlar .quiz-nav-btn--flag {
     font-weight: 600;
     color: #64748b;
     padding: 0.25rem 0.5rem;
-    background: #f8fafc;
+    background: var(--bg-elevated);
     border-radius: 6px;
 }
 
@@ -897,39 +897,39 @@ body.dark-mode.page-testlar .quiz-nav-btn--flag {
 
 .page-interaktiv .game-card__btn:disabled {
     background: #e5e7eb;
-    color: #94a3b8;
+    color: var(--text-light);
     cursor: not-allowed;
     box-shadow: none;
 }
 
 body.dark-mode.page-interaktiv {
-    background: #0f172a;
+    background: var(--bg);
 }
 
 body.dark-mode.page-interaktiv .game-card,
 body.dark-mode.page-interaktiv .start-screen,
 body.dark-mode.page-interaktiv .result-screen,
 body.dark-mode.page-interaktiv .game-header {
-    background: #1e293b;
-    border-color: #334155;
+    background: var(--card-bg);
+    border-color: var(--border-strong);
 }
 
 body.dark-mode.page-testlar .test-card {
-    background: #1e293b;
-    border-color: #334155;
+    background: var(--card-bg);
+    border-color: var(--border-strong);
 }
 
 body.dark-mode.page-testlar .test-card--featured {
-    background: linear-gradient(180deg, #1e293b 0%, #1a2332 100%);
+    background: linear-gradient(180deg, var(--card-bg) 0%, #1a2332 100%);
 }
 
 body.dark-mode.page-testlar .test-card__desc,
 body.dark-mode.page-interaktiv .game-card__desc {
-    color: #94a3b8;
+    color: var(--text-light);
 }
 
 body.dark-mode.page-testlar .test-card__meta-item,
 body.dark-mode.page-interaktiv .game-card__meta-item {
     color: #cbd5e1;
-    background: #0f172a;
+    background: var(--bg);
 }

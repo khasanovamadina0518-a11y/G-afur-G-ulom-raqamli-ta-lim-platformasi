@@ -7,11 +7,11 @@
     --tl-navy: #1a3c5e;
     --tl-gold: #c9a84c;
     --tl-royal: #2563eb;
-    --tl-border: #e5e7eb;
-    --tl-muted: #6b7280;
-    --tl-text: #111827;
-    --tl-bg: #f8f9fb;
-    --tl-card: #ffffff;
+    --tl-border: var(--border);
+    --tl-muted: var(--text-light);
+    --tl-text: var(--text);
+    --tl-bg: var(--bg);
+    --tl-card: var(--card-bg);
     --tl-shadow: 0 4px 24px rgba(26, 60, 94, 0.08);
     --tl-shadow-soft: 0 2px 12px rgba(17, 24, 39, 0.06);
     background: var(--tl-bg);
@@ -66,6 +66,7 @@
     font-family: 'Playfair Display', serif;
     font-size: clamp(2rem, 5vw, 2.75rem);
     font-weight: 700;
+    color: #ffffff;
 }
 
 .page-talim .tl-hero__text {
@@ -211,7 +212,7 @@
     width: 46px;
     height: 46px;
     border-radius: 10px;
-    background: #fff;
+    background: var(--card-bg);
     border: 1px solid var(--tl-border);
     font-size: 1rem;
     font-weight: 700;
@@ -353,7 +354,7 @@
 /* Sidebar */
 .page-talim .tl-progress__bar {
     height: 8px;
-    background: #e5e7eb;
+    background: var(--border);
     border-radius: 999px;
     overflow: hidden;
     margin: 0.5rem 0 0.75rem;
@@ -405,7 +406,7 @@
     justify-content: center;
     gap: 0.35rem;
     padding: 0.65rem 1rem;
-    background: #fff;
+    background: var(--card-bg);
     color: var(--tl-navy);
     border: 1px solid var(--tl-border);
     border-radius: 8px;
@@ -483,7 +484,7 @@
     padding: 1rem;
     border: 1px solid var(--tl-border);
     border-radius: 10px;
-    background: #fff;
+    background: var(--card-bg);
     cursor: pointer;
     font-weight: 600;
     color: var(--tl-navy);
@@ -506,7 +507,7 @@
 .page-talim .progress-bar {
     flex: 1;
     height: 8px;
-    background: #e5e7eb;
+    background: var(--border);
     border-radius: 999px;
     overflow: hidden;
 }
@@ -552,7 +553,7 @@
 .page-talim .answer-btn {
     padding: 1rem 1.1rem;
     text-align: left;
-    background: #fff;
+    background: var(--card-bg);
     border: 1px solid var(--tl-border);
     border-radius: 10px;
     cursor: pointer;
@@ -736,18 +737,19 @@
 
 /* Dark mode */
 body.dark-mode.page-talim {
-    --tl-bg: #0f172a;
-    --tl-card: #1e293b;
-    --tl-border: #334155;
-    --tl-text: #e2e8f0;
-    --tl-muted: #94a3b8;
+    --tl-bg: var(--bg);
+    --tl-card: var(--card-bg);
+    --tl-border: var(--border-strong);
+    --tl-text: var(--text);
+    --tl-muted: var(--text-light);
+    --tl-navy: var(--primary-light);
 }
 
 body.dark-mode.page-talim .class-btn,
 body.dark-mode.page-talim .difficulty-btn,
 body.dark-mode.page-talim .answer-btn,
 body.dark-mode.page-talim .tl-btn-outline {
-    background: #0f172a;
+    background: var(--bg);
     color: var(--tl-text);
 }
 
@@ -764,7 +766,7 @@ body.dark-mode.page-talim .tl-card__title,
 body.dark-mode.page-talim .lesson-card h3,
 body.dark-mode.page-talim .question-text,
 body.dark-mode.page-talim .tl-progress__pct {
-    color: #f1f5f9;
+    color: var(--text);
 }
 
 body.dark-mode.page-talim .tl-material {

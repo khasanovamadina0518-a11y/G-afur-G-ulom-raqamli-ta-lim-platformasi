@@ -241,13 +241,20 @@ function renderHeader() {
 
     // Saqlangan mavzuni qo'llash
     const savedTheme = localStorage.getItem('theme');
+    const isDarkTheme = savedTheme === 'dark';
 
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
+    document.body.classList.toggle('dark-mode', isDarkTheme);
 
-        const btn = document.getElementById('darkBtn');
-        const icon = btn && btn.querySelector('.dark-mode-toggle__icon');
-        if (icon) icon.textContent = '☀️';
+    const btn = document.getElementById('darkBtn');
+    const icon = btn && btn.querySelector('.dark-mode-toggle__icon');
+    if (icon) icon.textContent = isDarkTheme ? '☀️' : '🌙';
+
+    const drawerDarkBtn = document.getElementById('drawerDarkBtn');
+    if (drawerDarkBtn) {
+        const drawerIcon = drawerDarkBtn.querySelector('.drawer-btn-icon');
+        const drawerText = drawerDarkBtn.querySelector('.drawer-btn-text');
+        if (drawerIcon) drawerIcon.textContent = isDarkTheme ? '☀️' : '🌙';
+        if (drawerText) drawerText.textContent = isDarkTheme ? 'Light Mode' : 'Dark Mode';
     }
 
     initHeaderSearchExpand();
@@ -303,15 +310,6 @@ function renderHeader() {
             item.classList.add('active');
         }
     });
-
-    // Drawer dark mode tugmasini yangilash
-    const drawerDarkBtn = document.getElementById('drawerDarkBtn');
-    if (drawerDarkBtn && savedTheme === 'dark') {
-        const icon = drawerDarkBtn.querySelector('.drawer-btn-icon');
-        const text = drawerDarkBtn.querySelector('.drawer-btn-text');
-        if (icon) icon.textContent = '☀️';
-        if (text) text.textContent = 'Light Mode';
-    }
 
     headerInitialized = true;
 }

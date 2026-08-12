@@ -562,7 +562,7 @@
         max-width: 960px;
         margin: 2.25rem auto 0;
         padding-top: 1.5rem;
-        text-align: left;
+        text-align: center;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -570,8 +570,9 @@
         font-size: 0.875rem;
         line-height: 1.6;
         max-width: none;
-        margin-left: 0;
-        margin-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
     }
 
     .footer-bottom p + p {
@@ -647,7 +648,7 @@
         max-width: 87.5rem;
         margin: 2.75rem auto 0;
         padding-top: 1.75rem;
-        text-align: left;
+        text-align: center;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -655,8 +656,9 @@
         font-size: 0.875rem;
         line-height: 1.6;
         max-width: none;
-        margin-left: 0;
-        margin-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
     }
 
     .footer-bottom p + p {
@@ -1181,6 +1183,49 @@
     body.dark-mode .bottom-nav-item.active span {
         color: var(--secondary-light);
     }
+
+    body:not(.dark-mode) .drawer-content {
+        background: var(--card-bg);
+    }
+
+    body:not(.dark-mode) .drawer-item {
+        background: var(--bg-elevated);
+        border-color: var(--border);
+        color: var(--text);
+    }
+
+    body:not(.dark-mode) .drawer-footer {
+        background: var(--bg);
+        border-top-color: var(--border);
+    }
+
+    body:not(.dark-mode) .drawer-dark-btn,
+    body:not(.dark-mode) .drawer-lang {
+        background: var(--bg-elevated);
+        border-color: var(--border);
+        color: var(--text);
+    }
+
+    body:not(.dark-mode) .mobile-bottom-nav {
+        background: rgba(255, 255, 255, 0.94);
+        border-top-color: var(--border);
+        box-shadow:
+            0 -8px 32px rgba(26, 60, 94, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    }
+
+    body:not(.dark-mode) .bottom-nav-item:not(.active) {
+        color: var(--text-light);
+        opacity: 1;
+    }
+
+    body:not(.dark-mode) .bottom-nav-item.active {
+        background: rgba(201, 168, 76, 0.14);
+    }
+
+    body:not(.dark-mode) .bottom-nav-item.active span {
+        color: var(--primary);
+    }
 }
 
 /* ===================================
@@ -1205,33 +1250,49 @@ html body.page-interaktiv {
     --test-royal: var(--accent-action);
     --video-royal: var(--accent-action);
     --ai-royal: var(--accent-action);
-    --dash-border: var(--gray-200);
-    --ach-border: var(--gray-200);
-    --hy-border: var(--gray-200);
-    --ilm-border: var(--gray-200);
-    --tl-border: var(--gray-200);
-    --test-border: var(--gray-200);
-    --video-border: var(--gray-200);
-    --ai-border: var(--gray-200);
-    --dash-muted: var(--gray-500);
-    --ach-muted: var(--gray-500);
-    --hy-muted: var(--gray-500);
-    --ilm-muted: var(--gray-500);
-    --tl-muted: var(--gray-500);
-    --test-muted: var(--gray-500);
-    --video-muted: var(--gray-500);
-    --ai-muted: var(--gray-500);
-    --dash-text: var(--gray-900);
-    --ach-text: var(--gray-900);
-    --hy-text: var(--gray-900);
-    --ilm-text: var(--gray-900);
-    --tl-text: var(--gray-900);
-    --test-text: var(--gray-900);
-    --video-text: var(--gray-900);
-    --ai-text: var(--gray-900);
+    --dash-border: var(--border);
+    --ach-border: var(--border);
+    --hy-border: var(--border);
+    --ilm-border: var(--border);
+    --tl-border: var(--border);
+    --test-border: var(--border);
+    --video-border: var(--border);
+    --ai-border: var(--border);
+    --dash-muted: var(--text-light);
+    --ach-muted: var(--text-light);
+    --hy-muted: var(--text-light);
+    --ilm-muted: var(--text-light);
+    --tl-muted: var(--text-light);
+    --test-muted: var(--text-light);
+    --video-muted: var(--text-light);
+    --ai-muted: var(--text-light);
+    --dash-text: var(--text);
+    --ach-text: var(--text);
+    --hy-text: var(--text);
+    --ilm-text: var(--text);
+    --tl-text: var(--text);
+    --test-text: var(--text);
+    --video-text: var(--text);
+    --ai-text: var(--text);
+    --dash-bg: var(--bg);
+    --ach-bg: var(--bg);
+    --hy-bg: var(--bg);
+    --ilm-bg: var(--bg);
+    --tl-bg: var(--bg);
+    --test-bg: var(--bg);
+    --video-bg: var(--bg);
+    --ai-bg: var(--bg);
+    --dash-card: var(--card-bg);
+    --ach-card: var(--card-bg);
+    --hy-card: var(--card-bg);
+    --ilm-card: var(--card-bg);
+    --tl-card: var(--card-bg);
+    --test-card: var(--card-bg);
+    --ai-card: var(--card-bg);
     --dash-shadow-soft: var(--shadow-sm);
     --ach-shadow-soft: var(--shadow-sm);
-    background: var(--surface-muted);
+    background: var(--bg);
+    color: var(--text);
 }
 
 html body.page-dashboard [class*="__card"],
