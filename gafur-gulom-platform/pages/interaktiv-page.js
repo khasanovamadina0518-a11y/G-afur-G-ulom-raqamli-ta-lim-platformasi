@@ -172,7 +172,7 @@ const poems = [
 
 // Timeline events
 const timelineEventsData = [
-    { year: 1889, text: "G'afur G'ulom Toshkentda tug'ilgan" },
+    { year: 1903, text: "G'afur G'ulom Toshkentda tug'ilgan" },
     { year: 1908, text: "Birinchi she'rini yozgan" },
     { year: 1915, text: "Jadid maktabini tamomla gan" },
     { year: 1920, text: "Birinchi she'rlar to'plami nashr etilgan" },

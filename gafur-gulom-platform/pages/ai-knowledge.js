@@ -208,7 +208,7 @@ function searchHayot(query) {
     }
 
     if (includesPhrase(query, 'g\'afur g\'ulom kim') || (tokens.includes('kim') && scoreText(tokens, 'g\'afur g\'ulom', 2) > 0)) {
-        const birth = (data.hayot.voqealar || []).find(v => v.yil === 1889);
+        const birth = (data.hayot.voqealar || []).find(v => v.yil === 1903);
         const death = (data.hayot.voqealar || []).find(v => v.sarlavha === 'Vafoti');
         hits.push({
             type: 'bio_summary',

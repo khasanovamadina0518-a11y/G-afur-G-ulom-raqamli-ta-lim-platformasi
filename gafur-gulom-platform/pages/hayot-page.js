@@ -25,9 +25,9 @@ const EVENT_WORKS = {
 };
 
 const OVERVIEW_CARDS = [
-    { label: 'Tug\'ilish', title: 'Tug\'ildi', year: 1889 },
-    { label: 'Ta\'lim', title: 'Ta\'lim yo\'li', year: 1895 },
-    { label: 'Ijod', title: 'Ijod boshlanishi', year: 1910 },
+    { label: 'Tug\'ilish', title: 'Tug\'ildi', year: 1903 },
+    { label: 'Ta\'lim', title: 'Ta\'lim yo\'li', year: 1909 },
+    { label: 'Ijod', title: 'Ijod boshlanishi', year: 1924 },
     { label: 'Asar', title: 'Shum bola', year: 1939 },
     { label: 'Unvon', title: 'Tan olinish', year: 1960 },
     { label: 'Meros', title: 'Vafoti', year: 1966 }
@@ -346,7 +346,7 @@ function renderFacts() {
 
     grid.innerHTML = `
         <div class="hy-fact">
-            <span class="hy-fact__num">1889</span>
+            <span class="hy-fact__num">1903</span>
             <p class="hy-fact__label">Tug'ilgan yil</p>
         </div>
         <div class="hy-fact">
@@ -436,7 +436,7 @@ function renderDocuments() {
     const grid = document.getElementById('hy-documents-grid');
     if (!grid) return;
 
-    const birthVoqea = getVoqeaByYear(1889);
+    const birthVoqea = getVoqeaByYear(1903);
     const docs = [
         {
             type: 'Portret',
