@@ -312,22 +312,21 @@ function initModal() {
 function openPoemModal(poemId) {
     const poem = allPoems.find(p => p.id === poemId);
     if (!poem) return;
-    
+
     currentPoemId = poemId;
 
-    const modal = document.getElementById('poem-modal');
-    modal.classList.remove('modal--pdf');
-    
+    const poemModal = document.getElementById('poem-modal');
+    poemModal.classList.remove('modal--pdf');
+
     document.getElementById('modal-title').textContent = poem.sarlavha;
     document.getElementById('modal-year').textContent = poem.yil;
-    document.getElementById('modal-badges').innerHTML = 
+    document.getElementById('modal-badges').innerHTML =
         poem.mavzu.map(m => `<span class="badge">${m}</span>`).join('');
     document.getElementById('modal-text').textContent = poem.matn;
-    
+
     updateFavoriteButton();
-    
-    const modal = document.getElementById('poem-modal');
-    modal.classList.add('active');
+
+    poemModal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
