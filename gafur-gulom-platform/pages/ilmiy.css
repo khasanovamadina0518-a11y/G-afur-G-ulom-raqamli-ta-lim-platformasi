@@ -648,3 +648,116 @@ body.dark-mode.page-ilmiy .ilm-keyword {
 body.dark-mode.page-ilmiy .term-example {
     background: rgba(15, 23, 42, 0.5);
 }
+
+/* ----- PDF reader modal ----- */
+.page-ilmiy .ilm-pdf-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.page-ilmiy .ilm-pdf-modal.active {
+    display: flex;
+}
+
+.page-ilmiy .ilm-pdf-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.72);
+}
+
+.page-ilmiy .ilm-pdf-modal__dialog {
+    position: relative;
+    z-index: 1;
+    width: min(960px, 100%);
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+    background: var(--ilm-card);
+    border-radius: 12px;
+    box-shadow: var(--ilm-shadow);
+    padding: 1.25rem 1.25rem 1rem;
+}
+
+.page-ilmiy .ilm-pdf-modal__close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ilm-text);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.page-ilmiy .ilm-pdf-modal__close:hover {
+    background: rgba(26, 60, 94, 0.08);
+}
+
+.page-ilmiy .ilm-pdf-modal__title {
+    margin: 0 2.5rem 1rem 0;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 700;
+    color: var(--ilm-navy);
+    line-height: 1.4;
+}
+
+.page-ilmiy .ilm-pdf-modal__frame-wrap {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    min-height: 320px;
+    border: 1px solid var(--ilm-border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #111827;
+}
+
+.page-ilmiy .ilm-pdf-modal__frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+.page-ilmiy .ilm-pdf-modal__hint {
+    margin: 0.75rem 0 0;
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.page-ilmiy .ilm-pdf-modal__external {
+    color: var(--ilm-royal);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.page-ilmiy .ilm-pdf-modal__external:hover {
+    text-decoration: underline;
+}
+
+body.dark-mode.page-ilmiy .ilm-pdf-modal__dialog {
+    background: var(--ilm-card);
+    border: 1px solid var(--ilm-border);
+}
+
+body.dark-mode.page-ilmiy .ilm-pdf-modal__title {
+    color: var(--text);
+}
+
+@media (max-width: 768px) {
+    .page-ilmiy .ilm-pdf-modal__dialog {
+        padding: 1rem 0.875rem 0.875rem;
+    }
+
+    .page-ilmiy .ilm-pdf-modal__frame-wrap {
+        min-height: 220px;
+    }
+}

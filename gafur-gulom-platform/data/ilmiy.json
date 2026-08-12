@@ -202,8 +202,16 @@
       "ilmiyRahbar": "prof. Tursunov O.",
       "muassasa": "AndDU"
     }
-  ]
-,
+  ],
+  "tadqiqotlar": [
+    {
+      "id": 1,
+      "sarlavha": "G'afur G'ulom prozasi leksikasi",
+      "tur": "Ilmiy risola",
+      "qisqa": "G'afur G'ulom prozasining leksik xususiyatlari, so'z boyligi va til qatlamlari bo'yicha ilmiy risola.",
+      "pdf": "assets/pdf/ilmiy/gafur-gulom-prozasi-leksikasi.pdf"
+    }
+  ],
   "atamalar": [
     {
       "id": 1,

@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="assets/css/components.css?v=9">
     <link rel="stylesheet" href="assets/css/responsive.css?v=9">
     <link rel="stylesheet" href="assets/css/platform-buttons.css?v=9">
-    <link rel="stylesheet" href="pages/ilmiy.css?v=1">
+    <link rel="stylesheet" href="pages/ilmiy.css?v=2">
 </head>
 <body class="page-ilmiy">
     <div id="header-container"></div>
@@ -25,7 +25,7 @@
         <div class="ilm-hero__inner">
             <p class="ilm-hero__kicker">Ilmiy tadqiqotlar markazi</p>
             <h1 class="ilm-hero__title" id="ilm-hero-title">Ilmiy Arxiv</h1>
-            <p class="ilm-hero__text">G'afur G'ulom ijodi bo'yicha ilmiy maqolalar, dissertatsiyalar, atamalar lug'ati va bibliografiya generatori.</p>
+            <p class="ilm-hero__text">G'afur G'ulom ijodi bo'yicha ilmiy maqolalar, dissertatsiyalar, ilmiy tadqiqotlar, atamalar lug'ati va bibliografiya generatori.</p>
             <div class="ilm-hero__stats" id="ilm-hero-stats" aria-label="Arxiv statistikasi"></div>
         </div>
     </section>
@@ -35,6 +35,7 @@
             <nav class="ilm-tabs" aria-label="Ilmiy arxiv bo'limlari">
                 <button class="tab-btn active" type="button" data-tab="maqolalar">Maqolalar</button>
                 <button class="tab-btn" type="button" data-tab="dissertatsiyalar">Dissertatsiyalar</button>
+                <button class="tab-btn" type="button" data-tab="tadqiqotlar">Ilmiy tadqiqotlar</button>
                 <button class="tab-btn" type="button" data-tab="lugat">Atamalar lug'ati</button>
                 <button class="tab-btn" type="button" data-tab="bibliografiya">Bibliografiya</button>
             </nav>
@@ -88,6 +89,19 @@
                 <div class="ilm-papers" id="dissertations-container"></div>
             </div>
 
+            <!-- Ilmiy tadqiqotlar Tab -->
+            <div class="tab-content" data-tab="tadqiqotlar">
+                <div class="filter-panel">
+                    <h2 class="filter-panel__title">Qidiruv</h2>
+                    <div class="filter-group">
+                        <label for="research-search">Muallif yoki sarlavha</label>
+                        <input type="text" id="research-search" placeholder="Muallif yoki sarlavha...">
+                    </div>
+                </div>
+
+                <div class="ilm-papers" id="research-container"></div>
+            </div>
+
             <!-- Atamalar lug'ati Tab -->
             <div class="tab-content" data-tab="lugat">
                 <div class="filter-panel">
@@ -136,10 +150,24 @@
 
     <div id="footer-container"></div>
 
+    <div class="ilm-pdf-modal" id="ilm-pdf-modal" aria-hidden="true">
+        <div class="ilm-pdf-modal__backdrop" id="ilm-pdf-backdrop"></div>
+        <div class="ilm-pdf-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="ilm-pdf-title">
+            <button class="ilm-pdf-modal__close" type="button" id="ilm-pdf-close" aria-label="Yopish">×</button>
+            <h2 class="ilm-pdf-modal__title" id="ilm-pdf-title"></h2>
+            <div class="ilm-pdf-modal__frame-wrap">
+                <iframe class="ilm-pdf-modal__frame" id="ilm-pdf-frame" title="PDF o'qish"></iframe>
+            </div>
+            <p class="ilm-pdf-modal__hint">
+                <a class="ilm-pdf-modal__external" id="ilm-pdf-external" href="#" target="_blank" rel="noopener noreferrer">PDF ni yangi oynada ochish</a>
+            </p>
+        </div>
+    </div>
+
     <script src="components/header.js"></script>
     <script src="components/footer.js"></script>
     <script src="assets/js/data.js"></script>
     <script src="assets/js/app.js"></script>
-    <script src="pages/ilmiy-page.js?v=2"></script>
+    <script src="pages/ilmiy-page.js?v=3"></script>
 </body>
 </html>

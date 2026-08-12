@@ -3,7 +3,7 @@
 // IA + functionality preserved
 // ===================================
 
-let ilmiyData = { maqolalar: [], dissertatsiyalar: [], atamalar: [] };
+let ilmiyData = { maqolalar: [], dissertatsiyalar: [], tadqiqotlar: [], atamalar: [] };
 let selectedArticles = [];
 let selectedFormat = 'apa';
 
@@ -15,6 +15,11 @@ function escapeHtml(str) {
         .replace(/"/g, '&quot;');
 }
 
+function resolveAssetPath(path) {
+    if (!path || path === '#') return '';
+    return (window.platformUrl || function (r) { return r; })(path);
+}
+
 function renderHeroStats() {
     const el = document.getElementById('ilm-hero-stats');
     if (!el) return;
@@ -22,6 +27,7 @@ function renderHeroStats() {
     el.innerHTML = `
         <div class="ilm-hero__stat"><span class="ilm-hero__stat-num">${ilmiyData.maqolalar.length}</span> maqola</div>
         <div class="ilm-hero__stat"><span class="ilm-hero__stat-num">${ilmiyData.dissertatsiyalar.length}</span> dissertatsiya</div>
+        <div class="ilm-hero__stat"><span class="ilm-hero__stat-num">${(ilmiyData.tadqiqotlar || []).length}</span> tadqiqot</div>
         <div class="ilm-hero__stat"><span class="ilm-hero__stat-num">${ilmiyData.atamalar.length}</span> atama</div>
     `;
 }
@@ -44,6 +50,8 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
             displayArticles(ilmiyData.maqolalar);
         } else if (tab === 'dissertatsiyalar') {
             displayDissertations(ilmiyData.dissertatsiyalar);
+        } else if (tab === 'tadqiqotlar') {
+            displayResearch(ilmiyData.tadqiqotlar || []);
         } else if (tab === 'lugat') {
             displayTerms(ilmiyData.atamalar);
             createAlphabetNav();
@@ -223,6 +231,110 @@ document.getElementById('diss-search')?.addEventListener('input', function() {
 });
 
 // ===================================
+// ILMIY TADQIQOTLAR
+// ===================================
+
+function displayResearch(items) {
+    const container = document.getElementById('research-container');
+    if (!container) return;
+
+    if (!items.length) {
+        container.innerHTML = '<p class="ilm-empty">Ilmiy tadqiqot topilmadi.</p>';
+        return;
+    }
+
+    container.innerHTML = items.map(item => {
+        const authorMeta = item.muallif
+            ? `<span class="ilm-paper__meta-item">👤 <strong>${escapeHtml(item.muallif)}</strong></span>`
+            : '';
+        const yearMeta = item.yil
+            ? `<span class="ilm-paper__meta-item">📅 ${item.yil}</span>`
+            : '';
+
+        return `
+        <article class="ilm-paper">
+            <h3 class="ilm-paper__title">${escapeHtml(item.sarlavha)}</h3>
+            <div class="ilm-paper__meta">
+                ${authorMeta}
+                ${yearMeta}
+                <span class="ilm-badge">${escapeHtml(item.tur || 'Ilmiy tadqiqot')}</span>
+            </div>
+            <p class="ilm-paper__abstract">${escapeHtml(item.qisqa || '')}</p>
+            <div class="ilm-paper__actions">
+                <button class="ilm-btn-primary" type="button" onclick="openResearchPdf(${item.id})">O'qish</button>
+            </div>
+        </article>
+    `;
+    }).join('');
+}
+
+function openResearchPdf(id) {
+    const item = (ilmiyData.tadqiqotlar || []).find(entry => entry.id === id);
+    if (!item) return;
+
+    const pdfPath = item.pdf || item.pdfHavola;
+    if (!pdfPath || pdfPath === '#') {
+        alert('PDF hozircha mavjud emas. Tez kunda qo\'shiladi.');
+        return;
+    }
+
+    const pdfUrl = resolveAssetPath(pdfPath);
+    const modal = document.getElementById('ilm-pdf-modal');
+    const frame = document.getElementById('ilm-pdf-frame');
+    const title = document.getElementById('ilm-pdf-title');
+    const external = document.getElementById('ilm-pdf-external');
+
+    if (!modal || !frame || !title) return;
+
+    title.textContent = item.sarlavha;
+    frame.src = `${pdfUrl}#page=1`;
+    if (external) {
+        external.href = pdfUrl;
+    }
+
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeResearchPdfModal() {
+    const modal = document.getElementById('ilm-pdf-modal');
+    const frame = document.getElementById('ilm-pdf-frame');
+    if (!modal) return;
+
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (frame) frame.src = '';
+}
+
+function initResearchPdfModal() {
+    document.getElementById('ilm-pdf-close')?.addEventListener('click', closeResearchPdfModal);
+    document.getElementById('ilm-pdf-backdrop')?.addEventListener('click', closeResearchPdfModal);
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            closeResearchPdfModal();
+        }
+    });
+}
+
+document.getElementById('research-search')?.addEventListener('input', function() {
+    const search = this.value.toLowerCase();
+    const filtered = (ilmiyData.tadqiqotlar || []).filter(item => {
+        const author = (item.muallif || '').toLowerCase();
+        const title = (item.sarlavha || '').toLowerCase();
+        const summary = (item.qisqa || '').toLowerCase();
+        const type = (item.tur || '').toLowerCase();
+        return title.includes(search) ||
+            author.includes(search) ||
+            summary.includes(search) ||
+            type.includes(search);
+    });
+    displayResearch(filtered);
+});
+
+// ===================================
 // ATAMALAR LUG'ATI
 // ===================================
 
@@ -367,8 +479,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     try {
         const response = await fetch((window.platformUrl || function (r) { return r; })('data/ilmiy.json'));
         ilmiyData = await response.json();
+        ilmiyData.tadqiqotlar = ilmiyData.tadqiqotlar || [];
 
         renderHeroStats();
+        initResearchPdfModal();
         displayArticles(ilmiyData.maqolalar);
     } catch (error) {
         console.error('Ma\'lumotlarni yuklashda xatolik:', error);
