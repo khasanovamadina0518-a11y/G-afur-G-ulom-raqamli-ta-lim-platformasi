@@ -289,14 +289,14 @@ html body.page-video,
 html body.page-asarlar,
 html body.page-ai,
 html body.page-interaktiv {
-  --dash-royal: var(--accent-action);
-  --ach-royal: var(--accent-action);
-  --hy-royal: var(--accent-action);
-  --ilm-royal: var(--accent-action);
-  --tl-royal: var(--accent-action);
-  --test-royal: var(--accent-action);
-  --video-royal: var(--accent-action);
-  --ai-royal: var(--accent-action);
+  --dash-royal: var(--btn-primary-bg);
+  --ach-royal: var(--btn-primary-bg);
+  --hy-royal: var(--btn-primary-bg);
+  --ilm-royal: var(--btn-primary-bg);
+  --tl-royal: var(--btn-primary-bg);
+  --test-royal: var(--btn-primary-bg);
+  --video-royal: var(--btn-primary-bg);
+  --ai-royal: var(--btn-primary-bg);
   --dash-border: var(--border);
   --ach-border: var(--border);
   --hy-border: var(--border);
@@ -352,4 +352,223 @@ html body.page-interaktiv {
 }
 
 /* Hayot hero title — themed in pages/hayot.css via --hy-hero-* variables */
+
+/* ===================================
+   Platform interactive controls — shared Day/Dark
+   Primary action buttons: gradient, shadow, hover
+   Filter/tab chips: token colors only (no heavy shadow)
+   =================================== */
+
+:is(
+  .btn-primary,
+  .login-btn,
+  .drawer-login-btn,
+  .page-asarlar .library-item__read,
+  .page-asarlar .modal-btn-primary,
+  .page-hayot .hy-btn-primary,
+  .page-hayot .hy-btn-navy,
+  .page-talim .tl-btn-primary,
+  .page-talim .tl-btn-navy,
+  .page-ilmiy .ilm-btn-primary,
+  .page-video .video-btn--primary,
+  .page-testlar .test-card__btn,
+  .page-testlar .test-card__btn--featured,
+  .page-testlar .quiz-nav-btn--primary,
+  .page-testlar .quiz-nav-btn--submit,
+  .page-interaktiv .game-card__btn,
+  .page-ai .ai-send-btn
+) {
+  background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
+  color: var(--btn-primary-text);
+  border-color: var(--btn-primary-border);
+  box-shadow: 0 4px 14px var(--btn-primary-shadow);
+}
+
+:is(
+  .btn-primary,
+  .login-btn,
+  .drawer-login-btn,
+  .page-asarlar .library-item__read,
+  .page-asarlar .modal-btn-primary,
+  .page-hayot .hy-btn-primary,
+  .page-hayot .hy-btn-navy,
+  .page-talim .tl-btn-primary,
+  .page-talim .tl-btn-navy,
+  .page-ilmiy .ilm-btn-primary,
+  .page-video .video-btn--primary,
+  .page-testlar .test-card__btn,
+  .page-testlar .test-card__btn--featured,
+  .page-testlar .quiz-nav-btn--primary,
+  .page-testlar .quiz-nav-btn--submit,
+  .page-interaktiv .game-card__btn,
+  .page-ai .ai-send-btn
+):hover:not(:disabled) {
+  background: var(--btn-primary-hover);
+  color: var(--btn-primary-text);
+  box-shadow: 0 6px 20px var(--btn-primary-shadow);
+}
+
+:is(
+  .btn-primary,
+  .login-btn,
+  .drawer-login-btn,
+  .page-asarlar .library-item__read,
+  .page-asarlar .modal-btn-primary,
+  .page-hayot .hy-btn-primary,
+  .page-hayot .hy-btn-navy,
+  .page-talim .tl-btn-primary,
+  .page-talim .tl-btn-navy,
+  .page-ilmiy .ilm-btn-primary,
+  .page-video .video-btn--primary,
+  .page-testlar .test-card__btn,
+  .page-testlar .quiz-nav-btn--primary,
+  .page-testlar .quiz-nav-btn--submit,
+  .page-interaktiv .game-card__btn,
+  .page-ai .ai-send-btn
+):focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring), 0 4px 14px var(--btn-primary-shadow);
+}
+
+:is(
+  .btn-primary,
+  .login-btn,
+  .drawer-login-btn,
+  .page-asarlar .library-item__read,
+  .page-hayot .hy-btn-primary,
+  .page-talim .tl-btn-primary,
+  .page-video .video-btn--primary,
+  .page-ai .ai-send-btn
+):disabled,
+:is(
+  .page-testlar .quiz-nav-btn--primary,
+  .page-testlar .quiz-nav-btn--submit
+):disabled {
+  opacity: var(--btn-disabled-opacity);
+  cursor: not-allowed;
+  transform: none;
+}
+
+body.dark-mode.page-hayot .hy-btn-primary,
+body.dark-mode.page-hayot .hy-btn-navy,
+body.dark-mode.page-talim .tl-btn-primary,
+body.dark-mode.page-talim .tl-btn-navy,
+body.dark-mode.page-ilmiy .ilm-btn-primary,
+body.dark-mode.page-video .video-btn--primary,
+body.dark-mode.page-testlar .test-card__btn,
+body.dark-mode.page-testlar .quiz-nav-btn--primary,
+body.dark-mode.page-testlar .quiz-nav-btn--submit,
+body.dark-mode.page-interaktiv .game-card__btn,
+body.dark-mode.page-ai .ai-send-btn {
+  background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
+  color: var(--btn-primary-text);
+}
+
+body.dark-mode.page-hayot .hy-btn-primary:hover,
+body.dark-mode.page-hayot .hy-btn-navy:hover,
+body.dark-mode.page-talim .tl-btn-primary:hover,
+body.dark-mode.page-talim .tl-btn-navy:hover,
+body.dark-mode.page-ilmiy .ilm-btn-primary:hover,
+body.dark-mode.page-video .video-btn--primary:hover,
+body.dark-mode.page-testlar .test-card__btn:hover,
+body.dark-mode.page-testlar .quiz-nav-btn--primary:hover:not(:disabled),
+body.dark-mode.page-testlar .quiz-nav-btn--submit:hover:not(:disabled),
+body.dark-mode.page-interaktiv .game-card__btn:hover,
+body.dark-mode.page-ai .ai-send-btn:hover {
+  background: var(--btn-primary-hover);
+}
+
+body.dark-mode.page-asarlar .library-tabs .tab-btn,
+body.dark-mode.page-ilmiy .ilm-tabs .tab-btn,
+body.dark-mode.page-talim .tl-tabs .tab-btn,
+body.dark-mode.page-video .video-tabs .tab-btn {
+  color: var(--btn-tab-text);
+}
+
+body.dark-mode.page-asarlar .library-tabs .tab-btn:hover,
+body.dark-mode.page-ilmiy .ilm-tabs .tab-btn:hover,
+body.dark-mode.page-talim .tl-tabs .tab-btn:hover,
+body.dark-mode.page-video .video-tabs .tab-btn:hover {
+  color: var(--btn-tab-hover-text);
+}
+
+body.dark-mode.page-asarlar .library-tabs .tab-btn.active,
+body.dark-mode.page-ilmiy .ilm-tabs .tab-btn.active,
+body.dark-mode.page-talim .tl-tabs .tab-btn.active,
+body.dark-mode.page-video .video-tabs .tab-btn.active {
+  color: var(--btn-tab-active-text);
+  border-bottom-color: var(--btn-tab-active-border);
+}
+
+body.dark-mode.page-asarlar .library-chips .filter-btn,
+body.dark-mode.page-hayot .hy-filter-btn,
+body.dark-mode.page-ilmiy .letter-btn,
+body.dark-mode.page-ilmiy .format-btn {
+  background: var(--btn-filter-bg);
+  color: var(--btn-filter-text);
+  border-color: var(--btn-filter-border);
+}
+
+body.dark-mode.page-asarlar .library-chips .filter-btn:hover,
+body.dark-mode.page-hayot .hy-filter-btn:hover,
+body.dark-mode.page-ilmiy .letter-btn:hover,
+body.dark-mode.page-ilmiy .format-btn:hover {
+  background: var(--btn-filter-hover-bg);
+  color: var(--btn-filter-hover-text);
+}
+
+body.dark-mode.page-asarlar .library-chips .filter-btn.active,
+body.dark-mode.page-hayot .hy-filter-btn.active,
+body.dark-mode.page-ilmiy .letter-btn.active,
+body.dark-mode.page-ilmiy .format-btn.active {
+  background: var(--btn-filter-active-bg);
+  color: var(--btn-filter-active-text);
+  border-color: var(--btn-filter-active-border);
+}
+
+body.dark-mode.page-asarlar .view-btn.active {
+  background: var(--btn-filter-active-bg);
+  border-color: var(--btn-filter-active-border);
+  color: var(--btn-filter-active-text);
+}
+
+body.dark-mode.page-talim .class-btn:not(.active),
+body.dark-mode.page-talim .difficulty-btn:not(.active) {
+  background: var(--btn-filter-bg);
+  color: var(--btn-filter-text);
+  border-color: var(--btn-filter-border);
+}
+
+body.dark-mode.page-talim .class-btn.active,
+body.dark-mode.page-talim .difficulty-btn.active {
+  background: var(--btn-filter-active-bg);
+  color: var(--btn-filter-active-text);
+  border-color: var(--btn-filter-active-border);
+}
+
+body.dark-mode.page-talim .answer-btn,
+body.dark-mode.page-talim .tl-btn-outline {
+  background: var(--btn-outline-bg);
+  color: var(--btn-outline-text);
+  border-color: var(--btn-outline-border);
+}
+
+body.dark-mode.page-talim .tl-btn-outline:hover {
+  background: var(--btn-outline-hover-bg);
+  border-color: var(--btn-outline-hover-border);
+}
+
+body.dark-mode.page-ai .ai-prompt-chip,
+body.dark-mode.page-ai .ai-followup-chip {
+  background: var(--btn-filter-bg);
+  color: var(--btn-filter-text);
+  border-color: var(--btn-filter-border);
+}
+
+body.dark-mode.page-ai .ai-prompt-chip:hover,
+body.dark-mode.page-ai .ai-followup-chip:hover {
+  background: var(--btn-filter-hover-bg);
+  color: var(--btn-filter-hover-text);
+  border-color: var(--btn-filter-border);
+}
 

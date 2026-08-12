@@ -6,7 +6,7 @@
 .page-ai {
     --ai-navy: #1a3c5e;
     --ai-gold: #c9a84c;
-    --ai-royal: #2563eb;
+    --ai-royal: var(--btn-primary-bg);
     --ai-border: var(--border);
     --ai-muted: var(--text-light);
     --ai-text: var(--text);
@@ -278,19 +278,20 @@
     align-items: center;
     padding: 0.5rem 0.875rem;
     border-radius: 999px;
-    border: 1px solid var(--ai-border);
-    background: var(--bg-elevated);
-    color: #374151;
+    border: 1px solid var(--btn-filter-border);
+    background: var(--btn-filter-bg);
+    color: var(--btn-filter-text);
     font-family: 'Inter', sans-serif;
     font-size: 0.8125rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
 }
 
 .page-ai .ai-prompt-chip:hover {
-    background: rgba(37, 99, 235, 0.06);
-    border-color: rgba(37, 99, 235, 0.25);
+    background: var(--btn-filter-hover-bg);
+    border-color: var(--btn-filter-border);
+    color: var(--btn-filter-hover-text);
     transform: translateY(-1px);
 }
 
@@ -366,19 +367,20 @@
     display: inline-flex;
     padding: 0.4375rem 0.75rem;
     border-radius: 999px;
-    border: 1px solid var(--ai-border);
-    background: var(--bg);
-    color: #374151;
+    border: 1px solid var(--btn-filter-border);
+    background: var(--btn-filter-bg);
+    color: var(--btn-filter-text);
     font-family: 'Inter', sans-serif;
     font-size: 0.75rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .page-ai .ai-followup-chip:hover {
-    background: var(--bg-elevated);
-    border-color: rgba(37, 99, 235, 0.25);
+    background: var(--btn-filter-hover-bg);
+    border-color: var(--btn-filter-border);
+    color: var(--btn-filter-hover-text);
 }
 
 /* ----- Typing indicator ----- */
@@ -459,21 +461,21 @@
     height: 48px;
     border: none;
     border-radius: 12px;
-    background: var(--ai-royal);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
+    color: var(--btn-primary-text);
     cursor: pointer;
     flex-shrink: 0;
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
-    transition: background-color 0.2s ease, transform 0.15s ease;
+    box-shadow: 0 4px 14px var(--btn-primary-shadow);
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
 
 .page-ai .ai-send-btn:hover:not(:disabled) {
-    background: #1d4ed8;
+    background: var(--btn-primary-hover);
     transform: translateY(-1px);
 }
 
 .page-ai .ai-send-btn:disabled {
-    opacity: 0.5;
+    opacity: var(--btn-disabled-opacity);
     cursor: not-allowed;
 }
 
@@ -521,7 +523,18 @@ body.dark-mode.page-ai .ai-typing__dots {
 }
 
 body.dark-mode.page-ai .ai-prompt-chip,
-body.dark-mode.page-ai .ai-followup-chip,
+body.dark-mode.page-ai .ai-followup-chip {
+    background: var(--btn-filter-bg);
+    border-color: var(--btn-filter-border);
+    color: var(--btn-filter-text);
+}
+
+body.dark-mode.page-ai .ai-prompt-chip:hover,
+body.dark-mode.page-ai .ai-followup-chip:hover {
+    background: var(--btn-filter-hover-bg);
+    color: var(--btn-filter-hover-text);
+}
+
 body.dark-mode.page-ai .ai-new-chat,
 body.dark-mode.page-ai .ai-clear-btn,
 body.dark-mode.page-ai .ai-composer__input {

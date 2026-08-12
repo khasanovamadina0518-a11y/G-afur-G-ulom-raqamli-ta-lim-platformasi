@@ -12,9 +12,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/components.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/main.css?v=9">
+    <link rel="stylesheet" href="assets/css/components.css?v=9">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=9">
+    <link rel="stylesheet" href="assets/css/platform-buttons.css?v=9">
     <link rel="stylesheet" href="pages/interaktiv.css?v=2">
 </head>
 <body class="page-testlar">
@@ -41,7 +42,7 @@
                         <span class="test-card__meta-item"><span data-test-count="hayot">20</span> savol</span>
                         <span class="test-card__meta-item">15 daqiqa</span>
                         <span class="test-card__badge test-card__badge--easy">Oson</span>
-                    </div>
+        </div>
                     <button type="button" class="test-card__btn" onclick="startTestCategory('hayot')">Boshlash</button>
                 </article>
 
@@ -53,7 +54,7 @@
                         <span class="test-card__meta-item"><span data-test-count="asarlar">20</span> savol</span>
                         <span class="test-card__meta-item">18 daqiqa</span>
                         <span class="test-card__badge test-card__badge--medium">O'rta</span>
-                    </div>
+        </div>
                     <button type="button" class="test-card__btn" onclick="startTestCategory('asarlar')">Boshlash</button>
                 </article>
 
@@ -65,7 +66,7 @@
                         <span class="test-card__meta-item"><span data-test-count="sheriyat">15</span> savol</span>
                         <span class="test-card__meta-item">12 daqiqa</span>
                         <span class="test-card__badge test-card__badge--medium">O'rta</span>
-                    </div>
+        </div>
                     <button type="button" class="test-card__btn" onclick="startTestCategory('sheriyat')">Boshlash</button>
                 </article>
 
@@ -77,7 +78,7 @@
                         <span class="test-card__meta-item"><span data-test-count="hikoya">15</span> savol</span>
                         <span class="test-card__meta-item">14 daqiqa</span>
                         <span class="test-card__badge test-card__badge--hard">Qiyin</span>
-                    </div>
+        </div>
                     <button type="button" class="test-card__btn" onclick="startTestCategory('hikoya')">Boshlash</button>
                 </article>
 
@@ -89,7 +90,7 @@
                         <span class="test-card__meta-item"><span data-test-count="ilmiy">6</span> savol</span>
                         <span class="test-card__meta-item">10 daqiqa</span>
                         <span class="test-card__badge test-card__badge--hard">Qiyin</span>
-                    </div>
+        </div>
                     <button type="button" class="test-card__btn" onclick="startTestCategory('ilmiy')">Boshlash</button>
                 </article>
 
@@ -101,25 +102,25 @@
                         <span class="test-card__meta-item"><span data-test-count="yakuniy">20</span> savol</span>
                         <span class="test-card__meta-item">25 daqiqa</span>
                         <span class="test-card__badge test-card__badge--mixed">Aralash</span>
-                    </div>
+        </div>
                     <button type="button" class="test-card__btn test-card__btn--featured" onclick="startTestCategory('yakuniy')">Boshlash</button>
                 </article>
-            </section>
+    </section>
 
-            <section id="quiz-game" class="game-screen">
+    <section id="quiz-game" class="game-screen">
                 <button class="btn-outline" onclick="backToTests()" style="margin-bottom: 2rem;">< Orqaga</button>
-                
-                <div id="quiz-start" class="start-screen">
+        
+        <div id="quiz-start" class="start-screen">
                     <h2 id="quiz-start-title">Test</h2>
                     <p id="quiz-start-desc" class="text-light" style="font-size: 1.125rem;">Savollarga javob bering va bilimingizni baholang.</p>
-                    <input type="text" id="quiz-player-name" placeholder="Ismingizni kiriting" maxlength="30">
-                    <button class="btn-primary" style="width: 100%; padding: 1.5rem;" onclick="startQuizGame()">
+            <input type="text" id="quiz-player-name" placeholder="Ismingizni kiriting" maxlength="30">
+            <button class="btn-primary" style="width: 100%; padding: 1.5rem;" onclick="startQuizGame()">
                         Boshlash
-                    </button>
-                    <div id="quiz-leaderboard-preview" class="leaderboard" style="margin-top: 2rem;"></div>
-                </div>
-                
-                <div id="quiz-playing" style="display: none;">
+            </button>
+            <div id="quiz-leaderboard-preview" class="leaderboard" style="margin-top: 2rem;"></div>
+        </div>
+        
+        <div id="quiz-playing" style="display: none;">
                     <div class="quiz-session">
                         <div class="quiz-session__toolbar">
                             <div class="quiz-session__score">? <span id="quiz-score">0</span> ball</div>
@@ -133,13 +134,13 @@
                         </div>
                         <div class="quiz-session__progress" aria-hidden="true">
                             <span class="quiz-session__progress-fill" id="quiz-session-progress"></span>
-                        </div>
+            </div>
                         <div class="quiz-timer-bar" aria-hidden="true">
-                            <div class="quiz-timer-fill" id="quiz-timer-fill"></div>
-                        </div>
+                    <div class="quiz-timer-fill" id="quiz-timer-fill"></div>
+                </div>
                         <div class="quiz-game-screen">
-                            <div class="quiz-question" id="quiz-question-text"></div>
-                            <div class="quiz-answers" id="quiz-answers"></div>
+                <div class="quiz-question" id="quiz-question-text"></div>
+                <div class="quiz-answers" id="quiz-answers"></div>
                         </div>
                         <div class="quiz-session__footer">
                             <button type="button" class="quiz-nav-btn quiz-nav-btn--ghost" id="quiz-prev-btn" disabled>
@@ -158,18 +159,18 @@
                                 Yakunlash
                             </button>
                         </div>
-                    </div>
-                </div>
-                
-                <div id="quiz-result" class="result-screen" style="display: none;">
+            </div>
+        </div>
+        
+        <div id="quiz-result" class="result-screen" style="display: none;">
                     <h2>?? Test tugadi!</h2>
-                    <div class="result-stars" id="quiz-result-stars"></div>
-                    <div class="result-score"><span id="quiz-final-score">0</span> ball</div>
-                    <p id="quiz-result-message" style="font-size: 1.25rem; margin: 2rem 0;"></p>
-                    <div id="quiz-high-score" style="font-size: 1.125rem; color: var(--secondary); margin-bottom: 2rem;"></div>
-                    <button class="btn-primary" onclick="restartQuizGame()">Qaytadan o'ynash</button>
-                </div>
-            </section>
+            <div class="result-stars" id="quiz-result-stars"></div>
+            <div class="result-score"><span id="quiz-final-score">0</span> ball</div>
+            <p id="quiz-result-message" style="font-size: 1.25rem; margin: 2rem 0;"></p>
+            <div id="quiz-high-score" style="font-size: 1.125rem; color: var(--secondary); margin-bottom: 2rem;"></div>
+            <button class="btn-primary" onclick="restartQuizGame()">Qaytadan o'ynash</button>
+        </div>
+    </section>
         </div>
     </main>
 

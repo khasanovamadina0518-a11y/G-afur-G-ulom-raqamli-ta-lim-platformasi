@@ -7,7 +7,7 @@
 .page-video {
     --video-navy: #1a3c5e;
     --video-gold: #c9a84c;
-    --video-royal: #2563eb;
+    --video-royal: var(--btn-primary-bg);
     --video-border: var(--border);
     --video-muted: var(--text-light);
     --video-text: var(--text);
@@ -282,26 +282,26 @@
 }
 
 .page-video .video-btn--primary {
-    background: var(--video-royal);
-    color: #ffffff;
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
+    color: var(--btn-primary-text);
+    box-shadow: 0 4px 14px var(--btn-primary-shadow);
 }
 
 .page-video .video-btn--primary:hover {
-    background: #1d4ed8;
-    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.34);
+    background: var(--btn-primary-hover);
+    box-shadow: 0 6px 18px var(--btn-primary-shadow);
 }
 
 .page-video .video-btn--secondary {
-    background: var(--bg);
-    color: var(--video-navy);
-    border-color: var(--video-border);
+    background: var(--btn-outline-bg);
+    color: var(--btn-outline-text);
+    border-color: var(--btn-outline-border);
     box-shadow: var(--video-shadow-soft);
 }
 
 .page-video .video-btn--secondary:hover {
-    border-color: rgba(26, 60, 94, 0.22);
-    background: var(--bg-elevated);
+    border-color: var(--btn-outline-hover-border);
+    background: var(--btn-outline-hover-bg);
 }
 
 /* ----- Tabs ----- */
@@ -327,12 +327,12 @@
 }
 
 .page-video .video-tabs .tab-btn:hover {
-    color: var(--video-navy);
+    color: var(--btn-tab-hover-text);
 }
 
 .page-video .video-tabs .tab-btn.active {
-    color: var(--video-navy);
-    border-bottom-color: var(--video-navy);
+    color: var(--btn-tab-active-text);
+    border-bottom-color: var(--btn-tab-active-border);
 }
 
 /* ----- Tab panels ----- */

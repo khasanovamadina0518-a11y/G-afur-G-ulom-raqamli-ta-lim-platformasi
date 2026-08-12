@@ -1006,19 +1006,19 @@
         justify-content: center;
         gap: var(--space-2);
         padding: var(--space-4);
-        background: var(--secondary);
-        border: 1px solid var(--secondary);
+        background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
+        border: 1px solid var(--btn-primary-border);
         border-radius: var(--radius);
         font-size: var(--fs-base);
         font-weight: var(--fw-bold);
-        color: #ffffff;
+        color: var(--btn-primary-text);
         cursor: pointer;
         transition: var(--transition);
-        box-shadow: var(--shadow-xs);
+        box-shadow: 0 4px 14px var(--btn-primary-shadow);
     }
 
     .drawer-login-btn:hover {
-        background: var(--secondary-light);
+        background: var(--btn-primary-hover);
     }
 
     .drawer-login-btn:active {

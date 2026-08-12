@@ -12,10 +12,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="assets/css/main.css?v=7">
-    <link rel="stylesheet" href="assets/css/components.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="pages/asarlar.css?v=1">
+    <link rel="stylesheet" href="assets/css/main.css?v=9">
+    <link rel="stylesheet" href="assets/css/components.css?v=9">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=9">
+    <link rel="stylesheet" href="assets/css/platform-buttons.css?v=9">
+    <link rel="stylesheet" href="pages/asarlar.css?v=2">
 </head>
 <body class="page-asarlar">
     <div id="header-container"></div>
@@ -47,7 +48,7 @@
                             Filtr
                         </button>
                     </div>
-
+                    
                     <div class="library-filter-panel" id="filter-panel">
                         <label for="year-filter" class="visually-hidden">Yil bo'yicha filtr</label>
                         <select class="year-select" id="year-filter">
@@ -128,7 +129,7 @@
             if (icon) icon.textContent = isDark ? '☀️' : '🌙';
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
         };
-
+        
         document.addEventListener('DOMContentLoaded', function() {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {

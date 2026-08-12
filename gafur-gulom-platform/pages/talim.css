@@ -6,7 +6,7 @@
 .page-talim {
     --tl-navy: #1a3c5e;
     --tl-gold: #c9a84c;
-    --tl-royal: #2563eb;
+    --tl-royal: var(--btn-primary-bg);
     --tl-border: var(--border);
     --tl-muted: var(--text-light);
     --tl-text: var(--text);
@@ -134,12 +134,12 @@
 }
 
 .page-talim .tl-tabs .tab-btn:hover {
-    color: var(--tl-navy);
+    color: var(--btn-tab-hover-text);
 }
 
 .page-talim .tl-tabs .tab-btn.active {
-    color: var(--tl-navy);
-    border-bottom-color: var(--tl-gold);
+    color: var(--btn-tab-active-text);
+    border-bottom-color: var(--btn-tab-active-border);
 }
 
 .page-talim .tab-content {
@@ -231,23 +231,25 @@
     width: 46px;
     height: 46px;
     border-radius: 10px;
-    background: var(--card-bg);
-    border: 1px solid var(--tl-border);
+    background: var(--btn-filter-bg);
+    border: 1px solid var(--btn-filter-border);
     font-size: 1rem;
     font-weight: 700;
-    color: var(--tl-navy);
+    color: var(--btn-filter-text);
     cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, color 0.2s ease;
 }
 
 .page-talim .class-btn:hover {
-    border-color: var(--tl-navy);
+    border-color: var(--btn-filter-hover-text);
+    color: var(--btn-filter-hover-text);
+    background: var(--btn-filter-hover-bg);
 }
 
 .page-talim .class-btn.active {
-    background: var(--tl-navy);
-    color: #fff;
-    border-color: var(--tl-navy);
+    background: var(--btn-filter-active-bg);
+    color: var(--btn-filter-active-text);
+    border-color: var(--btn-filter-active-border);
     transform: translateY(-1px);
 }
 
@@ -403,8 +405,8 @@
     justify-content: center;
     gap: 0.35rem;
     padding: 0.7rem 1.15rem;
-    background: var(--tl-royal);
-    color: #fff;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
+    color: var(--btn-primary-text);
     border: none;
     border-radius: 8px;
     font-weight: 600;
@@ -416,7 +418,7 @@
 }
 
 .page-talim .tl-btn-primary:hover {
-    background: #1d4ed8;
+    background: var(--btn-primary-hover);
 }
 
 .page-talim .tl-btn-outline {
@@ -425,9 +427,9 @@
     justify-content: center;
     gap: 0.35rem;
     padding: 0.65rem 1rem;
-    background: var(--card-bg);
-    color: var(--tl-navy);
-    border: 1px solid var(--tl-border);
+    background: var(--btn-outline-bg);
+    color: var(--btn-outline-text);
+    border: 1px solid var(--btn-outline-border);
     border-radius: 8px;
     font-weight: 600;
     font-size: 0.875rem;
@@ -436,18 +438,20 @@
 }
 
 .page-talim .tl-btn-outline:hover {
-    border-color: var(--tl-navy);
-    background: rgba(26, 60, 94, 0.04);
+    border-color: var(--btn-outline-hover-border);
+    background: var(--btn-outline-hover-bg);
 }
 
 .page-talim .tl-btn-navy {
-    background: var(--tl-navy);
-    color: #fff;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
+    color: var(--btn-primary-text);
     border: none;
+    box-shadow: 0 4px 14px var(--btn-primary-shadow);
 }
 
 .page-talim .tl-btn-navy:hover {
-    background: #153049;
+    background: var(--btn-primary-hover);
+    box-shadow: 0 6px 20px var(--btn-primary-shadow);
 }
 
 .page-talim .tl-cert-preview {
@@ -501,19 +505,19 @@
 
 .page-talim .difficulty-btn {
     padding: 1rem;
-    border: 1px solid var(--tl-border);
+    border: 1px solid var(--btn-filter-border);
     border-radius: 10px;
-    background: var(--card-bg);
+    background: var(--btn-filter-bg);
     cursor: pointer;
     font-weight: 600;
-    color: var(--tl-navy);
-    transition: background 0.2s ease, border-color 0.2s ease;
+    color: var(--btn-filter-text);
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .page-talim .difficulty-btn.active {
-    background: var(--tl-navy);
-    color: #fff;
-    border-color: var(--tl-navy);
+    background: var(--btn-filter-active-bg);
+    color: var(--btn-filter-active-text);
+    border-color: var(--btn-filter-active-border);
 }
 
 .page-talim .quiz-header {
@@ -770,14 +774,6 @@ body.dark-mode.page-talim {
     --tl-hero-kicker: #c9a84c;
     --tl-hero-border: rgba(255, 255, 255, 0.08);
     --tl-hero-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 8px 32px rgba(0, 0, 0, 0.28);
-}
-
-body.dark-mode.page-talim .class-btn,
-body.dark-mode.page-talim .difficulty-btn,
-body.dark-mode.page-talim .answer-btn,
-body.dark-mode.page-talim .tl-btn-outline {
-    background: var(--bg);
-    color: var(--tl-text);
 }
 
 body.dark-mode.page-talim .tl-card,

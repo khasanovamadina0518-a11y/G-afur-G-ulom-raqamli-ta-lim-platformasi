@@ -6,7 +6,7 @@
 .page-testlar {
     --test-navy: #1a3c5e;
     --test-gold: #c9a84c;
-    --test-royal: #2563eb;
+    --test-royal: var(--btn-primary-bg);
     --test-border: var(--border);
     --test-muted: var(--text-light);
     --test-text: var(--text);
@@ -439,15 +439,15 @@
 .page-testlar .quiz-nav-btn--primary,
 .page-testlar .quiz-nav-btn--submit {
     justify-self: end;
-    background: var(--test-royal);
-    color: #ffffff;
-    border-color: var(--test-royal);
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    border-color: var(--btn-primary-bg);
+    box-shadow: 0 4px 14px var(--btn-primary-shadow);
 }
 
 .page-testlar .quiz-nav-btn--primary:hover:not(:disabled),
 .page-testlar .quiz-nav-btn--submit:hover:not(:disabled) {
-    background: #1d4ed8;
+    background: var(--btn-primary-hover);
 }
 
 .page-testlar .congrats-message {
@@ -746,28 +746,28 @@ body.dark-mode.page-testlar .quiz-nav-btn--flag {
     min-height: 44px;
     border: none;
     border-radius: 10px;
-    background: var(--test-royal);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
+    color: var(--btn-primary-text);
     font-family: 'Inter', sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.24);
+    box-shadow: 0 4px 14px var(--btn-primary-shadow);
     transition: background-color 0.2s ease, transform 0.15s ease;
 }
 
 .page-testlar .test-card__btn:hover {
-    background: #1d4ed8;
+    background: var(--btn-primary-hover);
     transform: translateY(-1px);
 }
 
 .page-testlar .test-card__btn--featured {
-    background: var(--test-navy);
-    box-shadow: 0 4px 14px rgba(26, 60, 94, 0.24);
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
+    box-shadow: 0 4px 14px var(--btn-primary-shadow);
 }
 
 .page-testlar .test-card__btn--featured:hover {
-    background: #153049;
+    background: var(--btn-primary-hover);
 }
 
 /* ===================================
@@ -777,7 +777,7 @@ body.dark-mode.page-testlar .quiz-nav-btn--flag {
 .page-interaktiv {
     --test-navy: #1a3c5e;
     --test-gold: #c9a84c;
-    --test-royal: #2563eb;
+    --test-royal: var(--btn-primary-bg);
     --test-border: var(--border);
     --test-muted: var(--text-light);
     --test-text: var(--text);
@@ -858,8 +858,8 @@ body.dark-mode.page-testlar .quiz-nav-btn--flag {
     margin-top: auto;
     border: none;
     border-radius: 10px;
-    background: var(--test-royal);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
+    color: var(--btn-primary-text);
     font-family: 'Inter', sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
@@ -868,7 +868,7 @@ body.dark-mode.page-testlar .quiz-nav-btn--flag {
 }
 
 .page-interaktiv .game-card--premium:hover .game-card__btn:not(:disabled) {
-    background: #1d4ed8;
+    background: var(--btn-primary-hover);
 }
 
 .page-interaktiv .game-card--soon {

@@ -138,12 +138,12 @@
 }
 
 .page-ilmiy .ilm-tabs .tab-btn:hover {
-    color: var(--ilm-navy);
+    color: var(--btn-tab-hover-text);
 }
 
 .page-ilmiy .ilm-tabs .tab-btn.active {
-    color: var(--ilm-navy);
-    border-bottom-color: var(--ilm-gold);
+    color: var(--btn-tab-active-text);
+    border-bottom-color: var(--btn-tab-active-border);
 }
 
 /* ----- Tab panels ----- */
@@ -221,18 +221,20 @@
     justify-content: center;
     gap: 0.35rem;
     padding: 0.7rem 1.25rem;
-    background: var(--ilm-navy);
-    color: #fff;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
+    color: var(--btn-primary-text);
     border: none;
     border-radius: 8px;
     font-weight: 600;
     font-size: 0.9375rem;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.15s ease;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 14px var(--btn-primary-shadow);
 }
 
 .page-ilmiy .ilm-btn-primary:hover {
-    background: #153049;
+    background: var(--btn-primary-hover);
+    box-shadow: 0 6px 20px var(--btn-primary-shadow);
 }
 
 .page-ilmiy .ilm-btn-outline {
@@ -241,9 +243,9 @@
     justify-content: center;
     gap: 0.35rem;
     padding: 0.7rem 1.25rem;
-    background: #fff;
-    color: var(--ilm-navy);
-    border: 1px solid var(--ilm-border);
+    background: var(--btn-outline-bg);
+    color: var(--btn-outline-text);
+    border: 1px solid var(--btn-outline-border);
     border-radius: 8px;
     font-weight: 600;
     font-size: 0.9375rem;
@@ -252,8 +254,8 @@
 }
 
 .page-ilmiy .ilm-btn-outline:hover {
-    border-color: var(--ilm-navy);
-    background: rgba(26, 60, 94, 0.04);
+    border-color: var(--btn-outline-hover-border);
+    background: var(--btn-outline-hover-bg);
 }
 
 .page-ilmiy .ilm-btn-gold {
@@ -421,21 +423,45 @@
     align-items: center;
     justify-content: center;
     padding: 0 0.35rem;
-    background: var(--ilm-card);
-    border: 1px solid var(--ilm-border);
+    background: var(--btn-filter-bg);
+    border: 1px solid var(--btn-filter-border);
     border-radius: 8px;
     font-weight: 600;
     font-size: 0.8125rem;
-    color: var(--ilm-navy);
+    color: var(--btn-filter-text);
     cursor: pointer;
     transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .page-ilmiy .letter-btn:hover,
 .page-ilmiy .letter-btn.active {
-    background: var(--ilm-navy);
-    color: #fff;
-    border-color: var(--ilm-navy);
+    background: var(--btn-filter-active-bg);
+    color: var(--btn-filter-active-text);
+    border-color: var(--btn-filter-active-border);
+}
+
+.page-ilmiy .format-btn {
+    padding: 0.65rem 1.1rem;
+    background: var(--btn-filter-bg);
+    border: 1px solid var(--btn-filter-border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--btn-filter-text);
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.page-ilmiy .format-btn:hover {
+    background: var(--btn-filter-hover-bg);
+    color: var(--btn-filter-hover-text);
+    border-color: var(--btn-filter-border);
+}
+
+.page-ilmiy .format-btn.active {
+    background: var(--btn-filter-active-bg);
+    color: var(--btn-filter-active-text);
+    border-color: var(--btn-filter-active-border);
 }
 
 .page-ilmiy .term-card {
@@ -505,28 +531,6 @@
     gap: 0.5rem;
     margin: 1rem 0;
     flex-wrap: wrap;
-}
-
-.page-ilmiy .format-btn {
-    padding: 0.65rem 1.1rem;
-    background: #fff;
-    border: 1px solid var(--ilm-border);
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: var(--ilm-navy);
-    transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.page-ilmiy .format-btn:hover {
-    border-color: var(--ilm-navy);
-}
-
-.page-ilmiy .format-btn.active {
-    background: var(--ilm-navy);
-    color: #fff;
-    border-color: var(--ilm-navy);
 }
 
 .page-ilmiy .bibliography-output {
@@ -614,12 +618,10 @@ body.dark-mode.page-ilmiy {
 
 body.dark-mode.page-ilmiy .filter-group select,
 body.dark-mode.page-ilmiy .filter-group input,
-body.dark-mode.page-ilmiy .ilm-btn-outline,
-body.dark-mode.page-ilmiy .letter-btn,
-body.dark-mode.page-ilmiy .format-btn {
-    background: var(--bg);
-    color: var(--ilm-text);
-    border-color: var(--ilm-border);
+body.dark-mode.page-ilmiy .ilm-btn-outline {
+    background: var(--btn-outline-bg);
+    color: var(--btn-outline-text);
+    border-color: var(--btn-outline-border);
 }
 
 body.dark-mode.page-ilmiy .ilm-tabs,

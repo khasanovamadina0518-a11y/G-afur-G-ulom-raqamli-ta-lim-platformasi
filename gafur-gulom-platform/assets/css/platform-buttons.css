@@ -1,0 +1,129 @@
+/* Platform action buttons — Day/Dark (reference: bright blue pill + soft shadow) */
+
+body:not(.dark-mode) {
+    --btn-action-radius: 999px;
+}
+
+body:not(.dark-mode) :is(
+    .btn-primary,
+    .login-btn,
+    .drawer-login-btn,
+    .site-header--premium .login-btn,
+    .page-asarlar .library-item__read,
+    .page-asarlar .modal-btn-primary,
+    .page-hayot .hy-btn-primary,
+    .page-hayot .hy-btn-navy,
+    .page-talim .tl-btn-primary,
+    .page-talim .tl-btn-navy,
+    .page-ilmiy .ilm-btn-primary,
+    .page-video .video-btn--primary,
+    .page-testlar .test-card__btn,
+    .page-testlar .test-card__btn--featured,
+    .page-testlar .quiz-nav-btn--primary,
+    .page-testlar .quiz-nav-btn--submit,
+    .page-interaktiv .game-card__btn,
+    .page-ai .ai-send-btn
+) {
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
+    color: var(--btn-primary-text);
+    border-color: var(--btn-primary-border);
+    box-shadow: 0 4px 14px var(--btn-primary-shadow);
+}
+
+body:not(.dark-mode) :is(
+    .btn-primary,
+    .login-btn,
+    .drawer-login-btn,
+    .site-header--premium .login-btn,
+    .page-asarlar .library-item__read,
+    .page-asarlar .modal-btn-primary,
+    .page-hayot .hy-btn-primary,
+    .page-hayot .hy-btn-navy,
+    .page-talim .tl-btn-primary,
+    .page-talim .tl-btn-navy,
+    .page-ilmiy .ilm-btn-primary,
+    .page-video .video-btn--primary,
+    .page-testlar .test-card__btn,
+    .page-testlar .test-card__btn--featured,
+    .page-testlar .quiz-nav-btn--primary,
+    .page-testlar .quiz-nav-btn--submit,
+    .page-interaktiv .game-card__btn,
+    .page-ai .ai-send-btn
+):hover:not(:disabled) {
+    background: var(--btn-primary-hover);
+    color: var(--btn-primary-text);
+    box-shadow: 0 6px 20px var(--btn-primary-shadow);
+}
+
+body:not(.dark-mode) .login-btn,
+body:not(.dark-mode) .site-header--premium .login-btn,
+body:not(.dark-mode) .drawer-login-btn {
+    border-radius: var(--btn-action-radius);
+}
+
+body:not(.dark-mode) :is(
+    .page-asarlar .library-chips .filter-btn.active,
+    .page-asarlar .view-btn.active,
+    .page-hayot .hy-filter-btn.active,
+    .page-ilmiy .letter-btn.active,
+    .page-ilmiy .format-btn.active,
+    .page-talim .class-btn.active,
+    .page-talim .difficulty-btn.active
+) {
+    background: var(--btn-filter-active-bg);
+    color: var(--btn-filter-active-text);
+    border-color: var(--btn-filter-active-border);
+}
+
+body.dark-mode :is(
+    .btn-primary,
+    .login-btn,
+    .drawer-login-btn,
+    .site-header--premium .login-btn,
+    .page-asarlar .library-item__read,
+    .page-asarlar .modal-btn-primary,
+    .page-hayot .hy-btn-primary,
+    .page-hayot .hy-btn-navy,
+    .page-talim .tl-btn-primary,
+    .page-talim .tl-btn-navy,
+    .page-ilmiy .ilm-btn-primary,
+    .page-video .video-btn--primary,
+    .page-testlar .test-card__btn,
+    .page-testlar .quiz-nav-btn--primary,
+    .page-testlar .quiz-nav-btn--submit,
+    .page-interaktiv .game-card__btn,
+    .page-ai .ai-send-btn
+) {
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
+    color: var(--btn-primary-text);
+    border-color: var(--btn-primary-border);
+    box-shadow: 0 4px 14px var(--btn-primary-shadow);
+}
+
+body.dark-mode :is(
+    .btn-primary,
+    .login-btn,
+    .drawer-login-btn,
+    .page-asarlar .library-item__read,
+    .page-hayot .hy-btn-primary,
+    .page-talim .tl-btn-primary,
+    .page-ilmiy .ilm-btn-primary,
+    .page-video .video-btn--primary,
+    .page-ai .ai-send-btn
+):hover:not(:disabled) {
+    background: var(--btn-primary-hover);
+}
+
+body.dark-mode :is(
+    .page-asarlar .library-chips .filter-btn.active,
+    .page-asarlar .view-btn.active,
+    .page-hayot .hy-filter-btn.active,
+    .page-ilmiy .letter-btn.active,
+    .page-ilmiy .format-btn.active,
+    .page-talim .class-btn.active,
+    .page-talim .difficulty-btn.active
+) {
+    background: var(--btn-filter-active-bg);
+    color: var(--btn-filter-active-text);
+    border-color: var(--btn-filter-active-border);
+}

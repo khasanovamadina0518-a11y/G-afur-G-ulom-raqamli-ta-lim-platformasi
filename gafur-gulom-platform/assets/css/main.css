@@ -3,6 +3,7 @@
    Phase 1: Visual tokens (palette, type, spacing)
    =================================== */
 @import url('theme.css');
+@import url('platform-buttons.css');
 
 /* ===================================
    Design Tokens
@@ -126,6 +127,47 @@
     --accent-link: var(--primary);
     --accent-highlight: var(--secondary);
 
+    /* Interactive control tokens — platform action buttons (Day/Dark) */
+    --btn-primary-bg: #5da9e9;
+    --btn-primary-bg-end: #6db8f5;
+    --btn-primary-hover: #4a96d9;
+    --btn-primary-text: #ffffff;
+    --btn-primary-shadow: rgba(93, 169, 233, 0.35);
+    --btn-primary-border: transparent;
+    --btn-action-radius: 999px;
+    --btn-navy-bg: var(--btn-primary-bg);
+    --btn-navy-hover: var(--btn-primary-hover);
+    --btn-outline-bg: var(--card-bg);
+    --btn-outline-text: var(--primary);
+    --btn-outline-border: var(--border);
+    --btn-outline-hover-bg: rgba(74, 144, 217, 0.08);
+    --btn-outline-hover-border: var(--btn-primary-bg);
+    --btn-filter-bg: var(--card-bg);
+    --btn-filter-text: var(--text-light);
+    --btn-filter-border: var(--border);
+    --btn-filter-hover-bg: rgba(74, 144, 217, 0.1);
+    --btn-filter-hover-text: var(--btn-primary-hover);
+    --btn-filter-active-bg: var(--btn-primary-bg);
+    --btn-filter-active-text: var(--btn-primary-text);
+    --btn-filter-active-border: var(--btn-primary-bg);
+    --btn-tab-text: var(--text-light);
+    --btn-tab-hover-text: var(--btn-primary-bg);
+    --btn-tab-active-text: var(--btn-primary-bg);
+    --btn-tab-active-border: var(--btn-primary-bg);
+    --btn-ghost-bg: transparent;
+    --btn-ghost-text: var(--text-inverse);
+    --btn-ghost-border: rgba(255, 255, 255, 0.45);
+    --btn-ghost-hover-bg: rgba(255, 255, 255, 0.08);
+    --btn-ghost-hover-border: rgba(255, 255, 255, 0.7);
+    --btn-disabled-opacity: 0.5;
+    /* Aliases for documentation / future use */
+    --button-primary-bg: var(--btn-primary-bg);
+    --button-primary-bg-end: var(--btn-primary-bg-end);
+    --button-primary-text: var(--btn-primary-text);
+    --button-primary-border: var(--btn-primary-border);
+    --button-primary-hover: var(--btn-primary-hover);
+    --button-primary-shadow: var(--btn-primary-shadow);
+
     /* Control rhythm */
     --control-height-sm: 2.125rem;
     --control-height-md: 2.625rem;
@@ -155,6 +197,45 @@ body.dark-mode {
     --shadow: 0 4px 18px rgba(0, 0, 0, 0.32);
     --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.36);
     --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.42);
+
+    --accent-action: #2563eb;
+    --accent-action-hover: #1d4ed8;
+    --btn-primary-bg: #1a3c5e;
+    --btn-primary-bg-end: #234a72;
+    --btn-primary-hover: #153049;
+    --btn-primary-text: var(--text-inverse);
+    --btn-primary-shadow: rgba(0, 0, 0, 0.32);
+    --btn-primary-border: rgba(255, 255, 255, 0.12);
+    --btn-navy-bg: var(--btn-primary-bg);
+    --btn-navy-hover: var(--btn-primary-hover);
+    --btn-outline-bg: var(--bg);
+    --btn-outline-text: var(--text);
+    --btn-outline-border: var(--border-strong);
+    --btn-outline-hover-bg: rgba(255, 255, 255, 0.06);
+    --btn-outline-hover-border: var(--primary-light);
+    --btn-filter-bg: rgba(255, 255, 255, 0.06);
+    --btn-filter-text: var(--text-light);
+    --btn-filter-border: var(--border-strong);
+    --btn-filter-hover-bg: rgba(255, 255, 255, 0.1);
+    --btn-filter-hover-text: var(--text);
+    --btn-filter-active-bg: #2563eb;
+    --btn-filter-active-text: var(--text-inverse);
+    --btn-filter-active-border: #2563eb;
+    --btn-tab-text: var(--text-light);
+    --btn-tab-hover-text: var(--text);
+    --btn-tab-active-text: var(--secondary-light);
+    --btn-tab-active-border: var(--secondary);
+    --btn-ghost-bg: transparent;
+    --btn-ghost-text: var(--text-inverse);
+    --btn-ghost-border: rgba(255, 255, 255, 0.35);
+    --btn-ghost-hover-bg: rgba(255, 255, 255, 0.1);
+    --btn-ghost-hover-border: rgba(255, 255, 255, 0.55);
+    --button-primary-bg: var(--btn-primary-bg);
+    --button-primary-bg-end: var(--btn-primary-bg-end);
+    --button-primary-text: var(--btn-primary-text);
+    --button-primary-border: var(--btn-primary-border);
+    --button-primary-hover: var(--btn-primary-hover);
+    --button-primary-shadow: var(--btn-primary-shadow);
 
     background-color: var(--bg);
     color: var(--text);
@@ -465,6 +546,45 @@ body:not(.dark-mode) {
     --shadow: 0 4px 18px rgba(26, 60, 94, 0.08);
     --shadow-md: 0 8px 28px rgba(26, 60, 94, 0.1);
     --shadow-lg: 0 16px 40px rgba(26, 60, 94, 0.12);
+    --accent-action: var(--primary);
+    --accent-action-hover: var(--primary-light);
+    --btn-primary-bg: #5da9e9;
+    --btn-primary-bg-end: #6db8f5;
+    --btn-primary-hover: #4a96d9;
+    --btn-primary-text: #ffffff;
+    --btn-primary-shadow: rgba(93, 169, 233, 0.35);
+    --btn-primary-border: transparent;
+    --btn-action-radius: 999px;
+    --btn-navy-bg: var(--btn-primary-bg);
+    --btn-navy-hover: var(--btn-primary-hover);
+    --btn-outline-bg: var(--card-bg);
+    --btn-outline-text: var(--primary);
+    --btn-outline-border: var(--border);
+    --btn-outline-hover-bg: rgba(74, 144, 217, 0.08);
+    --btn-outline-hover-border: var(--btn-primary-bg);
+    --btn-filter-bg: var(--card-bg);
+    --btn-filter-text: var(--text-light);
+    --btn-filter-border: var(--border);
+    --btn-filter-hover-bg: rgba(74, 144, 217, 0.1);
+    --btn-filter-hover-text: var(--btn-primary-hover);
+    --btn-filter-active-bg: var(--btn-primary-bg);
+    --btn-filter-active-text: var(--btn-primary-text);
+    --btn-filter-active-border: var(--btn-primary-bg);
+    --btn-tab-text: var(--text-light);
+    --btn-tab-hover-text: var(--btn-primary-bg);
+    --btn-tab-active-text: var(--btn-primary-bg);
+    --btn-tab-active-border: var(--btn-primary-bg);
+    --btn-ghost-bg: transparent;
+    --btn-ghost-text: var(--text-inverse);
+    --btn-ghost-border: rgba(255, 255, 255, 0.45);
+    --btn-ghost-hover-bg: rgba(255, 255, 255, 0.08);
+    --btn-ghost-hover-border: rgba(255, 255, 255, 0.7);
+    --button-primary-bg: var(--btn-primary-bg);
+    --button-primary-bg-end: var(--btn-primary-bg-end);
+    --button-primary-text: var(--btn-primary-text);
+    --button-primary-border: var(--btn-primary-border);
+    --button-primary-hover: var(--btn-primary-hover);
+    --button-primary-shadow: var(--btn-primary-shadow);
     background-color: var(--bg);
     color: var(--text);
 }
