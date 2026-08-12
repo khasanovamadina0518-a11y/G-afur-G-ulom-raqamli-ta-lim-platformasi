@@ -231,6 +231,16 @@
       "yil": 2003,
       "tur": "Ilmiy tadqiqot",
       "pdf": "assets/pdf/ilmiy/gafur-gulomning-poetik-mahorati.pdf"
+    },
+    {
+      "id": 4,
+      "sarlavha": "G'afur G'ulom",
+      "muallif": "Naim Karimov",
+      "nashriyot": "G'afur G'ulom nomidagi nashriyot-matbaa ijodiy uyi",
+      "joy": "Toshkent",
+      "yil": 2003,
+      "tur": "Shoir hayoti va she'riy ijodiga bir nazar",
+      "pdf": "assets/pdf/ilmiy/gafur-gulom-naim-karimov.pdf"
     }
   ],
   "atamalar": [
