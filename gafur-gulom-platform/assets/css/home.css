@@ -19,10 +19,13 @@
     --home-search-bg: #ffffff;
     --home-dropdown-bg: #ffffff;
     --home-hover-surface: rgba(26, 60, 94, 0.06);
-    --home-btn-primary-start: #1a3c5e;
-    --home-btn-primary-end: #2a5a8a;
-    --home-btn-primary-shadow: rgba(26, 60, 94, 0.28);
-    --home-btn-primary-shadow-hover: rgba(42, 90, 138, 0.35);
+    --home-btn-primary-start: #4a90d9;
+    --home-btn-primary-end: #6db3f2;
+    --home-btn-primary-hover-start: #3b7ec4;
+    --home-btn-primary-hover-end: #5599db;
+    --home-btn-primary-border: rgba(255, 255, 255, 0.35);
+    --home-btn-primary-shadow: rgba(74, 144, 217, 0.22);
+    --home-btn-primary-shadow-hover: rgba(59, 126, 196, 0.32);
     --home-btn-secondary-border: rgba(26, 60, 94, 0.24);
     --home-btn-secondary-hover-bg: rgba(26, 60, 94, 0.05);
     --home-portrait-ring: rgba(26, 60, 94, 0.1);
@@ -57,6 +60,7 @@ body.home-page.dark-mode {
     --home-hover-surface: rgba(255, 255, 255, 0.06);
     --home-btn-primary-start: #2563eb;
     --home-btn-primary-end: #38bdf8;
+    --home-btn-primary-border: transparent;
     --home-btn-primary-shadow: rgba(37, 99, 235, 0.35);
     --home-btn-primary-shadow-hover: rgba(56, 189, 248, 0.45);
     --home-btn-secondary-border: rgba(255, 255, 255, 0.28);
@@ -296,13 +300,22 @@ body.home-page:not(.dark-mode) .site-header {
 .home-page .home-hero__btn--primary {
     background: linear-gradient(135deg, var(--home-btn-primary-start) 0%, var(--home-btn-primary-end) 100%);
     color: #fff;
-    border: none;
+    border: 1px solid var(--home-btn-primary-border, transparent);
     box-shadow: 0 4px 24px var(--home-btn-primary-shadow);
+}
+
+body.home-page:not(.dark-mode) a.home-hero__btn--primary,
+body.home-page.dark-mode a.home-hero__btn--primary {
+    color: #fff;
 }
 
 .home-page .home-hero__btn--primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 32px var(--home-btn-primary-shadow-hover);
+}
+
+body.home-page:not(.dark-mode) .home-hero__btn--primary:hover {
+    background: linear-gradient(135deg, var(--home-btn-primary-hover-start) 0%, var(--home-btn-primary-hover-end) 100%);
 }
 
 .home-page .home-hero__btn--secondary {
@@ -675,7 +688,7 @@ body.home-page:not(.dark-mode) h2,
 body.home-page:not(.dark-mode) h3,
 body.home-page:not(.dark-mode) p,
 body.home-page:not(.dark-mode) li,
-body.home-page:not(.dark-mode) a {
+body.home-page:not(.dark-mode) a:not(.home-hero__btn--primary) {
     color: inherit;
 }
 
