@@ -472,6 +472,15 @@
       "joy": "Toshkent",
       "yil": 2002,
       "pdf": "assets/pdf/bibliografiya/akademik-gafur-gulom-xotiralar.pdf"
+    },
+    {
+      "id": 2,
+      "sarlavha": "G'afur G'ulom Andijonda",
+      "qisqa": "Xotiralar, she'rlar, maktublar, marsiyalar",
+      "nashriyot": "«Hayot» nashriyoti",
+      "joy": "Andijon",
+      "yil": 2003,
+      "pdf": "assets/pdf/bibliografiya/gafur-gulom-andijonda.pdf"
     }
   ]
 }
