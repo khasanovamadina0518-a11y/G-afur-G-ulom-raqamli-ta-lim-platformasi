@@ -43,9 +43,9 @@
     <link rel="stylesheet" href="assets/css/components.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
     <link rel="stylesheet" href="assets/css/theme.css">
-    <link rel="stylesheet" href="assets/css/home.css?v=7">
+    <link rel="stylesheet" href="assets/css/home.css?v=8">
     <style>
-        /* Homepage section styles (hero, features, stats → assets/css/home.css) */
+        /* Homepage section styles (hero, stats → assets/css/home.css) */
         
         /* Today's Poem Widget */
         .todays-poem {
@@ -236,7 +236,7 @@ body.dark-mode .card-link{
     <!-- Header will be injected by header.js -->
     <div id="header-container"></div>
 
-    <!-- Premium Above-the-Fold: Hero + Categories + Stats -->
+    <!-- Premium Above-the-Fold: Hero + Statistics -->
     <section class="home-above-fold" aria-label="Bosh sahifa">
         <div class="home-above-fold__container">
 
@@ -276,59 +276,6 @@ body.dark-mode .card-link{
                                 loading="eager">
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="home-features" aria-label="Platform bo'limlari">
-                <div class="home-features__inner">
-                    <a href="pages/hayot.html" class="home-feature-card">
-                        <span class="home-feature-card__icon" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        </span>
-                        <span class="home-feature-card__title">Hayoti</span>
-                        <span class="home-feature-card__meta">Hayot va ijodi</span>
-                        <span class="home-feature-card__arrow" aria-hidden="true">→</span>
-                    </a>
-                    <a href="pages/asarlar.html" class="home-feature-card">
-                        <span class="home-feature-card__icon" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                        </span>
-                        <span class="home-feature-card__title">Asarlari</span>
-                        <span class="home-feature-card__meta">500+ she'r</span>
-                        <span class="home-feature-card__arrow" aria-hidden="true">→</span>
-                    </a>
-                    <a href="pages/ilmiy.html" class="home-feature-card">
-                        <span class="home-feature-card__icon" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M6 21V7l6-4 6 4v14"></path><path d="M10 21v-4h4v4"></path></svg>
-                        </span>
-                        <span class="home-feature-card__title">Ilmiy arxiv</span>
-                        <span class="home-feature-card__meta">Ilmiy maqolalar</span>
-                        <span class="home-feature-card__arrow" aria-hidden="true">→</span>
-                    </a>
-                    <a href="pages/talim.html" class="home-feature-card">
-                        <span class="home-feature-card__icon" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5"></path></svg>
-                        </span>
-                        <span class="home-feature-card__title">Ta'lim markazi</span>
-                        <span class="home-feature-card__meta">Dars materiallari</span>
-                        <span class="home-feature-card__arrow" aria-hidden="true">→</span>
-                    </a>
-                    <a href="pages/multimedia.html" class="home-feature-card">
-                        <span class="home-feature-card__icon" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"></polygon></svg>
-                        </span>
-                        <span class="home-feature-card__title">Multimedia</span>
-                        <span class="home-feature-card__meta">Video va audio</span>
-                        <span class="home-feature-card__arrow" aria-hidden="true">→</span>
-                    </a>
-                    <a href="pages/interaktiv-oyinlar.html" class="home-feature-card">
-                        <span class="home-feature-card__icon" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M6 12h4"></path><path d="M8 10v4"></path><circle cx="15" cy="11" r="1" fill="currentColor"></circle><circle cx="18" cy="13" r="1" fill="currentColor"></circle></svg>
-                        </span>
-                        <span class="home-feature-card__title">Interaktiv</span>
-                        <span class="home-feature-card__meta">Viktorinalar</span>
-                        <span class="home-feature-card__arrow" aria-hidden="true">→</span>
-                    </a>
                 </div>
             </div>
 

@@ -991,7 +991,6 @@ html body.page-testlar .test-page__inner,
 html body.page-video .video-page__inner,
 html body.page-ai .ai-layout,
 html body.home-page .home-hero__inner,
-html body.home-page .home-features__inner,
 html body.home-page .home-stats__inner {
     max-width: 100%;
     min-width: 0;
@@ -1046,8 +1045,7 @@ html body.home-page .home-stats__inner {
     html body.page-talim .tl-card:hover,
     html body.page-testlar .test-card:hover,
     html body.page-video .video-card:hover,
-    html body.page-asarlar .library-card:hover,
-    .home-page .home-feature-card:hover {
+    html body.page-asarlar .library-card:hover {
         transform: none;
     }
 }
