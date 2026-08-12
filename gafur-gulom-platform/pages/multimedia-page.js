@@ -112,7 +112,7 @@ function renderLesson() {
     const downloadBtn = document.getElementById('download-btn');
 
     if (continueBtn) {
-        continueBtn.href = videoUrl || '#';
+        continueBtn.href = '#';
         continueBtn.onclick = function (event) {
             event.preventDefault();
             const player = document.getElementById('video-player');
@@ -126,8 +126,7 @@ function renderLesson() {
     if (downloadBtn && kurs.downloadUrl) {
         const downloadUrl = resolveAssetPath(kurs.downloadUrl);
         const downloadFilename = getDownloadFilename(kurs.downloadUrl);
-        downloadBtn.href = downloadUrl;
-        downloadBtn.setAttribute('download', downloadFilename);
+        downloadBtn.href = '#';
         downloadBtn.onclick = function (event) {
             event.preventDefault();
             triggerVideoDownload(downloadUrl, downloadFilename);
