@@ -471,8 +471,10 @@
         box-shadow: var(--shadow-lg);
         transform: translateX(100%);
         transition: transform var(--duration) var(--ease);
-        overflow-y: auto;
+        overflow: hidden;
         border-left: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
     }
 
     .mobile-drawer.open .drawer-content {
@@ -486,6 +488,7 @@
         padding: var(--space-5);
         border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         background: linear-gradient(145deg, var(--primary-dark), var(--primary));
+        flex-shrink: 0;
     }
 
     .drawer-header h3 {
@@ -517,6 +520,14 @@
 
     .drawer-menu {
         padding: var(--space-4);
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .drawer-item:last-child {
+        margin-bottom: 0;
     }
 
     .drawer-item {
@@ -578,6 +589,7 @@
         padding: var(--space-4);
         border-top: 1px solid var(--border);
         background: var(--bg);
+        flex-shrink: 0;
     }
 
     .drawer-dark-btn {

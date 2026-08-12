@@ -132,6 +132,13 @@ function renderHeader() {
             <button class="drawer-close" id="drawerClose" type="button" aria-label="Menyuni yopish">✕</button>
         </div>
         <div class="drawer-menu">
+            <a href="${base}index.html" class="drawer-item">
+                <div class="drawer-icon">🏠</div>
+                <div class="drawer-text">
+                    <div class="drawer-title">Bosh sahifa</div>
+                    <div class="drawer-desc">Asosiy sahifa</div>
+                </div>
+            </a>
             <a href="${base}pages/hayot.html" class="drawer-item">
                 <div class="drawer-icon">👤</div>
                 <div class="drawer-text">
@@ -139,18 +146,53 @@ function renderHeader() {
                     <div class="drawer-desc">Hayot va ijodi</div>
                 </div>
             </a>
-            <a href="${base}pages/ilmiy.html" class="drawer-item">
+            <a href="${base}pages/asarlar.html" class="drawer-item">
                 <div class="drawer-icon">📚</div>
+                <div class="drawer-text">
+                    <div class="drawer-title">Asarlari</div>
+                    <div class="drawer-desc">Elektron kutubxona</div>
+                </div>
+            </a>
+            <a href="${base}pages/multimedia.html" class="drawer-item">
+                <div class="drawer-icon">🎬</div>
+                <div class="drawer-text">
+                    <div class="drawer-title">Video darslar</div>
+                    <div class="drawer-desc">Video va audio</div>
+                </div>
+            </a>
+            <a href="${base}pages/interaktiv-oyinlar.html" class="drawer-item">
+                <div class="drawer-icon">🎮</div>
+                <div class="drawer-text">
+                    <div class="drawer-title">Interaktiv</div>
+                    <div class="drawer-desc">Viktorinalar va o'yinlar</div>
+                </div>
+            </a>
+            <a href="${base}pages/interaktiv.html" class="drawer-item">
+                <div class="drawer-icon">📝</div>
+                <div class="drawer-text">
+                    <div class="drawer-title">Testlar</div>
+                    <div class="drawer-desc">O'yinlar va testlar</div>
+                </div>
+            </a>
+            <a href="${base}pages/ai-yordamchi.html" class="drawer-item">
+                <div class="drawer-icon">🤖</div>
+                <div class="drawer-text">
+                    <div class="drawer-title">AI yordamchi</div>
+                    <div class="drawer-desc">Sun'iy intellekt yordam</div>
+                </div>
+            </a>
+            <a href="${base}pages/ilmiy.html" class="drawer-item">
+                <div class="drawer-icon">🔬</div>
                 <div class="drawer-text">
                     <div class="drawer-title">Ilmiy</div>
                     <div class="drawer-desc">Ilmiy maqolalar</div>
                 </div>
             </a>
-            <a href="${base}pages/interaktiv.html" class="drawer-item">
-                <div class="drawer-icon">🎮</div>
+            <a href="${base}pages/talim.html" class="drawer-item">
+                <div class="drawer-icon">🎓</div>
                 <div class="drawer-text">
-                    <div class="drawer-title">Testlar</div>
-                    <div class="drawer-desc">O'yinlar va testlar</div>
+                    <div class="drawer-title">Ta'lim</div>
+                    <div class="drawer-desc">Dars materiallari</div>
                 </div>
             </a>
         </div>
