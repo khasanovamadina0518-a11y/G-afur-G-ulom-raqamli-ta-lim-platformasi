@@ -1,3 +1,21 @@
 {
-  "qissalar": []
+  "qissalar": [
+    {
+      "id": 1,
+      "sarlavha": "Shum bola",
+      "muallif": "G'afur G'ulom",
+      "yil": 1936,
+      "mavzu": ["Bolalar", "Hayot", "Sarguzasht"],
+      "teglar": ["qissa", "bolalar", "adabiyot"],
+      "qisqa": "G'afur G'ulomning bolalar hayoti va sarguzashtlarini aks ettiruvchi mashhur qissasi.",
+      "pdf": "assets/pdf/qissalar/shum-bola.pdf",
+      "boblar": [
+        { "sarlavha": "I BO'LIM", "sahifa": 3 },
+        { "sarlavha": "II BO'LIM", "sahifa": 39 },
+        { "sarlavha": "III BO'LIM", "sahifa": 64 },
+        { "sarlavha": "IV BO'LIM", "sahifa": 110 },
+        { "sarlavha": "IZOH", "sahifa": 186 }
+      ]
+    }
+  ]
 }

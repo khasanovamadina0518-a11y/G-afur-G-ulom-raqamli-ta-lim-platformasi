@@ -1,5 +1,5 @@
 // Service Worker for G'afur G'ulom Platform
-const CACHE_NAME = 'gafur-gulom-v1';
+const CACHE_NAME = 'gafur-gulom-v2';
 const OFFLINE_URL = 'offline.html';
 
 // Files to cache
@@ -27,6 +27,7 @@ const CACHE_URLS = [
   './data/ilmiy.json',
   './data/dostonlar.json',
   './data/qissalar.json',
+  './assets/pdf/qissalar/shum-bola.pdf',
   './assets/images/gafur-gulom.jpg',
   './offline.html',
   './404.html'

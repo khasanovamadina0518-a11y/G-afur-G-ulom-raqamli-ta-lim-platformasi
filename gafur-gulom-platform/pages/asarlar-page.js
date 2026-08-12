@@ -314,6 +314,9 @@ function openPoemModal(poemId) {
     if (!poem) return;
     
     currentPoemId = poemId;
+
+    const modal = document.getElementById('poem-modal');
+    modal.classList.remove('modal--pdf');
     
     document.getElementById('modal-title').textContent = poem.sarlavha;
     document.getElementById('modal-year').textContent = poem.yil;
@@ -331,8 +334,15 @@ function openPoemModal(poemId) {
 function closeModal() {
     const modal = document.getElementById('poem-modal');
     modal.classList.remove('active');
+    modal.classList.remove('modal--pdf');
     document.body.style.overflow = 'auto';
     currentPoemId = null;
+
+    const modalText = document.getElementById('modal-text');
+    if (modalText) {
+        modalText.innerHTML = '';
+        modalText.textContent = '';
+    }
 }
 
 function updateFavoriteButton() {
@@ -468,12 +478,17 @@ async function openDostonModal(dostonId) {
 
     if (!doston) return;
 
+    const modal = document.getElementById('poem-modal');
+    modal.classList.remove('modal--pdf');
+
     document.getElementById('modal-title').textContent = doston.sarlavha;
     document.getElementById('modal-year').textContent = doston.yil;
     document.getElementById('modal-badges').innerHTML =
         doston.mavzu.map(m => `<span class="badge">${m}</span>`).join('');
 
-    document.getElementById('modal-text').textContent = doston.matn;
+    const modalText = document.getElementById('modal-text');
+    modalText.innerHTML = '';
+    modalText.textContent = doston.matn;
 
     document.getElementById('poem-modal').classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -675,6 +690,7 @@ function applyQissalarFilters() {
             qissa.muallif,
             qissa.qisqa,
             qissa.matn,
+            ...(Array.isArray(qissa.boblar) ? qissa.boblar.map(b => b.sarlavha) : []),
             ...(Array.isArray(qissa.mavzu) ? qissa.mavzu : []),
             ...(Array.isArray(qissa.teglar) ? qissa.teglar : [])
         ].filter(Boolean).join(' ').toLowerCase();
@@ -717,7 +733,7 @@ function openQissaRead(qissaId) {
     if (!qissa) return;
 
     if (qissa.pdf) {
-        window.open(resolveAssetPath(qissa.pdf), '_blank', 'noopener,noreferrer');
+        openQissaPdfReader(qissa);
         return;
     }
 
@@ -729,17 +745,71 @@ function openQissaRead(qissaId) {
     showNotification('Bu qissa uchun hozircha elektron fayl mavjud emas.', 'error');
 }
 
+function openQissaPdfReader(qissa, startPage) {
+    currentPoemId = null;
+
+    const pdfUrl = resolveAssetPath(qissa.pdf);
+    const page = startPage || 1;
+    const modal = document.getElementById('poem-modal');
+    const modalText = document.getElementById('modal-text');
+
+    document.getElementById('modal-title').textContent = qissa.sarlavha;
+    document.getElementById('modal-year').textContent = qissa.yil || '';
+    document.getElementById('modal-badges').innerHTML =
+        (qissa.mavzu || []).map(m => `<span class="badge">${m}</span>`).join('');
+
+    let chaptersHtml = '';
+    if (Array.isArray(qissa.boblar) && qissa.boblar.length > 0) {
+        chaptersHtml = `
+            <nav class="qissa-reader__chapters" aria-label="Bo'limlar">
+                ${qissa.boblar.map(b => {
+                    const isActive = b.sahifa === page ? ' active' : '';
+                    return `<button type="button" class="qissa-reader__chapter-btn${isActive}" data-page="${b.sahifa}">${b.sarlavha}</button>`;
+                }).join('')}
+            </nav>`;
+    }
+
+    modalText.innerHTML = `
+        ${chaptersHtml}
+        <div class="qissa-reader__frame-wrap">
+            <iframe class="qissa-reader__frame" src="${pdfUrl}#page=${page}" title="${qissa.sarlavha} — PDF"></iframe>
+        </div>
+        <p class="qissa-reader__hint">
+            <a class="qissa-reader__external" href="${pdfUrl}" target="_blank" rel="noopener noreferrer">PDF ni yangi oynada ochish</a>
+        </p>`;
+
+    modalText.querySelectorAll('.qissa-reader__chapter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const targetPage = this.getAttribute('data-page');
+            const frame = modalText.querySelector('.qissa-reader__frame');
+            if (frame) frame.src = `${pdfUrl}#page=${targetPage}`;
+            modalText.querySelectorAll('.qissa-reader__chapter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    modal.classList.add('modal--pdf');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
 function openQissaModal(qissaId) {
     const qissa = allQissalar.find(q => q.id === qissaId);
     if (!qissa) return;
 
     currentPoemId = null;
 
+    const modal = document.getElementById('poem-modal');
+    modal.classList.remove('modal--pdf');
+
     document.getElementById('modal-title').textContent = qissa.sarlavha;
     document.getElementById('modal-year').textContent = qissa.yil || '';
     document.getElementById('modal-badges').innerHTML =
         (qissa.mavzu || []).map(m => `<span class="badge">${m}</span>`).join('');
-    document.getElementById('modal-text').textContent = qissa.matn;
+
+    const modalText = document.getElementById('modal-text');
+    modalText.innerHTML = '';
+    modalText.textContent = qissa.matn;
 
     document.getElementById('poem-modal').classList.add('active');
     document.body.style.overflow = 'hidden';

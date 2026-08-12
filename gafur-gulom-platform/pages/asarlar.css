@@ -599,6 +599,86 @@
     white-space: pre-line;
 }
 
+/* ----- Qissa PDF reader (modal extension) ----- */
+.page-asarlar .modal.modal--pdf .modal-content {
+    max-width: min(980px, 96vw);
+    padding: clamp(1rem, 3vw, 2rem);
+}
+
+.page-asarlar .modal.modal--pdf .modal-text {
+    max-width: none;
+    margin-bottom: 0;
+    white-space: normal;
+    color: var(--text);
+}
+
+.page-asarlar .modal.modal--pdf .modal-actions .modal-btn-primary {
+    display: none;
+}
+
+.page-asarlar .qissa-reader__chapters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.page-asarlar .qissa-reader__chapter-btn {
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.page-asarlar .qissa-reader__chapter-btn:hover {
+    border-color: var(--btn-primary-bg);
+    color: var(--btn-primary-bg);
+}
+
+.page-asarlar .qissa-reader__chapter-btn.active {
+    background: var(--btn-filter-active-bg);
+    border-color: var(--btn-filter-active-border);
+    color: var(--btn-filter-active-text);
+}
+
+.page-asarlar .qissa-reader__frame-wrap {
+    width: 100%;
+    height: min(70vh, 720px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--card-bg);
+}
+
+.page-asarlar .qissa-reader__frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.page-asarlar .qissa-reader__hint {
+    margin: 0.75rem 0 0;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8125rem;
+}
+
+.page-asarlar .qissa-reader__external {
+    color: var(--btn-primary-bg);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.page-asarlar .qissa-reader__external:hover {
+    text-decoration: underline;
+}
+
 .page-asarlar .modal-actions {
     display: flex;
     gap: 0.75rem;
@@ -748,8 +828,34 @@ body.dark-mode.page-asarlar .library-filter-panel {
     border-color: var(--border-strong);
 }
 
+body.dark-mode.page-asarlar .modal.modal--pdf .modal-content {
+    background: var(--card-bg);
+}
+
+body.dark-mode.page-asarlar .qissa-reader__chapter-btn {
+    background: var(--card-bg);
+    border-color: var(--border-strong);
+    color: var(--text);
+}
+
+body.dark-mode.page-asarlar .qissa-reader__frame-wrap {
+    border-color: var(--border-strong);
+    background: var(--bg);
+}
+
 /* ----- Responsive ----- */
 @media (max-width: 768px) {
+    .page-asarlar .qissa-reader__frame-wrap {
+        height: min(58vh, 560px);
+    }
+
+    .page-asarlar .qissa-reader__chapters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.25rem;
+    }
+
     .page-asarlar .library-item {
         grid-template-columns: 64px minmax(0, 1fr);
         grid-template-rows: auto auto;
