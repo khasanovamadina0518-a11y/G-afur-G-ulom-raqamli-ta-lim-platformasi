@@ -47,53 +47,6 @@
     <style>
         /* Homepage section styles (hero, stats → assets/css/home.css) */
         
-        /* Today's Poem Widget */
-        .todays-poem {
-            padding: 80px 2rem;
-            background: white;
-        }
-        
-        .poem-widget {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 3rem;
-            border: 4px solid var(--secondary);
-            border-radius: var(--radius);
-            background: var(--bg);
-        }
-        
-        .poem-widget h2 {
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 2rem;
-        }
-        
-        .poem-title {
-            font-size: 1.75rem;
-            color: var(--secondary);
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        
-        .poem-excerpt {
-            font-style: italic;
-            line-height: 2;
-            color: var(--text);
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .poem-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
         /* User Categories */
         .user-categories {
             padding: 80px 2rem;
@@ -155,38 +108,6 @@
             margin-right: 0.5rem;
         }
         
-        /* CTA Section */
-        .cta-section {
-            padding: 80px 2rem;
-            background: linear-gradient(135deg, #1a3c5e 0%, #2a5a8a 100%);
-            text-align: center;
-            color: white;
-        }
-        
-        .cta-section h2 {
-            color: white;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 1.5rem 3rem;
-            background: var(--secondary);
-            color: white;
-            border-radius: 50px;
-            font-size: 1.25rem;
-            font-weight: 600;
-            transition: var(--transition);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            background: var(--secondary-light);
-        }
-        
         @media (max-width: 768px) {
             .categories-grid {
                 grid-template-columns: 1fr;
@@ -202,13 +123,11 @@ body.dark-mode{
     color:#f1f5f9;
 }
 
-body.dark-mode .todays-poem,
 body.dark-mode .user-categories{
     background:#0f172a;
 }
 
-body.dark-mode .category-card,
-body.dark-mode .poem-widget{
+body.dark-mode .category-card{
     background:#1e293b;
     color:white;
     border:1px solid #334155;
@@ -312,21 +231,6 @@ body.dark-mode .card-link{
         </div>
     </section>
 
-    <!-- Today's Poem Widget -->
-    <section class="todays-poem">
-        <div class="poem-widget">
-            <h2>📖 Bugungi she'r</h2>
-            <h3 class="poem-title" id="poem-title">Yuklanmoqda...</h3>
-            <div class="poem-excerpt" id="poem-excerpt">
-                Iltimos kuting...
-            </div>
-            <div class="poem-buttons">
-                <a href="#" class="btn-primary" id="read-full-btn">To'liq o'qish</a>
-                <button class="btn-outline" id="new-poem-btn">Yangi she'r</button>
-            </div>
-        </div>
-    </section>
-
     <!-- User Categories -->
     <section class="user-categories">
         <h2 class="section-title">Foydalanuvchi toifalari</h2>
@@ -371,14 +275,6 @@ body.dark-mode .card-link{
                     <li>Tarixiy hujjatlar</li>
                 </ul>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Bugunning buyuk she'rini o'qi</h2>
-            <a href="pages/asarlar.html" class="cta-button">She'rlar to'plamiga o'tish</a>
         </div>
     </section>
 

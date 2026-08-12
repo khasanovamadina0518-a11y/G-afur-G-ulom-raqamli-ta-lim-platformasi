@@ -371,7 +371,6 @@
 }
 
 /* ----- Below-fold sections (light) ----- */
-.home-page .todays-poem,
 .home-page .user-categories {
     background: var(--bg);
 }
