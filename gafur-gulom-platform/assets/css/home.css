@@ -488,6 +488,63 @@
     .home-page .home-stats__item::after {
         display: none !important;
     }
+
+    /* User categories — 2-column compact mobile layout */
+    .home-page .user-categories {
+        padding: 2rem 1rem 1.75rem;
+    }
+
+    .home-page .user-categories .section-title {
+        font-size: clamp(1.375rem, 5.5vw, 1.625rem);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .home-page .user-categories .section-title::after {
+        width: 44px;
+        height: 2px;
+    }
+
+    .home-page .categories-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.6875rem;
+    }
+
+    .home-page .category-card {
+        padding: 0.875rem 0.75rem;
+        min-height: auto;
+        height: auto;
+    }
+
+    .home-page .category-card:hover {
+        transform: none;
+    }
+
+    .home-page .category-icon {
+        font-size: 1.5rem;
+        margin-bottom: 0.375rem;
+        line-height: 1;
+    }
+
+    .home-page .category-card h3 {
+        font-size: 0.9375rem;
+        margin-bottom: 0.25rem;
+        line-height: 1.25;
+        overflow-wrap: break-word;
+    }
+
+    .home-page .category-card .text-light {
+        margin-bottom: 0.375rem !important;
+        font-size: 0.75rem;
+        line-height: 1.3;
+    }
+
+    .home-page .category-list li {
+        padding: 0.25rem 0;
+        font-size: 0.75rem;
+        line-height: 1.35;
+        overflow-wrap: break-word;
+    }
 }
 
 @media screen and (max-width: 390px) {

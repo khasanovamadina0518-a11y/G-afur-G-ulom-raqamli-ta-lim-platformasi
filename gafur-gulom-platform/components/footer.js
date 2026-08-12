@@ -14,15 +14,6 @@ function renderFooter() {
         <footer class="site-footer">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>G'afur G'ulom haqida</h3>
-                    <p>
-                        G'afur G'ulom (1889-1966) - O'zbek adabiyotining buyuk shoiri, 
-                        yozuvchisi va dramaturgi. Uning asarlari o'zbek xalqining 
-                        madaniy merosining ajralmas qismidir.
-                    </p>
-                </div>
-                
-                <div class="footer-section">
                     <h3>Tezkor havolalar</h3>
                     <ul class="footer-links">
                         <li><a href="${basePath}pages/hayot.html">Hayoti</a></li>
