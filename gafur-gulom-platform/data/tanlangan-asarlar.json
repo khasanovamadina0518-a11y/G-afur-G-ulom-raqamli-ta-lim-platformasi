@@ -35,6 +35,15 @@
       "joy": "Toshkent",
       "yil": 1990,
       "pdf": "assets/pdf/tanlangan-asarlar/gafur-gulom-mukammal-asarlar-toplami-12-tom-1990.pdf"
+    },
+    {
+      "id": 5,
+      "sarlavha": "Farzandlarimga",
+      "muallif": "G'afur G'ulom",
+      "yil": 1983,
+      "joy": "Toshkent",
+      "nashriyot": "O‘zbekiston LKSM Markaziy Komiteti “Yosh gvardiya” nashriyoti",
+      "pdf": "assets/pdf/tanlangan-asarlar/farzandlarimga.pdf"
     }
   ]
 }

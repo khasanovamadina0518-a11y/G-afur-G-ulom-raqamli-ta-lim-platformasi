@@ -1029,8 +1029,11 @@ function displayTanlanganAsarlar() {
     const visible = filteredTanlanganAsarlar.slice(0, tanlanganAsarlarDisplayLimit);
 
     container.innerHTML = visible.map(asar => {
-        const category = asar.qisqaSarlavha || '';
-        const description = [asar.nashr, asar.joy, asar.yil].filter(Boolean).join(' · ');
+        const category = asar.qisqaSarlavha || asar.muallif || '';
+        const description = (asar.qisqaSarlavha
+            ? [asar.nashr, asar.joy, asar.yil]
+            : [asar.nashriyot, asar.joy, asar.yil]
+        ).filter(Boolean).join(' · ');
         const readAction = `<button class="library-item__read" type="button" onclick="openTanlanganRead(${asar.id})">O'qish</button>`;
         const coverSrc = asar.rasm ? resolveAssetPath(asar.rasm) : '';
 
@@ -1085,7 +1088,10 @@ function applyTanlanganAsarlarFilters() {
         const searchBlob = [
             asar.sarlavha,
             asar.qisqaSarlavha,
-            asar.nashr
+            asar.nashr,
+            asar.muallif,
+            asar.nashriyot,
+            asar.joy
         ].filter(Boolean).join(' ').toLowerCase();
 
         return !searchQuery || searchBlob.includes(searchQuery);
@@ -1115,7 +1121,9 @@ function openTanlanganRead(asarId) {
     if (asar.pdf) {
         openQissaPdfReader({
             ...asar,
-            mavzu: asar.qisqaSarlavha ? [asar.qisqaSarlavha] : []
+            mavzu: asar.qisqaSarlavha
+                ? [asar.qisqaSarlavha]
+                : (asar.muallif ? [asar.muallif] : [])
         });
         return;
     }
