@@ -207,6 +207,8 @@
     {
       "id": 1,
       "sarlavha": "G'afur G'ulom prozasi leksikasi",
+      "muallif": "Ziyodulla Hamidov",
+      "yil": 2003,
       "tur": "Ilmiy risola",
       "qisqa": "G'afur G'ulom prozasining leksik xususiyatlari, so'z boyligi va til qatlamlari bo'yicha ilmiy risola.",
       "pdf": "assets/pdf/ilmiy/gafur-gulom-prozasi-leksikasi.pdf"
@@ -220,6 +222,15 @@
       "yil": 2007,
       "tur": "Ilmiy tadqiqot",
       "pdf": "assets/pdf/ilmiy/gafur-gulom-poeziyasining-leksik-semantik-xususiyatlari.pdf"
+    },
+    {
+      "id": 3,
+      "sarlavha": "G'afur G'ulomning poetik mahorati",
+      "muallif": "Muslihiddin Muhiddinov, Suyun Karimov",
+      "joy": "Samarqand",
+      "yil": 2003,
+      "tur": "Ilmiy tadqiqot",
+      "pdf": "assets/pdf/ilmiy/gafur-gulomning-poetik-mahorati.pdf"
     }
   ],
   "atamalar": [
