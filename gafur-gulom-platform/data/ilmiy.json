@@ -462,5 +462,16 @@
       "misol": "'Shum bola' dostonining syujeti qiziqarli.",
       "talaffuz": "syu-jet"
     }
+  ],
+  "bibliografiya": [
+    {
+      "id": 1,
+      "sarlavha": "Akademik G'afur G'ulom (xotiralar)",
+      "muallif": "Aziz Qayumov",
+      "nashriyot": "Abdulla Qodiriy nomidagi xalq merosi nashriyoti",
+      "joy": "Toshkent",
+      "yil": 2002,
+      "pdf": "assets/pdf/bibliografiya/akademik-gafur-gulom-xotiralar.pdf"
+    }
   ]
 }

@@ -3,7 +3,7 @@
 // IA + functionality preserved
 // ===================================
 
-let ilmiyData = { maqolalar: [], dissertatsiyalar: [], tadqiqotlar: [], atamalar: [] };
+let ilmiyData = { maqolalar: [], dissertatsiyalar: [], tadqiqotlar: [], atamalar: [], bibliografiya: [] };
 let selectedArticles = [];
 let selectedFormat = 'apa';
 
@@ -55,6 +55,8 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
         } else if (tab === 'lugat') {
             displayTerms(ilmiyData.atamalar);
             createAlphabetNav();
+        } else if (tab === 'bibliografiya') {
+            displayBibliography(ilmiyData.bibliografiya || []);
         }
     });
 });
@@ -270,6 +272,10 @@ function displayResearch(items) {
 
 function openResearchPdf(id) {
     const item = (ilmiyData.tadqiqotlar || []).find(entry => entry.id === id);
+    openIlmPdfModal(item);
+}
+
+function openIlmPdfModal(item) {
     if (!item) return;
 
     const pdfPath = item.pdf || item.pdfHavola;
@@ -400,6 +406,53 @@ document.getElementById('term-search')?.addEventListener('input', function() {
 });
 
 // ===================================
+// BIBLIOGRAFIYA
+// ===================================
+
+function displayBibliography(items) {
+    const container = document.getElementById('bibliografiya-container');
+    if (!container) return;
+
+    if (!items.length) {
+        container.innerHTML = '';
+        return;
+    }
+
+    container.innerHTML = items.map(item => {
+        const authorMeta = item.muallif
+            ? `<span class="ilm-paper__meta-item">👤 <strong>${escapeHtml(item.muallif)}</strong></span>`
+            : '';
+        const yearMeta = item.yil
+            ? `<span class="ilm-paper__meta-item">📅 ${item.yil}</span>`
+            : '';
+        const placeMeta = item.joy
+            ? `<span class="ilm-paper__meta-item">📍 ${escapeHtml(item.joy)}</span>`
+            : '';
+
+        return `
+        <article class="ilm-paper">
+            <h3 class="ilm-paper__title">${escapeHtml(item.sarlavha)}</h3>
+            <div class="ilm-paper__meta">
+                ${authorMeta}
+                ${yearMeta}
+                ${placeMeta}
+                <span class="ilm-badge">Kitob</span>
+            </div>
+            <p class="ilm-paper__abstract">${escapeHtml(item.nashriyot || '')}</p>
+            <div class="ilm-paper__actions">
+                <button class="ilm-btn-primary" type="button" onclick="openBibliographyPdf(${item.id})">O'qish</button>
+            </div>
+        </article>
+    `;
+    }).join('');
+}
+
+function openBibliographyPdf(id) {
+    const item = (ilmiyData.bibliografiya || []).find(entry => entry.id === id);
+    openIlmPdfModal(item);
+}
+
+// ===================================
 // BIBLIOGRAFIYA GENERATOR
 // ===================================
 
@@ -480,10 +533,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         const response = await fetch((window.platformUrl || function (r) { return r; })('data/ilmiy.json'));
         ilmiyData = await response.json();
         ilmiyData.tadqiqotlar = ilmiyData.tadqiqotlar || [];
+        ilmiyData.bibliografiya = ilmiyData.bibliografiya || [];
 
         renderHeroStats();
         initResearchPdfModal();
         displayArticles(ilmiyData.maqolalar);
+        displayBibliography(ilmiyData.bibliografiya);
     } catch (error) {
         console.error('Ma\'lumotlarni yuklashda xatolik:', error);
         alert('Ma\'lumotlar yuklanmadi. Iltimos, sahifani qayta yuklang.');
