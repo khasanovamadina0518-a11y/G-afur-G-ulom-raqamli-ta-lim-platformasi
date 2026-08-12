@@ -110,11 +110,6 @@ body:not(.dark-mode) {
   color: var(--text);
 }
 
-body:not(.dark-mode) .site-footer {
-  background-color: #2a5a8a;
-  background-image: linear-gradient(165deg, #315f8f 0%, #2a5a8a 48%, #3d6fa8 100%);
-}
-
 /*
  * Button Component (ds-*)
  * Optional utility classes — not required by current pages
@@ -361,13 +356,4 @@ html body.page-interaktiv {
   color: #ffffff;
 }
 
-body.dark-mode .site-footer {
-  background-color: #0a1219;
-  background-image: linear-gradient(165deg, #0f1923 0%, #0a1219 50%, #152535 100%);
-  border-top: 1px solid var(--border);
-}
-
-body.dark-mode .footer-bottom {
-  border-top-color: var(--border);
-  color: rgba(232, 224, 208, 0.72);
-}
+/*
