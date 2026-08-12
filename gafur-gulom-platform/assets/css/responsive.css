@@ -502,6 +502,172 @@
 }
 
 /* ===================================
+   Tablet Footer (768px–1023px)
+   =================================== */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .site-footer {
+        padding: 2.5rem 2rem 1.5rem;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.75rem 2.5rem;
+        max-width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 0;
+        align-items: start;
+    }
+
+    .footer-section:last-child {
+        grid-column: 1 / -1;
+        text-align: left;
+    }
+
+    .footer-section h3 {
+        font-size: 1.1875rem;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+    }
+
+    .footer-section p,
+    .footer-links a {
+        font-size: 0.9375rem;
+        line-height: 1.6;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.625rem;
+    }
+
+    .footer-links li {
+        margin-bottom: 0;
+    }
+
+    .footer-links a {
+        display: inline-block;
+        padding: 0.125rem 0;
+    }
+
+    .footer-section:last-child p br {
+        display: block;
+        margin-bottom: 0.6875rem;
+        content: '';
+    }
+
+    .footer-bottom {
+        max-width: 960px;
+        margin: 2.25rem auto 0;
+        padding-top: 1.5rem;
+        text-align: left;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-bottom p {
+        font-size: 0.875rem;
+        line-height: 1.6;
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .footer-bottom p + p {
+        margin-top: 0.625rem !important;
+        font-size: 0.8125rem !important;
+        line-height: 1.55 !important;
+        opacity: 0.72;
+    }
+}
+
+/* ===================================
+   Desktop Footer Polish (≥1024px)
+   =================================== */
+@media screen and (min-width: 1024px) {
+    .site-footer {
+        padding: 2.75rem clamp(2rem, 3vw, 3rem) 1.75rem;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 2rem 3rem;
+        max-width: 87.5rem;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 0;
+        align-items: start;
+    }
+
+    .footer-section h3 {
+        font-size: 1.3125rem;
+        margin-bottom: 1.125rem;
+        line-height: 1.3;
+    }
+
+    .footer-section p,
+    .footer-links a {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6875rem;
+    }
+
+    .footer-links li {
+        margin-bottom: 0;
+    }
+
+    .footer-links a {
+        display: inline-block;
+        padding: 0.125rem 0;
+    }
+
+    .footer-section:last-child {
+        text-align: left;
+    }
+
+    .footer-section:last-child p {
+        margin: 0;
+        text-align: left;
+    }
+
+    .footer-section:last-child p br {
+        display: block;
+        margin-bottom: 0.75rem;
+        content: '';
+    }
+
+    .footer-bottom {
+        max-width: 87.5rem;
+        margin: 2.75rem auto 0;
+        padding-top: 1.75rem;
+        text-align: left;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-bottom p {
+        font-size: 0.875rem;
+        line-height: 1.6;
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .footer-bottom p + p {
+        margin-top: 0.625rem !important;
+        font-size: 0.8125rem !important;
+        line-height: 1.55 !important;
+        opacity: 0.72;
+    }
+}
+
+/* ===================================
    Mobile Navigation System
    =================================== */
 
