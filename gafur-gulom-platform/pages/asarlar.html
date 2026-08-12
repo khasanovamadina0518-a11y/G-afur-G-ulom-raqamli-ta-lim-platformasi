@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="assets/css/components.css?v=9">
     <link rel="stylesheet" href="assets/css/responsive.css?v=9">
     <link rel="stylesheet" href="assets/css/platform-buttons.css?v=9">
-    <link rel="stylesheet" href="pages/asarlar.css?v=2">
+    <link rel="stylesheet" href="pages/asarlar.css?v=3">
 </head>
 <body class="page-asarlar">
     <div id="header-container"></div>
@@ -33,6 +33,7 @@
             <div class="tabs-nav library-tabs">
                 <button class="tab-btn active" type="button" data-tab="sherlar">She'rlar</button>
                 <button class="tab-btn" type="button" data-tab="dostonlar">Dostonlar</button>
+                <button class="tab-btn" type="button" data-tab="qissalar">Qissalar</button>
             </div>
 
             <!-- She'rlar -->
@@ -92,6 +93,52 @@
             <div class="tab-content" data-tab="dostonlar">
                 <div class="library-list" id="dostonlar-grid"></div>
             </div>
+
+            <!-- Qissalar -->
+            <div class="tab-content" data-tab="qissalar">
+                <div class="library-toolbar">
+                    <div class="library-search-row">
+                        <label class="library-search" for="qissalar-search-input">
+                            <svg class="library-search__icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+                            <input type="search" class="search-input" id="qissalar-search-input" placeholder="Qidiruv..." autocomplete="off">
+                        </label>
+                        <button class="library-filter-btn" type="button" id="qissalar-filter-toggle" aria-expanded="false" aria-controls="qissalar-filter-panel">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                            Filtr
+                        </button>
+                    </div>
+
+                    <div class="library-filter-panel" id="qissalar-filter-panel">
+                        <label for="qissalar-year-filter" class="visually-hidden">Yil bo'yicha filtr</label>
+                        <select class="year-select" id="qissalar-year-filter">
+                            <option value="all">Barcha yillar</option>
+                            <option value="1920-1930">1920-1930</option>
+                            <option value="1930-1940">1930-1940</option>
+                            <option value="1940-1950">1940-1950</option>
+                            <option value="1950-1966">1950-1966</option>
+                        </select>
+                    </div>
+
+                    <div class="library-chips filter-group" id="qissalar-chips">
+                        <button class="filter-btn active" type="button" data-qissa-mavzu="all">Barchasi</button>
+                    </div>
+
+                    <div class="library-meta-row">
+                        <span class="results-count" id="qissalar-results-count">0 ta qissa topildi</span>
+                        <div class="view-toggle">
+                            <button class="view-btn" type="button" data-qissa-view="grid" title="Panjara">⊞</button>
+                            <button class="view-btn active" type="button" data-qissa-view="list" title="Ro'yxat">☰</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="library-list" id="qissalar-grid"></div>
+
+                <button class="library-load-more is-hidden" type="button" id="qissalar-load-more-btn" aria-label="Ko'proq qissalarni yuklash">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                    Yana yuklash
+                </button>
+            </div>
         </div>
     </main>
 
@@ -144,6 +191,6 @@
     <script src="components/footer.js"></script>
     <script src="assets/js/data.js?v=8"></script>
     <script src="assets/js/app.js?v=8"></script>
-    <script src="pages/asarlar-page.js?v=9"></script>
+    <script src="pages/asarlar-page.js?v=10"></script>
 </body>
 </html>

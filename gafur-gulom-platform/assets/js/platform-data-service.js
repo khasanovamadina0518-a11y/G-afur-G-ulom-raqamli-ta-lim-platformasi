@@ -12,7 +12,8 @@
         ilmiy: { file: 'ilmiy.json', optional: false },
         quiz: { file: 'quiz.json', optional: false },
         videolar: { file: 'videolar.json', optional: true },
-        asarlar: { file: 'asarlar.json', optional: true }
+        asarlar: { file: 'asarlar.json', optional: true },
+        qissalar: { file: 'qissalar.json', optional: true }
     };
 
     const EVENTS = ['dataUpdated', 'progressChanged', 'contentAdded'];
@@ -174,6 +175,10 @@
             return this.getSource('asarlar')?.asarlar || [];
         },
 
+        getQissalar() {
+            return this.getSource('qissalar')?.qissalar || [];
+        },
+
         getScientificArticles() {
             const ilmiy = this.getSource('ilmiy');
             if (!ilmiy) return { maqolalar: [], dissertatsiyalar: [], atamalar: [] };
@@ -201,8 +206,9 @@
                 poems: this.getPoems().length,
                 dostonlar: this.getDostonlar().length,
                 asarlar: this.getAsarlar().length,
+                qissalar: this.getQissalar().length,
                 books: this.getBooks().length,
-                works: this.getPoems().length + this.getDostonlar().length + this.getAsarlar().length,
+                works: this.getPoems().length + this.getDostonlar().length + this.getAsarlar().length + this.getQissalar().length,
                 scientificArticles: ilmiy.maqolalar.length,
                 dissertations: ilmiy.dissertatsiyalar.length,
                 terms: ilmiy.atamalar.length,
@@ -231,6 +237,7 @@
             this.getPoems().forEach(p => push('poem', 'sherlar', p));
             this.getDostonlar().forEach(d => push('doston', 'dostonlar', d));
             this.getAsarlar().forEach(a => push('book', 'asarlar', a, 'nomi'));
+            this.getQissalar().forEach(q => push('qissa', 'qissalar', q));
             this.getBiography().voqealar?.forEach(v => push('lifeEvent', 'hayot', v));
             Object.entries(this.getBiography().bosqichlar || {}).forEach(([key, b]) => {
                 push('lifeStage', 'hayot', { ...b, key }, 'sarlavha');

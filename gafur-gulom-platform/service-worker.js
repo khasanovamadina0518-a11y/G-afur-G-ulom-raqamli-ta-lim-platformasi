@@ -26,6 +26,7 @@ const CACHE_URLS = [
   './data/quiz.json',
   './data/ilmiy.json',
   './data/dostonlar.json',
+  './data/qissalar.json',
   './assets/images/gafur-gulom.jpg',
   './offline.html',
   './404.html'

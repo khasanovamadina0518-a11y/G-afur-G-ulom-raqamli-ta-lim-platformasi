@@ -134,6 +134,11 @@
         return window.PlatformDataService.getDostonlar();
     }
 
+    async function getQissalar() {
+        await platformDataReady;
+        return window.PlatformDataService.getQissalar();
+    }
+
     async function getHayotMalumotlari() {
         await platformDataReady;
         return window.PlatformDataService.getBiography().voqealar || [];
@@ -195,7 +200,8 @@
         const results = window.PlatformDataService.searchAll(query, 50);
         return {
             sherlar: results.filter(r => r.type === 'poem').map(r => r.item),
-            dostonlar: results.filter(r => r.type === 'doston').map(r => r.item)
+            dostonlar: results.filter(r => r.type === 'doston').map(r => r.item),
+            qissalar: results.filter(r => r.type === 'qissa').map(r => r.item)
         };
     }
 
@@ -211,6 +217,7 @@
 
     window.getSherlar = getSherlar;
     window.getDostonlar = getDostonlar;
+    window.getQissalar = getQissalar;
     window.getHayotMalumotlari = getHayotMalumotlari;
     window.getHayotFull = getHayotFull;
     window.getQuizSavollari = getQuizSavollari;

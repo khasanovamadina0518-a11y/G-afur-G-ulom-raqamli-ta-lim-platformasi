@@ -4,9 +4,12 @@
 
 let allPoems = [];
 let filteredPoems = [];
+let allQissalar = [];
+let filteredQissalar = [];
 let favorites = [];
 let currentPoemId = null;
 let displayLimit = 10;
+let qissalarDisplayLimit = 10;
 
 const BOOKMARK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
 
@@ -15,7 +18,7 @@ function getCoverVariant(id) {
     return variants[id % 3];
 }
 
-function buildLibraryItem({ id, title, category, description, coverVariant, readAction, showBookmark = true }) {
+function buildLibraryItem({ id, title, category, description, coverVariant, coverSrc, readAction, showBookmark = true, tagsHtml = '' }) {
     const favActive = isFavorite(id);
     const bookmark = showBookmark ? `
                 <button class="library-item__bookmark favorite-btn ${favActive ? 'active' : ''}"
@@ -25,15 +28,20 @@ function buildLibraryItem({ id, title, category, description, coverVariant, read
                     ${BOOKMARK_SVG}
                 </button>` : '';
 
+    const coverInner = coverSrc
+        ? `<img class="library-item__cover-img" src="${coverSrc}" alt="" loading="lazy">`
+        : `<span class="library-item__cover-label">${title}</span>`;
+
     return `
         <article class="library-item" data-id="${id}">
             <div class="library-item__cover ${coverVariant}" aria-hidden="true">
-                <span class="library-item__cover-label">${title}</span>
+                ${coverInner}
             </div>
             <div class="library-item__body">
                 <h3 class="library-item__title">${title}</h3>
                 <p class="library-item__category">${category}</p>
                 <p class="library-item__desc">${description}</p>
+                ${tagsHtml}
             </div>
             <div class="library-item__actions">
                 ${readAction}
@@ -53,7 +61,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     initTabs();
     initModal();
     initLoadMore();
-    checkUrlParams(); // Check if a poem was shared
+    await loadQissalar();
+    initQissalarFilters();
+    initQissalarLoadMore();
+    checkUrlParams();
 });
 
 // ===================================
@@ -61,15 +72,27 @@ document.addEventListener('DOMContentLoaded', async function() {
 // ===================================
 function checkUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
+    const tab = urlParams.get('tab');
+    if (tab && ['sherlar', 'dostonlar', 'qissalar'].includes(tab)) {
+        switchTab(tab, false);
+    }
+
     const poemId = urlParams.get('id') || urlParams.get('poem');
     
     if (poemId) {
         const id = parseInt(poemId);
         const poem = allPoems.find(p => p.id === id);
         if (poem) {
-            // Open the poem modal after a short delay
+            switchTab('sherlar', false);
             setTimeout(() => openPoemModal(id), 500);
         }
+    }
+
+    const qissaId = urlParams.get('qissa');
+    if (qissaId) {
+        const id = parseInt(qissaId, 10);
+        switchTab('qissalar', false);
+        setTimeout(() => openQissaRead(id), 500);
     }
 }
 
@@ -411,14 +434,22 @@ function initTabs() {
     });
 }
 
-function switchTab(tabName) {
-    // Remove active from all
+function switchTab(tabName, updateUrl = true) {
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-    
-    // Add active to selected
-    document.querySelector(`[data-tab="${tabName}"].tab-btn`).classList.add('active');
-    document.querySelector(`[data-tab="${tabName}"].tab-content`).classList.add('active');
+
+    const tabBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+    const tabContent = document.querySelector(`.tab-content[data-tab="${tabName}"]`);
+    if (!tabBtn || !tabContent) return;
+
+    tabBtn.classList.add('active');
+    tabContent.classList.add('active');
+
+    if (updateUrl) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('tab', tabName);
+        history.replaceState(null, '', url);
+    }
 }
 
 // ===================================
@@ -479,3 +510,239 @@ async function loadDostonlar() {
     }
 
 }
+
+// ===================================
+// Qissalar
+// ===================================
+function resolveAssetPath(path) {
+    if (!path) return '';
+    return (window.platformUrl || function (r) { return r; })(path);
+}
+
+function buildQissaTags(mavzu) {
+    if (!Array.isArray(mavzu) || mavzu.length === 0) return '';
+    const tags = mavzu.map(m => `<span class="library-item__tag">${m}</span>`).join('');
+    return `<div class="library-item__tags">${tags}</div>`;
+}
+
+async function loadQissalar() {
+    const container = document.getElementById('qissalar-grid');
+    if (!container) return;
+
+    try {
+        allQissalar = await getQissalar();
+        filteredQissalar = [...allQissalar];
+        renderQissalarCategoryChips();
+        displayQissalar();
+        updateQissalarResultsCount();
+    } catch (error) {
+        console.error('Qissalarni yuklashda xatolik:', error);
+        container.innerHTML = `<p class="library-empty">Qissalar yuklanmadi. Keyinroq qayta urinib ko'ring.</p>`;
+    }
+}
+
+function renderQissalarCategoryChips() {
+    const chips = document.getElementById('qissalar-chips');
+    if (!chips) return;
+
+    const categories = [...new Set(
+        allQissalar.flatMap(q => Array.isArray(q.mavzu) ? q.mavzu : [])
+    )].sort();
+
+    chips.innerHTML = `<button class="filter-btn active" type="button" data-qissa-mavzu="all">Barchasi</button>` +
+        categories.map(cat =>
+            `<button class="filter-btn" type="button" data-qissa-mavzu="${cat}">${cat}</button>`
+        ).join('');
+}
+
+function displayQissalar() {
+    const container = document.getElementById('qissalar-grid');
+    if (!container) return;
+
+    if (filteredQissalar.length === 0) {
+        const message = allQissalar.length === 0
+            ? 'Qissalar hozircha qo\'shilmagan.'
+            : 'Hech qanday qissa topilmadi. Filtrlarni o\'zgartiring.';
+        container.innerHTML = `<p class="library-empty">${message}</p>`;
+        updateQissalarLoadMoreButton();
+        return;
+    }
+
+    const visible = filteredQissalar.slice(0, qissalarDisplayLimit);
+
+    container.innerHTML = visible.map(qissa => {
+        const author = qissa.muallif || "G'afur G'ulom";
+        const category = `${author} · Qissa · ${qissa.yil || ''}`.replace(/ · $/, '');
+        const readAction = `<button class="library-item__read" type="button" onclick="openQissaRead(${qissa.id})">O'qish</button>`;
+        const coverSrc = qissa.rasm ? resolveAssetPath(qissa.rasm) : '';
+
+        return buildLibraryItem({
+            id: qissa.id,
+            title: qissa.sarlavha,
+            category,
+            description: qissa.qisqa || '',
+            coverVariant: getCoverVariant(qissa.id + 4),
+            coverSrc,
+            readAction,
+            showBookmark: false,
+            tagsHtml: buildQissaTags(qissa.mavzu)
+        });
+    }).join('');
+
+    updateQissalarLoadMoreButton();
+}
+
+function updateQissalarLoadMoreButton() {
+    const btn = document.getElementById('qissalar-load-more-btn');
+    if (!btn) return;
+
+    if (filteredQissalar.length > qissalarDisplayLimit) {
+        btn.classList.remove('is-hidden');
+    } else {
+        btn.classList.add('is-hidden');
+    }
+}
+
+function initQissalarLoadMore() {
+    const btn = document.getElementById('qissalar-load-more-btn');
+    if (!btn) return;
+
+    btn.addEventListener('click', function() {
+        qissalarDisplayLimit += 10;
+        displayQissalar();
+    });
+}
+
+function initQissalarFilters() {
+    const searchInput = document.getElementById('qissalar-search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', applyQissalarFilters);
+    }
+
+    const filterToggle = document.getElementById('qissalar-filter-toggle');
+    const filterPanel = document.getElementById('qissalar-filter-panel');
+    if (filterToggle && filterPanel) {
+        filterToggle.addEventListener('click', function() {
+            const isOpen = filterPanel.classList.toggle('is-open');
+            filterToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+    }
+
+    const yearSelect = document.getElementById('qissalar-year-filter');
+    if (yearSelect) {
+        yearSelect.addEventListener('change', applyQissalarFilters);
+    }
+
+    const chips = document.getElementById('qissalar-chips');
+    if (chips) {
+        chips.addEventListener('click', function(e) {
+            const btn = e.target.closest('.filter-btn[data-qissa-mavzu]');
+            if (!btn) return;
+            chips.querySelectorAll('.filter-btn[data-qissa-mavzu]').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            applyQissalarFilters();
+        });
+    }
+
+    const viewButtons = document.querySelectorAll('[data-qissa-view]');
+    viewButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            viewButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const view = this.getAttribute('data-qissa-view');
+            const grid = document.getElementById('qissalar-grid');
+            if (!grid) return;
+            if (view === 'grid') {
+                grid.classList.add('library-list--grid');
+            } else {
+                grid.classList.remove('library-list--grid');
+            }
+        });
+    });
+}
+
+function applyQissalarFilters() {
+    const searchInput = document.getElementById('qissalar-search-input');
+    const searchQuery = (searchInput?.value || '').toLowerCase();
+    const activeChip = document.querySelector('.filter-btn.active[data-qissa-mavzu]');
+    const activeMavzu = activeChip ? activeChip.getAttribute('data-qissa-mavzu') : 'all';
+    const yearRange = document.getElementById('qissalar-year-filter')?.value || 'all';
+
+    filteredQissalar = allQissalar.filter(qissa => {
+        const searchBlob = [
+            qissa.sarlavha,
+            qissa.muallif,
+            qissa.qisqa,
+            qissa.matn,
+            ...(Array.isArray(qissa.mavzu) ? qissa.mavzu : []),
+            ...(Array.isArray(qissa.teglar) ? qissa.teglar : [])
+        ].filter(Boolean).join(' ').toLowerCase();
+
+        const matchesSearch = !searchQuery || searchBlob.includes(searchQuery);
+
+        let matchesMavzu = true;
+        if (activeMavzu !== 'all') {
+            matchesMavzu = Array.isArray(qissa.mavzu) && qissa.mavzu.includes(activeMavzu);
+        }
+
+        let matchesYear = true;
+        if (yearRange !== 'all' && qissa.yil) {
+            const [start, end] = yearRange.split('-').map(Number);
+            matchesYear = qissa.yil >= start && qissa.yil <= end;
+        }
+
+        return matchesSearch && matchesMavzu && matchesYear;
+    });
+
+    qissalarDisplayLimit = 10;
+    displayQissalar();
+    updateQissalarResultsCount();
+}
+
+function updateQissalarResultsCount() {
+    const count = document.getElementById('qissalar-results-count');
+    if (!count) return;
+
+    if (allQissalar.length === 0) {
+        count.textContent = '0 ta qissa topildi';
+        return;
+    }
+
+    count.textContent = `${allQissalar.length} ta qissadan ${filteredQissalar.length} ta ko'rsatilmoqda`;
+}
+
+function openQissaRead(qissaId) {
+    const qissa = allQissalar.find(q => q.id === qissaId);
+    if (!qissa) return;
+
+    if (qissa.pdf) {
+        window.open(resolveAssetPath(qissa.pdf), '_blank', 'noopener,noreferrer');
+        return;
+    }
+
+    if (qissa.matn) {
+        openQissaModal(qissaId);
+        return;
+    }
+
+    showNotification('Bu qissa uchun hozircha elektron fayl mavjud emas.', 'error');
+}
+
+function openQissaModal(qissaId) {
+    const qissa = allQissalar.find(q => q.id === qissaId);
+    if (!qissa) return;
+
+    currentPoemId = null;
+
+    document.getElementById('modal-title').textContent = qissa.sarlavha;
+    document.getElementById('modal-year').textContent = qissa.yil || '';
+    document.getElementById('modal-badges').innerHTML =
+        (qissa.mavzu || []).map(m => `<span class="badge">${m}</span>`).join('');
+    document.getElementById('modal-text').textContent = qissa.matn;
+
+    document.getElementById('poem-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+window.openQissaRead = openQissaRead;
