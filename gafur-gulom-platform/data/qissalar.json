@@ -16,6 +16,14 @@
         { "sarlavha": "IV BO'LIM", "sahifa": 110 },
         { "sarlavha": "IZOH", "sahifa": 186 }
       ]
+    },
+    {
+      "id": 2,
+      "sarlavha": "Yodgor",
+      "muallif": "G'afur G'ulom",
+      "teglar": ["qissa", "adabiyot"],
+      "qisqa": "Yozning qiziq kunlari. Egnimda elvagaygina, ko'ksi ochiq, yoqasiga pilta otgan surp yaktak.",
+      "pdf": "assets/pdf/qissalar/Yodgor.pdf"
     }
   ]
 }
