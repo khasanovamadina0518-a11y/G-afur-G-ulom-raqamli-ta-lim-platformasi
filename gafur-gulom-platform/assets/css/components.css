@@ -818,14 +818,10 @@ body.dark-mode .lang-switch__options {
 }
 
 /* Subpage hero headings — override global h1 { color: var(--primary) } on navy bands */
-.page-ilmiy .ilm-hero__title,
-.page-talim .tl-hero__title,
 .page-hayot .hy-hero__title {
     color: #ffffff;
 }
 
-.page-ilmiy .ilm-hero__stat,
-.page-talim .tl-hero__stat,
 .page-hayot .hy-hero__stat {
     color: rgba(255, 255, 255, 0.88);
 }

@@ -356,9 +356,7 @@ html body.page-interaktiv {
   color: var(--text);
 }
 
-/* Subpage hero headings — global h1 { color: var(--primary) } breaks navy hero bands */
-.page-ilmiy .ilm-hero__title,
-.page-talim .tl-hero__title,
+/* Subpage hero headings — global h1 { color: var(--primary) } breaks navy hero bands (Hayot only) */
 .page-hayot .hy-hero__title {
   color: #ffffff;
 }

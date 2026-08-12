@@ -14,6 +14,14 @@
     --ilm-card: var(--card-bg);
     --ilm-shadow: 0 4px 24px rgba(26, 60, 94, 0.08);
     --ilm-shadow-soft: 0 2px 12px rgba(17, 24, 39, 0.06);
+    --ilm-hero-bg: linear-gradient(135deg, #e8eef5 0%, #dfe8f2 48%, #d4e0ed 100%);
+    --ilm-hero-glow: radial-gradient(circle at 85% 20%, rgba(42, 90, 138, 0.14), transparent 45%);
+    --ilm-hero-text: #0f2438;
+    --ilm-hero-muted: #475569;
+    --ilm-hero-accent: #1a3c5e;
+    --ilm-hero-kicker: #a88b35;
+    --ilm-hero-border: rgba(26, 60, 94, 0.1);
+    --ilm-hero-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 4px 24px rgba(26, 60, 94, 0.08);
     background: var(--ilm-bg);
 }
 
@@ -29,19 +37,22 @@
 
 /* ----- Hero ----- */
 .page-ilmiy .ilm-hero {
-    background: linear-gradient(135deg, #1a3c5e 0%, #234a72 55%, #1a3c5e 100%);
-    color: #fff;
+    background: var(--ilm-hero-bg);
+    color: var(--ilm-hero-text);
     padding: clamp(2.5rem, 6vw, 3.5rem) 0;
     margin-bottom: 0;
     position: relative;
     overflow: hidden;
+    border-bottom: 1px solid var(--ilm-hero-border);
+    box-shadow: var(--ilm-hero-shadow);
+    transition: background var(--transition), color var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
 .page-ilmiy .ilm-hero::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 85% 20%, rgba(201, 168, 76, 0.18), transparent 45%);
+    background: var(--ilm-hero-glow);
     pointer-events: none;
 }
 
@@ -59,7 +70,7 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--ilm-gold);
+    color: var(--ilm-hero-kicker);
 }
 
 .page-ilmiy .ilm-hero__title {
@@ -68,7 +79,7 @@
     font-size: clamp(2rem, 5vw, 2.75rem);
     font-weight: 700;
     line-height: 1.15;
-    color: #ffffff;
+    color: var(--ilm-hero-text);
 }
 
 .page-ilmiy .ilm-hero__text {
@@ -76,7 +87,7 @@
     max-width: 36rem;
     font-size: 1rem;
     line-height: 1.65;
-    color: rgba(255, 255, 255, 0.88);
+    color: var(--ilm-hero-muted);
 }
 
 .page-ilmiy .ilm-hero__stats {
@@ -90,11 +101,12 @@
     align-items: baseline;
     gap: 0.35rem;
     font-size: 0.9375rem;
+    color: var(--ilm-hero-muted);
 }
 
 .page-ilmiy .ilm-hero__stat-num {
     font-weight: 700;
-    color: var(--ilm-gold);
+    color: var(--ilm-hero-accent);
     font-size: 1.125rem;
 }
 
@@ -590,6 +602,14 @@ body.dark-mode.page-ilmiy {
     --ilm-text: var(--text);
     --ilm-muted: var(--text-light);
     --ilm-navy: var(--primary-light);
+    --ilm-hero-bg: linear-gradient(135deg, #0b1220 0%, #1e293b 55%, #162032 100%);
+    --ilm-hero-glow: radial-gradient(circle at 85% 20%, rgba(201, 168, 76, 0.18), transparent 45%);
+    --ilm-hero-text: #f8fafc;
+    --ilm-hero-muted: rgba(255, 255, 255, 0.82);
+    --ilm-hero-accent: #c9a84c;
+    --ilm-hero-kicker: #c9a84c;
+    --ilm-hero-border: rgba(255, 255, 255, 0.08);
+    --ilm-hero-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 8px 32px rgba(0, 0, 0, 0.28);
 }
 
 body.dark-mode.page-ilmiy .filter-group select,
