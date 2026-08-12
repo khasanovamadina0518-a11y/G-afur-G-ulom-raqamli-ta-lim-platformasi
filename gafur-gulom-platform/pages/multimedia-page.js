@@ -19,6 +19,40 @@ function resolveAssetPath(path) {
     return (window.platformUrl || function (r) { return r; })(path);
 }
 
+function getDownloadFilename(path) {
+    const parts = String(path || '').split('/');
+    return parts[parts.length - 1] || 'video.mp4';
+}
+
+async function triggerVideoDownload(url, filename) {
+    if (!url) return;
+
+    try {
+        const response = await fetch(url, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const blob = await response.blob();
+        const objectUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = objectUrl;
+        link.download = filename;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(objectUrl);
+    } catch (error) {
+        console.error('Video yuklab olishda xatolik:', error);
+        const fallback = document.createElement('a');
+        fallback.href = url;
+        fallback.download = filename;
+        fallback.style.display = 'none';
+        document.body.appendChild(fallback);
+        fallback.click();
+        fallback.remove();
+    }
+}
+
 function formatVideoTime(seconds) {
     if (!Number.isFinite(seconds) || seconds < 0) return '00:00';
     const total = Math.floor(seconds);
@@ -90,8 +124,14 @@ function renderLesson() {
     }
 
     if (downloadBtn && kurs.downloadUrl) {
-        downloadBtn.href = resolveAssetPath(kurs.downloadUrl);
-        downloadBtn.setAttribute('download', '');
+        const downloadUrl = resolveAssetPath(kurs.downloadUrl);
+        const downloadFilename = getDownloadFilename(kurs.downloadUrl);
+        downloadBtn.href = downloadUrl;
+        downloadBtn.setAttribute('download', downloadFilename);
+        downloadBtn.onclick = function (event) {
+            event.preventDefault();
+            triggerVideoDownload(downloadUrl, downloadFilename);
+        };
     }
 }
 
