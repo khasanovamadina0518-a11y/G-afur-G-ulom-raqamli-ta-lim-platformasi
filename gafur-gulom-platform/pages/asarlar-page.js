@@ -8,11 +8,14 @@ let allQissalar = [];
 let filteredQissalar = [];
 let allTarjimalar = [];
 let filteredTarjimalar = [];
+let allTanlanganAsarlar = [];
+let filteredTanlanganAsarlar = [];
 let favorites = [];
 let currentPoemId = null;
 let displayLimit = 10;
 let qissalarDisplayLimit = 10;
 let tarjimalarDisplayLimit = 10;
+let tanlanganAsarlarDisplayLimit = 10;
 
 const BOOKMARK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
 
@@ -70,6 +73,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     await loadTarjimalar();
     initTarjimalarFilters();
     initTarjimalarLoadMore();
+    await loadTanlanganAsarlar();
+    initTanlanganAsarlarFilters();
+    initTanlanganAsarlarLoadMore();
     checkUrlParams();
 });
 
@@ -79,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 function checkUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
     const tab = urlParams.get('tab');
-    if (tab && ['sherlar', 'dostonlar', 'qissalar', 'tarjimalar'].includes(tab)) {
+    if (tab && ['sherlar', 'dostonlar', 'qissalar', 'tarjimalar', 'tanlangan-asarlar'].includes(tab)) {
         switchTab(tab, false);
     }
 
@@ -983,5 +989,140 @@ function openTarjimaRead(tarjimaId) {
     showNotification('Bu tarjima uchun hozircha elektron fayl mavjud emas.', 'error');
 }
 
+// ===================================
+// Tanlangan asarlar
+// ===================================
+
+async function loadTanlanganAsarlar() {
+    const container = document.getElementById('tanlangan-asarlar-grid');
+    if (!container) return;
+
+    try {
+        const dataUrl = (window.platformUrl || function (r) { return r; })('data/tanlangan-asarlar.json?v=20260813');
+        const res = await fetch(dataUrl, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        allTanlanganAsarlar = Array.isArray(data.tanlanganAsarlar) ? data.tanlanganAsarlar : [];
+
+        filteredTanlanganAsarlar = [...allTanlanganAsarlar];
+        displayTanlanganAsarlar();
+        updateTanlanganAsarlarResultsCount();
+    } catch (error) {
+        console.error('Tanlangan asarlarni yuklashda xatolik:', error);
+        container.innerHTML = `<p class="library-empty">Tanlangan asarlar yuklanmadi. Keyinroq qayta urinib ko'ring.</p>`;
+    }
+}
+
+function displayTanlanganAsarlar() {
+    const container = document.getElementById('tanlangan-asarlar-grid');
+    if (!container) return;
+
+    if (filteredTanlanganAsarlar.length === 0) {
+        const message = allTanlanganAsarlar.length === 0
+            ? 'Tanlangan asarlar hozircha qo\'shilmagan.'
+            : 'Hech qanday asar topilmadi. Qidiruvni o\'zgartiring.';
+        container.innerHTML = `<p class="library-empty">${message}</p>`;
+        updateTanlanganAsarlarLoadMoreButton();
+        return;
+    }
+
+    const visible = filteredTanlanganAsarlar.slice(0, tanlanganAsarlarDisplayLimit);
+
+    container.innerHTML = visible.map(asar => {
+        const category = asar.qisqaSarlavha || '';
+        const description = [asar.nashr, asar.joy, asar.yil].filter(Boolean).join(' · ');
+        const readAction = `<button class="library-item__read" type="button" onclick="openTanlanganRead(${asar.id})">O'qish</button>`;
+        const coverSrc = asar.rasm ? resolveAssetPath(asar.rasm) : '';
+
+        return buildLibraryItem({
+            id: asar.id,
+            title: asar.sarlavha,
+            category,
+            description,
+            coverVariant: getCoverVariant(asar.id + 8),
+            coverSrc,
+            readAction,
+            showBookmark: false
+        });
+    }).join('');
+
+    updateTanlanganAsarlarLoadMoreButton();
+}
+
+function updateTanlanganAsarlarLoadMoreButton() {
+    const btn = document.getElementById('tanlangan-asarlar-load-more-btn');
+    if (!btn) return;
+
+    if (filteredTanlanganAsarlar.length > tanlanganAsarlarDisplayLimit) {
+        btn.classList.remove('is-hidden');
+    } else {
+        btn.classList.add('is-hidden');
+    }
+}
+
+function initTanlanganAsarlarLoadMore() {
+    const btn = document.getElementById('tanlangan-asarlar-load-more-btn');
+    if (!btn) return;
+
+    btn.addEventListener('click', function() {
+        tanlanganAsarlarDisplayLimit += 10;
+        displayTanlanganAsarlar();
+    });
+}
+
+function initTanlanganAsarlarFilters() {
+    const searchInput = document.getElementById('tanlangan-asarlar-search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', applyTanlanganAsarlarFilters);
+    }
+}
+
+function applyTanlanganAsarlarFilters() {
+    const searchInput = document.getElementById('tanlangan-asarlar-search-input');
+    const searchQuery = (searchInput?.value || '').toLowerCase();
+
+    filteredTanlanganAsarlar = allTanlanganAsarlar.filter(asar => {
+        const searchBlob = [
+            asar.sarlavha,
+            asar.qisqaSarlavha,
+            asar.nashr
+        ].filter(Boolean).join(' ').toLowerCase();
+
+        return !searchQuery || searchBlob.includes(searchQuery);
+    });
+
+    tanlanganAsarlarDisplayLimit = 10;
+    displayTanlanganAsarlar();
+    updateTanlanganAsarlarResultsCount();
+}
+
+function updateTanlanganAsarlarResultsCount() {
+    const count = document.getElementById('tanlangan-asarlar-results-count');
+    if (!count) return;
+
+    if (allTanlanganAsarlar.length === 0) {
+        count.textContent = '0 ta asar topildi';
+        return;
+    }
+
+    count.textContent = `${allTanlanganAsarlar.length} ta asardan ${filteredTanlanganAsarlar.length} ta ko'rsatilmoqda`;
+}
+
+function openTanlanganRead(asarId) {
+    const asar = allTanlanganAsarlar.find(a => a.id === asarId);
+    if (!asar) return;
+
+    if (asar.pdf) {
+        openQissaPdfReader({
+            ...asar,
+            mavzu: asar.qisqaSarlavha ? [asar.qisqaSarlavha] : []
+        });
+        return;
+    }
+
+    showNotification('Bu asar uchun hozircha elektron fayl mavjud emas.', 'error');
+}
+
 window.openQissaRead = openQissaRead;
 window.openTarjimaRead = openTarjimaRead;
+window.openTanlanganRead = openTanlanganRead;
