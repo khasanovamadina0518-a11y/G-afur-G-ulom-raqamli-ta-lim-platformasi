@@ -1,0 +1,12 @@
+{
+  "tarjimalar": [
+    {
+      "id": 1,
+      "sarlavha": "Farhod va Shirin",
+      "muallif": "G'afur G'ulom",
+      "aslMuallif": "Alisher Navoiy",
+      "teglar": ["tarjima", "doston"],
+      "pdf": "assets/pdf/tarjimalar/farhod-va-shirin.pdf"
+    }
+  ]
+}

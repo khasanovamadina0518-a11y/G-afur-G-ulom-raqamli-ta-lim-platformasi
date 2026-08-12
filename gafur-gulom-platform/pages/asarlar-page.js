@@ -6,10 +6,13 @@ let allPoems = [];
 let filteredPoems = [];
 let allQissalar = [];
 let filteredQissalar = [];
+let allTarjimalar = [];
+let filteredTarjimalar = [];
 let favorites = [];
 let currentPoemId = null;
 let displayLimit = 10;
 let qissalarDisplayLimit = 10;
+let tarjimalarDisplayLimit = 10;
 
 const BOOKMARK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
 
@@ -64,6 +67,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     await loadQissalar();
     initQissalarFilters();
     initQissalarLoadMore();
+    await loadTarjimalar();
+    initTarjimalarFilters();
+    initTarjimalarLoadMore();
     checkUrlParams();
 });
 
@@ -73,7 +79,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 function checkUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
     const tab = urlParams.get('tab');
-    if (tab && ['sherlar', 'dostonlar', 'qissalar'].includes(tab)) {
+    if (tab && ['sherlar', 'dostonlar', 'qissalar', 'tarjimalar'].includes(tab)) {
         switchTab(tab, false);
     }
 
@@ -93,6 +99,13 @@ function checkUrlParams() {
         const id = parseInt(qissaId, 10);
         switchTab('qissalar', false);
         setTimeout(() => openQissaRead(id), 500);
+    }
+
+    const tarjimaId = urlParams.get('tarjima');
+    if (tarjimaId) {
+        const id = parseInt(tarjimaId, 10);
+        switchTab('tarjimalar', false);
+        setTimeout(() => openTarjimaRead(id), 500);
     }
 }
 
@@ -826,4 +839,149 @@ function openQissaModal(qissaId) {
     document.body.style.overflow = 'hidden';
 }
 
+// ===================================
+// Tarjimalar
+// ===================================
+
+function buildTarjimaTags(teglar) {
+    if (!Array.isArray(teglar) || teglar.length === 0) return '';
+    const tags = teglar.map(t => `<span class="library-item__tag">${t}</span>`).join('');
+    return `<div class="library-item__tags">${tags}</div>`;
+}
+
+async function loadTarjimalar() {
+    const container = document.getElementById('tarjimalar-grid');
+    if (!container) return;
+
+    try {
+        const dataUrl = (window.platformUrl || function (r) { return r; })('data/tarjimalar.json?v=20260812');
+        const res = await fetch(dataUrl, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        allTarjimalar = Array.isArray(data.tarjimalar) ? data.tarjimalar : [];
+
+        filteredTarjimalar = [...allTarjimalar];
+        displayTarjimalar();
+        updateTarjimalarResultsCount();
+    } catch (error) {
+        console.error('Tarjimalarni yuklashda xatolik:', error);
+        container.innerHTML = `<p class="library-empty">Tarjimalar yuklanmadi. Keyinroq qayta urinib ko'ring.</p>`;
+    }
+}
+
+function displayTarjimalar() {
+    const container = document.getElementById('tarjimalar-grid');
+    if (!container) return;
+
+    if (filteredTarjimalar.length === 0) {
+        const message = allTarjimalar.length === 0
+            ? 'Tarjimalar hozircha qo\'shilmagan.'
+            : 'Hech qanday tarjima topilmadi. Qidiruvni o\'zgartiring.';
+        container.innerHTML = `<p class="library-empty">${message}</p>`;
+        updateTarjimalarLoadMoreButton();
+        return;
+    }
+
+    const visible = filteredTarjimalar.slice(0, tarjimalarDisplayLimit);
+
+    container.innerHTML = visible.map(tarjima => {
+        const author = tarjima.muallif || "G'afur G'ulom";
+        const asl = tarjima.aslMuallif ? ` · ${tarjima.aslMuallif}` : '';
+        const category = `${author} · Tarjima${asl}${tarjima.yil ? ` · ${tarjima.yil}` : ''}`;
+        const readAction = `<button class="library-item__read" type="button" onclick="openTarjimaRead(${tarjima.id})">O'qish</button>`;
+        const coverSrc = tarjima.rasm ? resolveAssetPath(tarjima.rasm) : '';
+
+        return buildLibraryItem({
+            id: tarjima.id,
+            title: tarjima.sarlavha,
+            category,
+            description: tarjima.qisqa || '',
+            coverVariant: getCoverVariant(tarjima.id + 6),
+            coverSrc,
+            readAction,
+            showBookmark: false,
+            tagsHtml: buildTarjimaTags(tarjima.teglar)
+        });
+    }).join('');
+
+    updateTarjimalarLoadMoreButton();
+}
+
+function updateTarjimalarLoadMoreButton() {
+    const btn = document.getElementById('tarjimalar-load-more-btn');
+    if (!btn) return;
+
+    if (filteredTarjimalar.length > tarjimalarDisplayLimit) {
+        btn.classList.remove('is-hidden');
+    } else {
+        btn.classList.add('is-hidden');
+    }
+}
+
+function initTarjimalarLoadMore() {
+    const btn = document.getElementById('tarjimalar-load-more-btn');
+    if (!btn) return;
+
+    btn.addEventListener('click', function() {
+        tarjimalarDisplayLimit += 10;
+        displayTarjimalar();
+    });
+}
+
+function initTarjimalarFilters() {
+    const searchInput = document.getElementById('tarjimalar-search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', applyTarjimalarFilters);
+    }
+}
+
+function applyTarjimalarFilters() {
+    const searchInput = document.getElementById('tarjimalar-search-input');
+    const searchQuery = (searchInput?.value || '').toLowerCase();
+
+    filteredTarjimalar = allTarjimalar.filter(tarjima => {
+        const searchBlob = [
+            tarjima.sarlavha,
+            tarjima.muallif,
+            tarjima.aslMuallif,
+            tarjima.qisqa,
+            ...(Array.isArray(tarjima.teglar) ? tarjima.teglar : [])
+        ].filter(Boolean).join(' ').toLowerCase();
+
+        return !searchQuery || searchBlob.includes(searchQuery);
+    });
+
+    tarjimalarDisplayLimit = 10;
+    displayTarjimalar();
+    updateTarjimalarResultsCount();
+}
+
+function updateTarjimalarResultsCount() {
+    const count = document.getElementById('tarjimalar-results-count');
+    if (!count) return;
+
+    if (allTarjimalar.length === 0) {
+        count.textContent = '0 ta tarjima topildi';
+        return;
+    }
+
+    count.textContent = `${allTarjimalar.length} ta tarjimadan ${filteredTarjimalar.length} ta ko'rsatilmoqda`;
+}
+
+function openTarjimaRead(tarjimaId) {
+    const tarjima = allTarjimalar.find(t => t.id === tarjimaId);
+    if (!tarjima) return;
+
+    if (tarjima.pdf) {
+        openQissaPdfReader({
+            ...tarjima,
+            mavzu: tarjima.teglar || tarjima.mavzu || []
+        });
+        return;
+    }
+
+    showNotification('Bu tarjima uchun hozircha elektron fayl mavjud emas.', 'error');
+}
+
 window.openQissaRead = openQissaRead;
+window.openTarjimaRead = openTarjimaRead;
