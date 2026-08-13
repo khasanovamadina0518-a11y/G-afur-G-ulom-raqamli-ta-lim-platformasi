@@ -188,12 +188,25 @@
         </div>
     </div>
 
+    <div class="modal tl-pdf-modal" id="tl-pdf-modal" aria-hidden="true">
+        <div class="modal-content tl-pdf-modal__content">
+            <button class="modal-close" type="button" id="tl-pdf-close" aria-label="Yopish">×</button>
+            <h2 class="tl-pdf-modal__title" id="tl-pdf-title"></h2>
+            <div class="tl-pdf-modal__frame-wrap">
+                <iframe class="tl-pdf-modal__frame" id="tl-pdf-frame" title="PDF o'qish"></iframe>
+            </div>
+            <p class="tl-pdf-modal__hint">
+                <a class="tl-pdf-modal__external" id="tl-pdf-external" href="#" target="_blank" rel="noopener noreferrer">PDF ni yangi oynada ochish</a>
+            </p>
+        </div>
+    </div>
+
     <div id="footer-container"></div>
 
     <script src="components/header.js"></script>
     <script src="components/footer.js"></script>
     <script src="assets/js/data.js"></script>
     <script src="assets/js/app.js"></script>
-    <script src="pages/talim-page.js?v=2"></script>
+    <script src="pages/talim-page.js?v=3"></script>
 </body>
 </html>

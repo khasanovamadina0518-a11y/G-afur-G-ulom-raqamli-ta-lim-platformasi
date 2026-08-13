@@ -143,6 +143,17 @@ const darsRejalari = {
     ]
 };
 
+const oquvMateriallari = {
+    6: [
+        {
+            sarlavha: "G'afur G'ulom",
+            sinf: '6-sinf',
+            qisqa: "6-sinf darsligida G'afur G'ulomga oid materiallar",
+            pdf: 'assets/pdf/talim/6-sinf-gafur-gulom.pdf'
+        }
+    ]
+};
+
 // ===================================
 // HELPERS
 // ===================================
@@ -153,6 +164,11 @@ function escapeHtml(str) {
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
+}
+
+function resolveAssetPath(path) {
+    if (!path || path === '#') return '';
+    return (window.platformUrl || function (r) { return r; })(path);
 }
 
 function getTotalLessons() {
@@ -371,9 +387,9 @@ function loadLessons(classNum) {
                 </div>
             </article>
         `;
-    }).join('');
+    }).join('') + renderClassMaterials(classNum);
 
-    container.querySelectorAll('.lesson-card').forEach(card => {
+    container.querySelectorAll('.lesson-card[data-lesson]').forEach(card => {
         const cls = card.dataset.class;
         const title = card.dataset.lesson;
 
@@ -385,6 +401,76 @@ function loadLessons(classNum) {
             showLessonModal(cls, title);
         });
     });
+}
+
+function renderClassMaterials(classNum) {
+    const materials = oquvMateriallari[classNum] || [];
+    if (!materials.length) return '';
+
+    return materials.map(material => `
+        <article class="lesson-card lesson-card--material" data-class="${escapeHtml(classNum)}" data-material="${escapeHtml(material.sarlavha)}">
+            <h3>${escapeHtml(material.sarlavha)}</h3>
+            <p class="lesson-card__meta"><strong>Sinf:</strong> ${escapeHtml(material.sinf)}</p>
+            <p class="lesson-card__meta">${escapeHtml(material.qisqa)}</p>
+            <div class="lesson-card__actions">
+                <button class="tl-btn-primary tl-pdf-btn" type="button" data-pdf="${escapeHtml(material.pdf)}" data-title="${escapeHtml(material.sarlavha)}">PDFni o'qish</button>
+            </div>
+        </article>
+    `).join('');
+}
+
+function openTalimPdfModal(title, pdfPath) {
+    if (!pdfPath || pdfPath === '#') return;
+
+    const pdfUrl = resolveAssetPath(pdfPath);
+    const modal = document.getElementById('tl-pdf-modal');
+    const frame = document.getElementById('tl-pdf-frame');
+    const titleEl = document.getElementById('tl-pdf-title');
+    const external = document.getElementById('tl-pdf-external');
+
+    if (!modal || !frame || !titleEl) return;
+
+    titleEl.textContent = title || '';
+    frame.src = `${pdfUrl}#page=1`;
+    if (external) {
+        external.href = pdfUrl;
+    }
+
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeTalimPdfModal() {
+    const modal = document.getElementById('tl-pdf-modal');
+    const frame = document.getElementById('tl-pdf-frame');
+
+    if (!modal) return;
+
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    if (frame) frame.src = '';
+    document.body.style.overflow = '';
+}
+
+function initTalimPdfModal() {
+    document.getElementById('tl-pdf-close')?.addEventListener('click', closeTalimPdfModal);
+
+    document.getElementById('lessons-container')?.addEventListener('click', function(event) {
+        const btn = event.target.closest('.tl-pdf-btn');
+        if (!btn) return;
+
+        openTalimPdfModal(btn.dataset.title, btn.dataset.pdf);
+    });
+
+    const modal = document.getElementById('tl-pdf-modal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeTalimPdfModal();
+            }
+        });
+    }
 }
 
 function showLessonModal(classNum, sarlavha) {
@@ -784,6 +870,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     loadLessons(activeClass);
+    initTalimPdfModal();
 
     try {
         const response = await fetch((window.platformUrl || function (r) { return r; })('data/quiz.json'));
