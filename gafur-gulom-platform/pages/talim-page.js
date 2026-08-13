@@ -151,6 +151,14 @@ const oquvMateriallari = {
             qisqa: "6-sinf darsligida G'afur G'ulomga oid materiallar",
             pdf: 'assets/pdf/talim/6-sinf-gafur-gulom.pdf'
         }
+    ],
+    8: [
+        {
+            sarlavha: "G'afur G'ulom",
+            sinf: '8-sinf',
+            qisqa: "8-sinf darsligida G'afur G'ulomga oid materiallar",
+            pdf: 'assets/pdf/talim/8-sinf-gafur-gulom.pdf'
+        }
     ]
 };
 
@@ -404,7 +412,7 @@ function loadLessons(classNum) {
 }
 
 function renderClassMaterials(classNum) {
-    const materials = oquvMateriallari[classNum] || [];
+    const materials = oquvMateriallari[String(classNum)] || [];
     if (!materials.length) return '';
 
     return materials.map(material => `
