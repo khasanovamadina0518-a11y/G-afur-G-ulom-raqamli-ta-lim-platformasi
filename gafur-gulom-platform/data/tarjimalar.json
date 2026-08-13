@@ -7,6 +7,15 @@
       "aslMuallif": "Alisher Navoiy",
       "teglar": ["tarjima", "doston"],
       "pdf": "assets/pdf/tarjimalar/farhod-va-shirin.pdf"
+    },
+    {
+      "id": 2,
+      "sarlavha": "Yodgor",
+      "muallif": "M. Mardiyeva, S. Azamatova",
+      "aslMuallif": "G'afur G'ulom",
+      "teglar": ["tarjima", "qissa", "ingliz"],
+      "yil": 2025,
+      "pdf": "assets/pdf/tarjimalar/yodgor-inglizcha-tarjima-2025.pdf"
     }
   ]
 }
