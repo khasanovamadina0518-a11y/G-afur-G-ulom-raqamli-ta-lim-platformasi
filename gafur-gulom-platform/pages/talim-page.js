@@ -13,6 +13,7 @@ let wrongAnswers = [];
 let timerInterval = null;
 let timeLeft = 60;
 let selectedDifficulty = 'oson';
+let selectedQuizClass = '6';
 let userName = '';
 let activeClass = '6';
 
@@ -182,25 +183,52 @@ function resolveAssetPath(path) {
 }
 
 function getTotalLessons() {
-    return Object.values(darsRejalari).reduce((sum, lessons) => sum + lessons.length, 0);
+    return MODULE_CLASSES.reduce((sum, cls) => sum + (darsRejalari[cls]?.length || 0), 0);
+}
+
+function filterQuestionsByDifficulty(pool, difficulty) {
+    return pool.filter(q => q.daraja === difficulty || (difficulty === 'orta' && q.daraja === 'o\'rta'));
+}
+
+function filterQuestionsForQuiz(classNum) {
+    return quizData.filter(q => q.sinf === 'umumiy' || String(q.sinf) === String(classNum));
+}
+
+function filterQuestionsForBank(classKey) {
+    if (classKey === 'umumiy') {
+        return quizData.filter(q => q.sinf === 'umumiy');
+    }
+    return quizData.filter(q => String(q.sinf) === String(classKey));
 }
 
 function getProgress() {
     try {
-        return JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {
-            completedLessons: [],
-            lastClass: '5',
-            lastLesson: '',
-            quizBest: 0
-        };
+        const data = JSON.parse(localStorage.getItem(PROGRESS_KEY));
+        if (data && typeof data === 'object') {
+            return {
+                completedLessons: Array.isArray(data.completedLessons) ? data.completedLessons : [],
+                lastClass: data.lastClass || '6',
+                lastLesson: data.lastLesson || '',
+                quizBest: Number(data.quizBest) || 0
+            };
+        }
     } catch {
-        return { completedLessons: [], lastClass: '5', lastLesson: '', quizBest: 0 };
+        /* localStorage xatosi — default qiymat */
     }
+    return {
+        completedLessons: [],
+        lastClass: '6',
+        lastLesson: '',
+        quizBest: 0
+    };
 }
 
 function saveProgress(data) {
-    localStorage.setItem(PROGRESS_KEY, JSON.stringify(data));
-    renderProgressCard();
+    try {
+        localStorage.setItem(PROGRESS_KEY, JSON.stringify(data));
+    } catch {
+        /* localStorage xatosi — sahifa ishlashda davom etadi */
+    }
 }
 
 function lessonKey(classNum, sarlavha) {
@@ -224,15 +252,25 @@ function renderHeroStats() {
     const el = document.getElementById('tl-hero-stats');
     if (!el) return;
 
-    const classCount = Object.keys(darsRejalari).length;
+    const classCount = MODULE_CLASSES.length;
     const lessonCount = getTotalLessons();
     const quizCount = quizData.length || '—';
 
-    el.innerHTML = `
-        <div class="tl-hero__stat"><span class="tl-hero__stat-num">${classCount}</span> sinf</div>
-        <div class="tl-hero__stat"><span class="tl-hero__stat-num">${lessonCount}</span> dars</div>
-        <div class="tl-hero__stat"><span class="tl-hero__stat-num">${quizCount}</span> viktorina savoli</div>
-    `;
+    const chips = [
+        { num: classCount, label: 'sinf', icon: '🎓' },
+        { num: lessonCount, label: 'dars', icon: '📚' },
+        { num: quizCount, label: 'viktorina savoli', icon: '✦' }
+    ];
+
+    el.innerHTML = chips.map(chip => `
+        <div class="tl-stat-chip">
+            <span class="tl-stat-chip__icon" aria-hidden="true">${chip.icon}</span>
+            <div class="tl-stat-chip__body">
+                <span class="tl-stat-chip__num">${chip.num}</span>
+                <span class="tl-stat-chip__label">${chip.label}</span>
+            </div>
+        </div>
+    `).join('');
 }
 
 function renderCourseOverview() {
@@ -241,11 +279,11 @@ function renderCourseOverview() {
 
     el.innerHTML = `
         <p class="tl-overview__text">
-            Ushbu kurs G'afur G'ulom ijodini 5–11-sinflar uchun bosqichma-bosqich o'rgatadi.
-            Dars rejalar, viktorina va savol banki o'qituvchi hamda o'quvchi uchun tayyorlangan.
+            Ushbu kurs G'afur G'ulom ijodini 6 va 8-sinflar uchun bosqichma-bosqich o'rgatadi.
+            Dars rejalar, PDF materiallar, viktorina va savol banki o'qituvchi hamda o'quvchi uchun tayyorlangan.
         </p>
         <div class="tl-overview__meta">
-            <span><strong>7</strong> sinf darajasi</span>
+            <span><strong>2</strong> sinf darajasi</span>
             <span><strong>${getTotalLessons()}</strong> dars rejasi</span>
             <span><strong>3</strong> bo'lim (Dars, Viktorina, Bank)</span>
         </div>
@@ -288,33 +326,10 @@ function renderAssignments() {
     `).join('');
 }
 
-function renderProgressCard() {
-    const progress = getProgress();
-    const total = getTotalLessons();
-    const done = progress.completedLessons.length;
-    const pct = total ? Math.round((done / total) * 100) : 0;
-
-    const pctEl = document.getElementById('tl-progress-pct');
-    const fillEl = document.getElementById('tl-progress-fill');
-    const labelEl = document.getElementById('tl-progress-label');
-    const barEl = fillEl?.closest('[role="progressbar"]');
-
-    if (pctEl) pctEl.textContent = `${pct}%`;
-    if (fillEl) fillEl.style.width = `${pct}%`;
-    if (barEl) barEl.setAttribute('aria-valuenow', String(pct));
-
-    if (labelEl) {
-        if (progress.lastLesson) {
-            labelEl.textContent = `Oxirgi: ${progress.lastClass}-sinf — ${progress.lastLesson}`;
-        } else if (progress.quizBest >= 70) {
-            labelEl.textContent = `Viktorina eng yaxshi natija: ${progress.quizBest}%`;
-        } else {
-            labelEl.textContent = 'Hali dars boshlanmagan';
-        }
-    }
-}
+let activeTab = 'dars';
 
 function switchTab(tabName) {
+    activeTab = tabName;
     document.querySelectorAll('.tab-btn').forEach(b => {
         b.classList.toggle('active', b.dataset.tab === tabName);
     });
@@ -337,96 +352,114 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     });
 });
 
-document.getElementById('tl-go-quiz-btn')?.addEventListener('click', () => switchTab('quiz'));
-
-document.getElementById('tl-continue-btn')?.addEventListener('click', () => {
-    const progress = getProgress();
-    if (progress.lastClass && progress.lastLesson && MODULE_CLASSES.includes(String(progress.lastClass))) {
-        activeClass = progress.lastClass;
-        document.querySelectorAll('.class-btn').forEach(b => {
-            b.classList.toggle('active', b.dataset.class === activeClass);
-        });
-        loadLessons(activeClass);
-        showLessonModal(activeClass, progress.lastLesson);
-        return;
-    }
-    switchTab('quiz');
-});
-
 // ===================================
-// CLASS SELECTOR
+// GRADE META
 // ===================================
 
-document.querySelectorAll('.class-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        document.querySelectorAll('.class-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        activeClass = this.dataset.class;
-        loadLessons(activeClass);
-    });
-});
-
-function loadLessons(classNum) {
-    const container = document.getElementById('lessons-container');
-    const lessons = darsRejalari[classNum];
-    const progress = getProgress();
-
-    if (!container) return;
-
-    if (!lessons) {
-        container.innerHTML = '<p class="tl-empty">Ushbu sinf uchun dars rejalari hali qo\'shilmagan.</p>';
-        return;
+const GRADE_META = {
+    6: {
+        title: '6-sinf darslari',
+        desc: "6-sinf o'quvchilari uchun G'afur G'ulom hayoti va ijodi bo'yicha dars materiallari.",
+        theme: '6'
+    },
+    8: {
+        title: '8-sinf darslari',
+        desc: "8-sinf o'quvchilari uchun G'afur G'ulom hayoti va ijodi bo'yicha dars materiallari.",
+        theme: '8'
     }
+};
 
-    container.innerHTML = lessons.map((lesson, idx) => {
-        const key = lessonKey(classNum, lesson.sarlavha);
-        const isDone = progress.completedLessons.includes(key);
+function renderLessonRow(classNum, lesson, index, progress) {
+    const key = lessonKey(classNum, lesson.sarlavha);
+    const isDone = progress.completedLessons.includes(key);
+    const theme = GRADE_META[classNum]?.theme || '6';
 
-        return `
-            <article class="lesson-card" data-class="${escapeHtml(classNum)}" data-lesson="${escapeHtml(lesson.sarlavha)}">
-                <h3>${escapeHtml(lesson.sarlavha)}${isDone ? ' <span style="font-size:0.75rem;color:#059669;">✓</span>' : ''}</h3>
-                <p class="lesson-card__meta"><strong>Maqsad:</strong> ${escapeHtml(lesson.maqsad)}</p>
-                <p class="lesson-card__meta"><strong>Vaqt:</strong> ${escapeHtml(lesson.vaqt)}</p>
-                <div class="lesson-card__meta"><strong>Mavzular:</strong></div>
-                <ul class="lesson-card__topics">
-                    ${lesson.mavzular.map(m => `<li>${escapeHtml(m)}</li>`).join('')}
+    return `
+        <article class="tl-lesson-row tl-lesson-row--${theme}" data-class="${escapeHtml(classNum)}" data-lesson="${escapeHtml(lesson.sarlavha)}">
+            <div class="tl-lesson-row__num">${index + 1}</div>
+            <div class="tl-lesson-row__body">
+                <h3 class="tl-lesson-row__title">
+                    ${escapeHtml(lesson.sarlavha)}
+                    ${isDone ? '<span class="tl-lesson-row__done" aria-label="Tugallangan">✓</span>' : ''}
+                </h3>
+                <ul class="tl-lesson-row__meta">
+                    <li><span class="tl-lesson-row__icon" aria-hidden="true">◎</span><span><strong>Maqsad:</strong> ${escapeHtml(lesson.maqsad)}</span></li>
+                    <li><span class="tl-lesson-row__icon" aria-hidden="true">◷</span><span><strong>Vaqt:</strong> ${escapeHtml(lesson.vaqt)}</span></li>
+                    <li><span class="tl-lesson-row__icon" aria-hidden="true">☰</span><span><strong>Mavzular:</strong> ${escapeHtml(lesson.mavzular.join(', '))}</span></li>
                 </ul>
-                <div class="lesson-card__actions">
-                    <button class="tl-btn-outline tl-download-btn" type="button" data-action="download">Yuklab olish</button>
-                    <button class="tl-btn-primary tl-view-btn" type="button" data-action="view">Ko'rish</button>
-                </div>
-            </article>
-        `;
-    }).join('') + renderClassMaterials(classNum);
+            </div>
+            <button class="tl-lesson-row__btn tl-view-btn" type="button" data-action="view">Ko'rish →</button>
+        </article>
+    `;
+}
 
-    container.querySelectorAll('.lesson-card[data-lesson]').forEach(card => {
-        const cls = card.dataset.class;
-        const title = card.dataset.lesson;
+function renderMaterialRow(classNum, material) {
+    const theme = GRADE_META[classNum]?.theme || '6';
 
-        card.querySelector('[data-action="download"]')?.addEventListener('click', () => {
-            alert('Tez orada qo\'shiladi');
-        });
+    return `
+        <article class="tl-lesson-row tl-lesson-row--${theme} tl-lesson-row--material" data-class="${escapeHtml(classNum)}" data-material="${escapeHtml(material.sarlavha)}">
+            <div class="tl-lesson-row__num">PDF</div>
+            <div class="tl-lesson-row__body">
+                <h3 class="tl-lesson-row__title">${escapeHtml(material.sarlavha)} — ${escapeHtml(material.sinf)}</h3>
+                <ul class="tl-lesson-row__meta">
+                    <li><span class="tl-lesson-row__icon" aria-hidden="true">☰</span><span>${escapeHtml(material.qisqa)}</span></li>
+                </ul>
+            </div>
+            <button class="tl-lesson-row__btn tl-pdf-btn" type="button" data-pdf="${escapeHtml(material.pdf)}" data-title="${escapeHtml(material.sarlavha)}">PDFni o'qish →</button>
+        </article>
+    `;
+}
 
-        card.querySelector('[data-action="view"]')?.addEventListener('click', () => {
-            showLessonModal(cls, title);
+function renderGradeSection(classNum, progress) {
+    const lessons = darsRejalari[classNum];
+    const meta = GRADE_META[classNum];
+    if (!lessons || !meta) return '';
+
+    const rows = lessons.map((lesson, idx) => renderLessonRow(classNum, lesson, idx, progress)).join('');
+    const materials = (oquvMateriallari[String(classNum)] || [])
+        .map(m => renderMaterialRow(classNum, m))
+        .join('');
+
+    return `
+        <section class="tl-grade-section" id="tl-grade-${escapeHtml(classNum)}">
+            <header class="tl-grade-section__head">
+                <h2 class="tl-grade-section__title tl-grade-section__title--${meta.theme}">${escapeHtml(meta.title)}</h2>
+                <p class="tl-grade-section__desc">${escapeHtml(meta.desc)}</p>
+            </header>
+            <div class="tl-lesson-list">
+                ${rows}
+                ${materials}
+            </div>
+        </section>
+    `;
+}
+
+function bindLessonRowEvents(container) {
+    container.querySelectorAll('.tl-view-btn[data-action="view"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const row = btn.closest('[data-lesson]');
+            if (!row) return;
+            showLessonModal(row.dataset.class, row.dataset.lesson);
         });
     });
 }
 
-function renderClassMaterials(classNum) {
-    const materials = oquvMateriallari[String(classNum)] || [];
-    if (!materials.length) return '';
+function loadLessons() {
+    const container = document.getElementById('lessons-container');
+    if (!container) return;
 
-    return materials.map(material => `
-        <article class="lesson-card lesson-card--material" data-class="${escapeHtml(classNum)}" data-material="${escapeHtml(material.sarlavha)}">
-            <h3>${escapeHtml(material.sarlavha)}</h3>
-            <p class="lesson-card__meta"><strong>Sinf:</strong> ${escapeHtml(material.sinf)}</p>
-            <p class="lesson-card__meta">${escapeHtml(material.qisqa)}</p>
-            <div class="lesson-card__actions">
-                <button class="tl-btn-primary tl-pdf-btn" type="button" data-pdf="${escapeHtml(material.pdf)}" data-title="${escapeHtml(material.sarlavha)}">PDFni o'qish</button>
-            </div>
-        </article>
-    `).join('');
+    const progress = getProgress();
+    container.innerHTML = MODULE_CLASSES
+        .map(classNum => renderGradeSection(classNum, progress))
+        .join('');
+
+    bindLessonRowEvents(container);
+}
+
+function loadLessonsForClass(classNum) {
+    activeClass = String(classNum);
+    loadLessons();
+    document.getElementById(`tl-grade-${classNum}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function openTalimPdfModal(title, pdfPath) {
@@ -490,9 +523,10 @@ function showLessonModal(classNum, sarlavha) {
     if (!progress.completedLessons.includes(key)) {
         progress.completedLessons.push(key);
     }
-    progress.lastClass = classNum;
+    progress.lastClass = String(classNum);
     progress.lastLesson = sarlavha;
     saveProgress(progress);
+    loadLessons();
 
     alert(`${classNum}-sinf: "${sarlavha}" dars rejasi\n\nTo'liq versiya tez orada qo'shiladi!`);
 }
@@ -506,6 +540,14 @@ document.querySelectorAll('.difficulty-btn').forEach(btn => {
         document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
         selectedDifficulty = this.dataset.level;
+    });
+});
+
+document.querySelectorAll('.quiz-class-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.quiz-class-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        selectedQuizClass = this.dataset.quizClass;
     });
 });
 
@@ -526,10 +568,16 @@ function startQuiz() {
     score = 0;
     wrongAnswers = [];
 
-    const filtered = quizData.filter(q => q.daraja === selectedDifficulty || (selectedDifficulty === 'orta' && q.daraja === 'o\'rta'));
+    const classPool = filterQuestionsForQuiz(selectedQuizClass);
+    const filtered = filterQuestionsByDifficulty(classPool, selectedDifficulty);
 
     if (filtered.length < 10) {
-        alert('Tanlangan daraja uchun yetarli savollar yo\'q!');
+        const classLabel = `${selectedQuizClass}-sinf`;
+        const diffLabel = selectedDifficulty === 'orta' ? "o'rta" : selectedDifficulty;
+        alert(
+            `${classLabel} va "${diffLabel}" daraja uchun faqat ${filtered.length} ta savol mavjud (viktorina uchun 10 ta kerak).\n\n` +
+            `Boshqa daraja yoki sinfni tanlang.`
+        );
         return;
     }
 
@@ -785,30 +833,30 @@ function loadSavolBanki() {
         return;
     }
 
-    const oson = quizData.filter(q => q.daraja === 'oson');
-    const orta = quizData.filter(q => q.daraja === 'orta' || q.daraja === 'o\'rta');
-    const qiyin = quizData.filter(q => q.daraja === 'qiyin');
+    const count6 = filterQuestionsForBank('6').length;
+    const count8 = filterQuestionsForBank('8').length;
+    const countUmumiy = filterQuestionsForBank('umumiy').length;
 
     container.innerHTML = `
         <article class="lesson-card">
-            <h3>😊 Oson darajadagi savollar</h3>
-            <p class="lesson-card__meta">Jami: ${oson.length} ta savol</p>
+            <h3>6-sinf savollari</h3>
+            <p class="lesson-card__meta">Jami: ${count6} ta savol</p>
             <div class="lesson-card__actions">
-                <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankQuestions('oson')">Ko'rish</button>
+                <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankLevels('6')">Ko'rish</button>
             </div>
         </article>
         <article class="lesson-card">
-            <h3>🤔 O'rta darajadagi savollar</h3>
-            <p class="lesson-card__meta">Jami: ${orta.length} ta savol</p>
+            <h3>8-sinf savollari</h3>
+            <p class="lesson-card__meta">Jami: ${count8} ta savol</p>
             <div class="lesson-card__actions">
-                <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankQuestions('orta')">Ko'rish</button>
+                <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankLevels('8')">Ko'rish</button>
             </div>
         </article>
         <article class="lesson-card">
-            <h3>🔥 Qiyin darajadagi savollar</h3>
-            <p class="lesson-card__meta">Jami: ${qiyin.length} ta savol</p>
+            <h3>Umumiy savollar</h3>
+            <p class="lesson-card__meta">Jami: ${countUmumiy} ta savol</p>
             <div class="lesson-card__actions">
-                <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankQuestions('qiyin')">Ko'rish</button>
+                <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankLevels('umumiy')">Ko'rish</button>
             </div>
         </article>
         <article class="lesson-card">
@@ -821,13 +869,53 @@ function loadSavolBanki() {
     `;
 }
 
-function showBankQuestions(daraja) {
-    const filtered = quizData.filter(q => q.daraja === daraja || (daraja === 'orta' && q.daraja === 'o\'rta'));
+function showBankLevels(classKey) {
+    const pool = filterQuestionsForBank(classKey);
+    const label = classKey === 'umumiy' ? 'Umumiy' : `${classKey}-sinf`;
+    const oson = filterQuestionsByDifficulty(pool, 'oson');
+    const orta = filterQuestionsByDifficulty(pool, 'orta');
+    const qiyin = filterQuestionsByDifficulty(pool, 'qiyin');
+
+    document.getElementById('bank-container').innerHTML = `
+        <div class="tl-bank-detail">
+            <h2 class="tl-card__title">${escapeHtml(label)} savollari (${pool.length} ta)</h2>
+            <div class="lessons-grid" style="margin-top: 1rem;">
+                <article class="lesson-card">
+                    <h3>😊 Oson darajadagi savollar</h3>
+                    <p class="lesson-card__meta">Jami: ${oson.length} ta savol</p>
+                    <div class="lesson-card__actions">
+                        <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankQuestions('${classKey}', 'oson')">Ko'rish</button>
+                    </div>
+                </article>
+                <article class="lesson-card">
+                    <h3>🤔 O'rta darajadagi savollar</h3>
+                    <p class="lesson-card__meta">Jami: ${orta.length} ta savol</p>
+                    <div class="lesson-card__actions">
+                        <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankQuestions('${classKey}', 'orta')">Ko'rish</button>
+                    </div>
+                </article>
+                <article class="lesson-card">
+                    <h3>🔥 Qiyin darajadagi savollar</h3>
+                    <p class="lesson-card__meta">Jami: ${qiyin.length} ta savol</p>
+                    <div class="lesson-card__actions">
+                        <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankQuestions('${classKey}', 'qiyin')">Ko'rish</button>
+                    </div>
+                </article>
+            </div>
+            <button class="tl-btn-outline" type="button" onclick="loadSavolBanki()" style="margin-top: 1rem;">← Orqaga</button>
+        </div>
+    `;
+}
+
+function showBankQuestions(classKey, daraja) {
+    const pool = filterQuestionsForBank(classKey);
+    const filtered = filterQuestionsByDifficulty(pool, daraja);
+    const classLabel = classKey === 'umumiy' ? 'Umumiy' : `${classKey}-sinf`;
     const label = daraja.charAt(0).toUpperCase() + daraja.slice(1);
 
     let html = `
         <div class="tl-bank-detail">
-            <h2 class="tl-card__title">${escapeHtml(label)} darajadagi savollar (${filtered.length} ta)</h2>
+            <h2 class="tl-card__title">${escapeHtml(classLabel)} — ${escapeHtml(label)} darajadagi savollar (${filtered.length} ta)</h2>
             <div style="margin-top: 1rem;">
     `;
 
@@ -849,7 +937,7 @@ function showBankQuestions(daraja) {
 
     html += `
             </div>
-            <button class="tl-btn-outline" type="button" onclick="loadSavolBanki()" style="margin-top: 1rem;">← Orqaga</button>
+            <button class="tl-btn-outline" type="button" onclick="showBankLevels('${classKey}')" style="margin-top: 1rem;">← Orqaga</button>
         </div>
     `;
 
@@ -869,17 +957,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     renderLearningPath();
     renderMaterials();
     renderAssignments();
-    renderProgressCard();
-
-    const progress = getProgress();
-    if (progress.lastClass && MODULE_CLASSES.includes(String(progress.lastClass))) {
-        activeClass = progress.lastClass;
-        document.querySelectorAll('.class-btn').forEach(b => {
-            b.classList.toggle('active', b.dataset.class === activeClass);
-        });
-    }
-
-    loadLessons(activeClass);
+    loadLessons();
     initTalimPdfModal();
 
     try {
@@ -905,6 +983,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 window.TalimMarkaz = {
     loadLessons,
+    loadLessonsForClass,
     switchTab,
     getProgress,
     renderHeroStats

@@ -6,7 +6,8 @@
       "variantlar": ["1885", "1903", "1892", "1900"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": 6
     },
     {
       "id": 2,
@@ -14,7 +15,8 @@
       "variantlar": ["Shum bola", "Mehrobdan chayon", "Ikki eshik orasi", "Sinchalak"],
       "togri": 0,
       "daraja": "oson",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": 8
     },
     {
       "id": 3,
@@ -22,7 +24,8 @@
       "variantlar": ["Samarqand", "Buxoro", "Toshkent", "Farg'ona"],
       "togri": 2,
       "daraja": "oson",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": 6
     },
     {
       "id": 4,
@@ -30,7 +33,8 @@
       "variantlar": ["Xalq yozuvchisi", "Xalq shoiri", "Mehnat qahramoni", "Davlat mukofoti laureati"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 5,
@@ -38,7 +42,8 @@
       "variantlar": ["75 yil", "77 yil", "80 yil", "85 yil"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 6,
@@ -46,7 +51,8 @@
       "variantlar": ["1960", "1966", "1970", "1975"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": 6
     },
     {
       "id": 7,
@@ -54,7 +60,8 @@
       "variantlar": ["1920", "1925", "1930", "1935"],
       "togri": 1,
       "daraja": "orta",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 8,
@@ -62,7 +69,8 @@
       "variantlar": ["Jadid maktabi", "Rus-tuzem maktabi", "Gimnaziya", "Medresa"],
       "togri": 1,
       "daraja": "orta",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 9,
@@ -70,7 +78,8 @@
       "variantlar": ["Nazar", "G'ulom Nazar", "Muhammad", "Abdulla"],
       "togri": 1,
       "daraja": "qiyin",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 10,
@@ -78,7 +87,8 @@
       "variantlar": ["Eski shahar", "Bo'zsuv", "Chorsu", "Sebzor"],
       "togri": 1,
       "daraja": "qiyin",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 11,
@@ -86,7 +96,8 @@
       "variantlar": ["1935", "1939", "1940", "1945"],
       "togri": 1,
       "daraja": "orta",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": 8
     },
     {
       "id": 12,
@@ -94,7 +105,8 @@
       "variantlar": ["Turkiston", "Ishtirokiyun", "Mushtum", "Hurriyat"],
       "togri": 1,
       "daraja": "orta",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 13,
@@ -102,7 +114,8 @@
       "variantlar": ["1950", "1955", "1960", "1965"],
       "togri": 2,
       "daraja": "orta",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 14,
@@ -110,7 +123,8 @@
       "variantlar": ["Yomg'ir", "Seni ko'rmay", "Mehnat", "Bahor"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 15,
@@ -118,7 +132,8 @@
       "variantlar": ["Rossiya imperiyasi", "Sovet Ittifoqi", "Mustaqil O'zbekiston", "A va B to'g'ri"],
       "togri": 3,
       "daraja": "orta",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 16,
@@ -126,7 +141,8 @@
       "variantlar": ["O'zbekiston", "Shum bola", "Tinchlik", "Do'stlik"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": 8
     },
     {
       "id": 17,
@@ -134,7 +150,8 @@
       "variantlar": ["Fors tilida", "Arab tilida", "O'zbek tilida", "Rus tilida"],
       "togri": 2,
       "daraja": "oson",
-      "mavzu": "umumiy"
+      "mavzu": "umumiy",
+      "sinf": "umumiy"
     },
     {
       "id": 18,
@@ -142,7 +159,8 @@
       "variantlar": ["Frontda jang qilgan", "She'rlar yozgan", "Tibbiyot bilan shug'ullangan", "Hech narsa qilmagan"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 19,
@@ -150,7 +168,8 @@
       "variantlar": ["1925", "1930", "1935", "1940"],
       "togri": 1,
       "daraja": "qiyin",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 20,
@@ -158,7 +177,8 @@
       "variantlar": ["Ona", "Yomg'ir", "Mehnat", "Kitob"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 21,
@@ -166,7 +186,8 @@
       "variantlar": ["100 ga yaqin", "500 ga yaqin", "1000 ga yaqin", "50 ga yaqin"],
       "togri": 1,
       "daraja": "orta",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 22,
@@ -174,7 +195,8 @@
       "variantlar": ["1905", "1910", "1915", "1920"],
       "togri": 1,
       "daraja": "orta",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 23,
@@ -182,7 +204,8 @@
       "variantlar": ["Samarqand", "Buxoro", "Toshkent", "Andijon"],
       "togri": 2,
       "daraja": "orta",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 24,
@@ -190,7 +213,8 @@
       "variantlar": ["1930", "1935", "1940", "1945"],
       "togri": 1,
       "daraja": "qiyin",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 25,
@@ -198,7 +222,8 @@
       "variantlar": ["Faqat she'r", "She'r va roman", "She'r, doston, roman", "Faqat doston"],
       "togri": 2,
       "daraja": "oson",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 26,
@@ -206,7 +231,8 @@
       "variantlar": ["1960", "1964", "1965", "1970"],
       "togri": 2,
       "daraja": "qiyin",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 27,
@@ -214,7 +240,8 @@
       "variantlar": ["Faqat Vatan", "Faqat tabiat", "Vatan, mehnat, tabiat, muhabbat", "Faqat urush"],
       "togri": 2,
       "daraja": "oson",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 28,
@@ -222,7 +249,8 @@
       "variantlar": ["Vatan", "Mehnat ulug'lanishi", "Tabiat", "Do'stlik"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": 8
     },
     {
       "id": 29,
@@ -230,7 +258,8 @@
       "variantlar": ["Ha", "Yo'q", "Bilmayman", "Ma'lumot yo'q"],
       "togri": 0,
       "daraja": "orta",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 30,
@@ -238,7 +267,8 @@
       "variantlar": ["XVIII asr", "XIX asr", "XX asr", "XXI asr"],
       "togri": 2,
       "daraja": "oson",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": 6
     },
     {
       "id": 31,
@@ -246,7 +276,8 @@
       "variantlar": ["Vatan", "Bilim va ma'rifat", "Mehnat", "Sevgi"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 32,
@@ -254,7 +285,8 @@
       "variantlar": ["Arab, fors", "Rus, arab, fors", "Ingliz, rus", "Faqat o'zbek"],
       "togri": 1,
       "daraja": "orta",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 33,
@@ -262,7 +294,8 @@
       "variantlar": ["1945", "1950", "1955", "1960"],
       "togri": 1,
       "daraja": "qiyin",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 34,
@@ -270,7 +303,8 @@
       "variantlar": ["Tabiat", "Vatan", "Mehnat", "Do'stlik"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 35,
@@ -278,7 +312,8 @@
       "variantlar": ["Raqib", "Ustoz", "Tanqidchi", "Obuna bo'luvchi"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 36,
@@ -286,7 +321,8 @@
       "variantlar": ["Qish", "Bahor", "Yoz", "Kuz"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 37,
@@ -294,7 +330,8 @@
       "variantlar": ["Shifokor", "Jurnalist va yozuvchi", "O'qituvchi", "Sotuvchi"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 38,
@@ -302,7 +339,8 @@
       "variantlar": ["Vatanga", "Onaga", "Do'stga", "O'qituvchiga"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": 6
     },
     {
       "id": 39,
@@ -310,7 +348,8 @@
       "variantlar": ["Tabiat", "Vatanparvarlik va g'alaba", "Muhabbat", "Komeya"],
       "togri": 1,
       "daraja": "orta",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 40,
@@ -318,7 +357,8 @@
       "variantlar": ["Faqat rus tiliga", "Ko'p tillarga", "Hech qaysi tilga", "Faqat ingliz tiliga"],
       "togri": 1,
       "daraja": "orta",
-      "mavzu": "umumiy"
+      "mavzu": "umumiy",
+      "sinf": "umumiy"
     },
     {
       "id": 41,
@@ -326,7 +366,8 @@
       "variantlar": ["Vatan", "Do'stlik qadri", "Mehnat", "Tabiat"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 42,
@@ -334,7 +375,8 @@
       "variantlar": ["Romantizm", "Realizm", "Modernizm", "Klassitsizm"],
       "togri": 1,
       "daraja": "qiyin",
-      "mavzu": "umumiy"
+      "mavzu": "umumiy",
+      "sinf": "umumiy"
     },
     {
       "id": 43,
@@ -342,7 +384,8 @@
       "variantlar": ["Urush davri", "Tinchlik davri", "Urushdan keyin", "Inqilobdan oldin"],
       "togri": 2,
       "daraja": "orta",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 44,
@@ -350,7 +393,8 @@
       "variantlar": ["Oybek, Hamid Olimjon", "Cho'lpon", "Fitrat", "A va B"],
       "togri": 0,
       "daraja": "qiyin",
-      "mavzu": "hayot"
+      "mavzu": "hayot",
+      "sinf": "umumiy"
     },
     {
       "id": 45,
@@ -358,7 +402,8 @@
       "variantlar": ["Qariyalarga", "Yoshlarga", "Bolalarga", "Barcha avlodga"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 46,
@@ -366,7 +411,8 @@
       "variantlar": ["Yulduz", "Shum bola", "Yillar sadosi", "Hammasi"],
       "togri": 3,
       "daraja": "orta",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": 8
     },
     {
       "id": 47,
@@ -374,7 +420,8 @@
       "variantlar": ["Unutilgan", "Buyuk shoir sifatida", "Oddiy yozuvchi", "Noma'lum"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "umumiy"
+      "mavzu": "umumiy",
+      "sinf": "umumiy"
     },
     {
       "id": 48,
@@ -382,7 +429,8 @@
       "variantlar": ["Faqat o'quvchilar", "Barcha yoshdagilar", "Faqat talabalar", "Hech kim"],
       "togri": 1,
       "daraja": "oson",
-      "mavzu": "umumiy"
+      "mavzu": "umumiy",
+      "sinf": "umumiy"
     },
     {
       "id": 49,
@@ -390,7 +438,8 @@
       "variantlar": ["Faqat she'rlar", "She'r, doston, roman, hikoyalar", "Faqat romanlar", "Maktublar"],
       "togri": 1,
       "daraja": "orta",
-      "mavzu": "asarlar"
+      "mavzu": "asarlar",
+      "sinf": "umumiy"
     },
     {
       "id": 50,
@@ -398,7 +447,448 @@
       "variantlar": ["Hech qanday", "Kichik", "Katta va muhim", "O'rtacha"],
       "togri": 2,
       "daraja": "oson",
-      "mavzu": "umumiy"
+      "mavzu": "umumiy",
+      "sinf": "umumiy"
+    },
+    {
+      "id": 51,
+      "savol": "G'afur G'ulom otasi qanday taxalluslar bilan she'r yozgan?",
+      "variantlar": ["Fozil va G'ulom", "Mirzo va G'ulom", "Navoiy va G'ulom", "Ziyo va G'ulom"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot",
+      "sinf": 6,
+      "dars": "G'afur G'ulomning birinchi she'rlari"
+    },
+    {
+      "id": 52,
+      "savol": "G'afur G'ulom necha yoshida otasidan ayrilgan?",
+      "variantlar": ["7 yoshida", "9 yoshida", "12 yoshida", "15 yoshida"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot",
+      "sinf": 6,
+      "dars": "G'afur G'ulomning birinchi she'rlari"
+    },
+    {
+      "id": 53,
+      "savol": "G'afur G'ulom qanday oilada tug'ilgan?",
+      "variantlar": ["Savdochi oilasi", "Dehqon oilasi", "Oddiy xizmatchi oilasi", "Diniy oila"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot",
+      "sinf": 6,
+      "dars": "G'afur G'ulomning birinchi she'rlari"
+    },
+    {
+      "id": 54,
+      "savol": "G'afur G'ulomning uyiga qaysi mehmonlar kelib yurgan?",
+      "variantlar": ["Faqat qo'shnilar", "O'zbek shoirlari va xattotlar", "Faqat xattotlar", "Chet el sayyohlari"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot",
+      "sinf": 6,
+      "dars": "G'afur G'ulomning birinchi she'rlari"
+    },
+    {
+      "id": 55,
+      "savol": "G'afur G'ulom necha yoshida onasidan ayrilgan?",
+      "variantlar": ["9 yoshida", "12 yoshida", "15 yoshida", "18 yoshida"],
+      "togri": 2,
+      "daraja": "oson",
+      "mavzu": "hayot",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 56,
+      "savol": "\"Shum bola\" asaridagi voqealar qachon bo'lib o'tadi?",
+      "variantlar": ["XIX asr oxirida", "XX asr boshlarida", "XX asr o'rtalarida", "XXI asrda"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 57,
+      "savol": "Qissadagi daryo qanday nomlanadi?",
+      "variantlar": ["Sirdaryo", "Kalas", "Chirchiq", "Zarafshon"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 58,
+      "savol": "\"Shum bola\" filmi qaysi yilda suratga olingan?",
+      "variantlar": ["1966-yil", "1970-yil", "1977-yil", "1985-yil"],
+      "togri": 2,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 59,
+      "savol": "\"Shum bola\" filmida Shum bola rolini kim ijro etgan?",
+      "variantlar": ["Vohid Qodirov", "Abduraim Abduvahobov", "Xayrulla Sa'diyev", "G'afur G'ulom"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 60,
+      "savol": "Sariboy qanday lavozimga ega kishi?",
+      "variantlar": ["Kontor", "Bo'lis", "Arbab", "Dehqon"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 61,
+      "savol": "Sariboy shum bolaga oyiga qancha olma berishga kelishadi?",
+      "variantlar": ["Bir pud o'n qadoq", "Ikki pud o'n yetti qadoq", "Uch pud yigirma qadoq", "To'rt pud o'ttiz qadoq"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 62,
+      "savol": "Sariboy xizmatkorlar oldida tez-tez qaysi so'zni aytadi?",
+      "variantlar": ["Xo'p-xo'p", "Innaykeyin", "Barakalla", "Mayli-mayli"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 63,
+      "savol": "Shum bola Sariboyga ishga kirishdan oldin qanday aybini aytib qo'yadi?",
+      "variantlar": ["O'g'irlik qilish odat", "Yolg'on gapirish odat", "Kech qolish odat", "Ishdan qochish odat"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 64,
+      "savol": "Yumoristik asarda kamchiliklar qanday usul bilan tanqid qilinadi?",
+      "variantlar": ["Qattiq jazo orqali", "Yengil kulgi (yumor) orqali", "Faqat maqtov orqali", "Hech qanday usul bilan emas"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 65,
+      "savol": "PDFda mustaqil o'qish uchun qaysi hikoya tavsiya etilgan?",
+      "variantlar": ["\"Yomg'ir\"", "\"Mening o'g'rigina bolam\"", "\"Sinchalak\"", "\"Ikki eshik orasi\""],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 66,
+      "savol": "Shum bola Sariboy bilan suhbatni qaysi narsaning sinishi haqida boshlaydi?",
+      "variantlar": ["Arava g'ildiragi", "Dandon sopli pichoq", "Qamchi", "Sham"],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 67,
+      "savol": "Shum bola Sariboyga qaysi o'g'ilning o'limi haqida yolg'on xabar beradi?",
+      "variantlar": ["Bo'riboyvachcha", "Kenjatoy", "Yusuf", "Erkinjon"],
+      "togri": 0,
+      "daraja": "qiyin",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 68,
+      "savol": "Sariboy qimor o'ynab kimga yutqazibdi?",
+      "variantlar": ["Yusuf kontor", "Darvoza dehqoni", "Uzumchi", "Xizmatkorlar"],
+      "togri": 0,
+      "daraja": "qiyin",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 69,
+      "savol": "\"Shum bola\" qissasida voqealar qaysi shaxs nomidan bayon qilinadi?",
+      "variantlar": ["Uchinchi shaxs", "Birinchi shaxs (qahramon)", "Ikkinchi shaxs", "Muallif tomonidan to'g'ridan-to'g'ri"],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 70,
+      "savol": "Shum bola Sariboyning eshigida qancha vaqt ishlagan?",
+      "variantlar": ["O'n kun", "Bir oy-u o'n to'qqiz kun", "Uch oy", "Bir yil"],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 71,
+      "savol": "Shum bola qaysi qiz haqida yolg'on xabar beradi?",
+      "variantlar": ["Adol opa", "Halima opa", "Roqiyabibi", "Erkinjon onasi"],
+      "togri": 0,
+      "daraja": "qiyin",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 72,
+      "savol": "G'afur G'ulom oliy o'quv yurtida nima uchun o'qiy olmagan?",
+      "variantlar": ["Kasallik tufayli", "Ro'zg'or tebratish yosh zimmasida qolgani", "Urush boshlanganligi", "O'qituvchi topilmaganligi"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "hayot",
+      "sinf": 6,
+      "dars": "G'afur G'ulomning birinchi she'rlari"
+    },
+    {
+      "id": 73,
+      "savol": "G'afur G'ulom qaysi kursda o'qish imkoniga ega bo'lgan?",
+      "variantlar": ["Oliy pedagogika instituti", "Sakkiz oylik muallimlar tayyorlash kursi", "Tibbiyot kursi", "Huquq kursi"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot",
+      "sinf": 6,
+      "dars": "G'afur G'ulomning birinchi she'rlari"
+    },
+    {
+      "id": 74,
+      "savol": "6-sinf PDFda mutolaa qilinadigan asar qanday janrda ekanligi ko'rsatilgan?",
+      "variantlar": ["Roman", "Qissa", "Doston", "Hikoya"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 75,
+      "savol": "Quri Kalas qishlog'i qaysi daryoga nisbatan nomlangan?",
+      "variantlar": ["Sirdaryo", "Kalas daryosiga", "Chirchiq daryosiga", "Zarafshon daryosiga"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 76,
+      "savol": "\"Shum bola\" filmida Sariboy rolini kim ijro etgan?",
+      "variantlar": ["Abduraim Abduvahobov", "Vohid Qodirov", "Xayrulla Sa'diyev", "G'afur G'ulom"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar",
+      "sinf": 6,
+      "dars": "umumiy"
+    },
+    {
+      "id": 77,
+      "savol": "G'afur G'ulom qaysi mahallada tug'ilgan?",
+      "variantlar": ["Bo'zsuv", "Qo'rg'ontegi", "Chorsu", "Sebzor"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot",
+      "sinf": 8,
+      "dars": "umumiy"
+    },
+    {
+      "id": 78,
+      "savol": "G'afur G'ulom avval qaysi maktabda tahsil olgan?",
+      "variantlar": ["Medresa", "Eski maktab", "Gimnaziya", "Institut"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot",
+      "sinf": 8,
+      "dars": "umumiy"
+    },
+    {
+      "id": 79,
+      "savol": "G'afur G'ulomning ilk she'riy to'plamlari qanday nom bilan chop etilgan?",
+      "variantlar": ["\"Yillar sadosi\" va \"Bahor\"", "\"Dinamo\" va \"Tirik qo'shiqlar\"", "\"Sog'inish\" va \"Vaqt\"", "\"Ona\" va \"Vatan\""],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "umumiy"
+    },
+    {
+      "id": 80,
+      "savol": "\"Dinamo\" va \"Tirik qo'shiqlar\" to'plamlari qachon chop etilgan?",
+      "variantlar": ["1925–1926-yillarda", "1931–1932-yillarda", "1939–1940-yillarda", "1945–1946-yillarda"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "umumiy"
+    },
+    {
+      "id": 81,
+      "savol": "G'afur G'ulom Uilyam Shekspirning qaysi dramalarini o'zbek tiliga o'girgan?",
+      "variantlar": ["\"Gamlet\" va \"Romeo va Juliet\"", "\"Otello\" va \"Qirol Lir\"", "\"Makbet\" va \"Burzuy\"", "\"Othello\" va \"As You Like It\""],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "umumiy"
+    },
+    {
+      "id": 82,
+      "savol": "8-sinf PDFga ko'ra \"Shum bola\" qissasi ijodkorni qayerda mashhur qilgan?",
+      "variantlar": ["Faqat mahallada", "Faqat respublikada", "Jahon miqyosida ham", "Faqat maktabda"],
+      "togri": 2,
+      "daraja": "oson",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "'Shum bola' romani bilan tanishish"
+    },
+    {
+      "id": 83,
+      "savol": "G'afur G'ulomning uyiga qaysi sho'rlar ko'p kelgan?",
+      "variantlar": ["Navoiy, Fozil, Cho'lpon", "Muqimiy, Furqat, Muhyi", "Hamid Olimjon, Zulfiya, Erkin", "Faqat Mahmudxo'ja Behbudiy"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "hayot",
+      "sinf": 8,
+      "dars": "umumiy"
+    },
+    {
+      "id": 84,
+      "savol": "\"Sog'inish\" she'ri qachon yozilgan?",
+      "variantlar": ["1939-yil", "1942-yil", "1945-yil", "1960-yil"],
+      "togri": 1,
+      "daraja": "oson",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "umumiy"
+    },
+    {
+      "id": 85,
+      "savol": "8-sinf PDF jadvaliga ko'ra \"Sog'inish\" she'rida kimning sog'inch tuyg'ulari aks etgan?",
+      "variantlar": ["Onaning", "Otaning", "Farzandning", "Do'stning"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "umumiy"
+    },
+    {
+      "id": 86,
+      "savol": "\"Sog'inish\" she'ridagi \"xonayi xurshid\" iborasi nimani anglatadi?",
+      "variantlar": ["Oy uyi", "Quyosh uyi", "Yulduz uyi", "Osmon uyi"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "umumiy"
+    },
+    {
+      "id": 87,
+      "savol": "\"Vaqt\" she'ri kimga bag'ishlangan?",
+      "variantlar": ["Hamidulla Husan o'g'li mayor jiyaniga", "Zulfiyaga", "Nikolay Tixonovga", "O'z onasiga"],
+      "togri": 0,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "Mehnat mavzusidagi she'rlar"
+    },
+    {
+      "id": 88,
+      "savol": "\"Vaqt\" she'ri qachon yozilgan?",
+      "variantlar": ["1942-yil", "1943-yil", "1945-yil", "1966-yil"],
+      "togri": 2,
+      "daraja": "oson",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "Mehnat mavzusidagi she'rlar"
+    },
+    {
+      "id": 89,
+      "savol": "\"Vaqt\" she'ridagi Reyxstag voqeasi qachon sodir bo'lgan?",
+      "variantlar": ["1942-yilning may oyida", "1945-yilning may oyida", "1939-yilning sentyabrida", "1966-yilning aprelida"],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "Mehnat mavzusidagi she'rlar"
+    },
+    {
+      "id": 90,
+      "savol": "8-sinf PDFda Reyxstag ustiga g'alaba bayrog'ini kim qadagan?",
+      "variantlar": ["Nemis askarlari", "Sovet askarlari", "Amerika askarlari", "Fransiya askarlari"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "Mehnat mavzusidagi she'rlar"
+    },
+    {
+      "id": 91,
+      "savol": "\"Vaqt\" she'ridagi \"Fursatdir qilguvchi aziz, muharram\" satrida nima ta'kidlanmoqda?",
+      "variantlar": ["Urush qahramonligi", "Fursatning qadri va qadrlash", "Tabiat go'zalligi", "Ona muhabbati"],
+      "togri": 1,
+      "daraja": "orta",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "Mehnat mavzusidagi she'rlar"
+    },
+    {
+      "id": 92,
+      "savol": "\"Vaqt\" she'ridagi \"Bir lahza mazmuni bir butun bahor\" satri nimani ifodalaydi?",
+      "variantlar": ["Faqat fasl o'zgarishini", "Lahzaning qadr-qimmatini", "Faqat yoshlikni", "Faqat kechani"],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "Mehnat mavzusidagi she'rlar"
+    },
+    {
+      "id": 93,
+      "savol": "8-sinf PDFda \"Sog'inish\" she'ridagi \"mal'un gulshanga qadam qo'ymishkan\" misrasida \"mal'un\" so'zi nimani bildiradi?",
+      "variantlar": ["Mehribon", "La'natlangan, yomon niyatli kishi", "Boy", "Yetim"],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "umumiy"
+    },
+    {
+      "id": 94,
+      "savol": "8-sinf PDF jadvaliga ko'ra \"Sog'inish\"da urushga ketgan o'g'ilning qaytib kelishini ko'rgan ona tasvirlanganmi?",
+      "variantlar": ["Ha, aniq tasvirlangan", "Yo'q, bu hukm noto'g'ri", "She'rda ona umuman yo'q", "Faqat otaning sog'inchida aytilgan"],
+      "togri": 1,
+      "daraja": "qiyin",
+      "mavzu": "asarlar",
+      "sinf": 8,
+      "dars": "umumiy"
     }
   ]
 }
