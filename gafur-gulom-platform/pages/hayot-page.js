@@ -249,7 +249,7 @@ function renderEventCard(voqea) {
         <div class="hy-work">
             <h4 class="hy-work__title">${escapeHtml(w.title)}</h4>
             ${w.excerpt ? `<p class="hy-work__excerpt">${escapeHtml(w.excerpt)}</p>` : ''}
-            <a class="hy-btn-primary hy-btn-navy" href="asarlar.html">Kutubxonada ochish</a>
+            <a class="hy-btn-primary hy-btn-navy" href="pages/asarlar.html">Kutubxonada ochish</a>
         </div>
     `).join('') : '';
 
@@ -501,7 +501,7 @@ function renderLegacy() {
         <p class="hy-legacy__text">${escapeHtml(mainText)}</p>
         ${secondary ? `<p class="hy-legacy__text" style="font-size:1rem;opacity:0.9">${escapeHtml(secondary)}</p>` : ''}
         <p class="hy-legacy__source">Manba: hayot.json — 1966 voqea va so'nggi yillar bosqichi</p>
-        <a class="hy-btn-primary" href="asarlar.html">Meros asarlarni o'qish</a>
+        <a class="hy-btn-primary" href="pages/asarlar.html">Meros asarlarni o'qish</a>
     `;
 }
 
@@ -522,21 +522,21 @@ function renderNextSteps() {
             <div class="hy-next-card__label">Tavsiya etilgan kitob</div>
             <h3 class="hy-next-card__title">Shum bola</h3>
             <p class="hy-next-card__text">1939-yilda nashr etilgan roman — G'afur G'ulom ijodining eng mashhur asarlaridan biri.</p>
-            <a class="hy-btn-primary" href="asarlar.html">Kutubxonada o'qish</a>
+            <a class="hy-btn-primary" href="pages/asarlar.html">Kutubxonada o'qish</a>
         </article>
         <article class="hy-next-card">
             <div class="hy-next-card__icon" aria-hidden="true">🎬</div>
             <div class="hy-next-card__label">Tavsiya etilgan video</div>
             <h3 class="hy-next-card__title">${escapeHtml(urush?.sarlavha || 'Urush yillari')}</h3>
             <p class="hy-next-card__text">${escapeHtml(firstParagraph(urush?.matn || ''))}</p>
-            <a class="hy-btn-primary" href="multimedia.html">Video darslarni ko'rish</a>
+            <a class="hy-btn-primary" href="pages/multimedia.html">Video darslarni ko'rish</a>
         </article>
         <article class="hy-next-card">
             <div class="hy-next-card__icon" aria-hidden="true">✅</div>
             <div class="hy-next-card__label">Tavsiya etilgan test</div>
             <h3 class="hy-next-card__title">G'afur G'ulom hayoti viktorinasi</h3>
             <p class="hy-next-card__text">Biografiyani o'rganganingizdan keyin bilimingizni ${escapeHtml(kamolot?.sarlavha || 'viktorina')} orqali sinab ko'ring.</p>
-            <a class="hy-btn-primary" href="talim.html">Testni boshlash</a>
+            <a class="hy-btn-primary" href="pages/talim.html">Testni boshlash</a>
         </article>
     `;
 }

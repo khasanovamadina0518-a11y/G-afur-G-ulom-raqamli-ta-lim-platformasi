@@ -23,6 +23,14 @@ window.toggleDarkMode = function () {
 
 let headerInitialized = false;
 
+function platformHref(relativePath) {
+    if (typeof window.platformUrl === 'function') {
+        return window.platformUrl(relativePath);
+    }
+    const base = (typeof window.PLATFORM_BASE === 'string' && window.PLATFORM_BASE) ? window.PLATFORM_BASE : '/';
+    return base + String(relativePath || '').replace(/^\//, '');
+}
+
 function renderHeader() {
 
     if (headerInitialized) return;
@@ -30,18 +38,16 @@ function renderHeader() {
     const container = document.getElementById('header-container');
     if (!container) return;
 
-    const base = '';
-
     container.innerHTML = `
 <header class="site-header site-header--premium">
 
     <div class="header-content">
 
         <!-- Brand lockup (reference layout) -->
-        <a href="${base}index.html" class="brand-lockup" aria-label="G'afur G'ulom — Bosh sahifa">
+        <a href="${platformHref('index.html')}" class="brand-lockup" aria-label="G'afur G'ulom — Bosh sahifa">
             <img
                 class="brand-lockup__avatar"
-                src="${base}assets/images/gafur-gulom.jpg"
+                src="${platformHref('assets/images/gafur-gulom.jpg')}"
                 alt=""
                 width="44"
                 height="44"
@@ -59,15 +65,15 @@ function renderHeader() {
         <!-- Desktop Navigation — original platform IA (visual layout only modernized) -->
         <nav class="main-nav desktop-nav" aria-label="Asosiy navigatsiya">
             <ul class="nav-menu">
-                <li><a href="${base}index.html">Bosh sahifa</a></li>
-                <li><a href="${base}pages/hayot.html">Hayoti</a></li>
-                <li><a href="${base}pages/asarlar.html">Elektron kutubxona</a></li>
-                <li><a href="${base}pages/multimedia.html">Video darslar</a></li>
-                <li><a href="${base}pages/interaktiv-oyinlar.html">Interaktiv</a></li>
-                <li><a href="${base}pages/interaktiv.html">Testlar</a></li>
-                <li><a href="${base}pages/ai-yordamchi.html">AI yordamchi</a></li>
-                <li><a href="${base}pages/ilmiy.html">Ilmiy</a></li>
-                <li><a href="${base}pages/talim.html">Ta'lim</a></li>
+                <li><a href="${platformHref('index.html')}">Bosh sahifa</a></li>
+                <li><a href="${platformHref('pages/hayot.html')}">Hayoti</a></li>
+                <li><a href="${platformHref('pages/asarlar.html')}">Elektron kutubxona</a></li>
+                <li><a href="${platformHref('pages/multimedia.html')}">Video darslar</a></li>
+                <li><a href="${platformHref('pages/interaktiv-oyinlar.html')}">Interaktiv</a></li>
+                <li><a href="${platformHref('pages/interaktiv.html')}">Testlar</a></li>
+                <li><a href="${platformHref('pages/ai-yordamchi.html')}">AI yordamchi</a></li>
+                <li><a href="${platformHref('pages/ilmiy.html')}">Ilmiy</a></li>
+                <li><a href="${platformHref('pages/talim.html')}">Ta'lim</a></li>
             </ul>
         </nav>
 
@@ -107,7 +113,7 @@ function renderHeader() {
                 </div>
             </div>
 
-            <a href="${base}pages/dashboard.html" class="login-btn">Kirish</a>
+            <a href="${platformHref('pages/dashboard.html')}" class="login-btn">Kirish</a>
 
             <button
                 class="header-icon-btn dark-mode-toggle"
@@ -132,63 +138,63 @@ function renderHeader() {
             <button class="drawer-close" id="drawerClose" type="button" aria-label="Menyuni yopish">✕</button>
         </div>
         <div class="drawer-menu">
-            <a href="${base}index.html" class="drawer-item">
+            <a href="${platformHref('index.html')}" class="drawer-item">
                 <div class="drawer-icon">🏠</div>
                 <div class="drawer-text">
                     <div class="drawer-title">Bosh sahifa</div>
                     <div class="drawer-desc">Asosiy sahifa</div>
                 </div>
             </a>
-            <a href="${base}pages/hayot.html" class="drawer-item">
+            <a href="${platformHref('pages/hayot.html')}" class="drawer-item">
                 <div class="drawer-icon">👤</div>
                 <div class="drawer-text">
                     <div class="drawer-title">Hayoti</div>
                     <div class="drawer-desc">Hayot va ijodi</div>
                 </div>
             </a>
-            <a href="${base}pages/asarlar.html" class="drawer-item">
+            <a href="${platformHref('pages/asarlar.html')}" class="drawer-item">
                 <div class="drawer-icon">📚</div>
                 <div class="drawer-text">
                     <div class="drawer-title">Asarlari</div>
                     <div class="drawer-desc">Elektron kutubxona</div>
                 </div>
             </a>
-            <a href="${base}pages/multimedia.html" class="drawer-item">
+            <a href="${platformHref('pages/multimedia.html')}" class="drawer-item">
                 <div class="drawer-icon">🎬</div>
                 <div class="drawer-text">
                     <div class="drawer-title">Video darslar</div>
                     <div class="drawer-desc">Video va audio</div>
                 </div>
             </a>
-            <a href="${base}pages/interaktiv-oyinlar.html" class="drawer-item">
+            <a href="${platformHref('pages/interaktiv-oyinlar.html')}" class="drawer-item">
                 <div class="drawer-icon">🎮</div>
                 <div class="drawer-text">
                     <div class="drawer-title">Interaktiv</div>
                     <div class="drawer-desc">Viktorinalar va o'yinlar</div>
                 </div>
             </a>
-            <a href="${base}pages/interaktiv.html" class="drawer-item">
+            <a href="${platformHref('pages/interaktiv.html')}" class="drawer-item">
                 <div class="drawer-icon">📝</div>
                 <div class="drawer-text">
                     <div class="drawer-title">Testlar</div>
                     <div class="drawer-desc">O'yinlar va testlar</div>
                 </div>
             </a>
-            <a href="${base}pages/ai-yordamchi.html" class="drawer-item">
+            <a href="${platformHref('pages/ai-yordamchi.html')}" class="drawer-item">
                 <div class="drawer-icon">🤖</div>
                 <div class="drawer-text">
                     <div class="drawer-title">AI yordamchi</div>
                     <div class="drawer-desc">Sun'iy intellekt yordam</div>
                 </div>
             </a>
-            <a href="${base}pages/ilmiy.html" class="drawer-item">
+            <a href="${platformHref('pages/ilmiy.html')}" class="drawer-item">
                 <div class="drawer-icon">🔬</div>
                 <div class="drawer-text">
                     <div class="drawer-title">Ilmiy</div>
                     <div class="drawer-desc">Ilmiy maqolalar</div>
                 </div>
             </a>
-            <a href="${base}pages/talim.html" class="drawer-item">
+            <a href="${platformHref('pages/talim.html')}" class="drawer-item">
                 <div class="drawer-icon">🎓</div>
                 <div class="drawer-text">
                     <div class="drawer-title">Ta'lim</div>
@@ -206,7 +212,7 @@ function renderHeader() {
                 <button class="drawer-lang-btn active" type="button">O'Z</button>
                 <button class="drawer-lang-btn" type="button">EN</button>
             </div>
-            <a href="${base}pages/dashboard.html" class="drawer-login-btn">
+            <a href="${platformHref('pages/dashboard.html')}" class="drawer-login-btn">
                 <span>👤</span>
                 <span>Kirish</span>
             </a>
@@ -216,23 +222,23 @@ function renderHeader() {
 
 <!-- Mobile Bottom Navigation -->
 <nav class="mobile-bottom-nav">
-    <a href="${base}index.html" class="bottom-nav-item" data-page="home">
+    <a href="${platformHref('index.html')}" class="bottom-nav-item" data-page="home">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         <span>Bosh sahifa</span>
     </a>
-    <a href="${base}pages/asarlar.html" class="bottom-nav-item" data-page="asarlar">
+    <a href="${platformHref('pages/asarlar.html')}" class="bottom-nav-item" data-page="asarlar">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
         <span>Elektron kutubxona</span>
     </a>
-    <a href="${base}pages/talim.html" class="bottom-nav-item" data-page="talim">
+    <a href="${platformHref('pages/talim.html')}" class="bottom-nav-item" data-page="talim">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
         <span>Ta'lim</span>
     </a>
-    <a href="${base}pages/multimedia.html" class="bottom-nav-item" data-page="multimedia">
+    <a href="${platformHref('pages/multimedia.html')}" class="bottom-nav-item" data-page="multimedia">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
         <span>Video darslar</span>
     </a>
-    <a href="${base}pages/ai-yordamchi.html" class="bottom-nav-item" data-page="ai-yordamchi">
+    <a href="${platformHref('pages/ai-yordamchi.html')}" class="bottom-nav-item" data-page="ai-yordamchi">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         <span>AI yordamchi</span>
     </a>

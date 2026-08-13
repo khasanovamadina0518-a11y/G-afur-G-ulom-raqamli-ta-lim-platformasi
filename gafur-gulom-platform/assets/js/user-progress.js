@@ -173,7 +173,7 @@
                             title: key.replace(/-/g, ' '),
                             type: 'Dars',
                             progress: 100,
-                            href: 'talim.html',
+                            href: 'pages/talim.html',
                             openedAt: Date.now()
                         });
                     }
@@ -258,7 +258,7 @@
                 id,
                 title,
                 type: 'Video dars',
-                href: 'multimedia.html',
+                href: 'pages/multimedia.html',
                 progress: 100,
                 openedAt: Date.now()
             };
@@ -350,12 +350,12 @@
                 title: last.title,
                 type: last.type || 'Asar',
                 progress: last.progress || 0,
-                href: last.href || 'asarlar.html'
+                href: last.href || 'pages/asarlar.html'
             } : {
                 title: recommendations?.featured?.[0]?.title || 'Elektron kutubxona',
                 type: 'Asar',
                 progress: 0,
-                href: 'asarlar.html'
+                href: 'pages/asarlar.html'
             };
 
             const badgeList = global.AchievementEngine
@@ -413,9 +413,9 @@
                     badgeList: badgeList.length ? badgeList : ['Boshlang\'ich']
                 },
                 aiRecommendations: poem ? [
-                    { icon: '📖', text: `Bugun "${poem.title}" bilan tanishing.`, link: 'asarlar.html', linkText: 'Kutubxona' },
-                    { icon: '🎯', text: 'G\'afur G\'ulom hayoti bo\'yicha viktorinani yeching.', link: 'interaktiv.html', linkText: 'Testlar' },
-                    { icon: '🎬', text: video ? `Video dars: ${video.title}.` : 'Video darslar bo\'limini ko\'ring.', link: 'multimedia.html', linkText: 'Video darslar' }
+                    { icon: '📖', text: `Bugun "${poem.title}" bilan tanishing.`, link: 'pages/asarlar.html', linkText: 'Kutubxona' },
+                    { icon: '🎯', text: 'G\'afur G\'ulom hayoti bo\'yicha viktorinani yeching.', link: 'pages/interaktiv.html', linkText: 'Testlar' },
+                    { icon: '🎬', text: video ? `Video dars: ${video.title}.` : 'Video darslar bo\'limini ko\'ring.', link: 'pages/multimedia.html', linkText: 'Video darslar' }
                 ] : [],
                 certificates,
                 recentActivity: state.activity.slice(0, 6).map(a => ({
@@ -467,7 +467,7 @@
                         id: poem.id,
                         title: poem.sarlavha,
                         type: 'She\'r',
-                        href: 'asarlar.html',
+                        href: 'pages/asarlar.html',
                         progress: 35
                     });
                 });
@@ -482,7 +482,7 @@
                         id: d.id,
                         title: d.sarlavha || d.nomi,
                         type: 'Doston',
-                        href: 'asarlar.html',
+                        href: 'pages/asarlar.html',
                         progress: 40
                     });
                 });

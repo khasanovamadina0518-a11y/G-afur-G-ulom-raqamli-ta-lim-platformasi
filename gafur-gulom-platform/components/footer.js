@@ -2,13 +2,19 @@
 // Footer Component
 // ===================================
 
+function platformHref(relativePath) {
+    if (typeof window.platformUrl === 'function') {
+        return window.platformUrl(relativePath);
+    }
+    const base = (typeof window.PLATFORM_BASE === 'string' && window.PLATFORM_BASE) ? window.PLATFORM_BASE : '/';
+    return base + String(relativePath || '').replace(/^\//, '');
+}
+
 function renderFooter() {
     const footerContainer = document.getElementById('footer-container');
     if (!footerContainer) return;
     
     const currentYear = new Date().getFullYear();
-    
-    const basePath = '';
     
     const footerHTML = `
         <footer class="site-footer">
@@ -16,19 +22,19 @@ function renderFooter() {
                 <div class="footer-section">
                     <h3>Tezkor havolalar</h3>
                     <ul class="footer-links">
-                        <li><a href="${basePath}pages/hayot.html">Hayoti</a></li>
-                        <li><a href="${basePath}pages/asarlar.html">Elektron kutubxona</a></li>
-                        <li><a href="${basePath}pages/ilmiy.html">Ilmiy tadqiqotlar</a></li>
-                        <li><a href="${basePath}pages/talim.html">Ta'lim resurslari</a></li>
+                        <li><a href="${platformHref('pages/hayot.html')}">Hayoti</a></li>
+                        <li><a href="${platformHref('pages/asarlar.html')}">Elektron kutubxona</a></li>
+                        <li><a href="${platformHref('pages/ilmiy.html')}">Ilmiy tadqiqotlar</a></li>
+                        <li><a href="${platformHref('pages/talim.html')}">Ta'lim resurslari</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
                     <h3>Resurslar</h3>
                     <ul class="footer-links">
-                        <li><a href="${basePath}pages/multimedia.html">Video darslar</a></li>
-                        <li><a href="${basePath}pages/interaktiv.html">Testlar</a></li>
-                        <li><a href="${basePath}pages/hamjamiyat.html">AI yordamchi</a></li>
+                        <li><a href="${platformHref('pages/multimedia.html')}">Video darslar</a></li>
+                        <li><a href="${platformHref('pages/interaktiv.html')}">Testlar</a></li>
+                        <li><a href="${platformHref('pages/hamjamiyat.html')}">AI yordamchi</a></li>
                         <li><a href="#" onclick="scrollToTop(); return false;">Yuqoriga ↑</a></li>
                     </ul>
                 </div>

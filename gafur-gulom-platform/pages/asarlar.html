@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
     <script>
-    (function(){var p=location.pathname.replace(/\\/g,'/'),m='/gafur-gulom-platform/',b='/';if(p.indexOf(m)!==-1)b=p.slice(0,p.indexOf(m)+m.length);else if(p.indexOf('/pages/')!==-1)b=p.slice(0,p.indexOf('/pages/')+1);else{var i=p.lastIndexOf('/');b=i<=0?'/':p.slice(0,i+1);}window.PLATFORM_BASE=b;window.platformUrl=function(r){return b+String(r||'').replace(/^\//,'');};})();
+    (function(){var p=location.pathname.replace(/\\/g,'/'),m='/gafur-gulom-platform/',b='/';if(p.indexOf(m)!==-1)b=p.slice(0,p.indexOf(m)+m.length);else if(p.indexOf('/pages/')!==-1)b=p.slice(0,p.indexOf('/pages/')+1);else{var i=p.lastIndexOf('/');b=i<=0?'/':p.slice(0,i+1);}var e=document.createElement('base');e.href=b;document.head.insertBefore(e,document.head.firstChild);window.PLATFORM_BASE=b;window.platformUrl=function(r){return b+String(r||'').replace(/^\//,'');};})();
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
