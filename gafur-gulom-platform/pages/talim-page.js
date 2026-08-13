@@ -14,7 +14,9 @@ let timerInterval = null;
 let timeLeft = 60;
 let selectedDifficulty = 'oson';
 let userName = '';
-let activeClass = '5';
+let activeClass = '6';
+
+const MODULE_CLASSES = ['6', '8'];
 
 const learningPath = [
     { title: "G'afur G'ulom hayoti bilan tanishish", detail: '5-sinf — biografiya va davr' },
@@ -339,7 +341,7 @@ document.getElementById('tl-go-quiz-btn')?.addEventListener('click', () => switc
 
 document.getElementById('tl-continue-btn')?.addEventListener('click', () => {
     const progress = getProgress();
-    if (progress.lastClass && progress.lastLesson) {
+    if (progress.lastClass && progress.lastLesson && MODULE_CLASSES.includes(String(progress.lastClass))) {
         activeClass = progress.lastClass;
         document.querySelectorAll('.class-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.class === activeClass);
@@ -870,7 +872,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     renderProgressCard();
 
     const progress = getProgress();
-    if (progress.lastClass) {
+    if (progress.lastClass && MODULE_CLASSES.includes(String(progress.lastClass))) {
         activeClass = progress.lastClass;
         document.querySelectorAll('.class-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.class === activeClass);
