@@ -16,7 +16,37 @@ a.drawer-login-btn {
     --dash-text: var(--text);
     --dash-shadow: 0 4px 24px rgba(26, 60, 94, 0.08);
     --dash-shadow-soft: 0 2px 12px rgba(17, 24, 39, 0.06);
+    --dash-sidebar-bg: var(--card-bg);
+    --dash-sidebar-text: var(--dash-navy);
+    --dash-sidebar-text-muted: var(--text-light);
+    --dash-sidebar-border: var(--border);
+    --dash-sidebar-link: var(--text-light);
+    --dash-sidebar-link-hover-bg: rgba(26, 60, 94, 0.06);
+    --dash-sidebar-link-hover-text: var(--dash-navy);
+    --dash-sidebar-link-active-bg: rgba(37, 99, 235, 0.12);
+    --dash-sidebar-link-active-text: var(--dash-navy);
+    --dash-sidebar-logout-border: var(--border-strong);
+    --dash-sidebar-logout-text: var(--dash-navy);
+    --dash-sidebar-logout-hover-bg: rgba(26, 60, 94, 0.06);
+    --dash-sidebar-avatar-text: var(--dash-navy);
     background: var(--bg);
+}
+
+/* Light mode — sidebar matches page cards/header (white panel, dark text) */
+body:not(.dark-mode).page-dashboard {
+    --dash-sidebar-bg: var(--card-bg);
+    --dash-sidebar-text: var(--dash-navy);
+    --dash-sidebar-text-muted: var(--text-light);
+    --dash-sidebar-border: var(--border);
+    --dash-sidebar-link: var(--text-light);
+    --dash-sidebar-link-hover-bg: rgba(26, 60, 94, 0.06);
+    --dash-sidebar-link-hover-text: var(--dash-navy);
+    --dash-sidebar-link-active-bg: rgba(37, 99, 235, 0.12);
+    --dash-sidebar-link-active-text: var(--dash-navy);
+    --dash-sidebar-logout-border: var(--border-strong);
+    --dash-sidebar-logout-text: var(--dash-navy);
+    --dash-sidebar-logout-hover-bg: rgba(26, 60, 94, 0.06);
+    --dash-sidebar-avatar-text: var(--dash-navy);
 }
 
 .page-dashboard .dash-page {
@@ -32,12 +62,12 @@ a.drawer-login-btn {
 
 /* ----- Sidebar ----- */
 .page-dashboard .dash-sidebar {
-    background: var(--dash-navy);
-    color: #ffffff;
+    color: var(--dash-sidebar-text);
     padding: 1.5rem 1rem 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    border-right: 1px solid var(--dash-sidebar-border);
 }
 
 .page-dashboard .dash-profile {
@@ -47,7 +77,7 @@ a.drawer-login-btn {
     text-align: center;
     gap: 0.625rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid var(--dash-sidebar-border);
 }
 
 .page-dashboard .dash-profile__avatar {
@@ -55,7 +85,7 @@ a.drawer-login-btn {
     height: 72px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--dash-gold), #e8c96a);
-    color: var(--dash-navy);
+    color: var(--dash-sidebar-avatar-text);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -70,12 +100,13 @@ a.drawer-login-btn {
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
     font-weight: 700;
+    color: var(--dash-sidebar-text);
 }
 
 .page-dashboard .dash-profile__meta {
     margin: 0;
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--dash-sidebar-text-muted);
 }
 
 .page-dashboard .dash-nav {
@@ -91,7 +122,7 @@ a.drawer-login-btn {
     gap: 0.75rem;
     padding: 0.625rem 0.875rem;
     border-radius: 10px;
-    color: rgba(255, 255, 255, 0.88);
+    color: var(--dash-sidebar-link);
     text-decoration: none;
     font-family: 'Inter', sans-serif;
     font-size: 0.875rem;
@@ -100,13 +131,13 @@ a.drawer-login-btn {
 }
 
 .page-dashboard .dash-nav__link:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: #ffffff;
+    background: var(--dash-sidebar-link-hover-bg);
+    color: var(--dash-sidebar-link-hover-text);
 }
 
 .page-dashboard .dash-nav__link.is-active {
-    background: rgba(37, 99, 235, 0.28);
-    color: #ffffff;
+    background: var(--dash-sidebar-link-active-bg);
+    color: var(--dash-sidebar-link-active-text);
     font-weight: 600;
 }
 
@@ -125,10 +156,10 @@ a.drawer-login-btn {
     gap: 0.5rem;
     min-height: 42px;
     padding: 0.5rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--dash-sidebar-logout-border);
     border-radius: 10px;
     background: transparent;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--dash-sidebar-logout-text);
     font-family: 'Inter', sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
@@ -138,7 +169,8 @@ a.drawer-login-btn {
 }
 
 .page-dashboard .dash-logout:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--dash-sidebar-logout-hover-bg);
+    color: var(--dash-sidebar-logout-text);
 }
 
 /* ----- Main ----- */
@@ -669,9 +701,43 @@ a.drawer-login-btn {
     cursor: pointer;
 }
 
-/* Dark mode */
+/* Dark mode — deep panel, clearly distinct from light navy */
 body.dark-mode.page-dashboard {
+    --dash-sidebar-bg: #101a24;
+    --dash-sidebar-text: #e8e0d0;
+    --dash-sidebar-text-muted: #a89f91;
+    --dash-sidebar-border: #2a3a4a;
+    --dash-sidebar-link: #c9c0b2;
+    --dash-sidebar-link-hover-bg: rgba(255, 255, 255, 0.06);
+    --dash-sidebar-link-hover-text: #f0e8dc;
+    --dash-sidebar-link-active-bg: rgba(201, 168, 76, 0.24);
+    --dash-sidebar-link-active-text: #fff4dc;
+    --dash-sidebar-logout-border: #3a4f64;
+    --dash-sidebar-logout-text: #c9c0b2;
+    --dash-sidebar-logout-hover-bg: rgba(255, 255, 255, 0.06);
+    --dash-sidebar-avatar-text: #101a24;
     background: var(--bg);
+}
+
+body:not(.dark-mode).page-dashboard .dash-sidebar {
+    background-color: var(--card-bg);
+    border-right-color: var(--border);
+}
+
+body.dark-mode.page-dashboard .dash-sidebar {
+    background-color: #101a24;
+    border-right-color: #2a3a4a;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.35);
+}
+
+body:not(.dark-mode).page-dashboard .dash-nav__link.is-active {
+    background: rgba(37, 99, 235, 0.12);
+    color: var(--dash-navy);
+}
+
+body.dark-mode.page-dashboard .dash-nav__link.is-active {
+    background: rgba(201, 168, 76, 0.24);
+    color: #fff4dc;
 }
 
 body.dark-mode.page-dashboard .dash-main {
@@ -755,6 +821,10 @@ body.dark-mode.page-dashboard .dash-cert {
 
     .page-dashboard .dash-sidebar.is-open {
         display: flex;
+    }
+
+    body.dark-mode.page-dashboard .dash-sidebar.is-open {
+        box-shadow: var(--shadow-md);
     }
 
     .page-dashboard .dash-sidebar-toggle {
