@@ -6,7 +6,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ilmiy Arxiv - G'afur G'ulom</title>
+    <title>Ilmiy arxiv - G'afur G'ulom</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,30 +16,54 @@
     <link rel="stylesheet" href="assets/css/components.css?v=9">
     <link rel="stylesheet" href="assets/css/responsive.css?v=9">
     <link rel="stylesheet" href="assets/css/platform-buttons.css?v=9">
-    <link rel="stylesheet" href="pages/ilmiy.css?v=2">
+    <link rel="stylesheet" href="pages/ilmiy.css?v=3">
 </head>
 <body class="page-ilmiy">
     <div id="header-container"></div>
 
     <section class="ilm-hero" aria-labelledby="ilm-hero-title">
+        <div class="ilm-hero__backdrop" aria-hidden="true">
+            <span class="ilm-hero__orb ilm-hero__orb--1"></span>
+            <span class="ilm-hero__orb ilm-hero__orb--2"></span>
+            <span class="ilm-hero__grid"></span>
+        </div>
         <div class="ilm-hero__inner">
-            <p class="ilm-hero__kicker">Ilmiy tadqiqotlar markazi</p>
-            <h1 class="ilm-hero__title" id="ilm-hero-title">Ilmiy Arxiv</h1>
+            <p class="ilm-hero__kicker"><span class="ilm-hero__kicker-dot" aria-hidden="true"></span>Ilmiy tadqiqotlar markazi</p>
+            <h1 class="ilm-hero__title" id="ilm-hero-title">Ilmiy arxiv</h1>
             <p class="ilm-hero__text">G'afur G'ulom ijodi bo'yicha ilmiy maqolalar, dissertatsiyalar, ilmiy tadqiqotlar, atamalar lug'ati va bibliografiya generatori.</p>
             <div class="ilm-hero__stats" id="ilm-hero-stats" aria-label="Arxiv statistikasi"></div>
+        </div>
+        <div class="ilm-hero__tabs-shell">
+            <div class="ilm-hero__tabs-inner">
+                <nav class="ilm-tabs ilm-tabs--premium" aria-label="Ilmiy arxiv bo'limlari">
+                    <button class="tab-btn active" type="button" data-tab="maqolalar">
+                        <span class="tab-btn__icon" aria-hidden="true">📄</span>
+                        <span>Maqolalar</span>
+                    </button>
+                    <button class="tab-btn" type="button" data-tab="dissertatsiyalar">
+                        <span class="tab-btn__icon" aria-hidden="true">🎓</span>
+                        <span>Dissertatsiyalar</span>
+                    </button>
+                    <button class="tab-btn" type="button" data-tab="tadqiqotlar">
+                        <span class="tab-btn__icon" aria-hidden="true">🔬</span>
+                        <span>Ilmiy tadqiqotlar</span>
+                    </button>
+                    <button class="tab-btn" type="button" data-tab="lugat">
+                        <span class="tab-btn__icon" aria-hidden="true">📖</span>
+                        <span>Atamalar lug'ati</span>
+                    </button>
+                    <button class="tab-btn" type="button" data-tab="bibliografiya">
+                        <span class="tab-btn__icon" aria-hidden="true">📚</span>
+                        <span>Bibliografiya</span>
+                    </button>
+                </nav>
+            </div>
         </div>
     </section>
 
     <main class="ilm-page">
         <div class="ilm-page__inner">
-            <nav class="ilm-tabs" aria-label="Ilmiy arxiv bo'limlari">
-                <button class="tab-btn active" type="button" data-tab="maqolalar">Maqolalar</button>
-                <button class="tab-btn" type="button" data-tab="dissertatsiyalar">Dissertatsiyalar</button>
-                <button class="tab-btn" type="button" data-tab="tadqiqotlar">Ilmiy tadqiqotlar</button>
-                <button class="tab-btn" type="button" data-tab="lugat">Atamalar lug'ati</button>
-                <button class="tab-btn" type="button" data-tab="bibliografiya">Bibliografiya</button>
-            </nav>
-
+            <div class="ilm-content-shell">
             <!-- Maqolalar Tab -->
             <div class="tab-content active" data-tab="maqolalar">
                 <div class="filter-panel">
@@ -147,6 +171,7 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </main>
 
@@ -170,6 +195,6 @@
     <script src="components/footer.js"></script>
     <script src="assets/js/data.js"></script>
     <script src="assets/js/app.js"></script>
-    <script src="pages/ilmiy-page.js?v=3"></script>
+    <script src="pages/ilmiy-page.js?v=4"></script>
 </body>
 </html>

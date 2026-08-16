@@ -1,6 +1,7 @@
 /* ===================================
-   Hayoti — Digital Biography (Phase 10)
+   Hayoti — Academic Biography
    Scoped under .page-hayot
+   Manba: Karimov, 2003
    =================================== */
 
 .page-hayot {
@@ -148,19 +149,12 @@
     color: var(--hy-hero-quote-cite);
 }
 
-.page-hayot .hy-hero__stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.65rem 1.25rem;
-    margin-bottom: 1.35rem;
-    font-size: 0.875rem;
-    color: var(--hy-hero-stat-color);
-}
-
-.page-hayot .hy-hero__stat-num {
-    font-weight: 700;
-    color: var(--hy-hero-stat-num);
-    font-size: 1.0625rem;
+.page-hayot .hy-hero__source {
+    margin: 0 0 1.25rem;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--hy-hero-quote-cite);
+    max-width: 36rem;
 }
 
 .page-hayot .hy-hero__actions {
@@ -455,10 +449,14 @@
     box-shadow: var(--hy-shadow-soft);
 }
 
-.page-hayot .hy-stage-sep__icon {
-    font-size: 1.5rem;
-    line-height: 1;
+.page-hayot .hy-stage-sep__marker {
     flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    margin-top: 0.35rem;
+    border-radius: 50%;
+    background: var(--hy-gold);
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.25);
 }
 
 .page-hayot .hy-stage-sep__body {
@@ -663,7 +661,114 @@
     line-height: 1.55;
 }
 
-/* Facts */
+/* Info cards */
+.page-hayot .hy-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.page-hayot .hy-info-card {
+    background: var(--hy-card);
+    border: 1px solid var(--hy-border);
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+    box-shadow: var(--hy-shadow-soft);
+}
+
+.page-hayot .hy-info-card__title {
+    margin: 0 0 0.75rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--hy-navy);
+    line-height: 1.35;
+}
+
+.page-hayot .hy-info-card__body p {
+    margin: 0 0 0.75rem;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--hy-text);
+}
+
+.page-hayot .hy-info-card__body p:last-child {
+    margin-bottom: 0;
+}
+
+/* Muhim sanalar */
+.page-hayot .hy-dates {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.page-hayot .hy-date-card {
+    background: var(--hy-card);
+    border: 1px solid var(--hy-border);
+    border-left: 4px solid var(--hy-gold);
+    border-radius: 0 12px 12px 0;
+    padding: 1.15rem 1.25rem;
+    box-shadow: var(--hy-shadow-soft);
+}
+
+.page-hayot .hy-date-card__sana {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--hy-gold);
+}
+
+.page-hayot .hy-date-card__matn {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--hy-muted);
+}
+
+/* Xulosa */
+.page-hayot .hy-section--conclusion .hy-conclusion {
+    background: var(--hy-legacy-bg);
+    color: var(--hy-legacy-text);
+    border: 1px solid var(--hy-legacy-border);
+    border-radius: 12px;
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    box-shadow: var(--hy-shadow-soft);
+}
+
+.page-hayot .hy-conclusion__text {
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--hy-legacy-text);
+}
+
+.page-hayot .hy-conclusion__source {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--hy-legacy-source);
+    line-height: 1.55;
+}
+
+.page-hayot .hy-quote-card__type {
+    margin: 0 0 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--hy-gold);
+}
+
+.page-hayot .hy-quote-card__source {
+    margin: 0.15rem 0 0;
+    font-size: 0.75rem;
+    color: var(--hy-muted);
+    font-style: normal;
+}
+
+/* Facts (legacy, unused) */
 .page-hayot .hy-facts {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -1069,4 +1174,21 @@ body.dark-mode.page-hayot .hy-filter-btn {
 
 body.dark-mode.page-hayot .hy-fact--quote p {
     color: var(--hy-text);
+}
+
+body.dark-mode.page-hayot .hy-info-card__title,
+body.dark-mode.page-hayot .hy-info-card__body p {
+    color: var(--hy-text);
+}
+
+body.dark-mode.page-hayot .hy-date-card__matn {
+    color: var(--hy-muted);
+}
+
+body.dark-mode.page-hayot .hy-hero__source {
+    color: var(--hy-hero-quote-cite);
+}
+
+body.dark-mode.page-hayot .hy-conclusion__text {
+    color: var(--hy-legacy-text);
 }

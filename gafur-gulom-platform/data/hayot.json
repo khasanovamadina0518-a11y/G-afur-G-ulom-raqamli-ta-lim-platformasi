@@ -1,183 +1,300 @@
 {
-  "voqealar": [
+  "manba": "Karimov, Naim. G'afur G'ulom: Shoir hayoti va she'riy ijodiga bir nazar. — T.: G'. G'ulom nomidagi nashriyot-matbaa ijodiy mehnati, 2003. — 64 b.",
+  "hero": {
+    "kicker": "Akademik biografiya",
+    "yillar": "1903–1928",
+    "intro": "G'afur G'ulom kindik qoni to'kilgan joy — Toshkent shahri Shayxovandtahur dahasidagi Qo'rg'ontegi mahallasi. Ushbu biografiya bo'limi Karimov N. tomonidan yoritilgan hayot yo'lining 1903-yil tug'ilishidan 1928-yilgacha bo'lgan davrini qamrab oladi.",
+    "iqtibos": "Agar shoirni idrok etmoqchi bo'lsang, uning vataniga bor.",
+    "iqtibosManba": "Gyote (Karimov, 2003)"
+  },
+  "overview": [
     {
-      "yil": 1903,
-      "sarlavha": "Tug'ildi",
-      "qisqa": "1903-yil 10-may kuni Toshkent shahrida tavallud topdi.",
-      "batafsil": "G'afur G'ulom 1903-yil 10-may kuni Toshkent shahrida dehqonlar oilasida tug'ildi. Otasi savodli inson bo'lib, o'zbek va tojik mumtoz adabiyotini mutolaa qilgan, rus tilini ham bilgan va she'rlar yozgan. Ularning xonadoniga Muqimiy, Furqat, Asiriy, Xislat kabi mashhur shoirlar tez-tez tashrif buyurgan. Ana shunday adabiy muhit G'afur G'ulomning dunyoqarashi va ijodiy qiziqishlarining shakllanishida muhim o'rin tutgan.",
-      "bosqich": "yoshlik",
-      "rasm": ""
+      "id": "tugilish",
+      "label": "Tug'ilish",
+      "title": "Qo'rg'ontegi, 1903",
+      "text": "1903-yil 10-may, juma kuni, ertalab soat 6 da Toshkentning Qo'rg'ontegi mahallasida tug'ilgan.",
+      "scrollTo": "hy-event-1903"
     },
     {
-      "yil": 1909,
-      "sarlavha": "Maktabga borish",
-      "qisqa": "6 yoshida mahalla maktabiga o'qishga bordi. Arabcha va forscha o'qishni o'rgandi.",
-      "batafsil": "1909-yilda, 6 yoshida mahalla maktabiga o'qishga bordi. Bu yerda arabcha va forscha o'qishni o'rgandi, Qur'oni Karimni yod oldi. Maktabda o'qish davomida she'riyatga bo'lgan qiziqishi yanada kuchaydi. O'sha davr maktablarida an'anaviy ta'lim usullari qo'llanilgan bo'lsa-da, yosh G'afur o'z iqtidori bilan ajralib turardi.",
-      "bosqich": "yoshlik",
-      "rasm": ""
+      "id": "oila",
+      "label": "Oila",
+      "title": "G'ulom Mirza va Toshbibi",
+      "text": "Otasi G'ulom Mirza Orif o'g'li xatli-savodli mirza; onasi Toshbibi Shoyusuf qizi zehnli ayol.",
+      "scrollTo": "hy-event-1912"
     },
     {
-      "yil": 1905,
-      "sarlavha": "Rus-tuzem maktabida",
-      "qisqa": "Rus-tuzem maktabiga o'qishga kirdi. Rus tili, matematika va boshqa fanlarni o'rgandi.",
-      "batafsil": "1905-yilda Rus-tuzem maktabiga o'qishga kirdi. Bu maktabda rus tili, matematika, tarix, geografiya va boshqa fanlarni o'rgandi. Rus tilini mukammal o'zlashtirishi uning kelajakdagi adabiy faoliyatida muhim rol o'ynadi. Maktabda o'qish davomida rus va jahon adabiyoti bilan tanishdi, bu uning dunyoqarashini kengaytirdi.",
-      "bosqich": "yoshlik",
-      "rasm": ""
+      "id": "talim",
+      "label": "Ta'lim",
+      "title": "Maktab va madrasa",
+      "text": "Hasanboy domla maktabida Bedildan «Maslak»gacha; madrasada fors-tojik tilini o'rgangan.",
+      "scrollTo": "hy-bolalik"
     },
     {
-      "yil": 1924,
-      "sarlavha": "Birinchi she'rlari",
-      "qisqa": "21 yoshida birinchi she'rlarini yozdi. She'rlari mahalliy gazetalarda chop etila boshlandi.",
-      "batafsil": "1924-yilda, 21 yoshida birinchi she'rlarini yozdi va mahalliy gazetalarda chop ettirdi. Dastlabki she'rlari milliy uyg'onish g'oyalari va ijtimoiy adolat mavzulariga bag'ishlangan edi. Yosh shoir sifatida tez orada Toshkent adabiy muhitida tanildi. Uning she'rlari oddiy xalq tilida yozilgani va hayotiy mavzularni qamrab olgani uchun keng omma tomonidan qabul qilindi.",
-      "bosqich": "boshlanish",
-      "rasm": ""
+      "id": "mehnat",
+      "label": "Mehnat",
+      "title": "1918 — qiyin yillar",
+      "text": "Kosibchilik, tunukasozlik, aravakashlik va harf terish — tirikchilik yo'li.",
+      "scrollTo": "hy-event-1918"
     },
     {
-      "yil": 1917,
-      "sarlavha": "Inqilob davri",
-      "qisqa": "Oktabr inqilobi sodir bo'ldi. G'afur G'ulom yangi tuzumni qo'llab-quvvatladi.",
-      "batafsil": "1917-yilda Oktabr inqilobi sodir bo'ldi. G'afur G'ulom yangi tuzumni qo'llab-quvvatladi va faol ijtimoiy-siyosiy ishlar bilan shug'ullandi. U inqilobni xalq ozodligi va adolat yo'li deb bildi. Bu davrda yozgan she'rlari yangi hayot, yangi tuzum va xalq manfaatlari mavzulariga bag'ishlangan. Shoir sifatida u yangi davr g'oyalarini targ'ib qilishda faol ishtirok etdi.",
-      "bosqich": "boshlanish",
-      "rasm": ""
+      "id": "oqituvchilik",
+      "label": "O'qituvchilik",
+      "title": "1920 — muallim",
+      "text": "1920-yil 3-martda «Cho'lpon» maktabiga muallim etib tayinlangan.",
+      "scrollTo": "hy-event-1920-03"
     },
     {
-      "yil": 1920,
-      "sarlavha": "Jurnalist sifatida",
-      "qisqa": "Turli gazetalar va jurnallarda jurnalist va muharrir bo'lib ishladi.",
-      "batafsil": "1920-yillardan boshlab turli gazetalar va jurnallarda jurnalist va muharrir bo'lib ishladi. 'Ishtirokiyun', 'Qizil O'zbekiston' gazetalarida xizmat qildi. Jurnalistika faoliyati uning yozuvchilik mahoratini oshirdi va jamiyat hayotini yaqindan kuzatish imkonini berdi. Bu tajriba keyinchalik uning badiiy asarlariga boy material bo'ldi.",
-      "bosqich": "boshlanish",
-      "rasm": ""
-    },
-    {
-      "yil": 1925,
-      "sarlavha": "Birinchi to'plami",
-      "qisqa": "'Yillar sadosi' nomli birinchi she'riy to'plami nashr etildi.",
-      "batafsil": "1925-yilda 'Yillar sadosi' nomli birinchi she'riy to'plami nashr etildi. Bu to'plam katta muvaffaqiyat qozondi va G'afur G'ulomni yetuk shoir sifatida tan olishga sabab bo'ldi. To'plamda milliy g'urur, vatan sevgisi, mehnat ulug'lanishi mavzularidagi she'rlar jamlangan. Tanqidchilar to'plamni yuqori baholadilar va shoir kelajagi katta deb e'tirof etdilar.",
-      "bosqich": "boshlanish",
-      "rasm": ""
-    },
-    {
-      "yil": 1930,
-      "sarlavha": "Yozuvchilar uyushmasida",
-      "qisqa": "O'zbekiston Yozuvchilar uyushmasining a'zosi bo'ldi.",
-      "batafsil": "1930-yilda O'zbekiston Yozuvchilar uyushmasining a'zosi bo'ldi. Yosh yozuvchilarga ustoz va yo'lboshchi bo'ldi. Uyushmada faol ishtirok etib, o'zbek adabiyotini rivojlantirishga katta hissa qo'shdi. Bu davr uning ijodiy kamolotining eng muhim bosqichlaridan biri bo'ldi. U ko'plab yosh iste'dodlarni kashf etdi va ularni qo'llab-quvvatladi.",
-      "bosqich": "kamolot",
-      "rasm": ""
-    },
-    {
-      "yil": 1939,
-      "sarlavha": "'Shum bola' romani",
-      "qisqa": "Mashhur 'Shum bola' romani nashr etildi.",
-      "batafsil": "1939-yilda mashhur 'Shum bola' romani nashr etildi. Bu asar bolalar adabiyotida yangi sahifa ochdi va bir necha avlod bolalarining sevimli kitobi bo'ldi. Roman oddiy bola hayoti orqali jamiyat muammolarini ko'rsatadi. Asar o'zbek tilida yozilgan eng yaxshi bolalar asarlaridan biri hisoblanadi va hozirgacha o'z ahamiyatini yo'qotmagan.",
-      "bosqich": "kamolot",
-      "rasm": ""
-    },
-    {
-      "yil": 1941,
-      "sarlavha": "Urush boshlandi",
-      "qisqa": "Ikkinchi jahon urushi boshlandi. G'afur G'ulom frontga she'rlar yozdi.",
-      "batafsil": "1941-yilda Ikkinchi jahon urushi boshlandi. G'afur G'ulom urush yillarida frontga she'rlar yozdi, askarlarni ruhlantirdi. Uning urush davridagi she'rlari vatanparvarlik, jasorat va g'alaba ishonchi bilan to'lgan. Shoir urush yillarida ham ijodiy faolligini davom ettirdi va xalqni g'alabaga ishontirdi. Uning she'rlari frontda va orqada keng tarqaldi.",
-      "bosqich": "urush",
-      "rasm": ""
-    },
-    {
-      "yil": 1943,
-      "sarlavha": "Urush she'rlari",
-      "qisqa": "Urush mavzusidagi eng kuchli she'rlarini yaratdi.",
-      "batafsil": "1943-yilda urush mavzusidagi eng kuchli she'rlarini yaratdi. Bu she'rlar askarlarni ruhlantiruvchi, xalqni birlashtiruvchi kuchga ega edi. 'Seni kutaman', 'Vatan' kabi she'rlari millionlab odamlar tomonidan o'qildi. Shoir urush dahshatlarini va xalq azob-uqubatlarini chuqur his etib, buni she'riyatda ifodaladi. Uning urush davridagi ijodi o'zbek adabiyotining eng yorqin sahifalaridan biridir.",
-      "bosqich": "urush",
-      "rasm": ""
-    },
-    {
-      "yil": 1950,
-      "sarlavha": "Davlat mukofoti",
-      "qisqa": "O'zbekiston SSR Davlat mukofoti laureati unvoniga sazovor bo'ldi.",
-      "batafsil": "1950-yilda O'zbekiston SSR Davlat mukofoti laureati unvoniga sazovor bo'ldi. Adabiyotga qo'shgan ulkan hissasi rasman e'tirof etildi. Bu mukofot uning ko'p yillik mehnati va ijodiy yutuqlarining natijasi edi. Shoir o'zbek adabiyotini yangi bosqichga ko'targanligini isbotladi. Mukofot olish marosimi respublika miqyosida nishonlandi.",
-      "bosqich": "songgi",
-      "rasm": ""
-    },
-    {
-      "yil": 1960,
-      "sarlavha": "Xalq shoiri",
-      "qisqa": "O'zbekiston xalq shoiri unvoniga sazovor bo'ldi.",
-      "batafsil": "1960-yilda O'zbekiston xalq shoiri unvoniga sazovor bo'ldi. Bu eng yuksak adabiy unvon edi va shoir faoliyatining eng yuqori e'tirofi hisoblanadi. Xalq shoiri unvoni uning xalq bilan uzviy bog'liqligini, she'riyatining xalq qalbiga singib ketganligini tasdiqladi. Bu voqea butun respublikada katta bayram sifatida nishonlandi.",
-      "bosqich": "songgi",
-      "rasm": ""
-    },
-    {
-      "yil": 1965,
-      "sarlavha": "Yubileyi",
-      "qisqa": "62 yoshlik yubileyi keng nishonlandi.",
-      "batafsil": "1965-yilda 62 yoshlik yubileyi keng nishonlandi. Butun respublikada tadbirlar o'tkazildi, shoir sharafiga kechalar uyushtirildi. Yubilеy munosabati bilan yangi asarlari nashr etildi, televizion dasturlar tayyorlandi. Yosh avlod shoir bilan uchrashuvlar o'tkazdi. Bu voqea o'zbek madaniyati hayotida muhim hodisa bo'ldi.",
-      "bosqich": "songgi",
-      "rasm": ""
-    },
-    {
-      "yil": 1966,
-      "sarlavha": "Vafoti",
-      "qisqa": "1966-yil 10-iyulda Toshkentda vafot etdi.",
-      "batafsil": "1966-yil 10-iyulda Toshkentda vafot etdi. Butun O'zbekiston qayg'uga botdi. Dafn marosimi respublika miqyosida o'tkazildi. Shoir Botir shahridagi Yozuvchilar xiyoboniga dafn etildi. Umri 63 yil bo'ldi. G'afur G'ulom o'zbek adabiyotiga boy meros qoldirdi - yuzlab she'rlar, dostonlar, romanlar va hikoyalar. Uning asarlari bugungi kunda ham o'qiladi va sevib o'rganiladi.",
-      "bosqich": "songgi",
-      "rasm": ""
+      "id": "gazetachilik",
+      "label": "Gazetachilik",
+      "title": "1924–1928",
+      "text": "1924-yildan gazetalarda muntazam chop etish; 1928-yil 15-sentabr «Qizil O'zbekiston» gazetasiga.",
+      "scrollTo": "hy-event-1928"
     }
   ],
   "bosqichlar": {
-    "yoshlik": {
-      "yillar": "1903-1924",
-      "sarlavha": "Yoshlik yillari",
-      "matn": "G'afur G'ulom 1903-yil 10-may kuni Toshkent shahrida dehqonlar oilasida tug'ildi. Bolalik va yoshlik yillari kambag'allik va mashaqqatda o'tdi, ammo bu uning ruhiy kamolotiga to'sqinlik qilmadi.\n\nDastlab mahalla maktabida, keyin rus-tuzem maktabida ta'lim oldi. Bu ikki xil ta'lim tizimi unga sharq va g'arb madaniyatlarini bir vaqtning o'zida o'rganish imkonini berdi. Arabcha, forscha va rus tillarini mukammal egalladi.\n\nYoshlik yillarida kitobxonlik va she'riyatga qiziqishi kuchaydi. Sharq klassiklari va rus adabiyoti namoyandalarining asarlarini o'qidi. Bu davr uning kelajakdagi ijodiy yo'lini belgilab berdi.",
-      "asarlar": ["Dastlabki she'rlar", "Yoshlik qo'shiqlar"]
+    "tugilish_oila": {
+      "yillar": "1903–1912",
+      "sarlavha": "Tug'ilish va oila",
+      "matn": "G'afur G'ulom 1903-yil 10-may kuni Qo'rg'ontegi mahallasida dunyoga kelgan. Tug'ilgan paytda otasi G'ulom Mirza Orif o'g'li 35 yoshda, onasi Toshbibi Shoyusuf qizi 21 yoshda bo'lgan. Tanglayini buvisi Xayriniso ko'targan.\n\nOtasi 1908-yilgacha shahar dumaxonasining mahalliy bo'limida mirzalik qilgan, so'ng Qoplonbek mavzesidagi yerlarida dehqonchilik bilan shug'ullangan. 1912 yil bahorida G'ulom Mirza 44 yoshida vafot etib, oltita yetimni qoldirgan."
     },
-    "boshlanish": {
-      "yillar": "1924-1930",
-      "sarlavha": "Ijodiy faoliyat boshlanishi",
-      "matn": "1924-yilda birinchi she'rlarini yozdi va mahalliy gazetalarda chop ettirdi. Dastlabki she'rlari milliy uyg'onish g'oyalari va ijtimoiy adolat mavzulariga bag'ishlangan edi.\n\n1917-yil inqilobi G'afur G'ulom hayotida muhim voqea bo'ldi. U yangi tuzumni qo'llab-quvvatladi va faol ijtimoiy-siyosiy ishlar bilan shug'ullandi. 1920-yillardan boshlab turli gazetalar va jurnallarda jurnalist va muharrir bo'lib ishladi.\n\n1925-yilda 'Yillar sadosi' nomli birinchi she'riy to'plami nashr etildi. Bu to'plam katta muvaffaqiyat qozondi va G'afur G'ulomni yetuk shoir sifatida tan olishga sabab bo'ldi.",
-      "asarlar": ["Yillar sadosi", "Yangi yo'l", "Qizil bayroq"]
+    "yetimlik": {
+      "yillar": "1912–1918",
+      "sarlavha": "Yetimlik va qiyinchiliklar",
+      "matn": "Otasi vafotidan keyin Rixsi qori yetimlarga murabbiy bo'lib qolgan. Birinchi jahon urushi boshlanishi bilan narx-navo ko'tarilib, oila turmushi og'irlashgan.\n\nG'afur G'ulom «Hayot» maktabida o'qigan, keyin butun oila tirikchilik uchun mehnat qilgan. O'rik, olma, bodring sotish, tamaki fabrikasida ishlash, ochlik va qimmatchilik yillari boshlangan. Onasi vafot etgan, akasi kasallangan."
     },
-    "kamolot": {
-      "yillar": "1930-1941",
-      "sarlavha": "Ijodiy kamolot davri",
-      "matn": "1930-yilda O'zbekiston Yozuvchilar uyushmasining a'zosi bo'ldi. Bu davr uning ijodiy kamolotining eng muhim bosqichlaridan biri bo'ldi. Yosh yozuvchilarga ustoz va yo'lboshchi bo'ldi.\n\nBu davrda G'afur G'ulom nafaqat shoir, balki nasrchi sifatida ham o'zini namoyon etdi. 1939-yilda mashhur 'Shum bola' romani nashr etildi. Bu asar bolalar adabiyotida yangi sahifa ochdi.\n\nShu yillarda u ko'plab she'rlar, dostonlar va hikoyalar yozdi. Uning asarlari xalq orasida keng tarqaldi va sevib o'qildi. Shoir o'zbek adabiyotining yetakchi namoyandalaridan biriga aylandi.",
-      "asarlar": ["Shum bola", "Yulduz", "Bahor", "Mehnat qo'shiqlari"]
+    "mehnat_kasb": {
+      "yillar": "1918–1920",
+      "sarlavha": "Mehnat va kasb o'rganish",
+      "matn": "1918-yilda G'afur G'ulom usta Mirazizga shogird bo'lib kosibchilikni o'rgangan. Kosibchilik tirikchilikka yetmagach, akasi bilan tunukasozlik, keyin aravakashlik va harf terish bilan shug'ullangan.\n\nHarf terishni o'rgatgan bosmaxona ishchisi Abdurahmon Sahiboev unga o'qituvchilarni tayyorlash kurslariga borishni maslahat bergan. Bir necha kundan so'ng u sakkiz oylik kursga qatnashgan."
     },
-    "urush": {
-      "yillar": "1941-1945",
-      "sarlavha": "Urush yillari",
-      "matn": "Ikkinchi jahon urushi boshlanganda G'afur G'ulom 52 yoshda edi. Yoshiga qaramay, u urush yillarida juda faol ijod qildi va frontga she'rlar yozdi.\n\nUning urush davridagi she'rlari vatanparvarlik, jasorat va g'alaba ishonchi bilan to'lgan. 'Seni kutaman', 'Vatan' kabi she'rlari millionlab odamlar tomonidan o'qildi va askarlarni ruhlantirdi.\n\nUrush yillarida ham shoir xalq bilan birga edi. U orqadagi mehnatchilarni ham, frontdagi askarlarni ham she'rlari bilan qo'llab-quvvatladi. Uning urush davridagi ijodi o'zbek adabiyotining eng yorqin sahifalaridan biridir.",
-      "asarlar": ["Seni kutaman", "Vatan", "G'alaba", "Qahramonlar"]
+    "oqituvchilik": {
+      "yillar": "1920–1924",
+      "sarlavha": "O'qituvchilik boshlanishi",
+      "matn": "Muallimlarni tayyorlash kursini tugatgach, 1920-yil 3-martda Bodak mahallasidagi «Cho'lpon» maktabiga muallim etib tayinlangan.\n\n1920-yilda 3-boqimsiz bolalar uyiga mudir, yetti yillik «Urfon» maktabiga mudir etib tayinlangan. 1924-yil avgustida «Hayot» maktabiga muallim bo'lib o'tgan, undan «Umid» musiqa texnikumiga ko'chgan."
     },
-    "songgi": {
-      "yillar": "1945-1966",
-      "sarlavha": "So'nggi yillar",
-      "matn": "Urushdan keyin G'afur G'ulom ijodiy faolligini davom ettirdi. 1950-yilda O'zbekiston SSR Davlat mukofoti laureati, 1960-yilda esa O'zbekiston xalq shoiri unvoniga sazovor bo'ldi.\n\nBu yillarda u ko'plab yangi asarlar yaratdi, xotira asarlari yozdi. Yosh avlod yozuvchilariga ustoz bo'ldi va o'zbek adabiyotini rivojlantirishga katta hissa qo'shdi.\n\n1966-yil 10-iyulda Toshkentda vafot etdi. G'afur G'ulom o'zbek adabiyotiga boy meros qoldirdi - yuzlab she'rlar, dostonlar, romanlar va hikoyalar. Uning asarlari bugungi kunda ham o'qiladi va sevib o'rganiladi.",
-      "asarlar": ["Xotiralar", "Hayot yo'llari", "Oxirgi she'rlar", "Nasihatlar"]
+    "gazetachilik": {
+      "yillar": "1924–1928",
+      "sarlavha": "Gazetachilik va dastlabki ijod",
+      "matn": "1924 yildan boshlab turli gazetalarda muntazam chop etish boshlangan. «Shoirlik nosqovog'idan bir otim» maqolasi «Mushtum»ga yuborilgan va chop etilgan.\n\n1928-yil 15-sentabrdan «Qizil O'zbekiston» gazetasiga ishga o'tgan va «Kambag'al dehqon» gazetasining mas'ul kotibi etib belgilangan."
     }
   },
+  "bosqichTartibi": ["tugilish_oila", "yetimlik", "mehnat_kasb", "oqituvchilik", "gazetachilik"],
+  "voqealar": [
+    {
+      "id": "1903",
+      "yil": 1903,
+      "sarlavha": "Tug'ilish",
+      "qisqa": "1903-yil 10-may, juma, ertalab soat 6 da Qo'rg'ontegi mahallasida tug'ilgan.",
+      "batafsil": "G'afur G'ulom 1903-yil 10-may kuni, juma kuni, ertalab soat 6 da Toshkentning Qo'rg'ontegi mahallasida chaqaloqlarga xos chinqirig'i bilan dunyoga kelgan. Tug'ilgan paytda otasi G'ulom Mirza Orif o'g'li 35 yoshda, onasi Toshbibi Shoyusuf qizi 21 yoshda bo'lgan. Tanglayini buvisi Xayriniso ko'targan.",
+      "bosqich": "tugilish_oila"
+    },
+    {
+      "id": "1908",
+      "yil": 1908,
+      "sarlavha": "Otasi dehqonchilikka o'tadi",
+      "qisqa": "Otasi 1908-yilgacha mirzalik qilgan, so'ng Qoplonbekda dehqonchilik bilan shug'ullangan.",
+      "batafsil": "G'afur G'ulomning otasi xatli-savodli bo'lib, 1908-yilgacha shahar dumaxonasining mahalliy bo'limida mirzalik qilgan. So'ng Keles atrofidagi Qoplonbek mavzesidagi to'qqiz tanob yerida bug'doy, jo'xori, mosh ekish-yig'ish bilan mashg'ul bo'lgan.",
+      "bosqich": "tugilish_oila"
+    },
+    {
+      "id": "1912",
+      "yil": 1912,
+      "sarlavha": "Otasi vafot etadi",
+      "qisqa": "1912 yil bahorida G'ulom Mirza 44 yoshida vafot etib, oltita yetim qoldirgan.",
+      "batafsil": "1912 yilning ko'klamida G'ulom Mirza kasallikka chalinib, bir necha kun yo'talib yurgan va arzimagan shamollash orqasida qirq to'rt yoshida Qo'rg'ontegi mahallasidagi hovlisida oltita yetimni orqasida qoldirib, vafot etgan. Rixsi qori yetimlarga murabbiy bo'lib qolgan.",
+      "bosqich": "tugilish_oila"
+    },
+    {
+      "id": "1918",
+      "yil": 1918,
+      "sarlavha": "Mehnat yillari",
+      "qisqa": "Kosibchilik, tunukasozlik, aravakashlik va harf terish bilan shug'ullangan.",
+      "batafsil": "1918-yilda G'afur G'ulom mahallasidagi usta Mirazizga shogird bo'lib, kosibchilikni o'rgangan. Kosibchilik bilan ham tirikchilik o'tmagach, akasi bilan tunukasozlik bilan mashg'ul bo'lgan. Keyin aravakashlik, so'ngra harf terishlik bilan band bo'lgan.",
+      "bosqich": "mehnat_kasb"
+    },
+    {
+      "id": "1920-03",
+      "yil": 1920,
+      "sarlavha": "«Cho'lpon» maktabiga muallim",
+      "qisqa": "1920-yil 3-martda Bodak mahallasidagi «Cho'lpon» maktabiga muallim etib tayinlangan.",
+      "batafsil": "Muallimlarni tayyorlash kurslarini tugatgach, 1920-yilning 3-martida Bodak mahallasidagi «Cho'lpon» maktabiga muallim etib tayinlangan.",
+      "bosqich": "oqituvchilik"
+    },
+    {
+      "id": "1920",
+      "yil": 1920,
+      "sarlavha": "Boshqa lavozimlar",
+      "qisqa": "3-boqimsiz bolalar uyi mudiri va «Urfon» maktabi mudiri etib tayinlangan.",
+      "batafsil": "1920-yilda 3-boqimsiz bolalar uyiga mudir etib tayinlangan. Ayni paytda yetti yillik «Urfon» maktabining mudirligi ham uning zimmasiga tushgan.",
+      "bosqich": "oqituvchilik"
+    },
+    {
+      "id": "1924-08",
+      "yil": 1924,
+      "sarlavha": "«Hayot» maktabiga muallim",
+      "qisqa": "1924-yil avgustida «Hayot» maktabiga muallim, keyin «Umid» musiqa texnikumiga o'tgan.",
+      "batafsil": "1924-yil avgustida «Hayot» maktabiga muallim bo'lib o'tgan, undan «Umid» musiqa texnikumiga ko'chgan.",
+      "bosqich": "oqituvchilik"
+    },
+    {
+      "id": "1924",
+      "yil": 1924,
+      "sarlavha": "Gazetalarda chop etish",
+      "qisqa": "1924 yildan e'tiboran turli gazetalarda muntazam chop etish boshlangan.",
+      "batafsil": "G'afur G'ulomning turli gazetalardagi chiqishlari 1924 yildan e'tiboran qizg'in va muntazam tus olgan.",
+      "bosqich": "gazetachilik"
+    },
+    {
+      "id": "1928",
+      "yil": 1928,
+      "sarlavha": "«Qizil O'zbekiston» gazetasiga",
+      "qisqa": "1928-yil 15-sentabrdan «Qizil O'zbekiston» va «Kambag'al dehqon» gazetalarida ishlagan.",
+      "batafsil": "1928-yil 15-sentabrdan boshlab G'afur G'ulom «Qizil O'zbekiston» gazetasiga ishga o'tgan va «Kambag'al dehqon» gazetasining mas'ul kotibi etib belgilangan.",
+      "bosqich": "gazetachilik"
+    }
+  ],
+  "bolalik": {
+    "sarlavha": "Bolalik va ta'lim",
+    "lead": "Qo'rg'ontegi mahallasi, maktablar va dastlabki ta'lim",
+    "bolimlar": [
+      {
+        "sarlavha": "Qo'rg'ontegi mahallasi",
+        "matn": "Qo'rg'ontegi Shayxovandtahur dahasidagi mahalla bo'lib, shahar devoriga tutashgani uchun shunday nom olgan. Aholisi asosan o'zbeklardan iborat bo'lib, kosibchilik, savdo-sotiq va dehqonchilik bilan shug'ullangan.\n\nMahallada qadimda qo'rg'on bo'lgan, atrofida uy-joylar vujudga kelgan. Janub tomonda anhor irmog'i oqgan; shoir bolaligida shu yerda cho'milgan."
+      },
+      {
+        "sarlavha": "Hasanboy domla maktabi",
+        "matn": "Qo'rg'ontegidagi erlar maktabining muallimi Hasanboy domla G'afur G'ulomga alifbeni o'rgatgan hurmatli muallim bo'lgan. Qizlar maktabining otinoyisi Xayriniso — shoirning tuqqan bibisi (otamning onasi) bo'lgan.\n\nO'n mahalladan uch maktabda 103 chog'lik bola o'qigan."
+      },
+      {
+        "sarlavha": "Bedil va «Maslak»",
+        "matn": "G'afur G'ulom Hasanboy domlaning maktabida Bedildan «Maslak»gacha o'qib, uni ham tugatgan. Mahallalik Abdurahmon pari deb atalgan bola o'n olti yoshda ham «Haftiyak»dan nariga o'ta olmaganini inobatga olsak, G'afurning ziyrak va zukko bola ekanligi oydinlashadi."
+      },
+      {
+        "sarlavha": "Madrasa va fors-tojik ta'limi",
+        "matn": "G'afur G'ulom fors va arab tillaridan xabardor bo'lgan, ayniqsa fors-tojik tilini yaxshi bilgan. Buni u mahallasidagi Hasanboy domlaning madrasasida o'qigan va fors-tojik tilini shu yerda puxta o'rganib chiqqani bilan izohlash mumkin.\n\nShoirning Oybekka bag'ishlangan maqolasida: «Oybek Degrez maktabida, men Qo'rg'ontegi maktabida boshlang'ich eski tahsilni oldik. Keyin u Hamyna maktabiga, men Hayot maktabiga kirdim.» «Eski tahsil» deganda madrasa ta'limi nazarda tutilgan."
+      },
+      {
+        "sarlavha": "«Hayot» maktabi",
+        "matn": "Birinchi jahon urushi davrida G'afur G'ulom Mulla Muborakning bolalari qatori O'qchidagi «Hayot» maktabiga qatnab, Toshkent jadidlaridan saboq olgan. Maktabda bir yil o'qigan yoki yo'qligi aniq emas."
+      }
+    ]
+  },
+  "oila": {
+    "sarlavha": "Oila va adabiy muhit",
+    "lead": "Oilaviy shajara, ota-onasi va mahalladagi intellektual muhit",
+    "bolimlar": [
+      {
+        "sarlavha": "Ota-onasi",
+        "matn": "Otasi G'ulom Mirza Orif o'g'li xatli-savodli, o'zbekcha va tojikchani yaxshi bilgan, uncha-muncha ruscha ham so'zlashgan. Shahar ichida kishilarga ariza, spravkalar yozib bergani uchun «Mirza» laqabi qo'shilgan.\n\nOnasi Toshbibi Shoyusuf qizi o'zbek va tojik tillaridagi g'azallarni o'qib, anglay oladigan zehnli ayol bo'lgan. Erining vafotiga bag'ishlab marsiya ham yozgan."
+      },
+      {
+        "sarlavha": "Buvi Xayriniso",
+        "matn": "Xayriniso — shoirning tuqqan bibisi, qizlar maktabining otinoyisi bo'lgan. Keng, xushfevl ayol: o'n sakkiz o'g'li, bir qizi vafot etganda ham «Dod!» demagan, yetim nabiralar va o'quvchi qizlar bilan yashagan."
+      },
+      {
+        "sarlavha": "Oilaviy shajara",
+        "matn": "Qo'rg'ontegi mahallasidagi bir hovlda Rahmatilla va G'ulom Mirza aka-ukalar yashagan. Rahmatilladan Husan (Hamidulla Husanovning otasi), G'ulom Mirzadan Savriniso, G'afur, Rahbarniso, Bahriniso tug'ilgan.\n\nG'ulom Mirza vafot etgach, oilaga Husan aka boshliq bo'lgan. Bir hovli, bir qozon, bir ko'rpa ostida yashagan bolalar G'afur G'ulomni «aka» deb atashgan."
+      },
+      {
+        "sarlavha": "Otasining adabiy muhiti",
+        "matn": "Otasi adabiyot bilan juda qiziqar ekan. Uyga o'zbek shoirlari va xattotlaridan Xislat, Shomurod kotib kelib yurgan. Farg'ona vodiysidan Muqimiy, Toshxo'ja Asiriy, Furqat, Muhoyi kabi shoirlar tez-tez tashrif buyurgan.\n\nOtasi «Mirza» va «G'ulom» taxalluslari bilan she'rlar yozgan. Amakisi Mirza Abdulla «Bayozi Mirzo» kitobini 1913-yilda «G'ulomiya» bosmaxonasida chop etgan."
+      },
+      {
+        "sarlavha": "Mahalladagi adabiy muhit",
+        "matn": "Xadra atrofidagi mahallalarda Oybek (Muso), Ziyo Said, Oydin opa, G'ayratiy (Abdurahim), fan doktori Asqarov, fan doktori Najmiddinov, Abror Hidoyatov va G'afur G'ulom tug'ilgan."
+      },
+      {
+        "sarlavha": "Hamidulla Husanov xotiralari",
+        "matn": "Jiyan Hamidulla Husanov G'afur G'ulom haqida ko'p xotiralarni qoldirgan. Ular oilaviy birgalikda yashash, G'afur akamning shajaralar va o'tmish tarixini yaxshi bilishi, chin va mehribon inson sifatida yodga olinishi haqida.\n\nHamidulla Husanov urushni tibbiy xizmat kapitani lavozimida tugatib, G'afur G'ulomga Germaniyadan olib kelgan o'lja soatni hadya qilgan. Shoirning «Vaqt» asari shu inson nomi bilan bog'liq."
+      }
+    ]
+  },
+  "mehnat": {
+    "sarlavha": "Mehnat va o'qituvchilik",
+    "lead": "1918-yildagi kasblar va 1920-yillardagi pedagogik faoliyat",
+    "bolimlar": [
+      {
+        "sarlavha": "1918 — kasblar",
+        "matn": "1918-yilda usta Mirazizga shogird bo'lib kosibchilikni o'rgangan. Keyin tunukasozlik, aravakashlik va harf terish bilan shug'ullangan.\n\nHarf terishni o'rgatgan Abdurahmon Sahiboev unga o'qituvchilarni tayyorlash kurslariga borishni maslahat bergan."
+      },
+      {
+        "sarlavha": "1920-yil 3-mart — «Cho'lpon» maktabi",
+        "matn": "Sakkiz oylik muallimlarni tayyorlash kursini tugatgach, 1920-yil 3-martda Bodak mahallasidagi «Cho'lpon» maktabiga muallim etib tayinlangan."
+      },
+      {
+        "sarlavha": "1920 — boshqa lavozimlar",
+        "matn": "1920-yilda 3-boqimsiz bolalar uyiga mudir etib tayinlangan. Ayni paytda yetti yillik «Urfon» maktabining mudirligi ham uning zimmasiga tushgan."
+      },
+      {
+        "sarlavha": "1924-yil avgust — «Hayot» maktabi",
+        "matn": "1924-yil avgustida «Hayot» maktabiga muallim bo'lib o'tgan, undan «Umid» musiqa texnikumiga ko'chgan."
+      }
+    ]
+  },
+  "ijod": {
+    "sarlavha": "Dastlabki ijod va gazetachilik",
+    "lead": "1924–1928 yillardagi matbuot faoliyati",
+    "bolimlar": [
+      {
+        "sarlavha": "1924-yildan muntazam chop etish",
+        "matn": "G'afur G'ulomning turli gazetalardagi chiqishlari 1924 yildan e'tiboran qizg'in va muntazam tus olgan."
+      },
+      {
+        "sarlavha": "1928-yil 15-sentabr",
+        "matn": "1928-yil 15-sentabrdan boshlab «Qizil O'zbekiston» gazetasiga ishga o'tgan va «Kambag'al dehqon» gazetasining mas'ul kotibi etib belgilangan."
+      },
+      {
+        "sarlavha": "«Shoirlik nosqovog'idan bir otim»",
+        "matn": "«Shoirlik nosqovog'idan bir otim» maqolasi «Mushtum»ga yuborilgan. Toshkent yo'qsil yozuvchilari uyushmasida Ziyod Said bilan uchrashganda maqolaning «Mushtum»da chiqishini aytgan. Ko'p o'tmay maqola chop etilib, bo'lajak shoirning ishlari yurishib ketgan."
+      },
+      {
+        "sarlavha": "Boshqa dastlabki asarlar",
+        "matn": "Manbada tilga olingan boshqa asarlar: «Ona» she'ri (tug'ilish haqida), Qo'rg'ontegi haqidagi she'r (XX asr 20-yillari manzarasi), «Kechmish va kechirmishlarim» tarjimai holi, «Abdurahim G'ayratiy degan o'rtog'im to'g'risida» va «Sarhisob» (1962) maqolalari."
+      }
+    ]
+  },
+  "sanalar": [
+    { "sana": "1903, 10-may", "matn": "Qo'rg'ontegi mahallasida tug'ilish (juma, soat 6)" },
+    { "sana": "1908", "matn": "Otasi mirzalikdan ketib, Qoplonbekda dehqonchilik qilgan" },
+    { "sana": "1912, bahor", "matn": "Otasi G'ulom Mirza 44 yoshida vafot etgan" },
+    { "sana": "1918", "matn": "Kosibchilik, tunukasozlik, aravakashlik, harf terish" },
+    { "sana": "1920, 3-mart", "matn": "«Cho'lpon» maktabiga muallim etib tayinlangan" },
+    { "sana": "1920", "matn": "3-boqimsiz bolalar uyi va «Urfon» maktabi mudiri" },
+    { "sana": "1924, avgust", "matn": "«Hayot» maktabiga muallim; «Umid» texnikumiga o'tish" },
+    { "sana": "1924+", "matn": "Turli gazetalarda muntazam chop etish boshlangan" },
+    { "sana": "1928, 15-sentabr", "matn": "«Qizil O'zbekiston» va «Kambag'al dehqon» gazetalarida ishlash" }
+  ],
   "xotiralar": [
     {
-      "muallif": "Oybek",
-      "yil": 1960,
-      "matn": "G'afur G'ulom - o'zbek she'riyatining buyuk ustozi. Uning she'rlari xalq qalbiga singib ketgan, har bir misrasi hayot haqiqatini aks ettiradi."
+      "turi": "xotira",
+      "muallif": "Hamidulla Husanov",
+      "manba": "Karimov, 2003",
+      "matn": "G'afur akam uzoq va yaqin o'tmish tarixini, shajaralar, sulolalarni yaxshi bilar va maroq bilan so'zlar edi. Bir hovli, bir qozondan ovqat ichib, bir ko'rpa ostida katta bo'lganimizdan G'afur G'ulomni «aka» deb atardik."
     },
     {
-      "muallif": "Hamid Olimjon",
-      "yil": 1955,
-      "matn": "G'afur aka bizning ustoz va yo'lboshchimiz edi. Undan she'r yozishni emas, balki hayotni sevishni o'rgandik."
+      "turi": "xotira",
+      "muallif": "Hamidulla Husanov",
+      "manba": "Karimov, 2003",
+      "matn": "Qadimda shu yerda qo'rg'on bo'lgan, atrofida uy-joylar vujudga kelgan. «Qayerda turasan?» degan savolga «Qo'rg'ontegida», deb javob berishgan."
     },
     {
-      "muallif": "Abdulla Qahhor",
-      "yil": 1965,
-      "matn": "G'afur G'ulom bilan birga ishlash baxt edi. U nafaqat buyuk shoir, balki ajoyib inson, samimiy do'st edi."
+      "turi": "iqtibos",
+      "muallif": "G'afur G'ulom",
+      "manba": "«Ona» she'ri (Karimov, 2003)",
+      "matn": "Tug'ilgan damimni eslay olmayman, / Tashakkur deyilsa arzigulik tong. / Tanglayim ko'targan bibim bechora / Kim edi, bilmayman, o'lgandir, esiz."
     },
     {
-      "muallif": "Uyg'un",
-      "yil": 1958,
-      "matn": "G'afur G'ulomning she'rlari - bu xalq qalbi. U xalq bilan birga yashadi, xalq uchun yozdi."
+      "turi": "sher",
+      "muallif": "G'afur G'ulom",
+      "manba": "Qo'rg'ontegi she'ri (Karimov, 2003)",
+      "matn": "Qo'rg'ontegi ajoyib, xo'b chingiling mahalla, / Biri biriga qarshi, xuddi tarozi palla. / Bu she'r XX asrning 20-yillaridagi mahalla manzarasini aks ettiradi."
     },
     {
-      "muallif": "Mirtemir",
-      "yil": 1966,
-      "matn": "G'afur aka ketdi, lekin uning she'rlari abadiy qoladi. U o'zbek adabiyotiga boy meros qoldirdi."
+      "turi": "iqtibos",
+      "muallif": "G'afur G'ulom",
+      "manba": "«Kechmish va kechirmishlarim» (Karimov, 2003)",
+      "matn": "Men mana shu kundan boshlab chin hayot ko'chasiga kiraman. Ochlik, qimmatchilik yillari boshlanadi."
     }
-  ]
+  ],
+  "xulosa": "G'afur G'ulomning mashaqqatli hayot yo'liga bu qadar keng to'xtalishning sababi — birinchidan, XX asr boshlarida tug'ilgan oddiy, kambag'al kishilardan birining turmush so'qmoqlarida yo'qolmay, xalq irodasi, aql-zakovati va yuksak iste'dodining timsoli darajasiga erishganini; ikkinchidan, uning xalqchil va falsafiy ijodi ildizlarini; uchinchidan, uni oddiy xalq hayoti bilan bog'lagan uzilmas rishtalarni ko'rsatishdir."
 }

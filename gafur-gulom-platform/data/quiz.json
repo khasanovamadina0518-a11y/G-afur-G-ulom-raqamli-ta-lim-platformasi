@@ -120,7 +120,7 @@
     {
       "id": 14,
       "savol": "G'afur G'ulomning qaysi she'ri Vatan sevgisiga bag'ishlangan?",
-      "variantlar": ["Yomg'ir", "Seni ko'rmay", "Mehnat", "Bahor"],
+      "variantlar": ["Kuzatish", "Bari seniki", "Men yaxudiyman", "Sen yetim emassan"],
       "togri": 1,
       "daraja": "oson",
       "mavzu": "asarlar",
@@ -174,7 +174,7 @@
     {
       "id": 20,
       "savol": "G'afur G'ulomning qaysi she'ri tabiatga bag'ishlangan?",
-      "variantlar": ["Ona", "Yomg'ir", "Mehnat", "Kitob"],
+      "variantlar": ["Sog'inish", "Kuzatish", "Men yaxudiyman", "Chin arafa"],
       "togri": 1,
       "daraja": "oson",
       "mavzu": "asarlar",
@@ -245,8 +245,8 @@
     },
     {
       "id": 28,
-      "savol": "G'afur G'ulomning 'Mehnat' she'ri qaysi mavzuga bag'ishlangan?",
-      "variantlar": ["Vatan", "Mehnat ulug'lanishi", "Tabiat", "Do'stlik"],
+      "savol": "G'afur G'ulomning 'Men yaxudiyman' she'ri qaysi mavzuga bag'ishlangan?",
+      "variantlar": ["Vatan", "Insonlik va fashizmga qarshilik", "Tabiat", "Do'stlik"],
       "togri": 1,
       "daraja": "oson",
       "mavzu": "asarlar",
@@ -272,9 +272,9 @@
     },
     {
       "id": 31,
-      "savol": "'Kitob' she'rida nima haqida so'z boradi?",
-      "variantlar": ["Vatan", "Bilim va ma'rifat", "Mehnat", "Sevgi"],
-      "togri": 1,
+      "savol": "'Bizning ko'chada ham bayram bo'lajak' she'rida nima haqida so'z boradi?",
+      "variantlar": ["G'alaba va bayram kutish", "Bilim va ma'rifat", "Tabiat go'zelligi", "Do'stlik qadri"],
+      "togri": 0,
       "daraja": "oson",
       "mavzu": "asarlar",
       "sinf": "umumiy"
@@ -299,9 +299,9 @@
     },
     {
       "id": 34,
-      "savol": "'O'zbekiston' she'ri qaysi mavzuga bag'ishlangan?",
-      "variantlar": ["Tabiat", "Vatan", "Mehnat", "Do'stlik"],
-      "togri": 1,
+      "savol": "'Avval o'qi' she'ri nima haqida so'z boradi?",
+      "variantlar": ["Ta'lim va bilimga chaqiruv", "Vatan sevgisi", "Tabiat go'zelligi", "Urush qahramonlari"],
+      "togri": 0,
       "daraja": "oson",
       "mavzu": "asarlar",
       "sinf": "umumiy"
@@ -317,9 +317,9 @@
     },
     {
       "id": 36,
-      "savol": "'Bahor' she'rida qaysi fasl tasvirlangan?",
-      "variantlar": ["Qish", "Bahor", "Yoz", "Kuz"],
-      "togri": 1,
+      "savol": "'Sen yetim emassan' she'ri kimga bag'ishlangan?",
+      "variantlar": ["Urushda ota-onasiz qolgan go'daklarga", "Frontdagi askarlarga", "Maktab o'quvchilariga", "Dehqonlarga"],
+      "togri": 0,
       "daraja": "oson",
       "mavzu": "asarlar",
       "sinf": "umumiy"
@@ -335,9 +335,9 @@
     },
     {
       "id": 38,
-      "savol": "G'afur G'ulomning 'Ona' she'ri kimga bag'ishlangan?",
-      "variantlar": ["Vatanga", "Onaga", "Do'stga", "O'qituvchiga"],
-      "togri": 1,
+      "savol": "G'afur G'ulomning 'Sog'inish' she'ri qachon va qayerda yozilgan?",
+      "variantlar": ["1942-yil, Toshkent", "1940-yil, Namangan", "1945-yil, Samarqand", "1936-yil, Moskva"],
+      "togri": 0,
       "daraja": "oson",
       "mavzu": "asarlar",
       "sinf": 6
@@ -362,9 +362,9 @@
     },
     {
       "id": 41,
-      "savol": "'Do'stlik' she'rida nima haqida so'z boradi?",
-      "variantlar": ["Vatan", "Do'stlik qadri", "Mehnat", "Tabiat"],
-      "togri": 1,
+      "savol": "'Xotin' she'rida nima haqida so'z boradi?",
+      "variantlar": ["Xotinning hayo, vafo va mehnati", "Do'stlik qadri", "Tabiat go'zelligi", "Bolalar o'yinlari"],
+      "togri": 0,
       "daraja": "oson",
       "mavzu": "asarlar",
       "sinf": "umumiy"
@@ -380,9 +380,9 @@
     },
     {
       "id": 43,
-      "savol": "'Tinchlik' she'ri qaysi davr mahsulidir?",
-      "variantlar": ["Urush davri", "Tinchlik davri", "Urushdan keyin", "Inqilobdan oldin"],
-      "togri": 2,
+      "savol": "'Vaqt' she'ri nima haqida so'z boradi?",
+      "variantlar": ["Vaqt qadri va fursat", "Tinchlik va osoyishtalik", "Kuz hosili", "Bolalar ta'limi"],
+      "togri": 0,
       "daraja": "orta",
       "mavzu": "asarlar",
       "sinf": "umumiy"
@@ -398,9 +398,9 @@
     },
     {
       "id": 45,
-      "savol": "'Yoshlik' she'ri kimga manzur?",
-      "variantlar": ["Qariyalarga", "Yoshlarga", "Bolalarga", "Barcha avlodga"],
-      "togri": 1,
+      "savol": "'Kuz keldi' she'rida nima haqida so'z boradi?",
+      "variantlar": ["Kuz va hosil", "Yoshlik qadri", "Do'stlik", "Urush fojiasi"],
+      "togri": 0,
       "daraja": "oson",
       "mavzu": "asarlar",
       "sinf": "umumiy"

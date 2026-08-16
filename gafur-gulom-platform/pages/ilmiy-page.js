@@ -24,12 +24,22 @@ function renderHeroStats() {
     const el = document.getElementById('ilm-hero-stats');
     if (!el) return;
 
-    el.innerHTML = `
-        <div class="ilm-hero__stat"><span class="ilm-hero__stat-num">${ilmiyData.maqolalar.length}</span> maqola</div>
-        <div class="ilm-hero__stat"><span class="ilm-hero__stat-num">${ilmiyData.dissertatsiyalar.length}</span> dissertatsiya</div>
-        <div class="ilm-hero__stat"><span class="ilm-hero__stat-num">${(ilmiyData.tadqiqotlar || []).length}</span> tadqiqot</div>
-        <div class="ilm-hero__stat"><span class="ilm-hero__stat-num">${ilmiyData.atamalar.length}</span> atama</div>
-    `;
+    const chips = [
+        { num: ilmiyData.maqolalar.length, label: 'maqola', icon: '📄' },
+        { num: ilmiyData.dissertatsiyalar.length, label: 'dissertatsiya', icon: '🎓' },
+        { num: (ilmiyData.tadqiqotlar || []).length, label: 'tadqiqot', icon: '🔬' },
+        { num: ilmiyData.atamalar.length, label: 'atama', icon: '📖' }
+    ];
+
+    el.innerHTML = chips.map(chip => `
+        <div class="ilm-stat-chip">
+            <span class="ilm-stat-chip__icon" aria-hidden="true">${chip.icon}</span>
+            <div class="ilm-stat-chip__body">
+                <span class="ilm-stat-chip__num">${chip.num}</span>
+                <span class="ilm-stat-chip__label">${chip.label}</span>
+            </div>
+        </div>
+    `).join('');
 }
 
 // ===================================

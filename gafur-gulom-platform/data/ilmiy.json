@@ -114,96 +114,6 @@
   "dissertatsiyalar": [
     {
       "id": 1,
-      "muallif": "Abdullayev Komil",
-      "sarlavha": "G'afur G'ulom she'riyatida badiiy obraz va ramz",
-      "daraja": "Filologiya fanlari nomzodi",
-      "yil": 2015,
-      "ilmiyRahbar": "prof. Karimov A.",
-      "muassasa": "O'zMU"
-    },
-    {
-      "id": 2,
-      "muallif": "Rahmonova Dildora",
-      "sarlavha": "G'afur G'ulom dostonlarining til xususiyatlari",
-      "daraja": "Filologiya fanlari doktori",
-      "yil": 2018,
-      "ilmiyRahbar": "prof. Mahmudov N.",
-      "muassasa": "O'zDJTU"
-    },
-    {
-      "id": 3,
-      "muallif": "Toshmatov Javohir",
-      "sarlavha": "G'afur G'ulom ijodida bolalar obrazi",
-      "daraja": "Filologiya fanlari nomzodi",
-      "yil": 2020,
-      "ilmiyRahbar": "prof. Yusupova M.",
-      "muassasa": "O'zMU"
-    },
-    {
-      "id": 4,
-      "muallif": "Ergasheva Nigora",
-      "sarlavha": "G'afur G'ulom she'rlarining rus tiliga tarjimasi muammolari",
-      "daraja": "Filologiya fanlari nomzodi",
-      "yil": 2019,
-      "ilmiyRahbar": "prof. Ismoilov X.",
-      "muassasa": "SamDU"
-    },
-    {
-      "id": 5,
-      "muallif": "Karimov Sherzod",
-      "sarlavha": "G'afur G'ulom va XX asr o'zbek adabiyoti",
-      "daraja": "Filologiya fanlari doktori",
-      "yil": 2021,
-      "ilmiyRahbar": "akademik Quronov D.",
-      "muassasa": "O'zFA Til va adabiyot instituti"
-    },
-    {
-      "id": 6,
-      "muallif": "Yunusova Malika",
-      "sarlavha": "G'afur G'ulom she'rlarida metafora va uning funksiyalari",
-      "daraja": "Filologiya fanlari nomzodi",
-      "yil": 2022,
-      "ilmiyRahbar": "prof. Rahimov S.",
-      "muassasa": "BuxDU"
-    },
-    {
-      "id": 7,
-      "muallif": "Olimov Jasur",
-      "sarlavha": "G'afur G'ulom va jahon adabiyoti",
-      "daraja": "Filologiya fanlari nomzodi",
-      "yil": 2023,
-      "ilmiyRahbar": "prof. Karimova N.",
-      "muassasa": "SamDCHTI"
-    },
-    {
-      "id": 8,
-      "muallif": "Saidova Gulnora",
-      "sarlavha": "G'afur G'ulom bolalar adabiyotida",
-      "daraja": "Filologiya fanlari nomzodi",
-      "yil": 2016,
-      "ilmiyRahbar": "prof. Normatov U.",
-      "muassasa": "TDPU"
-    },
-    {
-      "id": 9,
-      "muallif": "Mirzayev Otabek",
-      "sarlavha": "G'afur G'ulom she'riyatida milliy o'zlik",
-      "daraja": "Filologiya fanlari doktori",
-      "yil": 2024,
-      "ilmiyRahbar": "akademik Sodiqov A.",
-      "muassasa": "O'zMU"
-    },
-    {
-      "id": 10,
-      "muallif": "Xolmatova Dildora",
-      "sarlavha": "G'afur G'ulom ijodida tarixiy shaxslar obrazi",
-      "daraja": "Filologiya fanlari nomzodi",
-      "yil": 2017,
-      "ilmiyRahbar": "prof. Tursunov O.",
-      "muassasa": "AndDU"
-    },
-    {
-      "id": 11,
       "muallif": "Razzoqova Umida Davronbek qizi",
       "sarlavha": "G'afur G'ulom qissalarida davr va shaxs talqini",
       "daraja": "Bitiruv malakaviy ishi",
@@ -214,7 +124,7 @@
       "pdf": "assets/pdf/dissertatsiyalar/gafur-gulom-qissalarida-davr-va-shaxs-talqini-2018.pdf"
     },
     {
-      "id": 12,
+      "id": 2,
       "muallif": "Mardiyeva Maxbuba Shavkatovna",
       "sarlavha": "G'afur G'ulom asarlarining asliyat va ingliz tiliga tarjimalarida frazeologizmlarning semantik va lingvomadaniy xususiyatlari (\"Shum bola\" va \"Yodgor\" qissalari asosida)",
       "daraja": "Filologiya fanlari bo'yicha falsafa doktori (PhD) dissertatsiyasi avtoreferati",
