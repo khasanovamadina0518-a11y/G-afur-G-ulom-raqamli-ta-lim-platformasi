@@ -6,6 +6,9 @@
 (function (global) {
     'use strict';
 
+    const STORAGE_PREFIX = 'platform-user-progress';
+    const GUEST_KEY = 'platform-user-progress-guest';
+    /** @deprecated legacy single-key storage — migrated to GUEST_KEY on init */
     const STORAGE_KEY = 'platform-user-progress';
     const LEGACY_FAVORITES = 'gafur-favorites';
     const LEGACY_TALIM = 'talim-progress';
@@ -32,13 +35,28 @@
         { min: 16, title: 'Usta o\'quvchi' }
     ];
 
+    let activeProgressKey = GUEST_KEY;
+
+    function resolveProgressKey(userId) {
+        return userId ? `${STORAGE_PREFIX}-${userId}` : GUEST_KEY;
+    }
+
+    function migrateLegacyProgress() {
+        try {
+            const legacy = global.localStorage.getItem(STORAGE_KEY);
+            if (legacy && !global.localStorage.getItem(GUEST_KEY)) {
+                global.localStorage.setItem(GUEST_KEY, legacy);
+            }
+        } catch (e) { /* ignore */ }
+    }
+
     function defaultState() {
         return {
             user: {
-                name: 'Umida Karimova',
-                initials: 'UK',
-                email: 'umida@example.uz',
-                memberSince: '2025-yil yanvar'
+                name: '',
+                initials: '',
+                email: '',
+                memberSince: ''
             },
             booksOpened: [],
             booksCompleted: [],
@@ -57,9 +75,10 @@
         };
     }
 
-    function loadState() {
+    function loadState(key) {
+        const storageKey = key || activeProgressKey;
         try {
-            const raw = global.localStorage.getItem(STORAGE_KEY);
+            const raw = global.localStorage.getItem(storageKey);
             if (!raw) return defaultState();
             return { ...defaultState(), ...JSON.parse(raw) };
         } catch (e) {
@@ -67,8 +86,8 @@
         }
     }
 
-    function saveState(state) {
-        global.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    function saveState(state, key) {
+        global.localStorage.setItem(key || activeProgressKey, JSON.stringify(state));
     }
 
     function emitEvent(name, payload) {
@@ -122,6 +141,118 @@
         if (days < 7) return `${days} kun oldin`;
         if (days < 14) return '1 hafta oldin';
         return `${Math.floor(days / 7)} hafta oldin`;
+    }
+
+    function getInitials(firstName, lastName) {
+        const a = (firstName || '').trim().charAt(0);
+        const b = (lastName || '').trim().charAt(0);
+        const initials = (a + b).toUpperCase();
+        return initials || 'F';
+    }
+
+    function profileFromAuthUser(authUser, fallbackUser) {
+        if (!authUser) return fallbackUser;
+        const name = (authUser.name || `${authUser.firstName || ''} ${authUser.lastName || ''}`.trim()).trim();
+        return {
+            name: name || fallbackUser?.name || '',
+            initials: authUser.initials || getInitials(authUser.firstName, authUser.lastName) || fallbackUser?.initials || '',
+            email: authUser.email || fallbackUser?.email || '',
+            memberSince: authUser.memberSince || fallbackUser?.memberSince || ''
+        };
+    }
+
+    function buildContinueHref(item) {
+        if (!item?.kind || item.id == null) return 'pages/asarlar.html';
+        const base = 'pages/asarlar.html';
+        switch (item.kind) {
+            case 'poem': return `${base}?poem=${item.id}`;
+            case 'qissa': return `${base}?qissa=${item.id}`;
+            case 'doston':
+            case 'book': return `${base}?tab=dostonlar&doston=${item.id}`;
+            case 'tarjima': return `${base}?tarjima=${item.id}`;
+            case 'lesson': return item.href || `${base}?tab=tanlangan-asarlar`;
+            case 'video': return 'pages/multimedia.html';
+            default: return item.href || base;
+        }
+    }
+
+    function resolveContinueLearning(state, recommendations) {
+        const readableKinds = ['poem', 'qissa', 'doston', 'tarjima', 'lesson', 'book'];
+        const books = state.booksOpened.filter(b => readableKinds.includes(b.kind));
+
+        let last = null;
+        if (state.lastOpened && readableKinds.includes(state.lastOpened.kind)) {
+            last = { ...state.lastOpened };
+        } else if (books.length) {
+            last = books.reduce((a, b) => ((a.openedAt || 0) > (b.openedAt || 0) ? a : b));
+        }
+
+        if (!last) {
+            return {
+                empty: true,
+                completed: false,
+                title: '',
+                type: '',
+                author: '',
+                description: '',
+                cover: '',
+                progress: 0,
+                href: 'pages/asarlar.html',
+                kind: null,
+                id: null
+            };
+        }
+
+        const key = `${last.kind}:${last.id}`;
+        const entry = books.find(b => `${b.kind}:${b.id}` === key);
+        if (entry) {
+            last = {
+                ...last,
+                progress: entry.progress,
+                title: entry.title,
+                type: entry.type,
+                kind: entry.kind,
+                id: entry.id
+            };
+        }
+
+        const progress = Math.min(100, Math.max(0, Number(last.progress) || 0));
+        const completed = progress >= 100 || state.booksCompleted.includes(key);
+
+        const item = {
+            empty: false,
+            completed,
+            kind: last.kind,
+            id: last.id,
+            title: last.title || '',
+            type: last.type || 'Asar',
+            author: '',
+            description: '',
+            cover: '',
+            progress,
+            href: buildContinueHref(last)
+        };
+
+        if (completed) {
+            const pools = [...(recommendations?.featured || []), ...(recommendations?.newest || [])];
+            for (const rec of pools) {
+                const recKind = rec.kind === 'book' ? 'doston' : rec.kind;
+                const recId = rec.item?.id;
+                if (!recKind || recId == null) continue;
+                const recKey = `${recKind}:${recId}`;
+                if (!state.booksCompleted.includes(recKey)) {
+                    item.nextTitle = rec.title;
+                    item.nextHref = buildContinueHref({ kind: recKind, id: recId });
+                    break;
+                }
+            }
+            if (!item.nextHref) {
+                item.nextTitle = 'Asarlarni ko\'rish';
+                item.nextHref = 'pages/asarlar.html';
+            }
+        }
+
+        return item;
     }
 
     function getLevelInfo(totalXp) {
@@ -344,19 +475,7 @@
             const xp = getLevelInfo(state.totalXp);
             const progressPct = this.computeProgressPercent(stats);
             const avgQuiz = this.getAverageQuizScore();
-
-            const last = state.lastOpened || state.booksOpened[state.booksOpened.length - 1];
-            const continueItem = last ? {
-                title: last.title,
-                type: last.type || 'Asar',
-                progress: last.progress || 0,
-                href: last.href || 'pages/asarlar.html'
-            } : {
-                title: recommendations?.featured?.[0]?.title || 'Elektron kutubxona',
-                type: 'Asar',
-                progress: 0,
-                href: 'pages/asarlar.html'
-            };
+            const continueItem = resolveContinueLearning(state, recommendations);
 
             const badgeList = global.AchievementEngine
                 ? AchievementEngine.getBadgeTitles(state)
@@ -382,7 +501,13 @@
             const video = recommendations?.newest?.find(r => r.kind === 'video') || recommendations?.random?.find(r => r.kind === 'video');
 
             let nextGoal = 'Birinchi asarni oching yoki test ishlang';
-            if (continueItem.progress > 0 && continueItem.progress < 100) {
+            if (continueItem.empty) {
+                nextGoal = 'Birinchi asarni oching yoki test ishlang';
+            } else if (continueItem.completed) {
+                nextGoal = continueItem.nextTitle
+                    ? `Keyingi asar: "${continueItem.nextTitle}"`
+                    : 'Keyingi asarni tanlang';
+            } else if (continueItem.progress > 0 && continueItem.progress < 100) {
                 nextGoal = `Keyingi maqsad: "${continueItem.title}" ni yakunlash`;
             } else if (!booksToday) {
                 nextGoal = 'Bugun kamida bitta asar o\'qing';
@@ -390,8 +515,13 @@
                 nextGoal = 'Bugun bitta test ishlang';
             }
 
+            const authUser = global.PlatformAuth?.getCurrentUser?.();
+            const profileUser = authUser
+                ? profileFromAuthUser(authUser, state.user)
+                : state.user;
+
             return {
-                user: state.user,
+                user: profileUser,
                 progress: { percent: progressPct, nextGoal },
                 xp: {
                     level: xp.level,
@@ -415,7 +545,7 @@
                 aiRecommendations: poem ? [
                     { icon: '📖', text: `Bugun "${poem.title}" bilan tanishing.`, link: 'pages/asarlar.html', linkText: 'Kutubxona' },
                     { icon: '🎯', text: 'G\'afur G\'ulom hayoti bo\'yicha viktorinani yeching.', link: 'pages/interaktiv.html', linkText: 'Testlar' },
-                    { icon: '🎬', text: video ? `Video dars: ${video.title}.` : 'Video darslar bo\'limini ko\'ring.', link: 'pages/multimedia.html', linkText: 'Video darslar' }
+                    { icon: '🎬', text: video ? `Video dars: ${video.title}.` : 'Videolar bo\'limini ko\'ring.', link: 'pages/multimedia.html', linkText: 'Videolar' }
                 ] : [],
                 certificates,
                 recentActivity: state.activity.slice(0, 6).map(a => ({
@@ -425,7 +555,7 @@
                 favorites: [
                     { label: 'Saqlangan asarlar', count: state.favorites.poems.length + state.booksCompleted.length },
                     { label: 'Sevimli she\'rlar', count: state.favorites.poems.length },
-                    { label: 'Video darslar', count: state.videosWatched.length }
+                    { label: 'Videolar', count: state.videosWatched.length }
                 ],
                 stats: {
                     booksOpened: state.booksOpened.length,
@@ -437,6 +567,37 @@
                     aiChats: state.aiChats
                 }
             };
+        },
+
+        updateProfile(profile) {
+            if (!profile) return;
+            this._state.user = {
+                ...this._state.user,
+                name: profile.name || this._state.user.name,
+                initials: profile.initials || this._state.user.initials,
+                email: profile.email || this._state.user.email,
+                memberSince: profile.memberSince || this._state.user.memberSince
+            };
+            this._persist('profileUpdate');
+        },
+
+        switchAccount(userId) {
+            saveState(this._state);
+            activeProgressKey = resolveProgressKey(userId);
+            this._state = loadState(activeProgressKey);
+            syncLegacy(this._state);
+
+            const authUser = global.PlatformAuth?.getCurrentUser?.();
+            if (authUser && userId && authUser.id === userId) {
+                this._state.user = profileFromAuthUser(authUser, this._state.user);
+                saveState(this._state);
+            }
+
+            emitEvent('progressChanged', { source: 'accountSwitch', userId: userId || null });
+        },
+
+        getActiveAccountKey() {
+            return activeProgressKey;
         },
 
         installHooks() {
@@ -488,6 +649,21 @@
                 });
             });
 
+            wrapFn('openQissaRead', function (qissaId) {
+                global.getQissalar?.().then(list => {
+                    const q = list?.find(x => x.id === qissaId);
+                    if (!q) return;
+                    UserProgress.recordContentOpened({
+                        kind: 'qissa',
+                        id: q.id,
+                        title: q.sarlavha,
+                        type: 'Qissa',
+                        href: 'pages/asarlar.html',
+                        progress: q.pdf ? 25 : 40
+                    });
+                });
+            });
+
             global.addEventListener('click', (e) => {
                 const lessonBtn = e.target.closest('.video-playlist__item');
                 if (lessonBtn) {
@@ -520,8 +696,11 @@
             };
 
             global.addEventListener('storage', (e) => {
-                if ([STORAGE_KEY, LEGACY_FAVORITES, LEGACY_TALIM, LEGACY_AI].includes(e.key)) {
-                    UserProgress._state = loadState();
+                if (!e.key) return;
+                const isProgressKey = e.key === activeProgressKey
+                    || e.key.startsWith(STORAGE_PREFIX);
+                if (isProgressKey || [LEGACY_FAVORITES, LEGACY_TALIM, LEGACY_AI].includes(e.key)) {
+                    UserProgress._state = loadState(activeProgressKey);
                     syncLegacy(UserProgress._state);
                     emitEvent('progressChanged', { source: 'storage' });
                 }
@@ -529,7 +708,14 @@
         },
 
         init() {
+            migrateLegacyProgress();
+            const authUser = global.PlatformAuth?.getCurrentUser?.();
+            activeProgressKey = resolveProgressKey(authUser?.id || null);
+            this._state = loadState(activeProgressKey);
             syncLegacy(this._state);
+            if (authUser) {
+                this._state.user = profileFromAuthUser(authUser, this._state.user);
+            }
             saveState(this._state);
             this.installHooks();
         }

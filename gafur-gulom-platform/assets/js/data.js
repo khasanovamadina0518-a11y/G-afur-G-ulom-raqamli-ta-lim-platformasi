@@ -108,12 +108,14 @@
         });
     }
 
-    platformDataReady
+    const platformProgressReady = platformDataReady
         .then(loadAchievementEngineScript)
         .then(loadUserProgressScript)
         .catch(err => {
             console.warn('UserProgress load skipped:', err);
         });
+
+    window.platformProgressReady = platformProgressReady;
 
     async function withService(method) {
         await platformDataReady;

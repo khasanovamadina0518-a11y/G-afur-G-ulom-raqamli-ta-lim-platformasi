@@ -19,58 +19,57 @@ let tanlanganAsarlarDisplayLimit = 10;
 
 const BOOKMARK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
 
-let activePoemAudioEl = null;
-let activePoemAudioId = null;
+let activeLibraryAudioEl = null;
+let activeLibraryAudioKey = null;
 
-function resolveAssetPath(path) {
-    if (!path) return '';
-    return (window.platformUrl || function (r) { return r; })(path);
-}
-
-function getPoemAudioIdFromEl(audioEl) {
-    return audioEl?.id?.replace('poem-audio-', '') || null;
-}
-
-function getPoemAudioParts(id) {
+function getLibraryAudioParts(prefix, id) {
     return {
-        audio: document.getElementById(`poem-audio-${id}`),
-        panel: document.getElementById(`poem-audio-panel-${id}`),
-        btn: document.getElementById(`poem-audio-btn-${id}`)
+        audio: document.getElementById(`${prefix}-audio-${id}`),
+        panel: document.getElementById(`${prefix}-audio-panel-${id}`),
+        btn: document.getElementById(`${prefix}-audio-btn-${id}`)
     };
 }
 
-function resetPoemAudioButton(id) {
-    const { btn } = getPoemAudioParts(id);
+function parseLibraryAudioEl(audioEl) {
+    const match = audioEl?.id?.match(/^(poem|qissa)-audio-(.+)$/);
+    if (!match) return null;
+    return { prefix: match[1], id: match[2], key: `${match[1]}-${match[2]}` };
+}
+
+function resetLibraryAudioButton(prefix, id, title, workType) {
+    const { btn } = getLibraryAudioParts(prefix, id);
     if (!btn) return;
 
-    const title = btn.dataset.poemTitle || "She'r";
     const icon = btn.querySelector('.library-item__audio-icon');
     const label = btn.querySelector('.library-item__audio-label');
     if (icon) icon.textContent = '🔊';
     if (label) label.textContent = 'Audio';
-    btn.setAttribute('aria-label', `${title} she'rini tinglash`);
+    btn.setAttribute('aria-label', `${title} ${workType}ini tinglash`);
     btn.setAttribute('aria-pressed', 'false');
     btn.classList.remove('is-playing');
 }
 
-function updatePoemAudioButton(audioEl) {
-    const id = getPoemAudioIdFromEl(audioEl);
-    const { btn, panel } = getPoemAudioParts(id);
+function updateLibraryAudioButton(audioEl) {
+    const parsed = parseLibraryAudioEl(audioEl);
+    if (!parsed) return;
+
+    const { btn, panel } = getLibraryAudioParts(parsed.prefix, parsed.id);
     if (!btn || !panel || panel.hidden) return;
 
-    const title = btn.dataset.poemTitle || "She'r";
+    const title = btn.dataset.audioTitle || '';
+    const workType = btn.dataset.audioType || 'asar';
     const playing = !audioEl.paused && !audioEl.ended;
     const icon = btn.querySelector('.library-item__audio-icon');
     const label = btn.querySelector('.library-item__audio-label');
     if (icon) icon.textContent = playing ? '⏸' : '🔊';
     if (label) label.textContent = playing ? 'Pause' : 'Audio';
-    btn.setAttribute('aria-label', playing ? `${title} she'rini to'xtatish` : `${title} she'rini tinglash`);
+    btn.setAttribute('aria-label', playing ? `${title} ${workType}ini to'xtatish` : `${title} ${workType}ini tinglash`);
     btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
     btn.classList.toggle('is-playing', playing);
 }
 
-function closePoemAudio(id) {
-    const { audio, panel } = getPoemAudioParts(id);
+function closeLibraryAudio(prefix, id) {
+    const { audio, panel, btn } = getLibraryAudioParts(prefix, id);
     if (!audio) return;
 
     audio.pause();
@@ -78,71 +77,79 @@ function closePoemAudio(id) {
 
     if (panel) panel.hidden = true;
 
-    resetPoemAudioButton(id);
+    const title = btn?.dataset.audioTitle || '';
+    const workType = btn?.dataset.audioType || 'asar';
+    resetLibraryAudioButton(prefix, id, title, workType);
 
-    if (activePoemAudioEl === audio) {
-        activePoemAudioEl = null;
-        activePoemAudioId = null;
+    const key = `${prefix}-${id}`;
+    if (activeLibraryAudioKey === key) {
+        activeLibraryAudioEl = null;
+        activeLibraryAudioKey = null;
     }
 }
 
-function openPoemAudio(id) {
-    const { audio, panel } = getPoemAudioParts(id);
+function openLibraryAudio(prefix, id) {
+    const { audio, panel } = getLibraryAudioParts(prefix, id);
     if (!audio || !panel) return;
 
     panel.hidden = false;
-    activePoemAudioEl = audio;
-    activePoemAudioId = id;
+    activeLibraryAudioEl = audio;
+    activeLibraryAudioKey = `${prefix}-${id}`;
     audio.play().catch(() => {});
-    updatePoemAudioButton(audio);
+    updateLibraryAudioButton(audio);
 }
 
-function onPoemAudioPlay(audioEl) {
-    const id = getPoemAudioIdFromEl(audioEl);
-    if (!id) return;
+function onLibraryAudioPlay(audioEl) {
+    const parsed = parseLibraryAudioEl(audioEl);
+    if (!parsed) return;
 
-    if (activePoemAudioEl && activePoemAudioEl !== audioEl) {
-        closePoemAudio(getPoemAudioIdFromEl(activePoemAudioEl));
+    if (activeLibraryAudioEl && activeLibraryAudioEl !== audioEl) {
+        const prev = parseLibraryAudioEl(activeLibraryAudioEl);
+        if (prev) closeLibraryAudio(prev.prefix, prev.id);
     }
 
-    activePoemAudioEl = audioEl;
-    activePoemAudioId = id;
-    updatePoemAudioButton(audioEl);
+    activeLibraryAudioEl = audioEl;
+    activeLibraryAudioKey = parsed.key;
+    updateLibraryAudioButton(audioEl);
 }
 
-function onPoemAudioPause(audioEl) {
-    updatePoemAudioButton(audioEl);
+function onLibraryAudioPause(audioEl) {
+    updateLibraryAudioButton(audioEl);
 }
 
-function onPoemAudioEnded(audioEl) {
-    closePoemAudio(getPoemAudioIdFromEl(audioEl));
+function onLibraryAudioEnded(audioEl) {
+    const parsed = parseLibraryAudioEl(audioEl);
+    if (!parsed) return;
+    closeLibraryAudio(parsed.prefix, parsed.id);
 }
 
-function togglePoemAudio(id) {
-    const { audio, panel, btn } = getPoemAudioParts(id);
+function toggleLibraryAudio(prefix, id) {
+    const { audio, panel, btn } = getLibraryAudioParts(prefix, id);
     if (!audio || !panel || !btn || btn.disabled) return;
 
-    const isOpen = activePoemAudioId === id && !panel.hidden;
+    const key = `${prefix}-${id}`;
+    const isOpen = activeLibraryAudioKey === key && !panel.hidden;
 
     if (isOpen) {
-        closePoemAudio(id);
+        closeLibraryAudio(prefix, id);
         return;
     }
 
-    if (activePoemAudioId !== null) {
-        closePoemAudio(activePoemAudioId);
+    if (activeLibraryAudioKey !== null) {
+        const [activePrefix, activeId] = activeLibraryAudioKey.split('-');
+        closeLibraryAudio(activePrefix, activeId);
     }
 
-    openPoemAudio(id);
+    openLibraryAudio(prefix, id);
 }
 
-function onPoemAudioError(id) {
-    const { audio } = getPoemAudioParts(id);
-    const btn = document.getElementById(`poem-audio-btn-${id}`);
+function onLibraryAudioError(prefix, id) {
+    const { audio } = getLibraryAudioParts(prefix, id);
+    const btn = document.getElementById(`${prefix}-audio-btn-${id}`);
 
-    console.warn(`She'r audio fayli topilmadi yoki yuklanmadi (id: ${id})`);
+    console.warn(`Audio fayli topilmadi yoki yuklanmadi (${prefix}, id: ${id})`);
 
-    closePoemAudio(id);
+    closeLibraryAudio(prefix, id);
 
     if (btn) {
         btn.disabled = true;
@@ -157,22 +164,44 @@ function onPoemAudioError(id) {
     }
 }
 
-function buildPoemAudioParts(poem) {
-    if (!poem.audio) {
+function buildLibraryAudioParts(prefix, item, workType) {
+    if (!item.audio) {
         return { audioAction: '', audioPanel: '' };
     }
 
-    const src = resolveAssetPath(poem.audio);
-    const safeTitle = poem.sarlavha.replace(/"/g, '&quot;');
+    const src = resolveAssetPath(item.audio);
+    const safeTitle = item.sarlavha.replace(/"/g, '&quot;');
+    const listenLabel = `${safeTitle} ${workType}ini tinglash`;
+
     return {
-        audioAction: `<button class="library-item__audio" type="button" id="poem-audio-btn-${poem.id}" data-poem-title="${safeTitle}" aria-label="${safeTitle} she'rini tinglash" aria-pressed="false" aria-controls="poem-audio-panel-${poem.id}" onclick="togglePoemAudio(${poem.id}); event.stopPropagation();"><span class="library-item__audio-icon" aria-hidden="true">🔊</span><span class="library-item__audio-label">Audio</span></button>`,
+        audioAction: `<button class="library-item__audio" type="button" id="${prefix}-audio-btn-${item.id}" data-audio-title="${safeTitle}" data-audio-type="${workType}" aria-label="${listenLabel}" aria-pressed="false" aria-controls="${prefix}-audio-panel-${item.id}" onclick="toggleLibraryAudio('${prefix}', ${item.id}); event.stopPropagation();"><span class="library-item__audio-icon" aria-hidden="true">🔊</span><span class="library-item__audio-label">Audio</span></button>`,
         audioPanel: `
-            <div class="library-item__audio-panel" id="poem-audio-panel-${poem.id}" hidden>
-                <audio class="library-item__audio-player" id="poem-audio-${poem.id}" controls preload="none" onplay="onPoemAudioPlay(this)" onpause="onPoemAudioPause(this)" onended="onPoemAudioEnded(this)" onerror="onPoemAudioError(${poem.id})">
+            <div class="library-item__audio-panel" id="${prefix}-audio-panel-${item.id}" hidden>
+                <audio class="library-item__audio-player" id="${prefix}-audio-${item.id}" controls preload="none" onplay="onLibraryAudioPlay(this)" onpause="onLibraryAudioPause(this)" onended="onLibraryAudioEnded(this)" onerror="onLibraryAudioError('${prefix}', ${item.id})">
                     <source src="${src}" type="audio/mpeg">
                 </audio>
             </div>`
     };
+}
+
+function buildPoemAudioParts(poem) {
+    return buildLibraryAudioParts('poem', poem, "she'r");
+}
+
+function buildQissaAudioParts(qissa) {
+    return buildLibraryAudioParts('qissa', qissa, 'qissa');
+}
+
+/* She'r audio — eski nomlar (HTML onclick mosligi) */
+function togglePoemAudio(id) { toggleLibraryAudio('poem', id); }
+function onPoemAudioPlay(el) { onLibraryAudioPlay(el); }
+function onPoemAudioPause(el) { onLibraryAudioPause(el); }
+function onPoemAudioEnded(el) { onLibraryAudioEnded(el); }
+function onPoemAudioError(id) { onLibraryAudioError('poem', id); }
+
+function resolveAssetPath(path) {
+    if (!path) return '';
+    return (window.platformUrl || function (r) { return r; })(path);
 }
 
 function getCoverVariant(id) {
@@ -263,6 +292,13 @@ function checkUrlParams() {
         const id = parseInt(qissaId, 10);
         switchTab('qissalar', false);
         setTimeout(() => openQissaRead(id), 500);
+    }
+
+    const dostonId = urlParams.get('doston');
+    if (dostonId) {
+        const id = parseInt(dostonId, 10);
+        switchTab('dostonlar', false);
+        setTimeout(() => openDostonModal(id), 500);
     }
 
     const tarjimaId = urlParams.get('tarjima');
@@ -781,6 +817,7 @@ function displayQissalar() {
         const category = `${author} · Qissa · ${qissa.yil || ''}`.replace(/ · $/, '');
         const readAction = `<button class="library-item__read" type="button" onclick="openQissaRead(${qissa.id})">O'qish</button>`;
         const coverSrc = qissa.rasm ? resolveAssetPath(qissa.rasm) : '';
+        const { audioAction, audioPanel } = buildQissaAudioParts(qissa);
 
         return buildLibraryItem({
             id: qissa.id,
@@ -790,6 +827,8 @@ function displayQissalar() {
             coverVariant: getCoverVariant(qissa.id + 4),
             coverSrc,
             readAction,
+            audioAction,
+            audioPanel,
             showBookmark: false,
             tagsHtml: buildQissaTags(qissa.mavzu)
         });

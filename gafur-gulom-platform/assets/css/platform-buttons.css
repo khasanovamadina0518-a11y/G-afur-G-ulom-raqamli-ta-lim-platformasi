@@ -22,7 +22,8 @@ body:not(.dark-mode) :is(
     .page-testlar .quiz-nav-btn--primary,
     .page-testlar .quiz-nav-btn--submit,
     .page-interaktiv .game-card__btn,
-    .page-ai .ai-send-btn
+    .page-ai .ai-send-btn,
+    .page-dashboard .dash-btn:not(.dash-btn--ghost)
 ) {
     background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
     color: var(--btn-primary-text);
@@ -48,7 +49,8 @@ body:not(.dark-mode) :is(
     .page-testlar .quiz-nav-btn--primary,
     .page-testlar .quiz-nav-btn--submit,
     .page-interaktiv .game-card__btn,
-    .page-ai .ai-send-btn
+    .page-ai .ai-send-btn,
+    .page-dashboard .dash-btn:not(.dash-btn--ghost)
 ):hover:not(:disabled) {
     background: var(--btn-primary-hover);
     color: var(--btn-primary-text);
@@ -92,7 +94,8 @@ body.dark-mode :is(
     .page-testlar .quiz-nav-btn--primary,
     .page-testlar .quiz-nav-btn--submit,
     .page-interaktiv .game-card__btn,
-    .page-ai .ai-send-btn
+    .page-ai .ai-send-btn,
+    .page-dashboard .dash-btn:not(.dash-btn--ghost)
 ) {
     background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-bg-end) 100%);
     color: var(--btn-primary-text);
@@ -109,7 +112,8 @@ body.dark-mode :is(
     .page-talim .tl-btn-primary,
     .page-ilmiy .ilm-btn-primary,
     .page-video .video-btn--primary,
-    .page-ai .ai-send-btn
+    .page-ai .ai-send-btn,
+    .page-dashboard .dash-btn:not(.dash-btn--ghost)
 ):hover:not(:disabled) {
     background: var(--btn-primary-hover);
 }
