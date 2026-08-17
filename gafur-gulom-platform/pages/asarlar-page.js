@@ -19,12 +19,168 @@ let tanlanganAsarlarDisplayLimit = 10;
 
 const BOOKMARK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
 
+let activePoemAudioEl = null;
+let activePoemAudioId = null;
+
+function resolveAssetPath(path) {
+    if (!path) return '';
+    return (window.platformUrl || function (r) { return r; })(path);
+}
+
+function getPoemAudioIdFromEl(audioEl) {
+    return audioEl?.id?.replace('poem-audio-', '') || null;
+}
+
+function getPoemAudioParts(id) {
+    return {
+        audio: document.getElementById(`poem-audio-${id}`),
+        panel: document.getElementById(`poem-audio-panel-${id}`),
+        btn: document.getElementById(`poem-audio-btn-${id}`)
+    };
+}
+
+function resetPoemAudioButton(id) {
+    const { btn } = getPoemAudioParts(id);
+    if (!btn) return;
+
+    const title = btn.dataset.poemTitle || "She'r";
+    const icon = btn.querySelector('.library-item__audio-icon');
+    const label = btn.querySelector('.library-item__audio-label');
+    if (icon) icon.textContent = '🔊';
+    if (label) label.textContent = 'Audio';
+    btn.setAttribute('aria-label', `${title} she'rini tinglash`);
+    btn.setAttribute('aria-pressed', 'false');
+    btn.classList.remove('is-playing');
+}
+
+function updatePoemAudioButton(audioEl) {
+    const id = getPoemAudioIdFromEl(audioEl);
+    const { btn, panel } = getPoemAudioParts(id);
+    if (!btn || !panel || panel.hidden) return;
+
+    const title = btn.dataset.poemTitle || "She'r";
+    const playing = !audioEl.paused && !audioEl.ended;
+    const icon = btn.querySelector('.library-item__audio-icon');
+    const label = btn.querySelector('.library-item__audio-label');
+    if (icon) icon.textContent = playing ? '⏸' : '🔊';
+    if (label) label.textContent = playing ? 'Pause' : 'Audio';
+    btn.setAttribute('aria-label', playing ? `${title} she'rini to'xtatish` : `${title} she'rini tinglash`);
+    btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    btn.classList.toggle('is-playing', playing);
+}
+
+function closePoemAudio(id) {
+    const { audio, panel } = getPoemAudioParts(id);
+    if (!audio) return;
+
+    audio.pause();
+    audio.currentTime = 0;
+
+    if (panel) panel.hidden = true;
+
+    resetPoemAudioButton(id);
+
+    if (activePoemAudioEl === audio) {
+        activePoemAudioEl = null;
+        activePoemAudioId = null;
+    }
+}
+
+function openPoemAudio(id) {
+    const { audio, panel } = getPoemAudioParts(id);
+    if (!audio || !panel) return;
+
+    panel.hidden = false;
+    activePoemAudioEl = audio;
+    activePoemAudioId = id;
+    audio.play().catch(() => {});
+    updatePoemAudioButton(audio);
+}
+
+function onPoemAudioPlay(audioEl) {
+    const id = getPoemAudioIdFromEl(audioEl);
+    if (!id) return;
+
+    if (activePoemAudioEl && activePoemAudioEl !== audioEl) {
+        closePoemAudio(getPoemAudioIdFromEl(activePoemAudioEl));
+    }
+
+    activePoemAudioEl = audioEl;
+    activePoemAudioId = id;
+    updatePoemAudioButton(audioEl);
+}
+
+function onPoemAudioPause(audioEl) {
+    updatePoemAudioButton(audioEl);
+}
+
+function onPoemAudioEnded(audioEl) {
+    closePoemAudio(getPoemAudioIdFromEl(audioEl));
+}
+
+function togglePoemAudio(id) {
+    const { audio, panel, btn } = getPoemAudioParts(id);
+    if (!audio || !panel || !btn || btn.disabled) return;
+
+    const isOpen = activePoemAudioId === id && !panel.hidden;
+
+    if (isOpen) {
+        closePoemAudio(id);
+        return;
+    }
+
+    if (activePoemAudioId !== null) {
+        closePoemAudio(activePoemAudioId);
+    }
+
+    openPoemAudio(id);
+}
+
+function onPoemAudioError(id) {
+    const { audio } = getPoemAudioParts(id);
+    const btn = document.getElementById(`poem-audio-btn-${id}`);
+
+    console.warn(`She'r audio fayli topilmadi yoki yuklanmadi (id: ${id})`);
+
+    closePoemAudio(id);
+
+    if (btn) {
+        btn.disabled = true;
+        btn.classList.add('is-unavailable');
+        btn.title = 'Audio fayl hozircha mavjud emas';
+    }
+
+    if (audio) {
+        audio.removeAttribute('src');
+        const source = audio.querySelector('source');
+        if (source) source.removeAttribute('src');
+    }
+}
+
+function buildPoemAudioParts(poem) {
+    if (!poem.audio) {
+        return { audioAction: '', audioPanel: '' };
+    }
+
+    const src = resolveAssetPath(poem.audio);
+    const safeTitle = poem.sarlavha.replace(/"/g, '&quot;');
+    return {
+        audioAction: `<button class="library-item__audio" type="button" id="poem-audio-btn-${poem.id}" data-poem-title="${safeTitle}" aria-label="${safeTitle} she'rini tinglash" aria-pressed="false" aria-controls="poem-audio-panel-${poem.id}" onclick="togglePoemAudio(${poem.id}); event.stopPropagation();"><span class="library-item__audio-icon" aria-hidden="true">🔊</span><span class="library-item__audio-label">Audio</span></button>`,
+        audioPanel: `
+            <div class="library-item__audio-panel" id="poem-audio-panel-${poem.id}" hidden>
+                <audio class="library-item__audio-player" id="poem-audio-${poem.id}" controls preload="none" onplay="onPoemAudioPlay(this)" onpause="onPoemAudioPause(this)" onended="onPoemAudioEnded(this)" onerror="onPoemAudioError(${poem.id})">
+                    <source src="${src}" type="audio/mpeg">
+                </audio>
+            </div>`
+    };
+}
+
 function getCoverVariant(id) {
     const variants = ['', 'library-item__cover--gold', 'library-item__cover--slate'];
     return variants[id % 3];
 }
 
-function buildLibraryItem({ id, title, category, description, coverVariant, coverSrc, readAction, showBookmark = true, tagsHtml = '' }) {
+function buildLibraryItem({ id, title, category, description, coverVariant, coverSrc, readAction, audioAction = '', audioPanel = '', showBookmark = true, tagsHtml = '' }) {
     const favActive = isFavorite(id);
     const bookmark = showBookmark ? `
                 <button class="library-item__bookmark favorite-btn ${favActive ? 'active' : ''}"
@@ -51,8 +207,10 @@ function buildLibraryItem({ id, title, category, description, coverVariant, cove
             </div>
             <div class="library-item__actions">
                 ${readAction}
+                ${audioAction}
                 ${bookmark}
             </div>
+            ${audioPanel}
         </article>
     `;
 }
@@ -148,6 +306,7 @@ function displayPoems() {
     container.innerHTML = visiblePoems.map(poem => {
         const category = `${poem.mavzu[0] || 'She\'r'} · She'r · ${poem.yil}`;
         const readAction = `<button class="library-item__read" type="button" onclick="openPoemModal(${poem.id})">O'qish</button>`;
+        const { audioAction, audioPanel } = buildPoemAudioParts(poem);
 
         return buildLibraryItem({
             id: poem.id,
@@ -155,7 +314,9 @@ function displayPoems() {
             category,
             description: poem.qisqa,
             coverVariant: getCoverVariant(poem.id),
-            readAction
+            readAction,
+            audioAction,
+            audioPanel
         });
     }).join('');
 
