@@ -23,7 +23,7 @@ function renderFooter() {
                     <h3>Tezkor havolalar</h3>
                     <ul class="footer-links">
                         <li><a href="${platformHref('pages/hayot.html')}">Hayoti</a></li>
-                        <li><a href="${platformHref('pages/asarlar.html')}">Elektron kutubxona</a></li>
+                        <li><a href="${platformHref('pages/asarlar.html')}">Asarlari</a></li>
                         <li><a href="${platformHref('pages/ilmiy.html')}">Ilmiy tadqiqotlar</a></li>
                         <li><a href="${platformHref('pages/talim.html')}">Ta'lim resurslari</a></li>
                     </ul>
@@ -32,7 +32,7 @@ function renderFooter() {
                 <div class="footer-section">
                     <h3>Resurslar</h3>
                     <ul class="footer-links">
-                        <li><a href="${platformHref('pages/multimedia.html')}">Video darslar</a></li>
+                        <li><a href="${platformHref('pages/multimedia.html')}">Videolar</a></li>
                         <li><a href="${platformHref('pages/interaktiv.html')}">Testlar</a></li>
                         <li><a href="${platformHref('pages/hamjamiyat.html')}">AI yordamchi</a></li>
                         <li><a href="#" onclick="scrollToTop(); return false;">Yuqoriga ↑</a></li>

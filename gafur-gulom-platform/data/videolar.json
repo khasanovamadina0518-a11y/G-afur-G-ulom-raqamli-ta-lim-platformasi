@@ -1,6 +1,33 @@
 {
+  "kategoriyalar": [
+    {
+      "slug": "hayoti-ijodi",
+      "tartib": "01",
+      "nom": "Hayoti va ijodi",
+      "tavsif": "G'afur G'ulomning hayoti, ijodiy shakllanishi va adabiy faoliyatiga bag'ishlangan videomateriallar."
+    },
+    {
+      "slug": "asarlar-tahlili",
+      "tartib": "02",
+      "nom": "Asarlari va ularning tahlili",
+      "tavsif": "G'afur G'ulom asarlari, she'rlari va hikoyalari bo'yicha adabiy tahlil va tushuntirish videolari."
+    },
+    {
+      "slug": "gafur-gulom-haqida",
+      "tartib": "03",
+      "nom": "G'afur G'ulom haqida",
+      "tavsif": "Adabiyotshunoslar, olimlar va tadqiqotchilarning G'afur G'ulom ijodi haqidagi ilmiy-ma'rifiy videolari."
+    },
+    {
+      "slug": "filmlar",
+      "tartib": "04",
+      "nom": "Asarlar asosida yaratilgan filmlar",
+      "tavsif": "G'afur G'ulom asarlari asosida yaratilgan badiiy filmlar."
+    }
+  ],
   "kurs": {
     "id": 1,
+    "kategoriya": "hayoti-ijodi",
     "sarlavha": "1. G'afur G'ulom hayoti va ijodi",
     "tavsif": "Ushbu darsda G'afur G'ulomning hayoti, ijodiy yo'li va adabiyotga qo'shgan hissasi batafsil yoritiladi.",
     "thumbnail": "../assets/images/gafur-gulom.jpg",
@@ -11,15 +38,167 @@
     "progress": 0.25
   },
   "darslar": [
-    { "id": 1, "tartib": 1, "sarlavha": "Bolalik yillari", "davomiylik": "03:20" },
-    { "id": 2, "tartib": 2, "sarlavha": "Ta'lim va ilk ijodiy faoliyati", "davomiylik": "04:15" },
-    { "id": 3, "tartib": 3, "sarlavha": "Asarlari va ularning tahlili", "davomiylik": "07:45", "active": true },
-    { "id": 4, "tartib": 4, "sarlavha": "Adabiyotdagi o'rni", "davomiylik": "03:25" }
+    {
+      "id": 1,
+      "tartib": 1,
+      "kategoriya": "hayoti-ijodi",
+      "sarlavha": "Bolalik yillari",
+      "davomiylik": "03:20",
+      "active": true
+    },
+    {
+      "id": 2,
+      "tartib": 2,
+      "kategoriya": "hayoti-ijodi",
+      "sarlavha": "Ta'lim va ilk ijodiy faoliyati",
+      "davomiylik": "04:15"
+    },
+    {
+      "id": 3,
+      "tartib": 3,
+      "kategoriya": "asarlar-tahlili",
+      "sarlavha": "Asarlari va ularning tahlili",
+      "davomiylik": "07:45"
+    },
+    {
+      "id": 4,
+      "tartib": 4,
+      "kategoriya": "hayoti-ijodi",
+      "sarlavha": "Adabiyotdagi o'rni",
+      "davomiylik": "03:25"
+    },
+    {
+      "id": 5,
+      "tartib": 5,
+      "kategoriya": "gafur-gulom-haqida",
+      "sarlavha": "G'afur G'ulom haqida. Qozog'boy Yo'ldoshev",
+      "sarlavhaToLiql": true,
+      "tavsif": "Qozog'boy Yo'ldoshev G'afur G'ulom hayoti va ijodi haqida so'zlaydi.",
+      "davomiylik": "32:13",
+      "mavzu": "G'afur G'ulom hayoti",
+      "videoUrl": "assets/videos/gafur-gulom-haqida-qozogboy-yoldoshev.mp4",
+      "downloadUrl": "assets/videos/gafur-gulom-haqida-qozogboy-yoldoshev.mp4",
+      "thumbnail": "../assets/images/gafur-gulom.jpg"
+    },
+    {
+      "id": 6,
+      "tartib": 6,
+      "kategoriya": "asarlar-tahlili",
+      "sarlavha": "Birgalikda o'qiymiz | \"Shum bola\" qissasi tahlili",
+      "sarlavhaToLiql": true,
+      "tavsif": "G'afur G'ulomning «Shum bola» qissasi bo'yicha tahliliy video. Manba: Madaniyat va Ma'rifat.",
+      "davomiylik": "54:31",
+      "mavzu": "Shum bola",
+      "videoUrl": "assets/videos/shum-bola-qissasi-tahlili.mp4",
+      "downloadUrl": "assets/videos/shum-bola-qissasi-tahlili.mp4",
+      "thumbnail": "../assets/images/gafur-gulom.jpg"
+    },
+    {
+      "id": 7,
+      "tartib": 7,
+      "kategoriya": "asarlar-tahlili",
+      "sarlavha": "\"Shum bola\" asari haqida | Sakkizinchi mo'jiza (09.10.2025)",
+      "sarlavhaToLiql": true,
+      "tavsif": "G'afur G'ulomning «Shum bola» asari haqida tahliliy video. Manba: Toshkent telekanali.",
+      "davomiylik": "27:09",
+      "mavzu": "Shum bola",
+      "videoUrl": "assets/videos/shum-bola-asari-haqida.mp4",
+      "downloadUrl": "assets/videos/shum-bola-asari-haqida.mp4",
+      "thumbnail": "../assets/images/gafur-gulom.jpg"
+    },
+    {
+      "id": 8,
+      "tartib": 8,
+      "kategoriya": "asarlar-tahlili",
+      "sarlavha": "Shum bola kim — G'afur G'ulom asarining sirlari",
+      "sarlavhaToLiql": true,
+      "tavsif": "G'afur G'ulomning «Shum bola» asari bo'yicha tahliliy video.",
+      "davomiylik": "04:14",
+      "mavzu": "Shum bola",
+      "videoUrl": "assets/videos/SHUM BOLA KIM - G'AFUR G'ULOM ASARINING SIRLARI.mp4",
+      "downloadUrl": "assets/videos/SHUM BOLA KIM - G'AFUR G'ULOM ASARINING SIRLARI.mp4",
+      "thumbnail": "../assets/images/gafur-gulom.jpg"
+    },
+    {
+      "id": 9,
+      "tartib": 9,
+      "kategoriya": "asarlar-tahlili",
+      "sarlavha": "G'afur G'ulom va uning «Shum bola» qissasi haqida fikrlar. Olomon hodisasi | HAYRAT",
+      "sarlavhaToLiql": true,
+      "tavsif": "G'afur G'ulomning «Shum bola» qissasi haqida tahliliy video. Manba: HAYRAT — Olomon hodisasi.",
+      "davomiylik": "37:18",
+      "mavzu": "Shum bola",
+      "videoUrl": "assets/videos/G‘afur G‘ulom va uning Shum bola qissasi haqida fikrlar. Olomon hodisasi.mp4",
+      "downloadUrl": "assets/videos/G‘afur G‘ulom va uning Shum bola qissasi haqida fikrlar. Olomon hodisasi.mp4",
+      "thumbnail": "../assets/images/gafur-gulom.jpg"
+    },
+    {
+      "id": 10,
+      "tartib": 10,
+      "kategoriya": "asarlar-tahlili",
+      "sarlavha": "G'afur G'ulomning «Shum bola» asarida qo'llangan so'zlar sharhi",
+      "sarlavhaToLiql": true,
+      "tavsif": "«Shum bola» asarida qo'llangan so'zlarning ma'nosi va sharhiga bag'ishlangan tahliliy video. Manba: YouTube.",
+      "mavzu": "Shum bola",
+      "videoUrl": "assets/videos/G‘afur G‘ulomning Shum bola asarida qo‘llangan so‘zlar sharhi.mp4",
+      "downloadUrl": "assets/videos/G‘afur G‘ulomning Shum bola asarida qo‘llangan so‘zlar sharhi.mp4",
+      "thumbnail": "../assets/images/gafur-gulom.jpg"
+    },
+    {
+      "id": 11,
+      "tartib": 11,
+      "kategoriya": "asarlar-tahlili",
+      "sarlavha": "G'afur G'ulom — «Shum bola» asari asosida booktrailer",
+      "sarlavhaToLiql": true,
+      "tavsif": "«Shum bola» qissasi asosida tayyorlangan booktrailer. Manba: YouTube.",
+      "davomiylik": "02:28",
+      "mavzu": "Shum bola",
+      "videoUrl": "assets/videos/G‘afur G‘ulom — Shum bola asari asosida booktrailer.mp4",
+      "downloadUrl": "assets/videos/G‘afur G‘ulom — Shum bola asari asosida booktrailer.mp4",
+      "thumbnail": "../assets/images/gafur-gulom.jpg"
+    }
+  ],
+  "filmlar": [
+    {
+      "id": 1,
+      "kategoriya": "filmlar",
+      "sarlavha": "Shum bola",
+      "asar": "Shum bola",
+      "tavsif": "G'afur G'ulomning «Shum bola» asari asosida yaratilgan badiiy film.",
+      "janr": "Badiiy film",
+      "videoUrl": "assets/videos/shum-bola.mp4",
+      "downloadUrl": "assets/videos/shum-bola.mp4"
+    },
+    {
+      "id": 2,
+      "kategoriya": "filmlar",
+      "sarlavha": "Yodgor",
+      "asar": "Yodgor",
+      "tavsif": "G'afur G'ulomning «Yodgor» qissasi asosida yaratilgan badiiy film.",
+      "janr": "Badiiy film",
+      "videoUrl": "assets/videos/yodgor.mp4",
+      "downloadUrl": "assets/videos/yodgor.mp4"
+    }
   ],
   "materiallar": [
-    { "id": 1, "sarlavha": "Dars qo'llanmasi (PDF)", "tur": "pdf", "hajm": "2.4 MB" },
-    { "id": 2, "sarlavha": "She'rlar to'plami", "tur": "doc", "hajm": "1.1 MB" },
-    { "id": 3, "sarlavha": "Taqdimot slaydlari", "tur": "ppt", "hajm": "4.8 MB" }
+    {
+      "id": 1,
+      "sarlavha": "Dars qo'llanmasi (PDF)",
+      "tur": "pdf",
+      "hajm": "2.4 MB"
+    },
+    {
+      "id": 2,
+      "sarlavha": "She'rlar to'plami",
+      "tur": "doc",
+      "hajm": "1.1 MB"
+    },
+    {
+      "id": 3,
+      "sarlavha": "Taqdimot slaydlari",
+      "tur": "ppt",
+      "hajm": "4.8 MB"
+    }
   ],
   "izohlar_soni": 32
 }

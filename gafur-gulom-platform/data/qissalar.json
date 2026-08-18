@@ -8,6 +8,7 @@
       "mavzu": ["Bolalar", "Hayot", "Sarguzasht"],
       "teglar": ["qissa", "bolalar", "adabiyot"],
       "qisqa": "G'afur G'ulomning bolalar hayoti va sarguzashtlarini aks ettiruvchi mashhur qissasi.",
+      "audio": "assets/audio/shum-bola.mp3",
       "pdf": "assets/pdf/qissalar/shum-bola.pdf",
       "boblar": [
         { "sarlavha": "I BO'LIM", "sahifa": 3 },
@@ -23,6 +24,7 @@
       "muallif": "G'afur G'ulom",
       "teglar": ["qissa", "adabiyot"],
       "qisqa": "Yozning qiziq kunlari. Egnimda elvagaygina, ko'ksi ochiq, yoqasiga pilta otgan surp yaktak.",
+      "audio": "assets/audio/yodgor.mp3",
       "pdf": "assets/pdf/qissalar/Yodgor.pdf"
     },
     {

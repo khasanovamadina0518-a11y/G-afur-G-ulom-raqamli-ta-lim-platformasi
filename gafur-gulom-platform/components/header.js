@@ -67,8 +67,8 @@ function renderHeader() {
             <ul class="nav-menu">
                 <li><a href="${platformHref('index.html')}">Bosh sahifa</a></li>
                 <li><a href="${platformHref('pages/hayot.html')}">Hayoti</a></li>
-                <li><a href="${platformHref('pages/asarlar.html')}">Elektron kutubxona</a></li>
-                <li><a href="${platformHref('pages/multimedia.html')}">Video darslar</a></li>
+                <li><a href="${platformHref('pages/asarlar.html')}">Asarlari</a></li>
+                <li><a href="${platformHref('pages/multimedia.html')}">Videolar</a></li>
                 <li><a href="${platformHref('pages/interaktiv-oyinlar.html')}">Interaktiv</a></li>
                 <li><a href="${platformHref('pages/interaktiv.html')}">Testlar</a></li>
                 <li><a href="${platformHref('pages/ai-yordamchi.html')}">AI yordamchi</a></li>
@@ -113,7 +113,7 @@ function renderHeader() {
                 </div>
             </div>
 
-            <a href="${platformHref('pages/dashboard.html')}" class="login-btn">Kirish</a>
+            <button type="button" class="login-btn" id="header-auth-btn" data-auth-open="login" data-auth-action="login">Kirish</button>
 
             <button
                 class="header-icon-btn dark-mode-toggle"
@@ -156,13 +156,13 @@ function renderHeader() {
                 <div class="drawer-icon">📚</div>
                 <div class="drawer-text">
                     <div class="drawer-title">Asarlari</div>
-                    <div class="drawer-desc">Elektron kutubxona</div>
+                    <div class="drawer-desc">Asarlari</div>
                 </div>
             </a>
             <a href="${platformHref('pages/multimedia.html')}" class="drawer-item">
                 <div class="drawer-icon">🎬</div>
                 <div class="drawer-text">
-                    <div class="drawer-title">Video darslar</div>
+                    <div class="drawer-title">Videolar</div>
                     <div class="drawer-desc">Video va audio</div>
                 </div>
             </a>
@@ -212,10 +212,10 @@ function renderHeader() {
                 <button class="drawer-lang-btn active" type="button">O'Z</button>
                 <button class="drawer-lang-btn" type="button">EN</button>
             </div>
-            <a href="${platformHref('pages/dashboard.html')}" class="drawer-login-btn">
+            <button type="button" class="drawer-login-btn" id="drawer-auth-btn" data-auth-open="login" data-auth-action="login">
                 <span>👤</span>
-                <span>Kirish</span>
-            </a>
+                <span class="drawer-auth-label">Kirish</span>
+            </button>
         </div>
     </div>
 </div>
@@ -228,7 +228,7 @@ function renderHeader() {
     </a>
     <a href="${platformHref('pages/asarlar.html')}" class="bottom-nav-item" data-page="asarlar">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-        <span>Elektron kutubxona</span>
+        <span>Asarlari</span>
     </a>
     <a href="${platformHref('pages/talim.html')}" class="bottom-nav-item" data-page="talim">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
@@ -236,7 +236,7 @@ function renderHeader() {
     </a>
     <a href="${platformHref('pages/multimedia.html')}" class="bottom-nav-item" data-page="multimedia">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-        <span>Video darslar</span>
+        <span>Videolar</span>
     </a>
     <a href="${platformHref('pages/ai-yordamchi.html')}" class="bottom-nav-item" data-page="ai-yordamchi">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
@@ -318,6 +318,17 @@ function renderHeader() {
     });
 
     headerInitialized = true;
+
+    loadAuthUI();
+}
+
+function loadAuthUI() {
+    if (document.querySelector('script[data-auth-modal-js]')) return;
+    const script = document.createElement('script');
+    script.src = platformHref('components/auth-modal.js?v=3');
+    script.setAttribute('data-auth-modal-js', '');
+    script.defer = true;
+    document.body.appendChild(script);
 }
 
 function initHeaderSearchExpand() {

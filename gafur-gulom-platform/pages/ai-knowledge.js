@@ -473,7 +473,7 @@ function buildVideoRecommendResponse(query) {
         .sort((a, b) => b.score - a.score);
 
     const list = (matched.length ? matched : stages.slice(0, 3)).map(x => x.s || x);
-    return `Video darslar bo'limida quyidagi mavzularni ko'rishingiz mumkin:\n${list.map(s => `• ${s.sarlavha} (${s.yillar})`).join('\n')}\n\nBu mavzular hayot.json dagi ijodiy bosqichlar bilan mos keladi.`;
+    return `Videolar bo'limida quyidagi mavzularni ko'rishingiz mumkin:\n${list.map(s => `• ${s.sarlavha} (${s.yillar})`).join('\n')}\n\nBu mavzular hayot.json dagi ijodiy bosqichlar bilan mos keladi.`;
 }
 
 function buildNotFoundResponse(query) {

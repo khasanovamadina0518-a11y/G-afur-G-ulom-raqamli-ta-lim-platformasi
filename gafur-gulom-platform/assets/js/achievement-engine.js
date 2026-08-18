@@ -18,7 +18,7 @@
     const CATALOG = [
         { id: 'first-step', icon: '🛡️', title: 'Birinchi qadam', desc: 'Birinchi asarni ochdingiz', progress: s => ({ c: s.booksOpened, t: 1 }) },
         { id: 'bookworm', icon: '📚', title: 'Kitobxon', desc: '5 ta asar o\'qildi', progress: s => ({ c: s.booksOpened, t: 5 }) },
-        { id: 'avid-reader', icon: '📖', title: '20 ta kitob o\'qing', desc: 'Elektron kutubxonada 20 ta asarni o\'qing', progress: s => ({ c: s.booksOpened, t: 20 }) },
+        { id: 'avid-reader', icon: '📖', title: '20 ta kitob o\'qing', desc: 'Asarlarda 20 ta asarni o\'qing', progress: s => ({ c: s.booksOpened, t: 20 }) },
         { id: 'book-finisher', icon: '✅', title: 'Asar ustasi', desc: '3 ta asarni to\'liq o\'qidingiz', progress: s => ({ c: s.booksCompleted, t: 3 }) },
         { id: 'active', icon: '⭐', title: 'Faol ishtirokchi', desc: '7 kun ketma-ket faollik', progress: s => ({ c: s.streak, t: 7 }) },
         { id: 'streak-fire', icon: '🔥', title: 'Streak ustasi', desc: '30 kunlik eng uzoq streak', progress: s => ({ c: s.streakLongest, t: 30 }) },
@@ -27,7 +27,7 @@
         { id: 'test-centurion', icon: '🏆', title: '100 ta test', desc: 'Jami 100 ta test yakunlang', progress: s => ({ c: s.testsCompleted, t: 100 }) },
         { id: 'quiz-scholar', icon: '🧠', title: 'Viktorina ustasi', desc: 'O\'rtacha test natijasi 80%+', progress: s => ({ c: s.avgQuiz, t: 80 }) },
         { id: 'video-master', icon: '🎥', title: 'Video ustasi', desc: '3 ta video dars ko\'rildi', progress: s => ({ c: s.videosWatched, t: 3 }) },
-        { id: 'video-complete', icon: '🎬', title: 'Barcha videolar', desc: 'Barcha video darslarni tomosha qiling', progress: (s, p) => ({ c: s.videosWatched, t: Math.max(p.videos, 1) }) },
+        { id: 'video-complete', icon: '🎬', title: 'Barcha videolar', desc: 'Barcha videolarni tomosha qiling', progress: (s, p) => ({ c: s.videosWatched, t: Math.max(p.videos, 1) }) },
         { id: 'ai-researcher', icon: '🤖', title: 'AI tadqiqotchisi', desc: 'AI yordamchi bilan 10 ta suhbat', progress: s => ({ c: s.aiChats, t: 10 }) },
         { id: 'ai-master', icon: '💬', title: 'AI eksperti', desc: 'AI yordamchi bilan 20 ta suhbat', progress: s => ({ c: s.aiChats, t: 20 }) },
         { id: 'scholar', icon: '🏅', title: 'Bilimdon', desc: 'Umumiy XP 500 dan oshdi', progress: s => ({ c: s.totalXp, t: 500 }) },

@@ -8,11 +8,10 @@ const AI_ACTIVE_KEY = 'ai-yordamchi-active-id';
 
 const SUGGESTED_PROMPTS = [
     "G'afur G'ulom kim?",
-    "Shum bola haqida ma'lumot ber.",
-    "G'afur G'ulomning she'rlari.",
-    "Menga test tavsiya qil.",
-    "Bugun nimani o'qishni tavsiya qilasan?",
-    "Eng mashhur asarlari qaysilar?"
+    "Shoirning bolalik davri haqida ma'lumot ber.",
+    "«Shum bola» asarining asosiy mavzusi nima?",
+    "G'afur G'ulom she'riyatining xususiyatlari qanday?",
+    "Testga tayyorlanishimga yordam ber."
 ];
 
 const FOLLOWUP_CHIPS = [
@@ -20,6 +19,8 @@ const FOLLOWUP_CHIPS = [
     'Asar haqida qisqacha',
     'Boshqa asarlar'
 ];
+
+const TEXTAREA_MAX_HEIGHT = 128;
 
 /** @typedef {{ id: string, title: string, messages: Array<{role:'user'|'assistant', content:string}>, updatedAt: number }} Conversation */
 
@@ -120,20 +121,10 @@ function renderHistory() {
     }
 
     list.innerHTML = conversations.map(conv => `
-        <button type="button" class="ai-history__item ${conv.id === activeConversationId ? 'is-active' : ''}" data-id="${conv.id}">
+        <button type="button" class="ai-history__item ${conv.id === activeConversationId ? 'is-active' : ''}" data-id="${escapeAttr(conv.id)}">
             ${escapeHtml(conv.title)}
         </button>
     `).join('');
-
-    list.querySelectorAll('.ai-history__item').forEach(btn => {
-        btn.addEventListener('click', () => {
-            activeConversationId = btn.dataset.id;
-            saveConversations();
-            renderHistory();
-            renderMessages();
-            closeMobileSidebar();
-        });
-    });
 }
 
 function renderMessages() {
@@ -160,9 +151,9 @@ function renderMessages() {
         followups.innerHTML = (lastAssistant.followups || FOLLOWUP_CHIPS).map(text => `
             <button type="button" class="ai-followup-chip" data-text="${escapeAttr(text)}">${escapeHtml(text)}</button>
         `).join('');
-        bindFollowupChips();
     } else if (followups) {
         followups.classList.add('is-hidden');
+        followups.innerHTML = '';
     }
 
     container.scrollTop = container.scrollHeight;
@@ -188,6 +179,24 @@ function setTyping(visible) {
     isTyping = visible;
     const el = document.getElementById('ai-typing');
     if (el) el.classList.toggle('is-hidden', !visible);
+
+    const followups = document.getElementById('ai-followups');
+    if (followups && visible) {
+        followups.classList.add('is-hidden');
+    }
+}
+
+function resetTextarea(input) {
+    if (!input) return;
+    input.value = '';
+    input.style.height = 'auto';
+}
+
+function autoResizeTextarea(input) {
+    if (!input) return;
+    input.style.height = 'auto';
+    const nextHeight = Math.min(input.scrollHeight, TEXTAREA_MAX_HEIGHT);
+    input.style.height = nextHeight + 'px';
 }
 
 async function sendUserMessage(text) {
@@ -203,10 +212,9 @@ async function sendUserMessage(text) {
     renderMessages();
 
     const input = document.getElementById('ai-input');
-    if (input) input.value = '';
+    resetTextarea(input);
 
     setTyping(true);
-    renderMessages();
 
     try {
         const response = await LocalAIProvider.sendMessage(conv.messages);
@@ -240,21 +248,39 @@ function clearActiveConversation() {
     renderMessages();
 }
 
-function bindPromptChips() {
-    document.querySelectorAll('.ai-prompt-chip').forEach(chip => {
-        chip.addEventListener('click', () => sendUserMessage(chip.dataset.text || chip.textContent));
-    });
-}
-
-function bindFollowupChips() {
-    document.querySelectorAll('.ai-followup-chip').forEach(chip => {
-        chip.addEventListener('click', () => sendUserMessage(chip.dataset.text || chip.textContent));
-    });
+function openMobileSidebar() {
+    const sidebar = document.getElementById('ai-sidebar');
+    const overlay = document.getElementById('ai-sidebar-overlay');
+    const toggle = document.getElementById('ai-history-toggle');
+    if (sidebar) sidebar.classList.add('is-open');
+    if (overlay) {
+        overlay.hidden = false;
+        overlay.classList.add('is-visible');
+        overlay.setAttribute('aria-hidden', 'false');
+    }
+    if (toggle) toggle.setAttribute('aria-expanded', 'true');
 }
 
 function closeMobileSidebar() {
     const sidebar = document.getElementById('ai-sidebar');
+    const overlay = document.getElementById('ai-sidebar-overlay');
+    const toggle = document.getElementById('ai-history-toggle');
     if (sidebar) sidebar.classList.remove('is-open');
+    if (overlay) {
+        overlay.classList.remove('is-visible');
+        overlay.setAttribute('aria-hidden', 'true');
+        overlay.hidden = true;
+    }
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+}
+
+function toggleMobileSidebar() {
+    const sidebar = document.getElementById('ai-sidebar');
+    if (sidebar?.classList.contains('is-open')) {
+        closeMobileSidebar();
+    } else {
+        openMobileSidebar();
+    }
 }
 
 function escapeHtml(str) {
@@ -275,7 +301,6 @@ function initSuggestedPrompts() {
     wrap.innerHTML = SUGGESTED_PROMPTS.map(text => `
         <button type="button" class="ai-prompt-chip" data-text="${escapeAttr(text)}">${escapeHtml(text)}</button>
     `).join('');
-    bindPromptChips();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -284,12 +309,16 @@ document.addEventListener('DOMContentLoaded', function() {
     renderHistory();
     renderMessages();
 
+    const input = document.getElementById('ai-input');
+    const layout = document.querySelector('.ai-layout');
+
     document.getElementById('ai-send-btn')?.addEventListener('click', () => {
-        const input = document.getElementById('ai-input');
         if (input) sendUserMessage(input.value);
     });
 
-    document.getElementById('ai-input')?.addEventListener('keydown', (e) => {
+    input?.addEventListener('input', () => autoResizeTextarea(input));
+
+    input?.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             sendUserMessage(e.target.value);
@@ -309,8 +338,30 @@ document.addEventListener('DOMContentLoaded', function() {
         closeMobileSidebar();
     });
 
-    document.getElementById('ai-history-toggle')?.addEventListener('click', () => {
-        document.getElementById('ai-sidebar')?.classList.toggle('is-open');
+    document.getElementById('ai-history-toggle')?.addEventListener('click', toggleMobileSidebar);
+
+    document.getElementById('ai-sidebar-overlay')?.addEventListener('click', closeMobileSidebar);
+
+    layout?.addEventListener('click', (e) => {
+        const target = e.target.closest('[data-id], .ai-prompt-chip, .ai-followup-chip');
+        if (!target) return;
+
+        if (target.classList.contains('ai-history__item')) {
+            activeConversationId = target.dataset.id;
+            saveConversations();
+            renderHistory();
+            renderMessages();
+            closeMobileSidebar();
+            return;
+        }
+
+        if (target.classList.contains('ai-prompt-chip') || target.classList.contains('ai-followup-chip')) {
+            sendUserMessage(target.dataset.text || target.textContent);
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMobileSidebar();
     });
 });
 
