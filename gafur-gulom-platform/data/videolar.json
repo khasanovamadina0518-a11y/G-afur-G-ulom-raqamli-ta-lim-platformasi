@@ -30,9 +30,9 @@
     "kategoriya": "hayoti-ijodi",
     "sarlavha": "1. G'afur G'ulom hayoti va ijodi",
     "tavsif": "Ushbu darsda G'afur G'ulomning hayoti, ijodiy yo'li va adabiyotga qo'shgan hissasi batafsil yoritiladi.",
-    "thumbnail": "../assets/images/gafur-gulom.jpg",
-    "videoUrl": "assets/videos/gafur-gulom-hayoti-va-jodi.mp4",
-    "downloadUrl": "assets/videos/gafur-gulom-hayoti-va-jodi.mp4",
+    "thumbnail": "assets/images/gafur-gulom.jpg",
+    "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/gafur-gulom-hayoti-va-jodi.mp4",
+    "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/gafur-gulom-hayoti-va-jodi.mp4",
     "currentTime": "04:35",
     "totalTime": "18:45",
     "progress": 0.25
@@ -76,9 +76,9 @@
       "tavsif": "Qozog'boy Yo'ldoshev G'afur G'ulom hayoti va ijodi haqida so'zlaydi.",
       "davomiylik": "32:13",
       "mavzu": "G'afur G'ulom hayoti",
-      "videoUrl": "assets/videos/gafur-gulom-haqida-qozogboy-yoldoshev.mp4",
-      "downloadUrl": "assets/videos/gafur-gulom-haqida-qozogboy-yoldoshev.mp4",
-      "thumbnail": "../assets/images/gafur-gulom.jpg"
+      "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/gafur-gulom-haqida-qozogboy-yoldoshev.mp4",
+      "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/gafur-gulom-haqida-qozogboy-yoldoshev.mp4",
+      "thumbnail": "assets/images/gafur-gulom.jpg"
     },
     {
       "id": 6,
@@ -89,9 +89,9 @@
       "tavsif": "G'afur G'ulomning «Shum bola» qissasi bo'yicha tahliliy video. Manba: Madaniyat va Ma'rifat.",
       "davomiylik": "54:31",
       "mavzu": "Shum bola",
-      "videoUrl": "assets/videos/shum-bola-qissasi-tahlili.mp4",
-      "downloadUrl": "assets/videos/shum-bola-qissasi-tahlili.mp4",
-      "thumbnail": "../assets/images/gafur-gulom.jpg"
+      "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/shum-bola-qissasi-tahlili.mp4",
+      "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/shum-bola-qissasi-tahlili.mp4",
+      "thumbnail": "assets/images/gafur-gulom.jpg"
     },
     {
       "id": 7,
@@ -102,9 +102,9 @@
       "tavsif": "G'afur G'ulomning «Shum bola» asari haqida tahliliy video. Manba: Toshkent telekanali.",
       "davomiylik": "27:09",
       "mavzu": "Shum bola",
-      "videoUrl": "assets/videos/shum-bola-asari-haqida.mp4",
-      "downloadUrl": "assets/videos/shum-bola-asari-haqida.mp4",
-      "thumbnail": "../assets/images/gafur-gulom.jpg"
+      "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/shum-bola-asari-haqida.mp4",
+      "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/shum-bola-asari-haqida.mp4",
+      "thumbnail": "assets/images/gafur-gulom.jpg"
     },
     {
       "id": 8,
@@ -115,9 +115,9 @@
       "tavsif": "G'afur G'ulomning «Shum bola» asari bo'yicha tahliliy video.",
       "davomiylik": "04:14",
       "mavzu": "Shum bola",
-      "videoUrl": "assets/videos/SHUM BOLA KIM - G'AFUR G'ULOM ASARINING SIRLARI.mp4",
-      "downloadUrl": "assets/videos/SHUM BOLA KIM - G'AFUR G'ULOM ASARINING SIRLARI.mp4",
-      "thumbnail": "../assets/images/gafur-gulom.jpg"
+      "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/SHUM%20BOLA%20KIM%20-%20G'AFUR%20G'ULOM%20ASARINING%20SIRLARI.mp4",
+      "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/SHUM%20BOLA%20KIM%20-%20G'AFUR%20G'ULOM%20ASARINING%20SIRLARI.mp4",
+      "thumbnail": "assets/images/gafur-gulom.jpg"
     },
     {
       "id": 9,
@@ -128,9 +128,9 @@
       "tavsif": "G'afur G'ulomning «Shum bola» qissasi haqida tahliliy video. Manba: HAYRAT — Olomon hodisasi.",
       "davomiylik": "37:18",
       "mavzu": "Shum bola",
-      "videoUrl": "assets/videos/G‘afur G‘ulom va uning Shum bola qissasi haqida fikrlar. Olomon hodisasi.mp4",
-      "downloadUrl": "assets/videos/G‘afur G‘ulom va uning Shum bola qissasi haqida fikrlar. Olomon hodisasi.mp4",
-      "thumbnail": "../assets/images/gafur-gulom.jpg"
+      "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/G%E2%80%98afur%20G%E2%80%98ulom%20va%20uning%20Shum%20bola%20qissasi%20haqida%20fikrlar.%20Olomon%20hodisasi.mp4",
+      "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/G%E2%80%98afur%20G%E2%80%98ulom%20va%20uning%20Shum%20bola%20qissasi%20haqida%20fikrlar.%20Olomon%20hodisasi.mp4",
+      "thumbnail": "assets/images/gafur-gulom.jpg"
     },
     {
       "id": 10,
@@ -140,9 +140,9 @@
       "sarlavhaToLiql": true,
       "tavsif": "«Shum bola» asarida qo'llangan so'zlarning ma'nosi va sharhiga bag'ishlangan tahliliy video. Manba: YouTube.",
       "mavzu": "Shum bola",
-      "videoUrl": "assets/videos/G‘afur G‘ulomning Shum bola asarida qo‘llangan so‘zlar sharhi.mp4",
-      "downloadUrl": "assets/videos/G‘afur G‘ulomning Shum bola asarida qo‘llangan so‘zlar sharhi.mp4",
-      "thumbnail": "../assets/images/gafur-gulom.jpg"
+      "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/G%E2%80%98afur%20G%E2%80%98ulomning%20Shum%20bola%20asarida%20qo%E2%80%98llangan%20so%E2%80%98zlar%20sharhi.mp4",
+      "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/G%E2%80%98afur%20G%E2%80%98ulomning%20Shum%20bola%20asarida%20qo%E2%80%98llangan%20so%E2%80%98zlar%20sharhi.mp4",
+      "thumbnail": "assets/images/gafur-gulom.jpg"
     },
     {
       "id": 11,
@@ -153,9 +153,9 @@
       "tavsif": "«Shum bola» qissasi asosida tayyorlangan booktrailer. Manba: YouTube.",
       "davomiylik": "02:28",
       "mavzu": "Shum bola",
-      "videoUrl": "assets/videos/G‘afur G‘ulom — Shum bola asari asosida booktrailer.mp4",
-      "downloadUrl": "assets/videos/G‘afur G‘ulom — Shum bola asari asosida booktrailer.mp4",
-      "thumbnail": "../assets/images/gafur-gulom.jpg"
+      "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/G%E2%80%98afur%20G%E2%80%98ulom%20%E2%80%94%20Shum%20bola%20asari%20asosida%20booktrailer.mp4",
+      "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/G%E2%80%98afur%20G%E2%80%98ulom%20%E2%80%94%20Shum%20bola%20asari%20asosida%20booktrailer.mp4",
+      "thumbnail": "assets/images/gafur-gulom.jpg"
     }
   ],
   "filmlar": [
@@ -166,8 +166,8 @@
       "asar": "Shum bola",
       "tavsif": "G'afur G'ulomning «Shum bola» asari asosida yaratilgan badiiy film.",
       "janr": "Badiiy film",
-      "videoUrl": "assets/videos/shum-bola.mp4",
-      "downloadUrl": "assets/videos/shum-bola.mp4"
+      "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/shum-bola.mp4",
+      "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/shum-bola.mp4"
     },
     {
       "id": 2,
@@ -176,8 +176,8 @@
       "asar": "Yodgor",
       "tavsif": "G'afur G'ulomning «Yodgor» qissasi asosida yaratilgan badiiy film.",
       "janr": "Badiiy film",
-      "videoUrl": "assets/videos/yodgor.mp4",
-      "downloadUrl": "assets/videos/yodgor.mp4"
+      "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/yodgor.mp4",
+      "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/yodgor.mp4"
     }
   ],
   "materiallar": [

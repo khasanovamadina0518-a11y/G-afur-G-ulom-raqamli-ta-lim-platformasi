@@ -24,7 +24,7 @@
       "muallif": "G'afur G'ulom",
       "teglar": ["qissa", "adabiyot"],
       "qisqa": "Yozning qiziq kunlari. Egnimda elvagaygina, ko'ksi ochiq, yoqasiga pilta otgan surp yaktak.",
-      "audio": "assets/audio/yodgor.mp3",
+      "audio": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/yodgor.mp3",
       "pdf": "assets/pdf/qissalar/Yodgor.pdf"
     },
     {

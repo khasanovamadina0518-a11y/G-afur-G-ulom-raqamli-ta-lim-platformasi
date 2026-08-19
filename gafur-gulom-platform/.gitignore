@@ -36,6 +36,9 @@ build/
 .cache/
 *.cache
 
-# Large media files
-assets/audio/*.mp3
+# Large local-only media copies (production URLs in data/*.json use R2 where applicable)
+assets/audio/shum-bola.mp3
+assets/audio/shum-bola-r2.mp3
+assets/audio/shum-bola-r2-64k.mp3
+assets/audio/yodgor.mp3
 assets/videos/*.mp4

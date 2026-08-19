@@ -24,6 +24,7 @@
 
     const base = global.PLATFORM_BASE || detectPlatformBase();
     global.PLATFORM_BASE = base;
+    global.R2_MEDIA_BASE = 'https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev';
     global.platformUrl = function platformUrl(relativePath) {
         const path = String(relativePath || '').trim();
 

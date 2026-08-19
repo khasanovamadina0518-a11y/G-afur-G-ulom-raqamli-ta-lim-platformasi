@@ -114,7 +114,40 @@ function setYouTubePlayerMode(youtubeId, title, autoplay = false) {
     return true;
 }
 
+function getMediaErrorMessage(mediaEl) {
+    if (!mediaEl) return 'Media yuklanmadi.';
+
+    const code = mediaEl.error?.code;
+    const src = mediaEl.currentSrc || mediaEl.src || '';
+
+    if (code === MediaError.MEDIA_ERR_NETWORK) {
+        return 'Tarmoq xatosi: media faylga ulanib bo‘lmadi.';
+    }
+    if (code === MediaError.MEDIA_ERR_DECODE) {
+        return 'Codec xatosi: brauzer ushbu media formatini ocha olmadi.';
+    }
+    if (code === MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED) {
+        if (/^https?:\/\//i.test(src)) {
+            return 'Media manbasi topilmadi (404) yoki qo‘llab-quvvatlanmaydi.';
+        }
+        return 'Media manbasi topilmadi yoki noto‘g‘ri yo‘l.';
+    }
+    return 'Media yuklanmadi yoki mavjud emas.';
+}
+
+function showVideoLoadError(message) {
+    const overlayEl = document.getElementById('player-overlay-title');
+    if (overlayEl) {
+        overlayEl.textContent = message;
+        overlayEl.hidden = false;
+    }
+    setPlayerPlayingState(false);
+}
+
 function getDownloadFilename(path) {
+    const parts = String(path || '').split('/');
+    return parts[parts.length - 1] || 'video.mp4';
+}
     const parts = String(path || '').split('/');
     return parts[parts.length - 1] || 'video.mp4';
 }
@@ -322,7 +355,7 @@ function getActiveProgressKey() {
 
 async function loadVideoData() {
     try {
-        const response = await fetch((window.platformUrl || function (r) { return r; })('data/videolar.json'));
+        const response = await fetch((window.platformUrl || function (r) { return r; })('data/videolar.json?v=20260819'));
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         videoData = await response.json();
 
@@ -861,8 +894,9 @@ function initPlayerControls() {
     courseVideo.addEventListener('timeupdate', updatePlayerProgress);
     courseVideo.addEventListener('loadedmetadata', updatePlayerProgress);
     courseVideo.addEventListener('error', () => {
-        console.warn('Video fayli yuklanmadi yoki topilmadi:', courseVideo.currentSrc || courseVideo.src);
-        setPlayerPlayingState(false);
+        const message = getMediaErrorMessage(courseVideo);
+        console.warn('Video yuklanmadi:', courseVideo.currentSrc || courseVideo.src, message);
+        showVideoLoadError(message);
     });
 
     if (progressBar) {

@@ -147,14 +147,20 @@ function onLibraryAudioError(prefix, id) {
     const { audio } = getLibraryAudioParts(prefix, id);
     const btn = document.getElementById(`${prefix}-audio-btn-${id}`);
 
-    console.warn(`Audio fayli topilmadi yoki yuklanmadi (${prefix}, id: ${id})`);
+    const message = audio?.error?.code === MediaError.MEDIA_ERR_NETWORK
+        ? 'Audio tarmoq xatosi'
+        : audio?.error?.code === MediaError.MEDIA_ERR_DECODE
+            ? 'Audio codec xatosi'
+            : 'Audio fayl topilmadi (404) yoki yuklanmadi';
+
+    console.warn(`${message} (${prefix}, id: ${id})`, audio?.currentSrc || audio?.src || '');
 
     closeLibraryAudio(prefix, id);
 
     if (btn) {
         btn.disabled = true;
         btn.classList.add('is-unavailable');
-        btn.title = 'Audio fayl hozircha mavjud emas';
+        btn.title = message;
     }
 
     if (audio) {
