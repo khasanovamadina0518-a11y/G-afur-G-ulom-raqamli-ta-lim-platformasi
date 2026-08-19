@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <script>
-    (function(){var p=location.pathname.replace(/\\/g,'/'),m='/gafur-gulom-platform/',b='/';if(p.indexOf(m)!==-1)b=p.slice(0,p.indexOf(m)+m.length);else if(p.indexOf('/pages/')!==-1)b=p.slice(0,p.indexOf('/pages/')+1);else{var i=p.lastIndexOf('/');b=i<=0?'/':p.slice(0,i+1);}var e=document.createElement('base');e.href=b;document.head.insertBefore(e,document.head.firstChild);window.PLATFORM_BASE=b;window.platformUrl=function(r){var path=String(r||'').trim();if(!path)return '';if(/^(https?:)?\/\//i.test(path))return path;return b+path.replace(/^\//,'');};})();
-    </script>
+    <script src="/assets/js/platform-base.js?v=1"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="G'afur G'ulom - O'zbek adabiyotining buyuk shoiri va yozuvchisi haqida to'liq ta'limiy platforma. She'rlar, hayot tarixi, interaktiv o'yinlar va ilmiy manbalar.">
@@ -26,10 +24,10 @@
     <meta property="twitter:image" content="https://gafurgulom.uz/assets/images/gafur-gulom.jpg">
     
     <!-- PWA -->
-    <link rel="manifest" href="manifest.json?v=3">
+    <link rel="manifest" href="/manifest.json?v=3">
     <meta name="theme-color" content="#c9a84c">
-    <link rel="icon" href="assets/images/gafur-gulom.jpg" type="image/jpeg">
-    <link rel="apple-touch-icon" href="assets/images/gafur-gulom.jpg">
+    <link rel="icon" href="/assets/images/gafur-gulom.jpg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="/assets/images/gafur-gulom.jpg">
     
     <title>G'afur G'ulom - Ta'limiy Platforma</title>
     
@@ -39,11 +37,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/main.css?v=9">
-    <link rel="stylesheet" href="assets/css/components.css?v=9">
-    <link rel="stylesheet" href="assets/css/responsive.css?v=9">
-    <link rel="stylesheet" href="assets/css/platform-buttons.css?v=9">
-    <link rel="stylesheet" href="assets/css/home.css?v=9">
+    <link rel="stylesheet" href="/assets/css/main.css?v=9">
+    <link rel="stylesheet" href="/assets/css/components.css?v=9">
+    <link rel="stylesheet" href="/assets/css/responsive.css?v=9">
+    <link rel="stylesheet" href="/assets/css/platform-buttons.css?v=9">
+    <link rel="stylesheet" href="/assets/css/home.css?v=9">
     <style>
         /* Homepage section styles (hero, stats → assets/css/home.css) */
         
@@ -172,11 +170,11 @@ body.dark-mode .card-link{
                             hayot tarixi, ilmiy arxiv va interaktiv ta'lim resurslari bir joyda.
                         </p>
                         <div class="home-hero__actions">
-                            <a href="pages/asarlar.html" class="home-hero__btn home-hero__btn--primary">
+                            <a href="/pages/asarlar.html" class="home-hero__btn home-hero__btn--primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                                 Kutubxonaga kirish
                             </a>
-                            <a href="pages/multimedia.html" class="home-hero__btn home-hero__btn--secondary">
+                            <a href="/pages/multimedia.html" class="home-hero__btn home-hero__btn--secondary">
                                 <span class="home-hero__btn-play" aria-hidden="true">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                                 </span>
@@ -187,7 +185,7 @@ body.dark-mode .card-link{
                     <div class="home-hero__media">
                         <div class="home-hero__portrait-wrap">
                             <img
-                                src="assets/images/gafur-gulom.jpg"
+                                src="/assets/images/gafur-gulom.jpg"
                                 alt="G'afur G'ulom portreti"
                                 class="hero-portrait home-hero__portrait"
                                 id="hero-portrait"
@@ -305,11 +303,10 @@ body.dark-mode .card-link{
             }
         });
     </script>
-    <script src="assets/js/platform-base.js"></script>
-    <script src="components/header.js?v=8"></script>
-    <script src="components/footer.js"></script>
-    <script src="assets/js/data.js?v=8"></script>
-    <script src="assets/js/app.js?v=8"></script>
+    <script src="/components/header.js?v=8"></script>
+    <script src="/components/footer.js"></script>
+    <script src="/assets/js/data.js?v=8"></script>
+    <script src="/assets/js/app.js?v=8"></script>
     
     <!-- Service Worker Registration -->
     <script>

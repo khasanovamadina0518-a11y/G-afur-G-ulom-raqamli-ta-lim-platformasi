@@ -25,7 +25,7 @@
             return global.platformUrl('data/');
         }
         const path = global.location?.pathname || '';
-        return path.includes('/pages/') ? '../data/' : 'data/';
+        return '/data/';
     }
 
     function normalizeQuery(q) {

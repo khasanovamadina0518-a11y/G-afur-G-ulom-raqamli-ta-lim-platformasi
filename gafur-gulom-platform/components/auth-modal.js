@@ -13,8 +13,11 @@
 
     function platformHref(relativePath) {
         if (typeof global.platformUrl === 'function') return global.platformUrl(relativePath);
+        const path = String(relativePath || '').trim();
+        if (!path) return '';
+        if (/^(https?:)?\/\//i.test(path)) return path;
         const base = global.PLATFORM_BASE || '/';
-        return base + String(relativePath || '').replace(/^\//, '');
+        return base + path.replace(/^\/+/, '');
     }
 
     function ensureAssets() {

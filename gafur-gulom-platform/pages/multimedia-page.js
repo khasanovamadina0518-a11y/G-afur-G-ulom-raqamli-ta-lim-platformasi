@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 function resolveAssetPath(path) {
     if (!path || path === '#') return '';
-    if (/^https?:\/\//i.test(path)) return path;
     return (window.platformUrl || function (r) { return r; })(path);
 }
 

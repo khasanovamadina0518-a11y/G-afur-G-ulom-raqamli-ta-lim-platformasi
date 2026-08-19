@@ -1,5 +1,5 @@
 /**
- * Platform root path helper — requires inline base bootstrap in HTML <head>.
+ * Platform root path helper — sets platformUrl without document <base>.
  */
 (function (global) {
     'use strict';
@@ -9,19 +9,17 @@
     }
 
     function detectPlatformBase() {
-        const path = (global.location?.pathname || '/').replace(/\\/g, '/');
-        const marker = '/gafur-gulom-platform/';
+        let path = (global.location?.pathname || '/').replace(/\\/g, '/');
+        if (!path.startsWith('/')) {
+            path = '/' + path;
+        }
 
+        const marker = '/gafur-gulom-platform/';
         if (path.includes(marker)) {
             return path.slice(0, path.indexOf(marker) + marker.length);
         }
 
-        if (path.includes('/pages/')) {
-            return path.slice(0, path.indexOf('/pages/') + 1);
-        }
-
-        const slash = path.lastIndexOf('/');
-        return slash <= 0 ? '/' : path.slice(0, slash + 1);
+        return '/';
     }
 
     const base = global.PLATFORM_BASE || detectPlatformBase();
@@ -35,6 +33,6 @@
             return path;
         }
 
-        return base + path.replace(/^\//, '');
+        return base + path.replace(/^\/+/, '');
     };
 })(window);

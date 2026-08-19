@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <script>
-    (function(){var p=location.pathname.replace(/\\/g,'/'),m='/gafur-gulom-platform/',b='/';if(p.indexOf(m)!==-1)b=p.slice(0,p.indexOf(m)+m.length);else if(p.indexOf('/pages/')!==-1)b=p.slice(0,p.indexOf('/pages/')+1);else{var i=p.lastIndexOf('/');b=i<=0?'/':p.slice(0,i+1);}var e=document.createElement('base');e.href=b;document.head.insertBefore(e,document.head.firstChild);window.PLATFORM_BASE=b;window.platformUrl=function(r){return b+String(r||'').replace(/^\//,'');};})();
-    </script>
+    <script src="/assets/js/platform-base.js?v=1"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - G'afur G'ulom</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/main.css?v=9">
-    <link rel="stylesheet" href="assets/css/components.css?v=9">
-    <link rel="stylesheet" href="assets/css/responsive.css?v=9">
-    <link rel="stylesheet" href="assets/css/platform-buttons.css?v=10">
-    <link rel="stylesheet" href="pages/dashboard.css?v=22">
+    <link rel="stylesheet" href="/assets/css/main.css?v=9">
+    <link rel="stylesheet" href="/assets/css/components.css?v=9">
+    <link rel="stylesheet" href="/assets/css/responsive.css?v=9">
+    <link rel="stylesheet" href="/assets/css/platform-buttons.css?v=10">
+    <link rel="stylesheet" href="/pages/dashboard.css?v=22">
 </head>
 <body class="page-dashboard">
     <div id="header-container"></div>
@@ -33,23 +31,23 @@
                         <span class="dash-nav__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-5h4v5h5V9.5"/></svg></span>
                         Bosh sahifa
                     </a>
-                    <a href="pages/asarlar.html" class="dash-nav__link">
+                    <a href="/pages/asarlar.html" class="dash-nav__link">
                         <span class="dash-nav__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
                         Kutubxona
                     </a>
-                    <a href="pages/multimedia.html" class="dash-nav__link">
+                    <a href="/pages/multimedia.html" class="dash-nav__link">
                         <span class="dash-nav__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
                         Videolar
                     </a>
-                    <a href="pages/asarlar.html" class="dash-nav__link">
+                    <a href="/pages/asarlar.html" class="dash-nav__link">
                         <span class="dash-nav__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3v5z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3v5z"/></svg></span>
                         Audiokitob
                     </a>
-                    <a href="pages/interaktiv.html" class="dash-nav__link">
+                    <a href="/pages/interaktiv.html" class="dash-nav__link">
                         <span class="dash-nav__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
                         Testlar
                     </a>
-                    <a href="pages/ai-yordamchi.html" class="dash-nav__link">
+                    <a href="/pages/ai-yordamchi.html" class="dash-nav__link">
                         <span class="dash-nav__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M12 14v4"/><path d="M8 14v2"/><path d="M16 14v2"/></svg></span>
                         AI yordamchi
                     </a>
@@ -104,7 +102,7 @@
                                     <span class="dash-metric__progress-value" id="dash-continue-pct">0%</span>
                                 </div>
                                 <div class="dash-metric__action">
-                                    <a href="pages/asarlar.html" class="dash-btn dash-btn--primary dash-btn--block dash-btn--metric" id="dash-continue-btn">Davom etish</a>
+                                    <a href="/pages/asarlar.html" class="dash-btn dash-btn--primary dash-btn--block dash-btn--metric" id="dash-continue-btn">Davom etish</a>
                                 </div>
                             </div>
                             <div class="dash-metric__inner dash-metric__inner--empty" id="dash-continue-empty" hidden>
@@ -119,7 +117,7 @@
                                 </div>
                                 <div class="dash-metric__progress dash-metric__progress--slot" aria-hidden="true"></div>
                                 <div class="dash-metric__action">
-                                    <a href="pages/asarlar.html" class="dash-btn dash-btn--primary dash-btn--block dash-btn--metric">Asarlarni ko'rish</a>
+                                    <a href="/pages/asarlar.html" class="dash-btn dash-btn--primary dash-btn--block dash-btn--metric">Asarlarni ko'rish</a>
                                 </div>
                             </div>
                         </div>
@@ -188,7 +186,7 @@
                         <section class="dash-card" id="achievements" aria-labelledby="dash-ach-title">
                             <div class="dash-card__head">
                                 <h2 class="dash-card__title" id="dash-ach-title">Yutuqlaringiz</h2>
-                                <a href="pages/yutuqlar.html" class="dash-card__link">Barchasi</a>
+                                <a href="/pages/yutuqlar.html" class="dash-card__link">Barchasi</a>
                             </div>
                             <div class="dash-ach-list" id="dash-badge-list"></div>
                         </section>
@@ -207,7 +205,7 @@
                                 </div>
                                 <div class="dash-profile-section__actions dash-profile-section__actions--compact">
                                     <button type="button" class="dash-btn dash-btn--primary dash-btn--block" id="dash-profile-edit-btn">Profilni tahrirlash</button>
-                                    <a href="pages/asarlar.html" class="dash-btn dash-btn--outline dash-btn--block">Keyingi asarni tanlash</a>
+                                    <a href="/pages/asarlar.html" class="dash-btn dash-btn--outline dash-btn--block">Keyingi asarni tanlash</a>
                                 </div>
                                 <div class="dash-profile-section__stats" id="dash-profile-stats" aria-label="O'qish statistikasi"></div>
                                 <div class="dash-profile-section__tests">
@@ -222,7 +220,7 @@
                         <h2 class="dash-card__title" id="dash-rec-title">AI yordamchi</h2>
                         <div class="dash-ai-panel">
                             <p class="dash-ai-panel__text">G'afur G'ulom asarlari, hayoti va she'rlari bo'yicha savol bering.</p>
-                            <a href="pages/ai-yordamchi.html" class="dash-btn dash-btn--outline dash-btn--block">AI bilan suhbat</a>
+                            <a href="/pages/ai-yordamchi.html" class="dash-btn dash-btn--outline dash-btn--block">AI bilan suhbat</a>
                         </div>
                         <ul class="dash-recs dash-recs--compact" id="dash-recs-list" hidden aria-hidden="true"></ul>
                     </section>
@@ -262,12 +260,12 @@
         </div>
     </div>
 
-    <script src="components/header.js"></script>
-    <script src="components/footer.js"></script>
-    <script src="assets/js/auth-service.js?v=3"></script>
-    <script src="components/auth-modal.js?v=3"></script>
-    <script src="assets/js/data.js?v=9"></script>
-    <script src="assets/js/app.js"></script>
-    <script src="pages/dashboard-page.js?v=15"></script>
+    <script src="/components/header.js"></script>
+    <script src="/components/footer.js"></script>
+    <script src="/assets/js/auth-service.js?v=3"></script>
+    <script src="/components/auth-modal.js?v=3"></script>
+    <script src="/assets/js/data.js?v=9"></script>
+    <script src="/assets/js/app.js"></script>
+    <script src="/pages/dashboard-page.js?v=15"></script>
 </body>
 </html>

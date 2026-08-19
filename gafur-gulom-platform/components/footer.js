@@ -6,8 +6,11 @@ function platformHref(relativePath) {
     if (typeof window.platformUrl === 'function') {
         return window.platformUrl(relativePath);
     }
+    const path = String(relativePath || '').trim();
+    if (!path) return '';
+    if (/^(https?:)?\/\//i.test(path)) return path;
     const base = (typeof window.PLATFORM_BASE === 'string' && window.PLATFORM_BASE) ? window.PLATFORM_BASE : '/';
-    return base + String(relativePath || '').replace(/^\//, '');
+    return base + path.replace(/^\/+/, '');
 }
 
 function renderFooter() {
