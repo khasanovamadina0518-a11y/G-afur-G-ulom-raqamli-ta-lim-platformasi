@@ -280,6 +280,55 @@ function isLessonCompleted(lessonId) {
     return isItemCompleted('lesson', lessonId);
 }
 
+const videoProgressSynced = new Set();
+
+function getActiveVideoMeta() {
+    if (!videoData) return null;
+    if (activeSelection.type === 'lesson' && activeLessonId) {
+        const lesson = videoData.darslar?.find(d => d.id === activeLessonId);
+        return { type: 'lesson', id: activeLessonId, title: lesson?.sarlavha || 'Video dars' };
+    }
+    if (activeSelection.type === 'film' && activeSelection.id != null) {
+        const film = videoData.filmlar?.find(f => f.id === activeSelection.id);
+        return { type: 'film', id: activeSelection.id, title: film?.sarlavha || 'Film' };
+    }
+    return {
+        type: 'kurs',
+        id: videoData.kurs?.id || 'kurs',
+        title: videoData.kurs?.sarlavha || 'Video kurs'
+    };
+}
+
+function syncVideoToUserProgress(type, id, title, percent) {
+    if (!window.UserProgress?.recordVideoWatched || !type || id == null) return;
+    if (!Number.isFinite(percent) || percent < 0.9) return;
+    const vid = `${type}:${id}`;
+    if (videoProgressSynced.has(vid)) return;
+    videoProgressSynced.add(vid);
+    UserProgress.recordVideoWatched({ id: vid, title: title || 'Video' });
+}
+
+function backfillVideoProgressToUserProgress() {
+    if (!videoData || !window.UserProgress?.syncLegacyVideoProgress) return;
+    const entries = [];
+    (videoData.darslar || []).forEach(lesson => {
+        entries.push({ type: 'lesson', id: lesson.id, title: lesson.sarlavha });
+    });
+    (videoData.filmlar || []).forEach(film => {
+        entries.push({ type: 'film', id: film.id, title: film.sarlavha });
+    });
+    if (videoData.kurs) {
+        entries.push({ type: 'kurs', id: videoData.kurs.id || 'kurs', title: videoData.kurs.sarlavha });
+    }
+    UserProgress.syncLegacyVideoProgress(entries);
+    entries.forEach(item => {
+        const progress = getItemProgress(item.type, item.id);
+        if (progress?.percent >= 0.9) {
+            syncVideoToUserProgress(item.type, item.id, item.title, progress.percent);
+        }
+    });
+}
+
 async function triggerVideoDownload(url, filename) {
     if (!url) return;
 
@@ -424,6 +473,7 @@ async function loadVideoData() {
         renderLesson();
         renderMaterials();
         renderCommentsTab();
+        backfillVideoProgressToUserProgress();
     } catch (error) {
         console.error('Video ma\'lumotlarini yuklashda xatolik:', error);
     }
@@ -831,6 +881,11 @@ function updatePlayerProgress() {
         } else if (activeSelection.type === 'film' && activeSelection.id) {
             saveItemProgress('film', activeSelection.id, current, duration);
         }
+
+        const meta = getActiveVideoMeta();
+        if (meta && duration > 0) {
+            syncVideoToUserProgress(meta.type, meta.id, meta.title, current / duration);
+        }
     }
 }
 
@@ -942,6 +997,8 @@ function initPlayerControls() {
             } else if (activeSelection.type === 'film' && activeSelection.id) {
                 saveItemProgress('film', activeSelection.id, courseVideo.duration, courseVideo.duration);
             }
+            const meta = getActiveVideoMeta();
+            if (meta) syncVideoToUserProgress(meta.type, meta.id, meta.title, 1);
             renderCatalog();
         }
     });

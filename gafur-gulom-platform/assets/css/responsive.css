@@ -1658,9 +1658,14 @@ html body.home-page .home-stats__inner {
         overflow-wrap: anywhere;
     }
 
-    html body.page-testlar .tests-grid,
+    html body.page-testlar .tests-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.625rem;
+    }
+
     html body.page-interaktiv .games-grid--interactive {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.625rem;
     }
 
     html body.page-asarlar .library-search-row {
@@ -1699,6 +1704,7 @@ html body.home-page .home-stats__inner {
 
 /* Horizontal tab/chip rows — stay inside viewport */
 html body.page-asarlar .library-chips,
+html body.page-asarlar .library-tabs,
 html body.page-hayot .hy-filters,
 html body.page-ilmiy .ilm-tabs,
 html body.page-talim .tl-tabs,

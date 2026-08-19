@@ -35,6 +35,8 @@
         { min: 16, title: 'Usta o\'quvchi' }
     ];
 
+    const CERT_PASS_SCORE = 70;
+
     let activeProgressKey = GUEST_KEY;
 
     function resolveProgressKey(userId) {
@@ -62,7 +64,10 @@
             booksCompleted: [],
             videosWatched: [],
             testsCompleted: [],
+            certificatesIssued: [],
             gamesCompleted: 0,
+            gamesPlayed: [],
+            audiosListened: [],
             favorites: { poems: [], books: [], videos: [] },
             activity: [],
             achievementsUnlocked: [],
@@ -119,14 +124,122 @@
         state.streak.longest = Math.max(state.streak.longest, state.streak.current);
     }
 
-    function addXp(state, amount, reason) {
+    function addXp(state, amount) {
         state.totalXp = Math.max(0, (state.totalXp || 0) + amount);
-        return reason;
+    }
+
+    function normalizeGamesPlayed(state) {
+        if (!Array.isArray(state.gamesPlayed)) state.gamesPlayed = [];
+        if (state.gamesPlayed.length === 0 && (state.gamesCompleted || 0) > 0) {
+            state.gamesCompleted = Math.max(state.gamesCompleted, state.gamesPlayed.length);
+        } else {
+            state.gamesCompleted = state.gamesPlayed.length;
+        }
     }
 
     function pushActivity(state, text, type) {
         state.activity.unshift({ text, type, at: Date.now() });
         state.activity = state.activity.slice(0, 30);
+    }
+
+    function formatCertDate(ts) {
+        if (!ts) return '';
+        try {
+            return new Date(ts).toLocaleDateString('uz-UZ', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        } catch (e) {
+            return '';
+        }
+    }
+
+    function issueCertificate(state, payload) {
+        const {
+            category,
+            title,
+            score,
+            issuedAt,
+            silent = false
+        } = payload || {};
+        const pct = Math.round(Number(score) || 0);
+        if (pct < CERT_PASS_SCORE) {
+            return { issued: false, isNew: false };
+        }
+
+        if (!Array.isArray(state.certificatesIssued)) {
+            state.certificatesIssued = [];
+        }
+
+        const catKey = String(category || title || 'general');
+        const certTitle = title || catKey;
+        const idx = state.certificatesIssued.findIndex(c => String(c.category || c.title) === catKey);
+
+        if (idx >= 0) {
+            const existing = state.certificatesIssued[idx];
+            if (pct > (Number(existing.score) || 0)) {
+                state.certificatesIssued[idx] = {
+                    ...existing,
+                    title: certTitle,
+                    score: pct,
+                    category: catKey
+                };
+            }
+            return { issued: true, isNew: false, title: certTitle, score: pct };
+        }
+
+        state.certificatesIssued.unshift({
+            category: catKey,
+            title: certTitle,
+            score: pct,
+            issuedAt: issuedAt || Date.now()
+        });
+        state.certificatesIssued = state.certificatesIssued.slice(0, 20);
+
+        if (!silent) {
+            pushActivity(state, `Sertifikat berildi: ${certTitle} (${pct}%)`, 'certificate');
+        }
+
+        return { issued: true, isNew: true, title: certTitle, score: pct };
+    }
+
+    function syncCertificatesIssued(state) {
+        if (!Array.isArray(state.certificatesIssued)) {
+            state.certificatesIssued = [];
+        }
+
+        (state.testsCompleted || []).forEach(t => {
+            const pct = Math.round(Number(t.percentage) || 0);
+            if (pct < CERT_PASS_SCORE) return;
+            issueCertificate(state, {
+                category: t.category || t.title || 'test',
+                title: t.title || 'Test',
+                score: pct,
+                issuedAt: t.completedAt,
+                silent: true
+            });
+        });
+
+        if ((state._talimQuizBest || 0) >= CERT_PASS_SCORE) {
+            issueCertificate(state, {
+                category: 'talim-quiz',
+                title: 'Ta\'lim viktorinasi',
+                score: Math.round(state._talimQuizBest),
+                silent: true
+            });
+        }
+    }
+
+    function getCertificatesForDisplay(state, limit) {
+        syncCertificatesIssued(state);
+        return (state.certificatesIssued || [])
+            .slice(0, limit || 5)
+            .map(c => ({
+                title: c.title,
+                date: formatCertDate(c.issuedAt),
+                score: c.score
+            }));
     }
 
     function formatRelativeTime(ts) {
@@ -169,8 +282,8 @@
         switch (item.kind) {
             case 'poem': return `${base}?poem=${item.id}${resume}`;
             case 'qissa': return `${base}?qissa=${item.id}${resume}`;
-            case 'doston':
-            case 'book': return `${base}?tab=dostonlar&doston=${item.id}${resume}`;
+            case 'doston': return `${base}?tab=dostonlar&doston=${item.id}${resume}`;
+            case 'book': return `${base}?tanlangan=${item.id}${resume}`;
             case 'tarjima': return `${base}?tarjima=${item.id}${resume}`;
             case 'lesson': return item.href || 'pages/talim.html';
             case 'video': return 'pages/multimedia.html';
@@ -341,23 +454,37 @@
 
         getState() {
             syncLegacy(this._state);
+            normalizeGamesPlayed(this._state);
+            syncCertificatesIssued(this._state);
             return structuredClone(this._state);
         },
 
         _persist(reason) {
+            normalizeGamesPlayed(this._state);
+            syncCertificatesIssued(this._state);
             saveState(this._state);
             checkAchievements(this._state);
-            emitEvent('progressChanged', { reason, state: this.getState() });
+            emitEvent('progressChanged', { reason });
+        },
+
+        markBookCompleted(kind, id, title) {
+            const key = `${kind}:${id}`;
+            if (this._state.booksCompleted.includes(key)) return false;
+            this._state.booksCompleted.push(key);
+            addXp(this._state, XP.bookComplete);
+            const label = title || 'Asar';
+            pushActivity(this._state, `"${label}" to'liq o'qildi`, kind);
+            return true;
         },
 
         recordContentOpened(payload) {
             const { kind, id, title, type, href, progress = 10 } = payload;
             touchStreak(this._state);
-            addXp(this._state, XP.bookOpen, 'bookOpen');
-            this._state.timeSpentMin += 5;
 
             const key = `${kind}:${id}`;
             let entry = this._state.booksOpened.find(b => `${b.kind}:${b.id}` === key);
+            const isNew = !entry;
+
             if (entry) {
                 entry.progress = Math.min(100, Math.max(entry.progress || 0, progress));
                 entry.openedAt = Date.now();
@@ -376,30 +503,33 @@
                     openedAt: Date.now()
                 };
                 this._state.booksOpened.push(entry);
+                addXp(this._state, XP.bookOpen);
+                this._state.timeSpentMin += 5;
+                pushActivity(this._state, `"${title}" ochildi`, kind);
             }
 
-            if (progress >= 100 && !this._state.booksCompleted.includes(key)) {
-                this._state.booksCompleted.push(key);
-                addXp(this._state, XP.bookComplete, 'bookComplete');
+            if (progress >= 100) {
+                this.markBookCompleted(kind, id, title);
             }
 
             this._state.lastOpened = { kind, id, title, type, href: entry.href, progress: entry.progress, openedAt: Date.now() };
-            pushActivity(this._state, `"${title}" ochildi`, kind);
-            this._persist('contentOpened');
-            emitEvent('contentOpened', payload);
+            this._persist(isNew ? 'contentOpened' : 'contentReopened');
+            if (isNew) emitEvent('contentOpened', payload);
         },
 
         recordVideoWatched(payload) {
             const { id, title } = payload;
             touchStreak(this._state);
-            addXp(this._state, XP.videoWatch, 'video');
-            this._state.timeSpentMin += 10;
+            const isNew = !this._state.videosWatched.find(v => String(v.id) === String(id));
 
-            if (!this._state.videosWatched.find(v => v.id === id)) {
+            if (isNew) {
+                addXp(this._state, XP.videoWatch);
+                this._state.timeSpentMin += 10;
                 this._state.videosWatched.push({ id, title, watchedAt: Date.now() });
+                pushActivity(this._state, `Video dars ko'rildi: ${title}`, 'video');
             } else {
                 this._state.videosWatched = this._state.videosWatched.map(v =>
-                    v.id === id ? { ...v, watchedAt: Date.now() } : v
+                    String(v.id) === String(id) ? { ...v, title: title || v.title, watchedAt: Date.now() } : v
                 );
             }
 
@@ -412,16 +542,16 @@
                 progress: 100,
                 openedAt: Date.now()
             };
-            pushActivity(this._state, `Video dars ko'rildi: ${title}`, 'video');
             this._persist('videoWatched');
-            emitEvent('contentOpened', { kind: 'video', ...payload });
+            if (isNew) emitEvent('contentOpened', { kind: 'video', ...payload });
         },
 
         recordQuizCompleted(payload) {
             const { category, title, score, maxScore, percentage } = payload;
             touchStreak(this._state);
             addXp(this._state, XP.quizComplete, 'quiz');
-            if (percentage >= 70) addXp(this._state, XP.quizHighScore, 'quizHigh');
+            const pct = Math.round(Number(percentage) || 0);
+            if (pct >= CERT_PASS_SCORE) addXp(this._state, XP.quizHighScore, 'quizHigh');
             this._state.timeSpentMin += 15;
 
             this._state.testsCompleted.unshift({
@@ -429,22 +559,79 @@
                 title,
                 score,
                 maxScore,
-                percentage,
+                percentage: pct,
                 completedAt: Date.now()
             });
             this._state.testsCompleted = this._state.testsCompleted.slice(0, 50);
 
-            pushActivity(this._state, `Test: ${title} — ${Math.round(percentage)}%`, 'quiz');
+            const certResult = issueCertificate(this._state, {
+                category: category || title || 'test',
+                title: title || 'Test',
+                score: pct,
+                issuedAt: Date.now()
+            });
+
+            pushActivity(this._state, `Test: ${title} — ${pct}%`, 'quiz');
             this._persist('quizCompleted');
-            emitEvent('progressChanged', { kind: 'quiz', ...payload });
+            emitEvent('progressChanged', { kind: 'quiz', ...payload, certificate: certResult });
+            return certResult;
+        },
+
+        getCertificates(limit) {
+            return getCertificatesForDisplay(this._state, limit);
+        },
+
+        recordTalimQuizResult(percentage) {
+            syncLegacy(this._state);
+            const pct = Math.round(Number(percentage) || 0);
+            if (pct > (this._state._talimQuizBest || 0)) {
+                this._state._talimQuizBest = pct;
+            }
+            if (pct < CERT_PASS_SCORE) {
+                this._persist('talimQuiz');
+                return { issued: false, isNew: false };
+            }
+            const certResult = issueCertificate(this._state, {
+                category: 'talim-quiz',
+                title: 'Ta\'lim viktorinasi',
+                score: pct,
+                issuedAt: Date.now()
+            });
+            this._persist('talimCertificate');
+            emitEvent('progressChanged', { kind: 'talim-quiz', percentage: pct, certificate: certResult });
+            return certResult;
         },
 
         recordGameCompleted(title) {
-            this._state.gamesCompleted += 1;
+            if (!title) return;
+            normalizeGamesPlayed(this._state);
+            if (this._state.gamesPlayed.includes(title)) return;
+            this._state.gamesPlayed.push(title);
+            this._state.gamesCompleted = this._state.gamesPlayed.length;
             touchStreak(this._state);
-            addXp(this._state, 20, 'game');
+            addXp(this._state, 20);
             pushActivity(this._state, `O'yin yakunlandi: ${title}`, 'game');
             this._persist('gameCompleted');
+        },
+
+        recordAudioListened(payload) {
+            const { id, title } = payload || {};
+            if (id == null) return;
+            touchStreak(this._state);
+            if (!this._state.audiosListened) this._state.audiosListened = [];
+            const key = String(id);
+            const isNew = !this._state.audiosListened.find(a => String(a.id) === key);
+            if (isNew) {
+                this._state.audiosListened.push({ id, title: title || 'Audio', listenedAt: Date.now() });
+                addXp(this._state, 8, 'audio');
+                pushActivity(this._state, title ? `Audio tinglandi: ${title}` : 'Audio tinglandi', 'audio');
+            } else {
+                this._state.audiosListened = this._state.audiosListened.map(a =>
+                    String(a.id) === key ? { ...a, listenedAt: Date.now() } : a
+                );
+            }
+            this._state.timeSpentMin += isNew ? 3 : 0;
+            this._persist('audioListened');
         },
 
         recordFavoriteChange(payload) {
@@ -527,7 +714,42 @@
                 };
             }
 
+            if (entry.progress >= 100) {
+                this.markBookCompleted(kind, id, entry.title);
+            }
+
             this._persist('readingPosition');
+        },
+
+        getTestStats() {
+            const tests = this._state.testsCompleted || [];
+            if (!tests.length) return { count: 0, avg: 0, best: 0, passed70: 0 };
+            const percentages = tests.map(t => Number(t.percentage) || 0);
+            return {
+                count: tests.length,
+                avg: Math.round(percentages.reduce((s, p) => s + p, 0) / percentages.length),
+                best: Math.max(...percentages),
+                passed70: tests.filter(t => (Number(t.percentage) || 0) >= 70).length
+            };
+        },
+
+        syncLegacyVideoProgress(entries) {
+            if (!Array.isArray(entries) || !entries.length) return;
+            let map = {};
+            try {
+                const raw = global.localStorage.getItem('gafur-video-progress');
+                if (raw) map = JSON.parse(raw);
+            } catch (e) { /* ignore */ }
+
+            entries.forEach(item => {
+                if (!item?.type || item.id == null) return;
+                const progressKey = `${item.type}:${item.id}`;
+                const stored = map[progressKey];
+                if (!stored || (stored.percent || 0) < 0.9) return;
+                const vid = `${item.type}:${item.id}`;
+                if (this._state.videosWatched.find(v => String(v.id) === vid)) return;
+                this.recordVideoWatched({ id: vid, title: item.title || 'Video' });
+            });
         },
 
         buildDashboardModel(stats, recommendations) {
@@ -542,21 +764,18 @@
                 ? AchievementEngine.getBadgeTitles(state)
                 : [];
 
-            const certificates = [];
-            state.testsCompleted.filter(t => t.percentage >= 70).slice(0, 3).forEach(t => {
-                certificates.push({
-                    title: t.title,
-                    date: new Date(t.completedAt).toLocaleDateString('uz-UZ', { year: 'numeric', month: 'long', day: 'numeric' })
-                });
-            });
-            if (state._talimQuizBest >= 70) {
-                certificates.push({ title: 'Ta\'lim viktorinasi', date: 'Yakunlangan' });
-            }
+            const certificates = getCertificatesForDisplay(state, 3);
 
             const today = todayKey();
             const booksToday = state.booksOpened.some(b => new Date(b.openedAt).toISOString().slice(0, 10) === today);
             const testsToday = state.testsCompleted.some(t => new Date(t.completedAt).toISOString().slice(0, 10) === today);
             const aiToday = state.activity.some(a => a.type === 'ai' && new Date(a.at).toISOString().slice(0, 10) === today);
+            const videosToday = (state.videosWatched || []).some(v => new Date(v.watchedAt).toISOString().slice(0, 10) === today);
+            const gamesToday = state.activity.some(a => a.type === 'game' && new Date(a.at).toISOString().slice(0, 10) === today);
+            const testStats = this.getTestStats();
+            const unlockedBadges = global.AchievementEngine
+                ? AchievementEngine.getUnlocked(state, stats)
+                : [];
 
             const poem = recommendations?.featured?.[0] || recommendations?.newest?.[0];
             const video = recommendations?.newest?.find(r => r.kind === 'video') || recommendations?.random?.find(r => r.kind === 'video');
@@ -594,14 +813,23 @@
                 todayGoals: [
                     { icon: '📖', title: 'Bitta asar o\'qing', time: '20 daqiqa', done: booksToday },
                     { icon: '📝', title: 'Test ishlash', time: '15 daqiqa', done: testsToday },
-                    { icon: '🤖', title: 'AI bilan suhbat', time: '10 daqiqa', done: aiToday || state.aiChats > 0 }
+                    { icon: '🤖', title: 'AI bilan suhbat', time: '10 daqiqa', done: aiToday }
                 ],
+                streak: {
+                    current: state.streak.current,
+                    longest: state.streak.longest,
+                    activeToday: state.streak.lastDate === today || booksToday || testsToday || aiToday || videosToday || gamesToday
+                },
+                testStats,
+                unlockedBadges,
                 achievements: {
                     certificates: certificates.length,
-                    badges: badgeList.length,
+                    badges: unlockedBadges.length || badgeList.length,
                     streak: state.streak.current,
+                    streakLongest: state.streak.longest,
                     xp: state.totalXp,
-                    badgeList: badgeList.length ? badgeList : ['Boshlang\'ich']
+                    badgeList: badgeList.length ? badgeList : [],
+                    unlockedBadges
                 },
                 aiRecommendations: poem ? [
                     {
@@ -629,6 +857,9 @@
                     videosWatched: state.videosWatched.length,
                     testsCompleted: state.testsCompleted.length,
                     avgQuizScore: avgQuiz,
+                    bestQuizScore: testStats.best,
+                    gamesCompleted: state.gamesCompleted || 0,
+                    audiosListened: (state.audiosListened || []).length,
                     timeSpentMin: state.timeSpentMin,
                     aiChats: state.aiChats
                 }
@@ -732,11 +963,12 @@
             });
 
             global.addEventListener('click', (e) => {
-                const lessonBtn = e.target.closest('.video-playlist__item');
-                if (lessonBtn) {
-                    const id = parseInt(lessonBtn.getAttribute('data-lesson-id'), 10);
-                    const title = lessonBtn.querySelector('.video-playlist__title')?.textContent?.trim() || 'Video dars';
-                    if (id) UserProgress.recordVideoWatched({ id, title });
+                const card = e.target.closest('.video-card[data-catalog-key]');
+                if (!card) return;
+                const catalogKey = card.getAttribute('data-catalog-key');
+                const title = card.querySelector('.video-card__title')?.textContent?.trim() || 'Video';
+                if (catalogKey) {
+                    UserProgress.recordVideoWatched({ id: catalogKey, title });
                 }
             }, true);
 

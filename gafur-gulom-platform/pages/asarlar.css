@@ -1032,6 +1032,30 @@ body.dark-mode.page-asarlar .qissa-reader__frame-wrap {
 
 /* ----- Responsive ----- */
 @media (max-width: 768px) {
+    .page-asarlar .library-tabs {
+        flex-wrap: wrap;
+        overflow-x: visible;
+        gap: 0.35rem 0.25rem;
+        margin-left: -0.25rem;
+        margin-right: -0.25rem;
+        padding-bottom: 0.125rem;
+    }
+
+    .page-asarlar .library-tabs .tab-btn {
+        flex: 1 1 calc(33.333% - 0.35rem);
+        max-width: calc(33.333% - 0.35rem);
+        padding: 0.625rem 0.4rem;
+        font-size: 0.8125rem;
+        text-align: center;
+        white-space: normal;
+        line-height: 1.25;
+    }
+
+    .page-asarlar .library-tabs .tab-btn:nth-child(n + 4) {
+        flex: 1 1 calc(50% - 0.35rem);
+        max-width: calc(50% - 0.35rem);
+    }
+
     .page-asarlar .qissa-reader__frame-wrap {
         height: min(58vh, 560px);
     }
@@ -1065,6 +1089,11 @@ body.dark-mode.page-asarlar .qissa-reader__frame-wrap {
 }
 
 @media (max-width: 480px) {
+    .page-asarlar .library-tabs .tab-btn {
+        font-size: 0.75rem;
+        padding: 0.5625rem 0.3rem;
+    }
+
     .page-asarlar .library-item__read,
     .page-asarlar .library-item__audio {
         padding: 0.4rem 0.7rem;

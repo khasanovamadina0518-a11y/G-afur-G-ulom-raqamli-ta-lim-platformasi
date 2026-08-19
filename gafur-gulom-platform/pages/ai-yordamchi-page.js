@@ -20,7 +20,20 @@ const FOLLOWUP_CHIPS = [
     'Boshqa asarlar'
 ];
 
+const PLATFORM_SECTIONS = [
+    { label: 'Hayoti', href: 'pages/hayot.html' },
+    { label: 'Asarlari', href: 'pages/asarlar.html' },
+    { label: 'Testlar', href: 'pages/interaktiv.html' },
+    { label: 'Interaktiv', href: 'pages/interaktiv-oyinlar.html' },
+    { label: 'Ilmiy', href: 'pages/ilmiy.html' },
+    { label: 'Videolar', href: 'pages/multimedia.html' }
+];
+
 const TEXTAREA_MAX_HEIGHT = 128;
+
+function aiHref(path) {
+    return (window.platformUrl || function (relativePath) { return relativePath; })(path);
+}
 
 /** @typedef {{ id: string, title: string, messages: Array<{role:'user'|'assistant', content:string}>, updatedAt: number }} Conversation */
 
@@ -127,7 +140,20 @@ function renderHistory() {
     `).join('');
 }
 
-function renderMessages() {
+function scrollMessagesToBottom(force = false) {
+    const container = document.getElementById('ai-messages');
+    if (!container) return;
+
+    const distanceFromBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+    if (!force && distanceFromBottom > 100) return;
+
+    requestAnimationFrame(() => {
+        container.scrollTop = container.scrollHeight;
+    });
+}
+
+function renderMessages(options = {}) {
+    const { scrollToBottom = true, forceScroll = false } = options;
     const conv = getActiveConversation();
     const container = document.getElementById('ai-messages');
     const empty = document.getElementById('ai-empty');
@@ -156,7 +182,9 @@ function renderMessages() {
         followups.innerHTML = '';
     }
 
-    container.scrollTop = container.scrollHeight;
+    if (scrollToBottom) {
+        scrollMessagesToBottom(forceScroll);
+    }
 }
 
 function renderMessageHtml(msg) {
@@ -167,10 +195,16 @@ function renderMessageHtml(msg) {
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M12 2v4"></path><circle cx="8" cy="14" r="1"></circle><circle cx="16" cy="14" r="1"></circle></svg>
            </span>`;
 
+    const linksHtml = !isUser && Array.isArray(msg.links) && msg.links.length
+        ? `<div class="ai-message__links">${msg.links.map(link => `
+            <a class="ai-message__link" href="${escapeAttr(aiHref(link.href))}">${escapeHtml(link.label)}</a>
+        `).join('')}</div>`
+        : '';
+
     return `
         <div class="ai-message ai-message--${isUser ? 'user' : 'assistant'}">
             ${avatar}
-            <div class="ai-message__bubble">${escapeHtml(msg.content)}</div>
+            <div class="ai-message__bubble">${escapeHtml(msg.content)}${linksHtml}</div>
         </div>
     `;
 }
@@ -204,12 +238,16 @@ async function sendUserMessage(text) {
     if (!trimmed || isTyping) return;
 
     const conv = getActiveConversation();
+    const isFirstUserMessage = !conv.messages.some(m => m.role === 'user');
     conv.messages.push({ role: 'user', content: trimmed });
     updateConversationTitle(conv, trimmed);
     conv.updatedAt = Date.now();
     saveConversations();
+    if (isFirstUserMessage) {
+        window.UserProgress?.recordAiChat?.();
+    }
     renderHistory();
-    renderMessages();
+    renderMessages({ forceScroll: true });
 
     const input = document.getElementById('ai-input');
     resetTextarea(input);
@@ -221,7 +259,8 @@ async function sendUserMessage(text) {
         conv.messages.push({
             role: 'assistant',
             content: response.content,
-            followups: response.followups || FOLLOWUP_CHIPS
+            followups: response.followups || FOLLOWUP_CHIPS,
+            links: response.links || []
         });
         conv.updatedAt = Date.now();
         saveConversations();
@@ -235,7 +274,7 @@ async function sendUserMessage(text) {
 
     setTyping(false);
     renderHistory();
-    renderMessages();
+    renderMessages({ forceScroll: true });
 }
 
 function clearActiveConversation() {
@@ -295,19 +334,55 @@ function escapeAttr(str) {
     return escapeHtml(str).replace(/'/g, '&#39;');
 }
 
+function getContextualPrompts() {
+    const prompts = [...SUGGESTED_PROMPTS];
+    const state = window.UserProgress?.getState?.();
+    const lastBook = state?.booksOpened?.[0];
+
+    if (lastBook?.title) {
+        prompts.unshift(`"${lastBook.title}" asari haqida qisqacha ma'lumot ber.`);
+    }
+
+    return prompts.slice(0, 5);
+}
+
 function initSuggestedPrompts() {
     const wrap = document.getElementById('ai-prompts');
     if (!wrap) return;
-    wrap.innerHTML = SUGGESTED_PROMPTS.map(text => `
+    wrap.innerHTML = getContextualPrompts().map(text => `
         <button type="button" class="ai-prompt-chip" data-text="${escapeAttr(text)}">${escapeHtml(text)}</button>
     `).join('');
+}
+
+function initPlatformLinks() {
+    const wrap = document.getElementById('ai-platform-links');
+    if (!wrap) return;
+    wrap.innerHTML = PLATFORM_SECTIONS.map(section => `
+        <a class="ai-platform-links__chip" href="${escapeAttr(aiHref(section.href))}">${escapeHtml(section.label)}</a>
+    `).join('');
+}
+
+function applyUrlContext() {
+    const params = new URLSearchParams(window.location.search);
+    const input = document.getElementById('ai-input');
+    const query = params.get('q') || params.get('prompt');
+    if (!query || !input) return;
+
+    input.value = query;
+    autoResizeTextarea(input);
+
+    if (params.get('send') === '1') {
+        window.setTimeout(() => sendUserMessage(query), 350);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     loadConversations();
     initSuggestedPrompts();
+    initPlatformLinks();
     renderHistory();
-    renderMessages();
+    renderMessages({ forceScroll: true });
+    applyUrlContext();
 
     const input = document.getElementById('ai-input');
     const layout = document.querySelector('.ai-layout');
@@ -350,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function() {
             activeConversationId = target.dataset.id;
             saveConversations();
             renderHistory();
-            renderMessages();
+            renderMessages({ forceScroll: true });
             closeMobileSidebar();
             return;
         }

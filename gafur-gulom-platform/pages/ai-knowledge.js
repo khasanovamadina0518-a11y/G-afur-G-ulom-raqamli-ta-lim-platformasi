@@ -58,8 +58,12 @@ const KnowledgeBase = {
                 hayot: svc.getSource('hayot') || svc.getBiography(),
                 sherlar: svc.getSource('sherlar') || { sherlar: svc.getPoems() },
                 dostonlar: svc.getSource('dostonlar') || { dostonlar: svc.getDostonlar() },
+                qissalar: svc.getSource('qissalar') || { qissalar: svc.getQissalar() },
+                tarjimalar: svc.getSource('tarjimalar') || { tarjimalar: svc.getTarjimalar() },
+                tanlanganAsarlar: svc.getSource('tanlangan-asarlar') || { asarlar: svc.getTanlanganAsarlar() },
                 ilmiy: svc.getSource('ilmiy') || svc.getScientificArticles(),
-                quiz: svc.getSource('quiz') || { savollar: svc.getQuizQuestions() }
+                quiz: svc.getSource('quiz') || { savollar: svc.getQuizQuestions() },
+                videolar: svc.getSource('videolar') || svc.getVideos()
             };
 
             if (typeof svc.on === 'function') {
@@ -267,6 +271,30 @@ function searchDostonlar(query) {
     return topHits(hits, 4);
 }
 
+function searchQissalar(query) {
+    const list = KnowledgeBase.getData()?.qissalar?.qissalar || [];
+    if (!list.length) return [];
+    const tokens = tokenize(query);
+
+    const hits = list.map(q => ({
+        type: 'qissa',
+        score: scoreRecord(tokens, [
+            [q.sarlavha, 3],
+            [q.qisqa, 2.5],
+            [q.matn, 1],
+            [(q.mavzu || []).join(' '), 1]
+        ]),
+        item: q,
+        source: 'qissalar'
+    }));
+
+    if (/\bqissa\b/.test(normalizeText(query)) && !hits.some(h => h.score > 0)) {
+        return list.slice(0, 3).map(q => ({ type: 'qissa', score: 1, item: q, source: 'qissalar' }));
+    }
+
+    return topHits(hits, 4);
+}
+
 function searchIlmiy(query) {
     const data = KnowledgeBase.getData();
     if (!data?.ilmiy?.maqolalar) return [];
@@ -339,9 +367,58 @@ function searchAll(query) {
         hayot: searchHayot(query),
         sherlar: searchSherlar(query),
         dostonlar: searchDostonlar(query),
+        qissalar: searchQissalar(query),
         ilmiy: searchIlmiy(query),
         quiz: searchQuiz(query)
     };
+}
+
+function buildPlatformLinks(intent, all) {
+    const links = [];
+
+    switch (intent) {
+        case 'hayot':
+            links.push({ label: 'Hayoti sahifasi', href: 'pages/hayot.html' });
+            break;
+        case 'sherlar': {
+            const sher = all?.sherlar?.[0]?.item;
+            if (sher?.id) {
+                links.push({ label: `«${sher.sarlavha}»ni o'qish`, href: `pages/asarlar.html?poem=${sher.id}` });
+            }
+            links.push({ label: 'She\'rlar bo\'limi', href: 'pages/asarlar.html?tab=sherlar' });
+            break;
+        }
+        case 'works': {
+            const qissa = all?.qissalar?.[0]?.item;
+            const doston = all?.dostonlar?.[0]?.item;
+            if (qissa?.id) {
+                links.push({ label: `«${qissa.sarlavha}» qissasi`, href: `pages/asarlar.html?qissa=${qissa.id}` });
+            } else if (doston?.id) {
+                links.push({ label: `«${doston.sarlavha}» hikoyasi`, href: `pages/asarlar.html?doston=${doston.id}` });
+            }
+            links.push({ label: 'Asarlar kutubxonasi', href: 'pages/asarlar.html' });
+            break;
+        }
+        case 'ilmiy':
+            links.push({ label: 'Ilmiy arxiv', href: 'pages/ilmiy.html' });
+            break;
+        case 'quiz':
+        case 'quiz_recommend':
+            links.push({ label: 'Testlar sahifasi', href: 'pages/interaktiv.html' });
+            break;
+        case 'video':
+            links.push({ label: 'Video darslar', href: 'pages/multimedia.html' });
+            break;
+        case 'study':
+            links.push({ label: 'Ta\'lim materiallari', href: 'pages/talim.html' });
+            links.push({ label: 'Interaktiv o\'yinlar', href: 'pages/interaktiv-oyinlar.html' });
+            break;
+        default:
+            links.push({ label: 'Asarlar', href: 'pages/asarlar.html' });
+            break;
+    }
+
+    return links.slice(0, 3);
 }
 
 function truncate(text, max = 320) {
@@ -391,7 +468,7 @@ function buildSherlarResponse(hits) {
     return lines.join('\n\n');
 }
 
-function buildWorksResponse(query, hitsHayot, hitsDoston, detailed) {
+function buildWorksResponse(query, hitsHayot, hitsDoston, detailed, hitsQissalar = []) {
     const q = normalizeText(query);
     const parts = [];
 
@@ -407,6 +484,11 @@ function buildWorksResponse(query, hitsHayot, hitsDoston, detailed) {
     for (const h of hitsDoston || []) {
         const d = h.item;
         parts.push(`«${d.sarlavha}» (${d.yil}): ${truncate(d.qisqa || d.matn, 180)}`);
+    }
+
+    for (const h of hitsQissalar || []) {
+        const qissa = h.item;
+        parts.push(`«${qissa.sarlavha}» qissasi${qissa.yil ? ` (${qissa.yil})` : ''}: ${truncate(qissa.qisqa || qissa.matn, 180)}`);
     }
 
     const stage = (hitsHayot || []).find(h => h.type === 'bosqich' && (h.item.asarlar || []).length);
@@ -555,7 +637,7 @@ async function queryKnowledgeBase(query, messages = []) {
             break;
         case 'works':
         case 'followup_other':
-            content = buildWorksResponse(effectiveQuery, all.hayot, all.dostonlar, detailed);
+            content = buildWorksResponse(effectiveQuery, all.hayot, all.dostonlar, detailed, all.qissalar);
             if (!content) content = buildHayotResponse(all.hayot, detailed);
             break;
         case 'ilmiy':
@@ -579,7 +661,7 @@ async function queryKnowledgeBase(query, messages = []) {
             const scores = [
                 ['hayot', all.hayot[0]?.score || 0],
                 ['sherlar', all.sherlar[0]?.score || 0],
-                ['works', Math.max(all.dostonlar[0]?.score || 0, all.hayot[0]?.score || 0)],
+                ['works', Math.max(all.dostonlar[0]?.score || 0, all.qissalar[0]?.score || 0, all.hayot[0]?.score || 0)],
                 ['ilmiy', all.ilmiy[0]?.score || 0]
             ].sort((a, b) => b[1] - a[1]);
 
@@ -590,7 +672,7 @@ async function queryKnowledgeBase(query, messages = []) {
                 switch (resolvedIntent) {
                     case 'hayot': content = buildHayotResponse(all.hayot, false); break;
                     case 'sherlar': content = buildSherlarResponse(all.sherlar); break;
-                    case 'works': content = buildWorksResponse(effectiveQuery, all.hayot, all.dostonlar, false); break;
+                    case 'works': content = buildWorksResponse(effectiveQuery, all.hayot, all.dostonlar, false, all.qissalar); break;
                     case 'ilmiy': content = buildIlmiyResponse(all.ilmiy); break;
                 }
             }
@@ -611,6 +693,7 @@ async function queryKnowledgeBase(query, messages = []) {
     return {
         content: content.trim(),
         followups: buildFollowups(resolvedIntent, all, query),
+        links: buildPlatformLinks(resolvedIntent, all),
         context: newContext
     };
 }
@@ -621,6 +704,7 @@ window.AIKnowledge = {
     searchHayot,
     searchSherlar,
     searchDostonlar,
+    searchQissalar,
     searchIlmiy,
     searchQuiz,
     searchAll,

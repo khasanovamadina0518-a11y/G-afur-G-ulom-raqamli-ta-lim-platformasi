@@ -67,8 +67,8 @@
     platformDataReady.then(installFetchShim);
 
     const resolveAsset = window.platformUrl || function (r) { return r; };
-    const PROGRESS_PATH = resolveAsset('assets/js/user-progress.js?v=2');
-    const ACHIEVEMENT_PATH = resolveAsset('assets/js/achievement-engine.js');
+    const PROGRESS_PATH = resolveAsset('assets/js/user-progress.js?v=5');
+    const ACHIEVEMENT_PATH = resolveAsset('assets/js/achievement-engine.js?v=5');
 
     function loadAchievementEngineScript() {
         if (window.AchievementEngine) return Promise.resolve();

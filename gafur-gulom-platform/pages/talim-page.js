@@ -697,6 +697,10 @@ function showResult() {
         progress.quizBest = percentage;
         saveProgress(progress);
     }
+
+    if (window.UserProgress && percentage >= 70) {
+        UserProgress.recordTalimQuizResult(percentage);
+    }
 }
 
 function restartQuiz() {

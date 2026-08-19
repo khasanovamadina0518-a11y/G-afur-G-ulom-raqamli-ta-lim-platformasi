@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/assets/css/components.css?v=9">
     <link rel="stylesheet" href="/assets/css/responsive.css?v=9">
     <link rel="stylesheet" href="/assets/css/platform-buttons.css?v=10">
-    <link rel="stylesheet" href="/pages/dashboard.css?v=27">
+    <link rel="stylesheet" href="/pages/dashboard.css?v=39">
 </head>
 <body class="page-dashboard">
     <div id="header-container"></div>
@@ -70,8 +70,10 @@
             <div class="dash-main">
                 <header class="dash-main__head dash-intro" id="dashboard-home">
                     <div class="dash-intro__content">
-                        <button type="button" class="dash-sidebar-toggle" id="dash-sidebar-toggle" aria-label="Profil bo'limiga o'tish">Profil</button>
-                        <h1 class="dash-greeting" id="dash-greeting">Assalomu alaykum!</h1>
+                        <div class="dash-intro__head">
+                            <h1 class="dash-greeting" id="dash-greeting"><span class="dash-greeting__salam">Assalomu alaykum,</span><span class="dash-greeting__name">foydalanuvchi!</span></h1>
+                            <button type="button" class="dash-sidebar-toggle" id="dash-sidebar-toggle" aria-label="Profil bo'limiga o'tish">Profil</button>
+                        </div>
                         <p class="dash-intro__sub" id="dash-greeting-sub">Bugun o'qishni davom ettirish uchun sizga mos tavsiyalar.</p>
                         <p class="dash-intro__activity" id="dash-last-activity" hidden></p>
                     </div>
@@ -191,9 +193,11 @@
                             <div class="dash-ach-list" id="dash-badge-list"></div>
                         </section>
 
-                        <section class="dash-card dash-profile-section" id="profile-section" aria-labelledby="dash-profile-section-title">
-                            <h2 class="dash-card__title" id="dash-profile-section-title">Shaxsiy profil</h2>
-                            <p class="dash-profile-section__since" id="dash-profile-member-since"></p>
+                        <section class="dash-card dash-card--profile dash-profile-section" id="profile-section" aria-labelledby="dash-profile-section-title">
+                            <div class="dash-profile-section__head">
+                                <h2 class="dash-card__title" id="dash-profile-section-title">Shaxsiy profil</h2>
+                                <p class="dash-profile-section__since" id="dash-profile-member-since"></p>
+                            </div>
                             <div class="dash-profile-section__layout dash-profile-section__layout--compact">
                                 <div class="dash-profile-section__identity dash-profile-section__identity--compact">
                                     <span class="dash-profile-section__avatar" id="dash-profile-section-avatar" aria-hidden="true">—</span>
@@ -202,15 +206,7 @@
                                         <p class="dash-profile-section__email" id="dash-profile-section-email"></p>
                                         <p class="dash-profile-section__rank" id="dash-profile-section-rank">Faol o'quvchi</p>
                                     </div>
-                                </div>
-                                <div class="dash-profile-section__actions dash-profile-section__actions--compact">
-                                    <button type="button" class="dash-btn dash-btn--primary dash-btn--block" id="dash-profile-edit-btn">Profilni tahrirlash</button>
-                                    <a href="/pages/asarlar.html" class="dash-btn dash-btn--outline dash-btn--block">Keyingi asarni tanlash</a>
-                                </div>
-                                <div class="dash-profile-section__stats" id="dash-profile-stats" aria-label="O'qish statistikasi"></div>
-                                <div class="dash-profile-section__tests">
-                                    <h3 class="dash-profile-section__subtitle">So'nggi test natijalari</h3>
-                                    <ul class="dash-profile-tests" id="dash-profile-tests-list"></ul>
+                                    <button type="button" class="dash-btn dash-btn--primary dash-btn--sm dash-profile-section__edit" id="dash-profile-edit-btn">Tahrirlash</button>
                                 </div>
                             </div>
                         </section>
@@ -255,8 +251,8 @@
     <script src="/components/footer.js"></script>
     <script src="/assets/js/auth-service.js?v=3"></script>
     <script src="/components/auth-modal.js?v=3"></script>
-    <script src="/assets/js/data.js?v=12"></script>
+    <script src="/assets/js/data.js?v=15"></script>
     <script src="/assets/js/app.js"></script>
-    <script src="/pages/dashboard-page.js?v=17"></script>
+    <script src="/pages/dashboard-page.js?v=20"></script>
 </body>
 </html>

@@ -16,14 +16,19 @@
     ];
 
     const CATALOG = [
-        { id: 'first-step', icon: '🛡️', title: 'Birinchi qadam', desc: 'Birinchi asarni ochdingiz', progress: s => ({ c: s.booksOpened, t: 1 }) },
-        { id: 'bookworm', icon: '📚', title: 'Kitobxon', desc: '5 ta asar o\'qildi', progress: s => ({ c: s.booksOpened, t: 5 }) },
+        { id: 'first-step', icon: '📖', title: 'Birinchi kitob', desc: 'Birinchi asarni o\'qish', progress: s => ({ c: s.booksOpened, t: 1 }) },
+        { id: 'first-video', icon: '🎬', title: 'Tomoshabin', desc: 'Birinchi videoni ko\'rish', progress: s => ({ c: s.videosWatched, t: 1 }) },
+        { id: 'first-game', icon: '🎮', title: 'O\'yinchi', desc: 'Birinchi interaktiv o\'yinni o\'ynash', progress: s => ({ c: s.gamesCompleted, t: 1 }) },
+        { id: 'streak-3', icon: '🔥', title: '3 kunlik streak', desc: '3 kun ketma-ket faol bo\'lish', progress: s => ({ c: Math.max(s.streak, s.streakLongest), t: 3 }) },
+        { id: 'bookworm', icon: '📚', title: 'Kitobxon (5)', desc: '5 ta asar o\'qildi', progress: s => ({ c: s.booksOpened, t: 5 }) },
+        { id: 'bookworm-10', icon: '📚', title: 'Kitobxon', desc: '10 ta asar o\'qish', progress: s => ({ c: s.booksOpened, t: 10 }) },
         { id: 'avid-reader', icon: '📖', title: '20 ta kitob o\'qing', desc: 'Asarlarda 20 ta asarni o\'qing', progress: s => ({ c: s.booksOpened, t: 20 }) },
         { id: 'book-finisher', icon: '✅', title: 'Asar ustasi', desc: '3 ta asarni to\'liq o\'qidingiz', progress: s => ({ c: s.booksCompleted, t: 3 }) },
-        { id: 'active', icon: '⭐', title: 'Faol ishtirokchi', desc: '7 kun ketma-ket faollik', progress: s => ({ c: s.streak, t: 7 }) },
+        { id: 'active', icon: '🔥', title: '7 kunlik streak', desc: '7 kun ketma-ket faol bo\'lish', progress: s => ({ c: Math.max(s.streak, s.streakLongest), t: 7 }) },
+        { id: 'active-user', icon: '⭐', title: 'Faol foydalanuvchi', desc: 'Platformada 20 ta faoliyat bajarish', progress: s => ({ c: s.activityCount, t: 20 }) },
         { id: 'streak-fire', icon: '🔥', title: 'Streak ustasi', desc: '30 kunlik eng uzoq streak', progress: s => ({ c: s.streakLongest, t: 30 }) },
-        { id: 'test-expert', icon: '📝', title: 'Test eksperti', desc: 'Testni 70%+ natija bilan topshiring', progress: s => ({ c: s.testsPassed70, t: 1 }) },
-        { id: 'test-marathon', icon: '🎯', title: 'Test marathon', desc: '10 ta test yakunlandi', progress: s => ({ c: s.testsCompleted, t: 10 }) },
+        { id: 'test-expert', icon: '📝', title: 'Bilimdon', desc: 'Birinchi testni muvaffaqiyatli yakunlash', progress: s => ({ c: s.testsPassed70, t: 1 }) },
+        { id: 'test-marathon', icon: '🏆', title: 'Bilim ustasi', desc: '10 ta testni muvaffaqiyatli bajarish', progress: s => ({ c: s.testsPassed70, t: 10 }) },
         { id: 'test-centurion', icon: '🏆', title: '100 ta test', desc: 'Jami 100 ta test yakunlang', progress: s => ({ c: s.testsCompleted, t: 100 }) },
         { id: 'quiz-scholar', icon: '🧠', title: 'Viktorina ustasi', desc: 'O\'rtacha test natijasi 80%+', progress: s => ({ c: s.avgQuiz, t: 80 }) },
         { id: 'video-master', icon: '🎥', title: 'Video ustasi', desc: '3 ta video dars ko\'rildi', progress: s => ({ c: s.videosWatched, t: 3 }) },
@@ -58,13 +63,21 @@
 
     function buildContext(state, platformStats) {
         const tests = state.testsCompleted || [];
+        const books = state.booksOpened || [];
         const avgQuiz = tests.length
             ? Math.round(tests.reduce((s, t) => s + t.percentage, 0) / tests.length)
             : 0;
+        const countKind = kind => books.filter(b => b.kind === kind).length;
         return {
-            booksOpened: (state.booksOpened || []).length,
+            booksOpened: books.length,
             booksCompleted: (state.booksCompleted || []).length,
+            poemsRead: countKind('poem'),
+            qissalarRead: countKind('qissa'),
+            dostonlarRead: countKind('doston') + countKind('book'),
+            tarjimalarRead: countKind('tarjima'),
+            tanlanganRead: countKind('book'),
             videosWatched: (state.videosWatched || []).length,
+            audiosListened: (state.audiosListened || []).length,
             testsCompleted: tests.length,
             testsPassed70: tests.filter(t => t.percentage >= 70).length,
             avgQuiz,
@@ -75,8 +88,128 @@
             gamesCompleted: state.gamesCompleted || 0,
             streak: state.streak?.current || 0,
             streakLongest: state.streak?.longest || 0,
+            activityCount: (state.activity || []).length,
             platformVideos: platformStats?.videos || 4
         };
+    }
+
+    const WEEKDAY_LABELS = ['Yak', 'Dush', 'Sesh', 'Chor', 'Pay', 'Jum', 'Shan'];
+
+    const ACTIVITY_ICONS = {
+        poem: '📖', qissa: '📖', doston: '📖', book: '📖', tarjima: '📖', lesson: '📖',
+        quiz: '📝', video: '🎬', game: '🎮', ai: '🤖', achievement: '🏆', favorite: '❤️', audio: '🎧',
+        default: '📌'
+    };
+
+    function collectActiveDates(state) {
+        const dates = new Set();
+        const addTs = ts => {
+            if (!ts) return;
+            dates.add(new Date(ts).toISOString().slice(0, 10));
+        };
+        (state.activity || []).forEach(a => addTs(a.at));
+        (state.booksOpened || []).forEach(b => addTs(b.openedAt));
+        (state.videosWatched || []).forEach(v => addTs(v.watchedAt));
+        (state.testsCompleted || []).forEach(t => addTs(t.completedAt));
+        (state.audiosListened || []).forEach(a => addTs(a.listenedAt));
+        if (state.streak?.lastDate) dates.add(state.streak.lastDate);
+        return dates;
+    }
+
+    function buildWeekActivity(state) {
+        const activeDates = collectActiveDates(state);
+        const days = [];
+        const today = new Date();
+        for (let i = 6; i >= 0; i -= 1) {
+            const d = new Date(today);
+            d.setDate(d.getDate() - i);
+            const key = d.toISOString().slice(0, 10);
+            days.push({
+                label: WEEKDAY_LABELS[d.getDay()],
+                date: key,
+                active: activeDates.has(key),
+                isToday: i === 0
+            });
+        }
+        return days;
+    }
+
+    function buildMonthActivity(state) {
+        const activeDates = collectActiveDates(state);
+        const days = [];
+        const today = new Date();
+        for (let i = 29; i >= 0; i -= 1) {
+            const d = new Date(today);
+            d.setDate(d.getDate() - i);
+            const key = d.toISOString().slice(0, 10);
+            days.push({ date: key, active: activeDates.has(key), isToday: i === 0 });
+        }
+        return days;
+    }
+
+    function buildContinueItems(state) {
+        const buildHref = item => {
+            if (global.UserProgress?.getContinueHref) return global.UserProgress.getContinueHref(item);
+            return 'pages/asarlar.html';
+        };
+        return (state.booksOpened || [])
+            .filter(b => {
+                const p = Number(b.progress) || 0;
+                const key = `${b.kind}:${b.id}`;
+                return p > 0 && p < 100 && !(state.booksCompleted || []).includes(key);
+            })
+            .sort((a, b) => (b.openedAt || 0) - (a.openedAt || 0))
+            .slice(0, 4)
+            .map(b => ({
+                title: b.title || 'Asar',
+                type: b.type || 'Asar',
+                progress: Math.round(Number(b.progress) || 0),
+                href: buildHref(b)
+            }));
+    }
+
+    function buildActivityFeed(state) {
+        return (state.activity || []).slice(0, 10).map(a => ({
+            icon: ACTIVITY_ICONS[a.type] || ACTIVITY_ICONS.default || '📌',
+            text: a.text,
+            time: formatRelativeTime(a.at)
+        }));
+    }
+
+    function buildEarnedTimeline(state) {
+        const dates = state.achievementDates || {};
+        return CATALOG
+            .filter(def => (state.achievementsUnlocked || []).includes(def.id))
+            .map(def => ({
+                id: def.id,
+                icon: def.icon,
+                title: def.title,
+                desc: def.desc,
+                date: dates[def.id] ? formatDate(dates[def.id]) : 'Yaqinda',
+                at: dates[def.id] || 0
+            }))
+            .sort((a, b) => b.at - a.at);
+    }
+
+    function buildAllBadges(state, platformStats) {
+        const ctx = buildContext(state, platformStats);
+        const dates = state.achievementDates || {};
+        const unlockedSet = new Set(state.achievementsUnlocked || []);
+        return CATALOG.map(def => {
+            const unlocked = unlockedSet.has(def.id);
+            const prog = getProgress(def, ctx, platformStats);
+            return {
+                id: def.id,
+                icon: def.icon,
+                title: def.title,
+                desc: def.desc,
+                unlocked,
+                date: unlocked && dates[def.id] ? formatDate(dates[def.id]) : '',
+                current: prog.current,
+                target: prog.target,
+                percent: prog.percent
+            };
+        });
     }
 
     function isUnlocked(def, ctx) {
@@ -195,64 +328,120 @@
                 }));
         },
 
-        buildYutuqlarModel(state, platformStats) {
+        buildYutuqlarModel(state, platformStats, recommendations) {
             syncLegacyDates(state);
             const ctx = buildContext(state, platformStats);
             const level = getLevelInfo(state.totalXp || 0);
             const unlocked = this.getUnlocked(state, platformStats);
             const locked = this.getLocked(state, platformStats);
-            const recent = this.getRecentUnlocks(state);
+            const earnedTimeline = buildEarnedTimeline(state);
+            const recentUnlocks = earnedTimeline.slice(0, 5);
             const tests = state.testsCompleted || [];
+            const today = new Date().toISOString().slice(0, 10);
+            const activeToday = collectActiveDates(state).has(today)
+                || state.streak?.lastDate === today;
 
-            const certificates = tests
-                .filter(t => t.percentage >= 70)
-                .slice(0, 5)
-                .map(t => ({
-                    title: t.title,
-                    date: formatDate(t.completedAt)
-                }));
+            const authUser = global.PlatformAuth?.getCurrentUser?.();
+            const profileUser = authUser
+                ? {
+                    name: authUser.name || `${authUser.firstName || ''} ${authUser.lastName || ''}`.trim() || state.user?.name || 'Foydalanuvchi',
+                    initials: authUser.initials || state.user?.initials || 'F',
+                    email: authUser.email || state.user?.email || ''
+                }
+                : {
+                    name: state.user?.name || 'Foydalanuvchi',
+                    initials: state.user?.initials || 'F',
+                    email: state.user?.email || ''
+                };
 
+            const certificates = global.UserProgress?.getCertificates?.(5)
+                || tests
+                    .filter(t => t.percentage >= 70)
+                    .slice(0, 5)
+                    .map(t => ({
+                        title: t.title,
+                        date: formatDate(t.completedAt),
+                        score: Math.round(t.percentage)
+                    }));
+
+            const continueItems = buildContinueItems(state);
+            const xpPct = Math.min(100, Math.round((level.currentXp / level.nextLevelXp) * 100));
             const xpRemaining = level.nextLevelXp - level.currentXp;
-            let encourage = 'Platformada o\'rganishni boshlang — birinchi badjingiz sizni kutmoqda!';
-            if (unlocked.length >= 5) {
-                encourage = `Ajoyib natija! Keyingi darajaga yetish uchun yana ${xpRemaining} XP kerak. Bugun kamida bitta test yoki video dars bilan davom eting.`;
-            } else if (unlocked.length > 0) {
-                encourage = `${unlocked.length} ta badj ochildi. Keyingi yutuq uchun o'qishda davom eting!`;
+
+            let libraryHref = 'pages/asarlar.html';
+            if (continueItems.length && global.UserProgress) {
+                const cont = global.UserProgress.buildDashboardModel?.(platformStats, recommendations)?.continueLearning;
+                if (cont && !cont.empty && cont.href) libraryHref = cont.href;
             }
 
+            const testBest = tests.length
+                ? Math.max(...tests.map(t => Number(t.percentage) || 0))
+                : 0;
+
             return {
+                user: profileUser,
                 level: {
                     number: level.level,
                     title: level.title,
+                    rank: level.title,
                     currentXp: level.currentXp,
                     nextLevelXp: level.nextLevelXp,
-                    nextLevelTitle: level.nextTitle
+                    totalXp: level.totalXp,
+                    nextLevelTitle: level.nextTitle,
+                    xpRemaining,
+                    progressPercent: xpPct
                 },
                 unlockedBadges: unlocked,
                 lockedBadges: locked,
+                allBadges: buildAllBadges(state, platformStats),
                 stats: {
+                    works: ctx.booksOpened,
+                    completed: ctx.booksCompleted,
+                    poems: ctx.poemsRead,
+                    qissalar: ctx.qissalarRead,
+                    dostonlar: ctx.dostonlarRead,
+                    tarjimalar: ctx.tarjimalarRead,
+                    tanlangan: ctx.tanlanganRead,
                     books: ctx.booksOpened,
                     videos: ctx.videosWatched,
+                    audios: ctx.audiosListened,
                     tests: ctx.testsCompleted,
+                    testsPassed: ctx.testsPassed70,
+                    avgQuiz: ctx.avgQuiz,
+                    bestQuiz: testBest,
                     games: ctx.gamesCompleted,
                     aiChats: ctx.aiChats,
+                    xp: ctx.totalXp,
+                    badges: unlocked.length,
                     studyHours: Math.round(ctx.timeSpentMin / 60)
                 },
                 streak: {
                     current: ctx.streak,
                     longest: ctx.streakLongest,
-                    calendarDays: Math.min(28, ctx.streak)
+                    activeToday,
+                    weekDays: buildWeekActivity(state),
+                    monthDays: buildMonthActivity(state)
                 },
-                recent: recent.length ? recent : state.activity?.filter(a => a.type === 'achievement').slice(0, 4).map(a => ({
-                    icon: '🏅',
-                    text: a.text,
-                    time: formatRelativeTime(a.at)
-                })) || [],
+                continueItems,
+                activity: buildActivityFeed(state),
+                earnedTimeline,
+                recentUnlocks: recentUnlocks.map(item => ({
+                    icon: item.icon,
+                    title: item.title,
+                    desc: item.desc,
+                    date: item.date,
+                    text: item.title,
+                    time: item.date
+                })),
                 certificates,
-                motivation: {
-                    quote: '"Ilm – inson kamolotining yo\'lidir."',
-                    author: 'G\'afur G\'ulom',
-                    message: encourage
+                hasCertificates: certificates.length > 0,
+                links: {
+                    library: libraryHref,
+                    tests: 'pages/interaktiv.html',
+                    videos: 'pages/multimedia.html',
+                    games: 'pages/interaktiv-oyinlar.html',
+                    dashboard: 'pages/dashboard.html',
+                    profile: 'pages/dashboard.html#profile-section'
                 }
             };
         },

@@ -708,13 +708,29 @@ function showQuizResult() {
 
     if (window.UserProgress) {
         const category = TEST_CATEGORIES[activeTestCategory];
-        UserProgress.recordQuizCompleted({
+        const certResult = UserProgress.recordQuizCompleted({
             category: activeTestCategory || 'quiz',
-            title: category?.title || document.getElementById('quiz-start-title')?.textContent || 'Test',
+            title: category ? getCatTitle(category) : (document.getElementById('quiz-start-title')?.textContent || 'Kim ko\'p biladi?'),
             score: quizScore,
             maxScore: 200,
             percentage
         });
+
+        let certNotice = document.getElementById('quiz-cert-notice');
+        if (!certNotice) {
+            certNotice = document.createElement('p');
+            certNotice.id = 'quiz-cert-notice';
+            certNotice.className = 'quiz-cert-notice';
+            document.getElementById('quiz-result-message')?.insertAdjacentElement('afterend', certNotice);
+        }
+        if (percentage >= 70) {
+            certNotice.textContent = certResult?.isNew
+                ? '📜 Tabriklaymiz! Sertifikatingiz avtomatik berildi. Yutuqlar sahifasida ko\'ring.'
+                : '📜 Sertifikatingiz Yutuqlar sahifasida mavjud.';
+            certNotice.hidden = false;
+        } else {
+            certNotice.hidden = true;
+        }
     }
     
     // Show high score comparison
@@ -940,6 +956,7 @@ function checkMemoryAnswers() {
         
         // Save to leaderboard
         saveToLeaderboard('memory', playerName || 'Anonim', percentage);
+        window.UserProgress?.recordGameCompleted?.('She\'r yodlash o\'yini');
     }, 2000);
 }
 
@@ -1418,6 +1435,7 @@ function checkYearMatch() {
         document.getElementById('timeline-playing').style.display = 'none';
         document.getElementById('timeline-result').style.display = 'block';
         saveToLeaderboard('timeline', playerName || 'Anonim', scorePercent);
+        window.UserProgress?.recordGameCompleted?.('Xronologiya o\'yini');
     }, correctCount === total ? 900 : 1800);
 }
 
@@ -2008,6 +2026,7 @@ function endWordSearchGame(completed) {
 
     if (allFound) {
         messageEl.textContent = uiT('gameAllWordsFound', 'Barcha so\'zlarni topdingiz.');
+        window.UserProgress?.recordGameCompleted?.('So\'z topish o\'yini');
     } else {
         messageEl.textContent = `${total} ta so'zdan ${found} tasini topdingiz.`;
     }

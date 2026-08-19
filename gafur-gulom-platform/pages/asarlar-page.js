@@ -14,8 +14,49 @@ let favorites = [];
 let currentPoemId = null;
 let currentReadingContext = null;
 let activeReadingTracker = null;
+
+function normalizeLibrarySearch(value) {
+    if (window.PlatformSearchUtils?.normalizeQuery) {
+        return window.PlatformSearchUtils.normalizeQuery(value);
+    }
+    return String(value || '')
+        .toLowerCase()
+        .replace(/[\u2018\u2019\u02BC\u02BB'`ʻʼ‛]/g, "'")
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+function librarySearchMatches(query, fields) {
+    const normalizedQuery = normalizeLibrarySearch(query);
+    if (!normalizedQuery) return true;
+    const haystack = normalizeLibrarySearch(
+        (Array.isArray(fields) ? fields : [fields]).filter(Boolean).join(' ')
+    );
+    return haystack.includes(normalizedQuery);
+}
+
+function bindLibrarySearchInput(input, handler) {
+    if (!input || typeof handler !== 'function') return;
+    input.addEventListener('input', handler);
+    input.addEventListener('search', handler);
+}
+
 function getSavedReadingPosition(kind, id) {
     return window.UserProgress?.getReadingPosition?.(kind, id) || null;
+}
+
+function trackContentOpened(kind, id, title, type, defaultProgress = 25) {
+    if (!window.UserProgress?.recordContentOpened || kind == null || id == null) return;
+    const saved = getSavedReadingPosition(kind, id);
+    const progress = saved?.progress || defaultProgress;
+    UserProgress.recordContentOpened({
+        kind,
+        id,
+        title: title || 'Asar',
+        type: type || 'Asar',
+        href: UserProgress.getContinueHref({ kind, id, progress }),
+        progress
+    });
 }
 
 function restoreTextModalScroll(kind, id) {
@@ -192,6 +233,11 @@ function onLibraryAudioPlay(audioEl) {
     activeLibraryAudioEl = audioEl;
     activeLibraryAudioKey = parsed.key;
     updateLibraryAudioButton(audioEl);
+    const btn = document.getElementById(`${parsed.prefix}-audio-btn-${parsed.id}`);
+    window.UserProgress?.recordAudioListened?.({
+        id: `${parsed.prefix}-${parsed.id}`,
+        title: btn?.dataset.audioTitle || 'Audio'
+    });
 }
 
 function onLibraryAudioPause(audioEl) {
@@ -414,10 +460,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 
 function refreshAsarlarUI() {
-    displayPoems();
-    displayQissalar();
-    displayTarjimalar();
-    displayTanlanganAsarlar();
+    applyFilters();
+    applyQissalarFilters();
+    applyTarjimalarFilters();
+    applyTanlanganAsarlarFilters();
     renderQissalarCategoryChips();
 }
 
@@ -586,10 +632,9 @@ function initLoadMore() {
 // Filters
 // ===================================
 function initFilters() {
+    const sherlarTab = document.querySelector('.tab-content[data-tab="sherlar"]');
     const searchInput = document.getElementById('search-input');
-    searchInput.addEventListener('input', function() {
-        applyFilters();
-    });
+    bindLibrarySearchInput(searchInput, applyFilters);
 
     const filterToggle = document.getElementById('filter-toggle');
     const filterPanel = document.getElementById('filter-panel');
@@ -600,7 +645,9 @@ function initFilters() {
         });
     }
 
-    const mavzuButtons = document.querySelectorAll('.filter-btn[data-mavzu]');
+    const mavzuButtons = sherlarTab
+        ? sherlarTab.querySelectorAll('.filter-btn[data-mavzu]')
+        : document.querySelectorAll('.filter-btn[data-mavzu]');
     mavzuButtons.forEach(btn => {
         btn.addEventListener('click', function() {
             mavzuButtons.forEach(b => b.classList.remove('active'));
@@ -610,9 +657,13 @@ function initFilters() {
     });
 
     const yearSelect = document.getElementById('year-filter');
-    yearSelect.addEventListener('change', applyFilters);
+    if (yearSelect) {
+        yearSelect.addEventListener('change', applyFilters);
+    }
 
-    const viewButtons = document.querySelectorAll('.view-btn');
+    const viewButtons = sherlarTab
+        ? sherlarTab.querySelectorAll('.view-btn[data-view]')
+        : [];
     viewButtons.forEach(btn => {
         btn.addEventListener('click', function() {
             viewButtons.forEach(b => b.classList.remove('active'));
@@ -620,6 +671,7 @@ function initFilters() {
 
             const view = this.getAttribute('data-view');
             const grid = document.getElementById('poems-grid');
+            if (!grid) return;
             if (view === 'grid') {
                 grid.classList.add('library-list--grid');
             } else {
@@ -630,20 +682,22 @@ function initFilters() {
 }
 
 function applyFilters() {
-    const searchQuery = document.getElementById('search-input').value.toLowerCase();
-    const activeMavzu = document.querySelector('.filter-btn.active[data-mavzu]').getAttribute('data-mavzu');
-    const yearRange = document.getElementById('year-filter').value;
+    const searchInput = document.getElementById('search-input');
+    const searchQuery = searchInput?.value || '';
+    const activeChip = document.querySelector('.tab-content[data-tab="sherlar"] .filter-btn.active[data-mavzu]');
+    const activeMavzu = activeChip?.getAttribute('data-mavzu') || 'all';
+    const yearRange = document.getElementById('year-filter')?.value || 'all';
     
     filteredPoems = allPoems.filter(poem => {
-        // Search filter
-        const searchBlob = [
+        const matchesSearch = librarySearchMatches(searchQuery, [
             poem.sarlavha,
             poem.matn,
             poem.qisqa,
             poem.muallif,
-            poem.nota
-        ].filter(Boolean).join(' ').toLowerCase();
-        const matchesSearch = !searchQuery || searchBlob.includes(searchQuery);
+            poem.nota,
+            ...(Array.isArray(poem.mavzu) ? poem.mavzu : []),
+            poem.yil
+        ]);
         
         // Mavzu filter
         let matchesMavzu = true;
@@ -694,12 +748,22 @@ function isFavorite(poemId) {
 }
 
 function toggleFavorite(poemId) {
+    const poem = allPoems.find(p => p.id === poemId);
+    const added = !isFavorite(poemId);
     if (isFavorite(poemId)) {
         favorites = favorites.filter(id => id !== poemId);
     } else {
         favorites.push(poemId);
     }
     saveFavorites();
+    if (window.UserProgress?.recordFavoriteChange) {
+        UserProgress.recordFavoriteChange({
+            kind: 'poem',
+            id: poemId,
+            added,
+            title: poem?.sarlavha || ''
+        });
+    }
     displayPoems();
 }
 
@@ -928,6 +992,8 @@ async function openDostonModal(dostonId) {
 
     if (!doston) return;
 
+    currentReadingContext = { kind: 'doston', id: dostonId };
+
     const modal = document.getElementById('poem-modal');
     modal.classList.remove('modal--pdf');
 
@@ -948,7 +1014,10 @@ async function openDostonRead(dostonId) {
     const doston = dostonlar.find(d => d.id === dostonId);
     if (!doston) return;
 
+    currentReadingContext = { kind: 'doston', id: dostonId };
+
     if (doston.pdf) {
+        trackContentOpened('doston', dostonId, doston.sarlavha, 'Doston', 25);
         openQissaPdfReader(doston);
         return;
     }
@@ -1116,10 +1185,7 @@ function initQissalarLoadMore() {
 }
 
 function initQissalarFilters() {
-    const searchInput = document.getElementById('qissalar-search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', applyQissalarFilters);
-    }
+    bindLibrarySearchInput(document.getElementById('qissalar-search-input'), applyQissalarFilters);
 
     const filterToggle = document.getElementById('qissalar-filter-toggle');
     const filterPanel = document.getElementById('qissalar-filter-panel');
@@ -1166,13 +1232,13 @@ function initQissalarFilters() {
 
 function applyQissalarFilters() {
     const searchInput = document.getElementById('qissalar-search-input');
-    const searchQuery = (searchInput?.value || '').toLowerCase();
-    const activeChip = document.querySelector('.filter-btn.active[data-qissa-mavzu]');
-    const activeMavzu = activeChip ? activeChip.getAttribute('data-qissa-mavzu') : 'all';
+    const searchQuery = searchInput?.value || '';
+    const activeChip = document.querySelector('.tab-content[data-tab="qissalar"] .filter-btn.active[data-qissa-mavzu]');
+    const activeMavzu = activeChip?.getAttribute('data-qissa-mavzu') || 'all';
     const yearRange = document.getElementById('qissalar-year-filter')?.value || 'all';
 
     filteredQissalar = allQissalar.filter(qissa => {
-        const searchBlob = [
+        const matchesSearch = librarySearchMatches(searchQuery, [
             qissa.sarlavha,
             qissa.muallif,
             qissa.qisqa,
@@ -1180,9 +1246,7 @@ function applyQissalarFilters() {
             ...(Array.isArray(qissa.boblar) ? qissa.boblar.map(b => b.sarlavha) : []),
             ...(Array.isArray(qissa.mavzu) ? qissa.mavzu : []),
             ...(Array.isArray(qissa.teglar) ? qissa.teglar : [])
-        ].filter(Boolean).join(' ').toLowerCase();
-
-        const matchesSearch = !searchQuery || searchBlob.includes(searchQuery);
+        ]);
 
         let matchesMavzu = true;
         if (activeMavzu !== 'all') {
@@ -1412,27 +1476,20 @@ function initTarjimalarLoadMore() {
 }
 
 function initTarjimalarFilters() {
-    const searchInput = document.getElementById('tarjimalar-search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', applyTarjimalarFilters);
-    }
+    bindLibrarySearchInput(document.getElementById('tarjimalar-search-input'), applyTarjimalarFilters);
 }
 
 function applyTarjimalarFilters() {
     const searchInput = document.getElementById('tarjimalar-search-input');
-    const searchQuery = (searchInput?.value || '').toLowerCase();
+    const searchQuery = searchInput?.value || '';
 
-    filteredTarjimalar = allTarjimalar.filter(tarjima => {
-        const searchBlob = [
-            tarjima.sarlavha,
-            tarjima.muallif,
-            tarjima.aslMuallif,
-            tarjima.qisqa,
-            ...(Array.isArray(tarjima.teglar) ? tarjima.teglar : [])
-        ].filter(Boolean).join(' ').toLowerCase();
-
-        return !searchQuery || searchBlob.includes(searchQuery);
-    });
+    filteredTarjimalar = allTarjimalar.filter(tarjima => librarySearchMatches(searchQuery, [
+        tarjima.sarlavha,
+        tarjima.muallif,
+        tarjima.aslMuallif,
+        tarjima.qisqa,
+        ...(Array.isArray(tarjima.teglar) ? tarjima.teglar : [])
+    ]));
 
     tarjimalarDisplayLimit = 10;
     displayTarjimalar();
@@ -1457,6 +1514,9 @@ function updateTarjimalarResultsCount() {
 function openTarjimaRead(tarjimaId) {
     const tarjima = allTarjimalar.find(t => t.id === tarjimaId);
     if (!tarjima) return;
+
+    currentReadingContext = { kind: 'tarjima', id: tarjimaId };
+    trackContentOpened('tarjima', tarjimaId, tarjima.sarlavha, 'Tarjima', 25);
 
     if (tarjima.pdf) {
         openQissaPdfReader({
@@ -1555,28 +1615,21 @@ function initTanlanganAsarlarLoadMore() {
 }
 
 function initTanlanganAsarlarFilters() {
-    const searchInput = document.getElementById('tanlangan-asarlar-search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', applyTanlanganAsarlarFilters);
-    }
+    bindLibrarySearchInput(document.getElementById('tanlangan-asarlar-search-input'), applyTanlanganAsarlarFilters);
 }
 
 function applyTanlanganAsarlarFilters() {
     const searchInput = document.getElementById('tanlangan-asarlar-search-input');
-    const searchQuery = (searchInput?.value || '').toLowerCase();
+    const searchQuery = searchInput?.value || '';
 
-    filteredTanlanganAsarlar = allTanlanganAsarlar.filter(asar => {
-        const searchBlob = [
-            asar.sarlavha,
-            asar.qisqaSarlavha,
-            asar.nashr,
-            asar.muallif,
-            asar.nashriyot,
-            asar.joy
-        ].filter(Boolean).join(' ').toLowerCase();
-
-        return !searchQuery || searchBlob.includes(searchQuery);
-    });
+    filteredTanlanganAsarlar = allTanlanganAsarlar.filter(asar => librarySearchMatches(searchQuery, [
+        asar.sarlavha,
+        asar.qisqaSarlavha,
+        asar.nashr,
+        asar.muallif,
+        asar.nashriyot,
+        asar.joy
+    ]));
 
     tanlanganAsarlarDisplayLimit = 10;
     displayTanlanganAsarlar();
@@ -1601,6 +1654,9 @@ function updateTanlanganAsarlarResultsCount() {
 function openTanlanganRead(asarId) {
     const asar = allTanlanganAsarlar.find(a => a.id === asarId);
     if (!asar) return;
+
+    currentReadingContext = { kind: 'book', id: asarId };
+    trackContentOpened('book', asarId, asar.sarlavha, 'Tanlangan asar', 25);
 
     if (asar.pdf) {
         openQissaPdfReader({

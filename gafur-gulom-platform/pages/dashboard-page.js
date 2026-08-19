@@ -15,6 +15,8 @@ function dashHref(relativePath) {
 }
 
 let currentContinueItem = null;
+let dashRefreshPromise = null;
+let dashInitialLoadDone = false;
 
 const GOAL_LINKS = {
     'Bitta asar o\'qing': 'pages/asarlar.html',
@@ -74,12 +76,18 @@ function renderRecommendations(recs) {
 
 function renderCompactStats(data) {
     const stats = data.stats || {};
+    const streak = data.streak?.current ?? data.achievements?.streak ?? 0;
     const items = [
-        { label: 'O\'qilgan asarlar', value: String(stats.booksOpened || 0) },
+        { label: 'Tugatilgan asarlar', value: String(stats.booksCompleted || 0) },
+        { label: 'Ochilgan asarlar', value: String(stats.booksOpened || 0) },
         { label: 'Ko\'rilgan videolar', value: String(stats.videosWatched || 0) },
         { label: 'Yechilgan testlar', value: String(stats.testsCompleted || 0) },
-        { label: 'Olingan yutuqlar', value: String(data.achievements.badges || 0) },
-        { label: 'O\'qish ketma-ketligi', value: `${data.achievements.streak || 0} kun` }
+        { label: 'O\'rtacha test', value: stats.testsCompleted ? `${stats.avgQuizScore || 0}%` : '—' },
+        { label: 'Eng yaxshi test', value: stats.testsCompleted ? `${stats.bestQuizScore || 0}%` : '—' },
+        { label: 'O\'ynalgan o\'yinlar', value: String(stats.gamesCompleted || 0) },
+        { label: 'Tinglangan audiolar', value: String(stats.audiosListened || 0) },
+        { label: 'Olingan yutuqlar', value: String(data.achievements?.badges || 0) },
+        { label: 'Streak', value: `${streak} kun` }
     ];
 
     return items.map(item => `
@@ -91,25 +99,33 @@ function renderCompactStats(data) {
 }
 
 function renderAchievementList(badges, data) {
-    const list = (badges || []).filter(b => b && b !== 'Boshlang\'ich');
+    const list = Array.isArray(badges) ? badges : [];
     if (!list.length) {
         return `
             <div class="dash-empty-state dash-empty-state--inline">
                 <p class="dash-empty-state__title">Hali yutuq qayd etilmagan.</p>
                 <p class="dash-empty-state__text">Asar o'qing, test ishlang yoki videolar tomosha qiling — natijalar shu yerda ko'rinadi.</p>
+                <a href="${escapeHtml(dashHref('pages/yutuqlar.html'))}" class="dash-btn dash-btn--outline dash-btn--sm">Yutuqlar sahifasi</a>
             </div>
         `;
     }
 
-    return list.map(title => `
+    return list.slice(0, 6).map(badge => {
+        const title = typeof badge === 'string' ? badge : badge.title;
+        const desc = typeof badge === 'string'
+            ? `O'quv faoliyati natijasi · ${escapeHtml(data?.xp?.title || '')}`
+            : (badge.desc || badge.date || '');
+        const icon = typeof badge === 'string' ? '🏅' : (badge.icon || '🏅');
+        return `
         <article class="dash-ach-item">
-            <span class="dash-ach-item__mark" aria-hidden="true"></span>
+            <span class="dash-ach-item__mark" aria-hidden="true">${icon}</span>
             <div>
                 <h3 class="dash-ach-item__title">${escapeHtml(title)}</h3>
-                <p class="dash-ach-item__meta">O'quv faoliyati natijasi · ${escapeHtml(data.xp.title)}</p>
+                <p class="dash-ach-item__meta">${escapeHtml(desc)}</p>
             </div>
         </article>
-    `).join('');
+    `;
+    }).join('');
 }
 
 function renderBadgeChips(badges) {
@@ -155,23 +171,25 @@ function renderFavorites(favs) {
     `).join('');
 }
 
-function renderBadgeChips(badges) {
-    return badges.map(b => `<span class="dash-badge-chip">${escapeHtml(b)}</span>`).join('');
-}
-
 function renderProfileStats(data) {
     const stats = data.stats || {};
+    const testStats = data.testStats || {};
+    const streakLongest = data.streak?.longest ?? data.achievements?.streakLongest ?? 0;
     const items = [
         { label: 'O\'qish darajasi', value: `${data.progress.percent}%` },
         { label: 'Joriy daraja', value: `${data.xp.level} — ${data.xp.title}` },
         { label: 'XP', value: `${data.achievements.xp} ball` },
-        { label: 'O\'qilgan asarlar', value: String(stats.booksOpened || 0) },
-        { label: 'Yakunlangan asarlar', value: String(stats.booksCompleted || 0) },
+        { label: 'Tugatilgan asarlar', value: String(stats.booksCompleted || 0) },
+        { label: 'Ochilgan asarlar', value: String(stats.booksOpened || 0) },
+        { label: 'Ko\'rilgan videolar', value: String(stats.videosWatched || 0) },
         { label: 'Test natijalari', value: stats.testsCompleted
-            ? `${stats.testsCompleted} ta · o'rtacha ${stats.avgQuizScore}%`
+            ? `${stats.testsCompleted} ta · o'rtacha ${stats.avgQuizScore}% · eng yaxshi ${testStats.best || stats.bestQuizScore || 0}%`
             : 'Hali test yo\'q' },
+        { label: 'O\'yinlar', value: String(stats.gamesCompleted || 0) },
+        { label: 'Audiolar', value: String(stats.audiosListened || 0) },
         { label: 'Yutuqlar', value: `${data.achievements.badges} ta` },
-        { label: 'Ketma-ket kun', value: `${data.achievements.streak} kun` }
+        { label: 'Joriy streak', value: `${data.achievements.streak} kun` },
+        { label: 'Eng uzoq streak', value: `${streakLongest} kun` }
     ];
 
     return items.map(item => `
@@ -266,6 +284,13 @@ async function enrichContinueLearning(item) {
             enriched.title = parsed.title || item.title;
             enriched.type = parsed.classNum ? `${parsed.classNum}-sinf dars` : 'Dars';
             enriched.href = item.href || 'pages/talim.html';
+        } else if (item.kind === 'tarjima') {
+            enriched.type = 'Tarjima';
+        } else if (item.kind === 'book') {
+            enriched.type = 'Tanlangan asar';
+        } else if (item.kind === 'video') {
+            enriched.type = 'Video dars';
+            enriched.href = item.href || 'pages/multimedia.html';
         }
     } catch (e) {
         console.warn('Continue learning enrich skipped:', e);
@@ -655,7 +680,7 @@ function renderDashboard(data) {
     const greeting = document.getElementById('dash-greeting');
     if (greeting) {
         const firstName = user.name.split(/\s+/)[0] || 'foydalanuvchi';
-        greeting.textContent = `Assalomu alaykum, ${firstName}!`;
+        greeting.innerHTML = `<span class="dash-greeting__salam">Assalomu alaykum,</span><span class="dash-greeting__name">${escapeHtml(firstName)}!</span>`;
     }
 
     const greetingSub = document.getElementById('dash-greeting-sub');
@@ -670,6 +695,9 @@ function renderDashboard(data) {
     if (lastActivity) {
         if (recent?.text) {
             lastActivity.textContent = `Oxirgi faoliyat: ${recent.text}${recent.time ? ` · ${recent.time}` : ''}`;
+            lastActivity.hidden = false;
+        } else if (data.streak?.activeToday) {
+            lastActivity.textContent = `Bugun faol bo'ldingiz · Streak: ${data.streak.current || 0} kun`;
             lastActivity.hidden = false;
         } else {
             lastActivity.hidden = true;
@@ -717,7 +745,7 @@ function renderDashboard(data) {
     if (achStreak) achStreak.textContent = data.achievements.streak;
     if (achXp) achXp.textContent = data.achievements.xp;
     if (statsGrid) statsGrid.innerHTML = renderCompactStats(data);
-    if (badgeList) badgeList.innerHTML = renderAchievementList(data.achievements.badgeList, data);
+    if (badgeList) badgeList.innerHTML = renderAchievementList(data.unlockedBadges || data.achievements?.unlockedBadges || data.achievements?.badgeList, data);
 
     const recsList = document.getElementById('dash-recs-list');
     if (recsList) recsList.innerHTML = renderRecommendations(data.aiRecommendations);
@@ -740,24 +768,33 @@ async function loadPlatformDataForDashboard() {
 }
 
 async function refreshDashboard() {
-    await ensureDashboardDataReady();
+    if (dashRefreshPromise) return dashRefreshPromise;
 
-    let stats = null;
-    let recommendations = null;
+    dashRefreshPromise = (async () => {
+        await ensureDashboardDataReady();
 
-    if (typeof getPlatformStatistics === 'function') {
-        stats = await getPlatformStatistics();
-    }
-    if (typeof recommendPlatformContent === 'function') {
-        recommendations = await recommendPlatformContent({ limit: 3 });
-    }
+        let stats = null;
+        let recommendations = null;
 
-    if (window.UserProgress) {
-        UserProgress.syncAchievements(stats);
-        const model = UserProgress.buildDashboardModel(stats, recommendations);
-        model.continueLearning = await enrichContinueLearning(model.continueLearning);
-        renderDashboard(model);
-    }
+        if (typeof getPlatformStatistics === 'function') {
+            stats = await getPlatformStatistics();
+        }
+        if (typeof recommendPlatformContent === 'function') {
+            recommendations = await recommendPlatformContent({ limit: 3 });
+        }
+
+        if (window.UserProgress) {
+            UserProgress.syncAchievements(stats);
+            const model = UserProgress.buildDashboardModel(stats, recommendations);
+            model.continueLearning = await enrichContinueLearning(model.continueLearning);
+            renderDashboard(model);
+            dashInitialLoadDone = true;
+        }
+    })().finally(() => {
+        dashRefreshPromise = null;
+    });
+
+    return dashRefreshPromise;
 }
 
 function bindContinueReadingButton() {
@@ -773,34 +810,41 @@ function bindContinueReadingButton() {
 }
 
 function bindDashboardEvents() {
-    const refresh = () => refreshDashboard();
+    let refreshTimer = null;
+    const scheduleRefresh = () => {
+        if (!dashInitialLoadDone) return;
+        clearTimeout(refreshTimer);
+        refreshTimer = setTimeout(() => refreshDashboard(), 200);
+    };
 
     const onUnlock = (ach) => {
         const ids = ach?.id ? [ach.id] : [];
-        refresh().then(() => {
+        refreshDashboard().then(() => {
             if (ids.length && window.AchievementEngine) {
                 AchievementEngine.markNewBadgeElements(ids);
             }
         });
     };
 
+    window.addEventListener('platform:progressChanged', scheduleRefresh);
+    window.addEventListener('platform:contentOpened', scheduleRefresh);
+    window.addEventListener('platform:favoriteChanged', scheduleRefresh);
+    window.addEventListener('platform:achievementUnlocked', e => onUnlock(e.detail));
+
     if (window.PlatformDataService?.on) {
-        PlatformDataService.on('dataUpdated', refresh);
-        PlatformDataService.on('progressChanged', refresh);
-        PlatformDataService.on('contentOpened', refresh);
-        PlatformDataService.on('favoriteChanged', refresh);
-        PlatformDataService.on('achievementUnlocked', onUnlock);
+        PlatformDataService.on('dataUpdated', scheduleRefresh);
     }
 
-    ['platform:progressChanged', 'platform:contentOpened', 'platform:favoriteChanged', 'platform:achievementUnlocked'].forEach(evt => {
-        window.addEventListener(evt, (e) => {
-            if (evt === 'platform:achievementUnlocked') onUnlock(e.detail);
-            else refresh();
-        });
+    window.addEventListener('storage', (e) => {
+        if (!e.key) return;
+        const isProgress = e.key.includes('platform-user-progress') || e.key === 'gafur-video-progress';
+        if (isProgress) scheduleRefresh();
     });
 
-    window.addEventListener('storage', (e) => {
-        if (e.key && e.key.includes('progress')) refresh();
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && dashInitialLoadDone) {
+            scheduleRefresh();
+        }
     });
 }
 
