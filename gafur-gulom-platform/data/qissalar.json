@@ -8,7 +8,7 @@
       "mavzu": ["Bolalar", "Hayot", "Sarguzasht"],
       "teglar": ["qissa", "bolalar", "adabiyot"],
       "qisqa": "G'afur G'ulomning bolalar hayoti va sarguzashtlarini aks ettiruvchi mashhur qissasi.",
-      "audio": "assets/audio/shum-bola.mp3",
+      "audio": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/shum-bola-r2-64k.mp3",
       "pdf": "assets/pdf/qissalar/shum-bola.pdf",
       "boblar": [
         { "sarlavha": "I BO'LIM", "sahifa": 3 },

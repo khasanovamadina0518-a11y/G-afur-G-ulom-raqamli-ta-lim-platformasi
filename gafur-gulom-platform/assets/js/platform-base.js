@@ -27,6 +27,14 @@
     const base = global.PLATFORM_BASE || detectPlatformBase();
     global.PLATFORM_BASE = base;
     global.platformUrl = function platformUrl(relativePath) {
-        return base + String(relativePath || '').replace(/^\//, '');
+        const path = String(relativePath || '').trim();
+
+        if (!path) return '';
+
+        if (/^(https?:)?\/\//i.test(path)) {
+            return path;
+        }
+
+        return base + path.replace(/^\//, '');
     };
 })(window);

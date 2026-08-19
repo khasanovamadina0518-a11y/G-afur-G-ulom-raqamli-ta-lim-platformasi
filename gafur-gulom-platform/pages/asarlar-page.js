@@ -744,11 +744,6 @@ async function loadDostonlar() {
 // ===================================
 // Qissalar
 // ===================================
-function resolveAssetPath(path) {
-    if (!path) return '';
-    return (window.platformUrl || function (r) { return r; })(path);
-}
-
 function buildQissaTags(mavzu) {
     if (!Array.isArray(mavzu) || mavzu.length === 0) return '';
     const tags = mavzu.map(m => `<span class="library-item__tag">${m}</span>`).join('');
