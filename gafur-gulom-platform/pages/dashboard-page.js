@@ -10,6 +10,12 @@ function escapeHtml(str) {
         .replace(/"/g, '&quot;');
 }
 
+function dashHref(relativePath) {
+    return (window.platformUrl || (r => r))(relativePath);
+}
+
+let currentContinueItem = null;
+
 const GOAL_LINKS = {
     'Bitta asar o\'qing': 'pages/asarlar.html',
     'Test ishlash': 'pages/interaktiv.html',
@@ -31,14 +37,14 @@ function renderGoals(goals) {
                 </div>
                 <div class="dash-metric__progress dash-metric__progress--slot" aria-hidden="true"></div>
                 <div class="dash-metric__action">
-                    <a href="pages/asarlar.html" class="dash-btn dash-btn--primary dash-btn--block dash-btn--metric">Kutubxona</a>
+                    <a href="${escapeHtml(dashHref('pages/asarlar.html'))}" class="dash-btn dash-btn--primary dash-btn--block dash-btn--metric" data-dash-library-link>Kutubxona</a>
                 </div>
             </div>
         `;
     }
 
     const goal = activeGoals[0];
-    const href = GOAL_LINKS[goal.title] || 'pages/asarlar.html';
+    const href = dashHref(GOAL_LINKS[goal.title] || 'pages/asarlar.html');
     return `
         <div class="dash-metric__inner">
             <div class="dash-metric__visual">${TASK_ICON}</div>
@@ -60,7 +66,7 @@ function renderRecommendations(recs) {
         <li class="dash-rec">
             <div>
                 <p class="dash-rec__text">${escapeHtml(rec.text)}</p>
-                <a class="dash-rec__link" href="${escapeHtml(rec.link)}">${escapeHtml(rec.linkText)}</a>
+                <a class="dash-rec__link" href="${escapeHtml(dashHref(rec.link))}">${escapeHtml(rec.linkText)}</a>
             </div>
         </li>
     `).join('');
@@ -265,10 +271,35 @@ async function enrichContinueLearning(item) {
         console.warn('Continue learning enrich skipped:', e);
     }
 
+    if (window.UserProgress?.getContinueHref && enriched.kind && enriched.id != null) {
+        enriched.href = window.UserProgress.getContinueHref(enriched);
+    }
+
     return enriched;
 }
 
+function resolveContinueTarget(item) {
+    if (!item || item.empty) return dashHref('pages/asarlar.html');
+    let rawPath = item.completed
+        ? (item.nextHref || 'pages/asarlar.html')
+        : (window.UserProgress?.getContinueHref?.(item) || item.href || 'pages/asarlar.html');
+
+    if (!item.completed) {
+        const progress = Number(item.progress) || 0;
+        if (progress > 0 && progress < 100 && !String(rawPath).includes('resume=1')) {
+            rawPath += String(rawPath).includes('?') ? '&resume=1' : '?resume=1';
+        }
+    }
+
+    return dashHref(rawPath);
+}
+
+function navigateToContinueReading(item) {
+    window.location.href = resolveContinueTarget(item);
+}
+
 function renderContinueSection(item) {
+    currentContinueItem = item && !item.empty ? { ...item } : null;
     const content = document.getElementById('dash-continue-content');
     const empty = document.getElementById('dash-continue-empty');
     if (!content || !empty) return;
@@ -336,10 +367,10 @@ function renderContinueSection(item) {
     if (btn) {
         if (item.completed) {
             btn.textContent = 'Keyingi asarni tanlash';
-            btn.href = item.nextHref || 'pages/asarlar.html';
+            btn.href = resolveContinueTarget(item);
         } else {
             btn.textContent = 'Davom etish';
-            btn.href = item.href || 'pages/asarlar.html';
+            btn.href = resolveContinueTarget(item);
         }
     }
 }
@@ -729,6 +760,18 @@ async function refreshDashboard() {
     }
 }
 
+function bindContinueReadingButton() {
+    const btn = document.getElementById('dash-continue-btn');
+    if (!btn || btn.dataset.continueBound === '1') return;
+    btn.dataset.continueBound = '1';
+
+    btn.addEventListener('click', (event) => {
+        if (!currentContinueItem) return;
+        event.preventDefault();
+        navigateToContinueReading(currentContinueItem);
+    });
+}
+
 function bindDashboardEvents() {
     const refresh = () => refreshDashboard();
 
@@ -772,6 +815,7 @@ async function initDashboard() {
 
     await refreshDashboard();
     bindDashboardEvents();
+    bindContinueReadingButton();
 
     bindProfileNavigation();
     bindProfileEditModal();
@@ -810,5 +854,6 @@ if (document.readyState === 'loading') {
 
 window.DashboardApp = {
     refresh: refreshDashboard,
-    getLiveData: () => window.UserProgress?.buildDashboardModel()
+    getLiveData: () => window.UserProgress?.buildDashboardModel(),
+    getContinueItem: () => currentContinueItem
 };

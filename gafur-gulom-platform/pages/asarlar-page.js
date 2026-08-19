@@ -12,6 +12,81 @@ let allTanlanganAsarlar = [];
 let filteredTanlanganAsarlar = [];
 let favorites = [];
 let currentPoemId = null;
+let currentReadingContext = null;
+let activeReadingTracker = null;
+function getSavedReadingPosition(kind, id) {
+    return window.UserProgress?.getReadingPosition?.(kind, id) || null;
+}
+
+function restoreTextModalScroll(kind, id) {
+    const saved = getSavedReadingPosition(kind, id);
+    const modalText = document.getElementById('modal-text');
+    if (!modalText || !saved?.scrollRatio) return;
+
+    const applyScroll = () => {
+        const maxScroll = modalText.scrollHeight - modalText.clientHeight;
+        if (maxScroll > 0) {
+            modalText.scrollTop = saved.scrollRatio * maxScroll;
+        }
+    };
+
+    requestAnimationFrame(() => {
+        applyScroll();
+        window.setTimeout(applyScroll, 120);
+    });
+}
+
+function stopReadingProgressTracker() {
+    if (!activeReadingTracker) return;
+    activeReadingTracker.modalText.removeEventListener('scroll', activeReadingTracker.onScroll);
+    if (activeReadingTracker.timer) window.clearTimeout(activeReadingTracker.timer);
+    activeReadingTracker = null;
+}
+
+function startReadingProgressTracker(kind, id) {
+    stopReadingProgressTracker();
+    const modalText = document.getElementById('modal-text');
+    if (!modalText) return;
+
+    const onScroll = () => {
+        if (activeReadingTracker?.timer) window.clearTimeout(activeReadingTracker.timer);
+        activeReadingTracker.timer = window.setTimeout(() => {
+            const maxScroll = modalText.scrollHeight - modalText.clientHeight;
+            if (maxScroll <= 0) return;
+            const scrollRatio = modalText.scrollTop / maxScroll;
+            const progress = Math.min(99, Math.round(10 + scrollRatio * 90));
+            window.UserProgress?.updateReadingPosition?.({ kind, id, scrollRatio, progress });
+        }, 250);
+    };
+
+    modalText.addEventListener('scroll', onScroll, { passive: true });
+    activeReadingTracker = { modalText, onScroll, kind, id, timer: null };
+}
+
+function saveReadingPositionFromModal(kind, id) {
+    const modalText = document.getElementById('modal-text');
+    if (!modalText || !kind || id == null) return;
+    const maxScroll = modalText.scrollHeight - modalText.clientHeight;
+    if (maxScroll <= 0) return;
+    const scrollRatio = modalText.scrollTop / maxScroll;
+    const progress = Math.min(99, Math.round(10 + scrollRatio * 90));
+    window.UserProgress?.updateReadingPosition?.({ kind, id, scrollRatio, progress });
+}
+
+function savePdfReadingPosition(kind, id, readPage) {
+    if (!kind || id == null) return;
+    const page = Math.max(1, Number(readPage) || 1);
+    const progress = Math.min(99, Math.max(10, page * 5));
+    window.UserProgress?.updateReadingPosition?.({ kind, id, readPage: page, progress });
+}
+
+function shouldResumeReading(options = {}) {
+    if (options.resume === false) return false;
+    if (options.resume === true) return true;
+    const params = new URLSearchParams(window.location.search);
+    return params.get('resume') === '1';
+}
+
 let displayLimit = 10;
 let qissalarDisplayLimit = 10;
 let tarjimalarDisplayLimit = 10;
@@ -359,20 +434,22 @@ function checkUrlParams() {
         }
     }
 
-    const tab = urlParams.get('tab');
+    const tabParam = urlParams.get('tab');
+    const tab = tabParam === 'hikoyalar' ? 'dostonlar' : tabParam;
     if (tab && ['sherlar', 'dostonlar', 'qissalar', 'tarjimalar', 'tanlangan-asarlar'].includes(tab)) {
         switchTab(tab, false);
     }
 
     const poemId = urlParams.get('id') || urlParams.get('poem');
-    
+    const resume = urlParams.get('resume') === '1';
+
     if (poemId) {
         const id = parseInt(poemId, 10);
         const poem = allPoems.find(p => p.id === id);
         if (poem) {
             switchTab('sherlar', false);
             setTimeout(() => {
-                openPoemModal(id);
+                openPoemModal(id, { resume });
                 afterContentOpen(600);
             }, 500);
             return;
@@ -384,7 +461,7 @@ function checkUrlParams() {
         const id = parseInt(qissaId, 10);
         switchTab('qissalar', false);
         setTimeout(() => {
-            openQissaRead(id);
+            openQissaRead(id, { resume });
             afterContentOpen(700);
         }, 500);
         return;
@@ -660,15 +737,19 @@ function initModal() {
     });
 }
 
-function openPoemModal(poemId) {
+function openPoemModal(poemId, options = {}) {
     const poem = allPoems.find(p => p.id === poemId);
     if (!poem) return;
 
+    currentReadingContext = { kind: 'poem', id: poemId };
+    const resume = shouldResumeReading(options);
+
     if (isPdfPoem(poem)) {
+        const saved = resume ? getSavedReadingPosition('poem', poemId) : null;
         openQissaPdfReader({
             ...poem,
             mavzu: poem.mavzu || (poem.muallif ? [poem.muallif] : [])
-        });
+        }, saved?.readPage || 1);
         return;
     }
 
@@ -687,14 +768,24 @@ function openPoemModal(poemId) {
 
     poemModal.classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    if (resume) restoreTextModalScroll('poem', poemId);
+    startReadingProgressTracker('poem', poemId);
 }
 
 function closeModal() {
+    if (currentReadingContext && !document.getElementById('poem-modal')?.classList.contains('modal--pdf')) {
+        saveReadingPositionFromModal(currentReadingContext.kind, currentReadingContext.id);
+    }
+
+    stopReadingProgressTracker();
+
     const modal = document.getElementById('poem-modal');
     modal.classList.remove('active');
     modal.classList.remove('modal--pdf');
     document.body.style.overflow = 'auto';
     currentPoemId = null;
+    currentReadingContext = null;
 
     const modalText = document.getElementById('modal-text');
     if (modalText) {
@@ -1127,17 +1218,21 @@ function updateQissalarResultsCount() {
     });
 }
 
-function openQissaRead(qissaId) {
+function openQissaRead(qissaId, options = {}) {
     const qissa = allQissalar.find(q => q.id === qissaId);
     if (!qissa) return;
 
+    currentReadingContext = { kind: 'qissa', id: qissaId };
+    const resume = shouldResumeReading(options);
+    const saved = resume ? getSavedReadingPosition('qissa', qissaId) : null;
+
     if (qissa.pdf) {
-        openQissaPdfReader(qissa);
+        openQissaPdfReader(qissa, saved?.readPage || 1);
         return;
     }
 
     if (qissa.matn) {
-        openQissaModal(qissaId);
+        openQissaModal(qissaId, { resume });
         return;
     }
 
@@ -1146,11 +1241,16 @@ function openQissaRead(qissaId) {
 
 function openQissaPdfReader(qissa, startPage) {
     currentPoemId = null;
+    if (!currentReadingContext && qissa?.id != null) {
+        currentReadingContext = { kind: qissa.kind || (isPdfPoem(qissa) ? 'poem' : 'qissa'), id: qissa.id };
+    }
 
     const pdfUrl = resolveAssetPath(qissa.pdf);
     const page = startPage || 1;
     const modal = document.getElementById('poem-modal');
     const modalText = document.getElementById('modal-text');
+    const readingKind = currentReadingContext?.kind || 'qissa';
+    const readingId = currentReadingContext?.id ?? qissa.id;
 
     document.getElementById('modal-title').textContent = qissa.sarlavha;
     document.getElementById('modal-year').textContent = qissa.yil || '';
@@ -1184,19 +1284,24 @@ function openQissaPdfReader(qissa, startPage) {
             if (frame) frame.src = `${pdfUrl}#page=${targetPage}`;
             modalText.querySelectorAll('.qissa-reader__chapter-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
+            savePdfReadingPosition(readingKind, readingId, targetPage);
         });
     });
+
+    savePdfReadingPosition(readingKind, readingId, page);
 
     modal.classList.add('modal--pdf');
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
-function openQissaModal(qissaId) {
+function openQissaModal(qissaId, options = {}) {
     const qissa = allQissalar.find(q => q.id === qissaId);
     if (!qissa) return;
 
     currentPoemId = null;
+    currentReadingContext = { kind: 'qissa', id: qissaId };
+    const resume = shouldResumeReading(options);
 
     const modal = document.getElementById('poem-modal');
     modal.classList.remove('modal--pdf');
@@ -1212,6 +1317,9 @@ function openQissaModal(qissaId) {
 
     document.getElementById('poem-modal').classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    if (resume) restoreTextModalScroll('qissa', qissaId);
+    startReadingProgressTracker('qissa', qissaId);
 }
 
 // ===================================

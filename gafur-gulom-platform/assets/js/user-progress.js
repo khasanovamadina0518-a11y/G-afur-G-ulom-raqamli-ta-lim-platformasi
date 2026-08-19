@@ -164,16 +164,23 @@
     function buildContinueHref(item) {
         if (!item?.kind || item.id == null) return 'pages/asarlar.html';
         const base = 'pages/asarlar.html';
+        const progress = Number(item.progress) || 0;
+        const resume = progress > 0 && progress < 100 ? '&resume=1' : '';
         switch (item.kind) {
-            case 'poem': return `${base}?poem=${item.id}`;
-            case 'qissa': return `${base}?qissa=${item.id}`;
+            case 'poem': return `${base}?poem=${item.id}${resume}`;
+            case 'qissa': return `${base}?qissa=${item.id}${resume}`;
             case 'doston':
-            case 'book': return `${base}?tab=dostonlar&doston=${item.id}`;
-            case 'tarjima': return `${base}?tarjima=${item.id}`;
-            case 'lesson': return item.href || `${base}?tab=tanlangan-asarlar`;
+            case 'book': return `${base}?tab=dostonlar&doston=${item.id}${resume}`;
+            case 'tarjima': return `${base}?tarjima=${item.id}${resume}`;
+            case 'lesson': return item.href || 'pages/talim.html';
             case 'video': return 'pages/multimedia.html';
             default: return item.href || base;
         }
+    }
+
+    function findBookEntry(state, kind, id) {
+        const key = `${kind}:${id}`;
+        return state.booksOpened.find(b => `${b.kind}:${b.id}` === key) || null;
     }
 
     function resolveContinueLearning(state, recommendations) {
@@ -352,10 +359,22 @@
             const key = `${kind}:${id}`;
             let entry = this._state.booksOpened.find(b => `${b.kind}:${b.id}` === key);
             if (entry) {
-                entry.progress = Math.min(100, Math.max(entry.progress, progress));
+                entry.progress = Math.min(100, Math.max(entry.progress || 0, progress));
                 entry.openedAt = Date.now();
+                if (title) entry.title = title;
+                if (type) entry.type = type;
             } else {
-                entry = { kind, id, title, type, href: href || 'asarlar.html', progress, openedAt: Date.now() };
+                entry = {
+                    kind,
+                    id,
+                    title,
+                    type,
+                    href: href || buildContinueHref({ kind, id, progress }),
+                    progress,
+                    readPage: 1,
+                    scrollRatio: 0,
+                    openedAt: Date.now()
+                };
                 this._state.booksOpened.push(entry);
             }
 
@@ -469,6 +488,48 @@
             return Math.round((bookPct + videoPct + testPct) / 3);
         },
 
+        getContinueHref(item) {
+            return buildContinueHref(item || {});
+        },
+
+        getReadingPosition(kind, id) {
+            const entry = findBookEntry(this._state, kind, id);
+            if (!entry) return null;
+            return {
+                progress: entry.progress || 0,
+                readPage: entry.readPage || 1,
+                scrollRatio: entry.scrollRatio || 0
+            };
+        },
+
+        updateReadingPosition(payload) {
+            const { kind, id, progress, readPage, scrollRatio } = payload || {};
+            if (!kind || id == null) return;
+            const entry = findBookEntry(this._state, kind, id);
+            if (!entry) return;
+
+            if (progress != null) {
+                entry.progress = Math.min(100, Math.max(entry.progress || 0, Number(progress) || 0));
+            }
+            if (readPage != null) entry.readPage = Math.max(1, Number(readPage) || 1);
+            if (scrollRatio != null) {
+                entry.scrollRatio = Math.min(1, Math.max(0, Number(scrollRatio) || 0));
+            }
+            entry.openedAt = Date.now();
+            entry.href = buildContinueHref(entry);
+
+            if (this._state.lastOpened?.kind === kind && this._state.lastOpened?.id === id) {
+                this._state.lastOpened = {
+                    ...this._state.lastOpened,
+                    progress: entry.progress,
+                    href: entry.href,
+                    openedAt: entry.openedAt
+                };
+            }
+
+            this._persist('readingPosition');
+        },
+
         buildDashboardModel(stats, recommendations) {
             syncLegacy(this._state);
             const state = this._state;
@@ -543,7 +604,12 @@
                     badgeList: badgeList.length ? badgeList : ['Boshlang\'ich']
                 },
                 aiRecommendations: poem ? [
-                    { icon: '📖', text: `Bugun "${poem.title}" bilan tanishing.`, link: 'pages/asarlar.html', linkText: 'Kutubxona' },
+                    {
+                        icon: '📖',
+                        text: `Bugun "${poem.title}" bilan tanishing.`,
+                        link: buildContinueHref({ kind: poem.kind === 'book' ? 'doston' : (poem.kind || 'poem'), id: poem.item?.id ?? poem.id }),
+                        linkText: 'Kutubxona'
+                    },
                     { icon: '🎯', text: 'G\'afur G\'ulom hayoti bo\'yicha viktorinani yeching.', link: 'pages/interaktiv.html', linkText: 'Testlar' },
                     { icon: '🎬', text: video ? `Video dars: ${video.title}.` : 'Videolar bo\'limini ko\'ring.', link: 'pages/multimedia.html', linkText: 'Videolar' }
                 ] : [],
@@ -623,13 +689,14 @@
             wrapFn('openPoemModal', function (poemId) {
                 global.getSherById?.(poemId).then(poem => {
                     if (!poem) return;
+                    const existing = UserProgress.getReadingPosition('poem', poem.id);
                     UserProgress.recordContentOpened({
                         kind: 'poem',
                         id: poem.id,
                         title: poem.sarlavha,
                         type: 'She\'r',
-                        href: 'pages/asarlar.html',
-                        progress: 35
+                        href: buildContinueHref({ kind: 'poem', id: poem.id, progress: existing?.progress || 10 }),
+                        progress: existing?.progress || 10
                     });
                 });
             });

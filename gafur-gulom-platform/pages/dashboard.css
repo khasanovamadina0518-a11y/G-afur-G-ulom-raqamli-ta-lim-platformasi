@@ -559,6 +559,14 @@ body:not(.dark-mode).page-dashboard {
     width: 100%;
     margin-top: auto;
     padding-top: 0.25rem;
+    position: relative;
+    z-index: 2;
+}
+
+.page-dashboard .dash-metric__action .dash-btn {
+    position: relative;
+    z-index: 2;
+    touch-action: manipulation;
 }
 
 .page-dashboard .dash-metric__action--spacer {
@@ -1900,11 +1908,22 @@ body.dark-mode.page-dashboard .dash-profile-modal__dialog {
     outline-offset: 2px;
 }
 
-/* Dark mode — deep panel, clearly distinct from light navy */
+/* Dark mode — deep panel, semantic token bridge for all dashboard surfaces */
 body.dark-mode.page-dashboard {
-    --dash-card-bg: #1f2937;
-    --dash-border: #374151;
-    --dash-track: #374151;
+    --dash-navy-brand: #1a3c5e;
+    --dash-navy: var(--text);
+    --dash-text: var(--text);
+    --dash-muted: var(--text-light);
+    --dash-royal: #93c5fd;
+    --dash-card-bg: var(--card-bg);
+    --dash-border: var(--border);
+    --dash-track: var(--border-strong);
+    --dash-accent-soft: rgba(93, 169, 233, 0.1);
+    --dash-sidebar-active-bg: rgba(93, 169, 233, 0.14);
+    --dash-sidebar-icon-bg: rgba(255, 255, 255, 0.06);
+    --dash-sidebar-icon-border: rgba(255, 255, 255, 0.12);
+    --dash-shadow: var(--shadow-sm);
+    --dash-shadow-soft: var(--shadow-xs);
     --dash-sidebar-bg: #101a24;
     --dash-sidebar-text: #e8e0d0;
     --dash-sidebar-text-muted: #a89f91;
@@ -1943,15 +1962,25 @@ body.dark-mode.page-dashboard .dash-nav__link.is-active {
 }
 
 body.dark-mode.page-dashboard .dash-nav__link.is-active .dash-nav__icon {
-    background: var(--dash-navy);
-    border-color: var(--dash-navy);
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
     color: #ffffff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
 }
 
+body.dark-mode.page-dashboard .dash-nav__icon {
+    background: var(--dash-sidebar-icon-bg);
+    border-color: var(--dash-sidebar-icon-border);
+    color: var(--dash-sidebar-link);
+}
+
+body.dark-mode.page-dashboard .dash-nav__link:hover .dash-nav__icon {
+    color: var(--dash-sidebar-link-hover-text);
+}
+
 body.dark-mode.page-dashboard .dash-profile__avatar,
 body.dark-mode.page-dashboard .dash-profile-section__identity--compact .dash-profile-section__avatar {
-    background: var(--dash-navy);
+    background: var(--primary-dark);
     color: #ffffff;
 }
 
@@ -1969,13 +1998,13 @@ body.dark-mode.page-dashboard .dash-intro__content {
 }
 
 body.dark-mode.page-dashboard .dash-intro__sub {
-    color: var(--text);
-    background: rgba(93, 169, 233, 0.1);
-    border-color: rgba(93, 169, 233, 0.18);
+    color: var(--text-light);
+    background: transparent;
+    border: none;
 }
 
 body.dark-mode.page-dashboard .dash-intro__activity {
-    color: var(--text);
+    color: var(--text-light);
     background: rgba(255, 255, 255, 0.04);
     border-color: var(--dash-border);
 }
@@ -1993,6 +2022,13 @@ body.dark-mode.page-dashboard .dash-card--metric {
 body.dark-mode.page-dashboard .dash-continue__type-badge {
     background: var(--card-bg);
     border-color: var(--border-strong);
+    color: var(--dash-royal);
+}
+
+body.dark-mode.page-dashboard .dash-metric__cover-badge {
+    background: var(--card-bg);
+    border-color: var(--border-strong);
+    color: var(--text);
 }
 
 body.dark-mode.page-dashboard .dash-card--muted,
@@ -2005,28 +2041,216 @@ body.dark-mode.page-dashboard .dash-empty-state {
 }
 
 body.dark-mode.page-dashboard .dash-card__title,
+body.dark-mode.page-dashboard .dash-card--metric .dash-card__title,
+body.dark-mode.page-dashboard .dash-metric__label,
+body.dark-mode.page-dashboard .dash-metric__sub,
+body.dark-mode.page-dashboard .dash-metric__pill,
+body.dark-mode.page-dashboard .dash-metric__status,
+body.dark-mode.page-dashboard .dash-metric__sep,
+body.dark-mode.page-dashboard .dash-metric__progress-value,
+body.dark-mode.page-dashboard .dash-metric__hint,
 body.dark-mode.page-dashboard .dash-progress__pct,
+body.dark-mode.page-dashboard .dash-progress__hint,
+body.dark-mode.page-dashboard .dash-progress__hint-label,
+body.dark-mode.page-dashboard .dash-progress-ring__value,
 body.dark-mode.page-dashboard .dash-xp__value,
+body.dark-mode.page-dashboard .dash-xp__label,
+body.dark-mode.page-dashboard .dash-xp__points,
 body.dark-mode.page-dashboard .dash-continue__title,
+body.dark-mode.page-dashboard .dash-continue__pct,
+body.dark-mode.page-dashboard .dash-continue--compact .dash-continue__title,
 body.dark-mode.page-dashboard .dash-goal__title,
 body.dark-mode.page-dashboard .dash-stat__value,
+body.dark-mode.page-dashboard .dash-stat__label,
 body.dark-mode.page-dashboard .dash-ach-item__title,
+body.dark-mode.page-dashboard .dash-ach-item__meta,
 body.dark-mode.page-dashboard .dash-rec__text,
-body.dark-mode.page-dashboard .dash-empty-state__title {
+body.dark-mode.page-dashboard .dash-empty-state__title,
+body.dark-mode.page-dashboard .dash-empty-state__text,
+body.dark-mode.page-dashboard .dash-fav__num,
+body.dark-mode.page-dashboard .dash-fav__label,
+body.dark-mode.page-dashboard .dash-cert__title,
+body.dark-mode.page-dashboard .dash-cert__date,
+body.dark-mode.page-dashboard .dash-activity__text,
+body.dark-mode.page-dashboard .dash-activity__time,
+body.dark-mode.page-dashboard .dash-profile-section__name,
+body.dark-mode.page-dashboard .dash-profile-section__subtitle,
+body.dark-mode.page-dashboard .dash-profile-stat__label,
+body.dark-mode.page-dashboard .dash-profile-stat__value,
+body.dark-mode.page-dashboard .dash-profile-tests__title,
+body.dark-mode.page-dashboard .dash-profile-tests__meta,
+body.dark-mode.page-dashboard .dash-profile-tests__empty,
+body.dark-mode.page-dashboard .dash-profile-modal__title,
+body.dark-mode.page-dashboard .dash-profile-modal__hint,
+body.dark-mode.page-dashboard .dash-card__eyebrow,
+body.dark-mode.page-dashboard .dash-sidebar-toggle {
     color: var(--text);
 }
 
-body.dark-mode.page-dashboard .dash-progress-ring__value {
+body.dark-mode.page-dashboard .dash-metric__sub,
+body.dark-mode.page-dashboard .dash-metric__status,
+body.dark-mode.page-dashboard .dash-metric__sep,
+body.dark-mode.page-dashboard .dash-metric__progress-value,
+body.dark-mode.page-dashboard .dash-metric__hint,
+body.dark-mode.page-dashboard .dash-progress__label,
+body.dark-mode.page-dashboard .dash-progress__hint,
+body.dark-mode.page-dashboard .dash-xp__label,
+body.dark-mode.page-dashboard .dash-xp__points,
+body.dark-mode.page-dashboard .dash-continue__author,
+body.dark-mode.page-dashboard .dash-continue__desc,
+body.dark-mode.page-dashboard .dash-continue__meta,
+body.dark-mode.page-dashboard .dash-continue--compact .dash-continue__meta,
+body.dark-mode.page-dashboard .dash-goal__time,
+body.dark-mode.page-dashboard .dash-stat__label,
+body.dark-mode.page-dashboard .dash-ach-item__meta,
+body.dark-mode.page-dashboard .dash-empty-state__text,
+body.dark-mode.page-dashboard .dash-fav__label,
+body.dark-mode.page-dashboard .dash-cert__date,
+body.dark-mode.page-dashboard .dash-activity__time,
+body.dark-mode.page-dashboard .dash-profile-section__since,
+body.dark-mode.page-dashboard .dash-profile-section__email,
+body.dark-mode.page-dashboard .dash-profile-stat__label,
+body.dark-mode.page-dashboard .dash-profile-tests__meta,
+body.dark-mode.page-dashboard .dash-profile-tests__empty,
+body.dark-mode.page-dashboard .dash-profile-modal__hint,
+body.dark-mode.page-dashboard .dash-card__eyebrow,
+body.dark-mode.page-dashboard .dash-ai-panel__text,
+body.dark-mode.page-dashboard .dash-intro__sub,
+body.dark-mode.page-dashboard .dash-intro__activity {
+    color: var(--text-light);
+}
+
+body.dark-mode.page-dashboard .dash-metric__icon,
+body.dark-mode.page-dashboard .dash-metric__badge {
+    background: var(--dash-sidebar-active-bg);
+    border-color: var(--dash-sidebar-icon-border);
     color: var(--text);
+}
+
+body.dark-mode.page-dashboard .dash-metric__pill {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+}
+
+body.dark-mode.page-dashboard .dash-xp__badge,
+body.dark-mode.page-dashboard .dash-xp--compact .dash-xp__badge {
+    background: rgba(147, 197, 253, 0.12);
+    border-color: rgba(147, 197, 253, 0.28);
+    color: var(--dash-royal);
+}
+
+body.dark-mode.page-dashboard .dash-progress-ring__fill {
+    stroke: var(--secondary-light);
+}
+
+body.dark-mode.page-dashboard .dash-progress-ring__track {
+    stroke: var(--border-strong);
 }
 
 body.dark-mode.page-dashboard .dash-progress__bar {
     background: var(--border-strong);
 }
 
+body.dark-mode.page-dashboard .dash-progress__fill {
+    background: linear-gradient(90deg, var(--primary-light), var(--secondary-light));
+}
+
+body.dark-mode.page-dashboard .dash-card__link,
+body.dark-mode.page-dashboard .dash-rec__link,
+body.dark-mode.page-dashboard .dash-profile-section__rank,
+body.dark-mode.page-dashboard .dash-profile-tests__score {
+    color: var(--dash-royal);
+}
+
+body.dark-mode.page-dashboard .dash-card__link:hover,
+body.dark-mode.page-dashboard .dash-rec__link:hover {
+    color: #bfdbfe;
+}
+
+body.dark-mode.page-dashboard .dash-btn--ghost {
+    color: var(--text);
+    border-color: var(--border-strong);
+}
+
+body.dark-mode.page-dashboard .dash-btn--ghost:hover:not(:disabled) {
+    color: var(--text);
+    background: var(--btn-outline-hover-bg);
+    border-color: var(--btn-outline-hover-border);
+}
+
+body.dark-mode.page-dashboard .dash-btn:focus-visible {
+    outline-color: var(--secondary-light);
+}
+
+body.dark-mode.page-dashboard .dash-continue__meta-type,
+body.dark-mode.page-dashboard .dash-continue__content.is-completed .dash-continue__meta-type {
+    background: rgba(147, 197, 253, 0.14);
+    color: #bfdbfe;
+}
+
+body.dark-mode.page-dashboard .dash-continue__content.is-completed .dash-continue__pct {
+    color: #6ee7b7;
+}
+
+body.dark-mode.page-dashboard .dash-metric__inner.is-completed .dash-metric__progress-value {
+    color: #6ee7b7;
+}
+
+body.dark-mode.page-dashboard .dash-rec,
+body.dark-mode.page-dashboard .dash-fav {
+    background: var(--bg-elevated);
+    border-color: var(--border-strong);
+}
+
+body.dark-mode.page-dashboard .dash-profile-section__avatar {
+    color: var(--primary-dark);
+}
+
+body.dark-mode.page-dashboard .dash-profile-modal__close {
+    color: var(--text-light);
+}
+
+body.dark-mode.page-dashboard .dash-profile-modal__close:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+}
+
+body.dark-mode.page-dashboard .dash-profile-field__input {
+    background: var(--bg);
+    color: var(--text);
+    border-color: var(--border-strong);
+}
+
+body.dark-mode.page-dashboard .dash-profile-field__input[readonly] {
+    color: var(--text-light);
+}
+
+body.dark-mode.page-dashboard .dash-profile-field__label {
+    color: var(--text-light);
+}
+
 body.dark-mode.page-dashboard .dash-goal,
 body.dark-mode.page-dashboard .dash-rec {
     border-color: var(--border-strong);
+}
+
+body.dark-mode.page-dashboard .dash-intro__content {
+    background: var(--dash-card-bg);
+    border: 1px solid var(--dash-border);
+}
+
+@media (max-width: 640px) {
+    body.dark-mode.page-dashboard .dash-intro__sub {
+        color: var(--text-light);
+        background: rgba(147, 197, 253, 0.08);
+        border-color: rgba(147, 197, 253, 0.18);
+    }
+
+    body.dark-mode.page-dashboard .dash-intro__activity {
+        color: var(--text-light);
+        background: var(--bg-elevated);
+        border-color: var(--border-strong);
+    }
 }
 
 /* Responsive */
