@@ -279,13 +279,17 @@ function renderHeader() {
     function closeMobileDrawer() {
         if (!drawer) return;
         drawer.classList.remove('open');
+        document.body.classList.remove('drawer-open');
         document.body.style.overflow = '';
+        if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
     }
 
     if (menuBtn && drawer) {
         menuBtn.addEventListener('click', () => {
             drawer.classList.add('open');
+            document.body.classList.add('drawer-open');
             document.body.style.overflow = 'hidden';
+            menuBtn.setAttribute('aria-expanded', 'true');
         });
     }
 
@@ -380,7 +384,7 @@ function initHeaderSearchExpand() {
 function setActiveNavLink() {
     const path = window.location.pathname;
     const file = path.split('/').pop() || 'index.html';
-    const links = document.querySelectorAll('.nav-menu a');
+    const links = document.querySelectorAll('.nav-menu a, .drawer-item');
 
     links.forEach(link => {
         const href = link.getAttribute('href') || '';

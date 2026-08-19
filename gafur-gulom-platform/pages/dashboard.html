@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/assets/css/components.css?v=9">
     <link rel="stylesheet" href="/assets/css/responsive.css?v=9">
     <link rel="stylesheet" href="/assets/css/platform-buttons.css?v=10">
-    <link rel="stylesheet" href="/pages/dashboard.css?v=22">
+    <link rel="stylesheet" href="/pages/dashboard.css?v=25">
 </head>
 <body class="page-dashboard">
     <div id="header-container"></div>
@@ -70,7 +70,7 @@
             <div class="dash-main">
                 <header class="dash-main__head dash-intro" id="dashboard-home">
                     <div class="dash-intro__content">
-                        <button type="button" class="dash-sidebar-toggle" id="dash-sidebar-toggle" aria-expanded="false" aria-controls="dash-sidebar">Menyu</button>
+                        <button type="button" class="dash-sidebar-toggle" id="dash-sidebar-toggle" aria-label="Profil bo'limiga o'tish">Profil</button>
                         <h1 class="dash-greeting" id="dash-greeting">Assalomu alaykum!</h1>
                         <p class="dash-intro__sub" id="dash-greeting-sub">Bugun o'qishni davom ettirish uchun sizga mos tavsiyalar.</p>
                         <p class="dash-intro__activity" id="dash-last-activity" hidden></p>
@@ -182,7 +182,7 @@
                     </section>
 
                     <!-- Bottom row -->
-                    <div class="dash-stack dash-span-6">
+                    <div class="dash-stack dash-span-12">
                         <section class="dash-card" id="achievements" aria-labelledby="dash-ach-title">
                             <div class="dash-card__head">
                                 <h2 class="dash-card__title" id="dash-ach-title">Yutuqlaringiz</h2>
@@ -215,15 +215,6 @@
                             </div>
                         </section>
                     </div>
-
-                    <section class="dash-card dash-span-6" aria-labelledby="dash-rec-title">
-                        <h2 class="dash-card__title" id="dash-rec-title">AI yordamchi</h2>
-                        <div class="dash-ai-panel">
-                            <p class="dash-ai-panel__text">G'afur G'ulom asarlari, hayoti va she'rlari bo'yicha savol bering.</p>
-                            <a href="/pages/ai-yordamchi.html" class="dash-btn dash-btn--outline dash-btn--block">AI bilan suhbat</a>
-                        </div>
-                        <ul class="dash-recs dash-recs--compact" id="dash-recs-list" hidden aria-hidden="true"></ul>
-                    </section>
                 </div>
             </div>
         </div>
@@ -266,6 +257,6 @@
     <script src="/components/auth-modal.js?v=3"></script>
     <script src="/assets/js/data.js?v=9"></script>
     <script src="/assets/js/app.js"></script>
-    <script src="/pages/dashboard-page.js?v=15"></script>
+    <script src="/pages/dashboard-page.js?v=16"></script>
 </body>
 </html>

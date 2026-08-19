@@ -792,10 +792,7 @@ async function initDashboard() {
     });
 
     document.getElementById('dash-sidebar-toggle')?.addEventListener('click', () => {
-        const sidebar = document.getElementById('dash-sidebar');
-        const toggle = document.getElementById('dash-sidebar-toggle');
-        const isOpen = sidebar?.classList.toggle('is-open');
-        if (toggle) toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        navigateToSection('profile-section', 'profile');
     });
 
     document.querySelectorAll('.dash-nav__link:not([data-dash-nav])').forEach(link => {
