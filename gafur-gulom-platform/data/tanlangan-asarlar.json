@@ -37,15 +37,6 @@
       "pdf": "assets/pdf/tanlangan-asarlar/gafur-gulom-mukammal-asarlar-toplami-12-tom-1990.pdf"
     },
     {
-      "id": 5,
-      "sarlavha": "Farzandlarimga",
-      "muallif": "G'afur G'ulom",
-      "yil": 1983,
-      "joy": "Toshkent",
-      "nashriyot": "O‘zbekiston LKSM Markaziy Komiteti “Yosh gvardiya” nashriyoti",
-      "pdf": "assets/pdf/tanlangan-asarlar/farzandlarimga.pdf"
-    },
-    {
       "id": 6,
       "sarlavha": "Mukammal asarlar to'plami — O'n birinchi tom",
       "muallif": "G'afur G'ulom",
@@ -54,6 +45,12 @@
       "joy": "Toshkent",
       "yil": 1989,
       "pdf": "assets/pdf/tanlangan-asarlar/mukammal-asarlar-toplami-11-tom-adabiy-tanqidiy-maqolalar.pdf"
+    },
+    {
+      "id": 7,
+      "sarlavha": "Tanlangan asarlar — 2-tom",
+      "muallif": "G'afur G'ulom",
+      "pdf": "assets/pdf/tanlangan-asarlar/Tanlangan asarlar \u2014 2-tom.pdf"
     }
   ]
 }

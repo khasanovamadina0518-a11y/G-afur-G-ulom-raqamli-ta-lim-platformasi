@@ -476,6 +476,25 @@
     font-weight: 600;
     color: var(--ilm-navy);
     line-height: 1.35;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.page-ilmiy .ilm-paper__source {
+    margin: 0 0 0.85rem;
+    font-size: 0.875rem;
+}
+
+.page-ilmiy .ilm-paper__source-link {
+    color: var(--ilm-royal);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.page-ilmiy .ilm-paper__source-link:hover {
+    color: var(--ilm-navy);
 }
 
 .page-ilmiy .ilm-paper__select {

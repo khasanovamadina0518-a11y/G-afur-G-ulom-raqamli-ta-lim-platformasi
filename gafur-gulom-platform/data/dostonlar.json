@@ -1,12 +1,14 @@
 {
   "dostonlar": [
     {
-      "id": 1,
-      "sarlavha": "Yulduz",
-      "yil": 1935,
-      "mavzu": ["Hayot", "Sevgi"],
-      "matn": "Yulduz dostoni - G'afur G'ulomning eng mashhur asarlaridan biri...",
-      "qisqa": "Yulduz ismli qizning hayoti haqida doston"
+      "id": 2,
+      "sarlavha": "Mening o'g'rigina bolam",
+      "muallif": "G'afur G'ulom",
+      "janr": "Hikoya",
+      "mavzu": ["Hikoya"],
+      "qisqa": "G'afur G'ulomning ma'naviy-ma'rifiy hikoyasi.",
+      "pdf": "assets/pdf/hikoyalar/Mening o\u2018g\u2018rigina bolam.pdf",
+      "audio": "assets/audio/Mening o\u2018g\u2018rigina bolam.m4a"
     }
   ]
 }

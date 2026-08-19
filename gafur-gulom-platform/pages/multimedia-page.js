@@ -9,6 +9,39 @@ let activeCategoryFilter = 'all';
 let activeYouTubeId = null;
 let courseVideo = null;
 
+const CAT_I18N_KEYS = {
+    'hayoti-ijodi': { nom: 'mmCatHayot', tavsif: 'mmCatHayotDesc' },
+    'asarlar-tahlili': { nom: 'mmCatAsarlar', tavsif: 'mmCatAsarlarDesc' },
+    'gafur-gulom-haqida': { nom: 'mmCatHaqida', tavsif: 'mmCatHaqidaDesc' },
+    'filmlar': { nom: 'mmCatFilmlar', tavsif: 'mmCatFilmlarDesc' }
+};
+
+const platformTranslate = window.PlatformI18n?.t || null;
+
+const uiT = (key, fallback, vars) => {
+    return platformTranslate ? platformTranslate(key, fallback, vars) : (fallback ?? key);
+};
+
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
+function locCat(cat, field) {
+    const keys = CAT_I18N_KEYS[cat.slug];
+    if (keys?.[field]) return uiT(keys[field], cat[field]);
+    return cat[field];
+}
+
+function refreshMultimediaUI() {
+    renderCategoryNav();
+    renderCatalog();
+    renderLesson();
+}
+
 const VIDEO_PROGRESS_KEY = 'gafur-video-progress';
 
 const DEFAULT_CATEGORIES = [
@@ -44,6 +77,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     initVideoTabs();
     initPlayerControls();
     initLessonNavigation();
+    window.PlatformI18n?.registerRefresh?.('multimedia', refreshMultimediaUI);
 });
 
 function resolveAssetPath(path) {
@@ -401,8 +435,8 @@ function renderCategoryNav() {
 
     const categories = getCategories();
     const filters = [
-        { slug: 'all', label: 'Barchasi' },
-        ...categories.map(cat => ({ slug: cat.slug, label: cat.nom }))
+        { slug: 'all', label: uiT('mmCatAll', 'Barchasi') },
+        ...categories.map(cat => ({ slug: cat.slug, label: locCat(cat, 'nom') }))
     ];
 
     nav.innerHTML = filters.map(filter => `
@@ -449,16 +483,16 @@ function renderCatalog() {
         const cardsHtml = categoryItems.length
             ? `<div class="video-card-grid">${categoryItems.map(item => renderCatalogCard(item)).join('')}</div>`
             : `<p class="video-category-section__empty">${category.slug === 'filmlar'
-                ? 'Hozircha bu bo\'limda filmlar qo\'shilmagan. Yangi film qo\'shish uchun videolar.json faylidagi "filmlar" massiviga yozing.'
-                : 'Bu kategoriyada videolar tez orada qo\'shiladi.'}</p>`;
+                ? uiT('mmEmptyFilms', 'Hozircha bu bo\'limda filmlar qo\'shilmagan.')
+                : uiT('mmEmptyCategory', 'Bu kategoriyada videolar tez orada qo\'shiladi.')}</p>`;
 
         return `
             <section class="video-category-section" data-category="${category.slug}" aria-labelledby="category-title-${category.slug}">
                 <header class="video-category-section__head">
                     <span class="video-category-section__num">${category.tartib}</span>
                     <div class="video-category-section__text">
-                        <h2 class="video-category-section__title" id="category-title-${category.slug}">${category.nom}</h2>
-                        <p class="video-category-section__desc">${category.tavsif}</p>
+                        <h2 class="video-category-section__title" id="category-title-${category.slug}">${escapeHtml(locCat(category, 'nom'))}</h2>
+                        <p class="video-category-section__desc">${escapeHtml(locCat(category, 'tavsif'))}</p>
                     </div>
                 </header>
                 ${cardsHtml}
@@ -474,8 +508,8 @@ function renderCatalog() {
                     <header class="video-category-section__head">
                         <span class="video-category-section__num">—</span>
                         <div class="video-category-section__text">
-                            <h2 class="video-category-section__title">Kategoriyasi aniqlanmagan</h2>
-                            <p class="video-category-section__desc">Quyidagi videolar uchun JSON faylida "kategoriya" maydoni ko'rsatilmagan.</p>
+                            <h2 class="video-category-section__title">${uiT('mmUncategorized', 'Kategoriyasi aniqlanmagan')}</h2>
+                            <p class="video-category-section__desc">${uiT('mmUncategorizedDesc', 'Quyidagi videolar uchun JSON faylida "kategoriya" maydoni ko\'rsatilmagan.')}</p>
                         </div>
                     </header>
                     <div class="video-card-grid">
@@ -514,30 +548,30 @@ function renderCatalogCard(item) {
     };
     const safeThumb = esc(thumb || thumbFallback);
     const safeFallback = esc(thumbFallback);
-    const primaryLabel = isFilm ? 'Tomosha qilish' : 'Davom ettirish';
+    const primaryLabel = isFilm ? uiT('mmWatch', 'Tomosha qilish') : uiT('mmContinueLesson', 'Davom ettirish');
     const cardClass = `video-card${isFilm ? ' video-card--film' : ''}${isActive ? ' is-active' : ''}`;
 
     const metaHtml = isFilm
         ? `
-            ${item.asar ? `<p class="video-card__meta"><span>Asar:</span> «${item.asar}»</p>` : ''}
-            <p class="video-card__meta"><span>Janr:</span> ${item.janr || 'Badiiy film'}</p>
-            ${item.yil ? `<p class="video-card__meta"><span>Yil:</span> ${item.yil}</p>` : ''}
+            ${item.asar ? `<p class="video-card__meta"><span>${uiT('mmWorkLabel', 'Asar')}:</span> «${item.asar}»</p>` : ''}
+            <p class="video-card__meta"><span>${uiT('mmGenreLabel', 'Janr')}:</span> ${item.janr || uiT('mmGenreFilm', 'Badiiy film')}</p>
+            ${item.yil ? `<p class="video-card__meta"><span>${uiT('mmYearLabel', 'Yil')}:</span> ${item.yil}</p>` : ''}
         `
         : `
-            ${item.davomiylik && item.davomiylik !== '—' ? `<p class="video-card__meta"><span>Davomiylik:</span> ${item.davomiylik}</p>` : ''}
-            ${item.mavzu && item.mavzu !== '—' ? `<p class="video-card__meta"><span>Mavzu:</span> ${item.mavzu}</p>` : ''}
+            ${item.davomiylik && item.davomiylik !== '—' ? `<p class="video-card__meta"><span>${uiT('mmDuration', 'Davomiyligi')}:</span> ${item.davomiylik}</p>` : ''}
+            ${item.mavzu && item.mavzu !== '—' ? `<p class="video-card__meta"><span>${uiT('mmTopic', 'Mavzu')}:</span> ${item.mavzu}</p>` : ''}
         `;
 
     const downloadHtml = !isFilm && item.downloadUrl
-        ? `<button type="button" class="video-btn video-btn--secondary video-card__btn" data-action="download">Yuklab olish</button>`
+        ? `<button type="button" class="video-btn video-btn--secondary video-card__btn" data-action="download">${uiT('download', 'Yuklab olish')}</button>`
         : '';
 
     return `
         <article class="${cardClass}" data-catalog-key="${item.key}" aria-current="${isActive ? 'true' : 'false'}">
             <div class="video-card__preview">
                 <img src="${safeThumb}" alt="" class="video-card__thumb" loading="lazy" data-thumb-fallback="${safeFallback}" onerror="window.PlatformThumbnails&&window.PlatformThumbnails.handleImgError(this)">
-                ${isFilm ? '<span class="video-card__badge">Film</span>' : ''}
-                ${isActive ? '<span class="video-card__playing">Hoziroq ko\'rilmoqda</span>' : ''}
+                ${isFilm ? `<span class="video-card__badge">${uiT('mmFilmBadge', 'Film')}</span>` : ''}
+                ${isActive ? `<span class="video-card__playing">${uiT('mmWatchingNow', 'Hoziroq ko\'rilmoqda')}</span>` : ''}
                 <span class="video-card__progress" aria-hidden="true"><span style="width:${progressWidth}%"></span></span>
             </div>
             <div class="video-card__body">
@@ -619,7 +653,7 @@ function renderLesson() {
     const topicEl = document.getElementById('lesson-topic');
     const nowEl = document.getElementById('lesson-now');
 
-    let displayTitle = kurs.sarlavha || 'Video dars';
+    let displayTitle = kurs.sarlavha || uiT('mmLessonDefault', 'Video dars');
     let displayDesc = kurs.tavsif || '';
     let displayDuration = kurs.totalTime || '—';
     let displayTopic = kurs.mavzu || '—';
@@ -628,19 +662,19 @@ function renderLesson() {
     let poster = kurs.thumbnail;
     let progressType = 'kurs';
     let progressId = kurs.id || 'kurs';
-    let badgeText = 'Video dars';
+    let badgeText = uiT('mmLessonDefault', 'Video dars');
 
     if (activeSelection.type === 'film' && film) {
-        displayTitle = film.sarlavha || film.title || 'Film';
+        displayTitle = film.sarlavha || film.title || uiT('mmFilmBadge', 'Film');
         displayDesc = film.tavsif || film.description || '';
         displayDuration = film.yil ? String(film.yil) : (film.davomiylik || '—');
-        displayTopic = film.asar ? `Asar: «${film.asar}»` : (film.janr || 'Badiiy film');
+        displayTopic = film.asar ? `${uiT('mmWorkLabel', 'Asar')}: «${film.asar}»` : (film.janr || uiT('mmGenreFilm', 'Badiiy film'));
         videoUrl = film.videoUrl;
         downloadUrl = film.downloadUrl;
         poster = film.thumbnail;
         progressType = 'film';
         progressId = film.id;
-        badgeText = 'Film';
+        badgeText = uiT('mmFilmBadge', 'Film');
     } else if (activeSelection.type === 'lesson' && lesson) {
         const usesLessonVideo = Boolean(lesson.videoUrl);
         displayTitle = getLessonDisplayTitle(lesson);
@@ -652,9 +686,9 @@ function renderLesson() {
         poster = usesLessonVideo ? lesson.thumbnail : kurs.thumbnail;
         progressType = 'lesson';
         progressId = lesson.id;
-        badgeText = `Dars ${lesson.tartib}`;
+        badgeText = `${uiT('mmLesson', 'Dars')} ${lesson.tartib}`;
     } else {
-        badgeText = 'Asosiy dars';
+        badgeText = uiT('mmMainLesson', 'Asosiy dars');
     }
 
     if (titleEl) titleEl.textContent = displayTitle;

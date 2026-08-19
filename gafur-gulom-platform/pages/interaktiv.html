@@ -22,97 +22,97 @@
     <main class="test-page">
         <div class="test-page__inner">
             <header class="test-header">
-                <a href="/index.html" class="test-header__back" aria-label="Bosh sahifaga qaytish">
+                <a href="/index.html" class="test-header__back" data-i18n-aria="backHome" aria-label="Bosh sahifaga qaytish">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
                 </a>
                 <div class="test-header__copy">
-                    <h1 class="test-header__title">Testlar</h1>
-                    <p class="test-header__subtitle">Professional baholash markazi</p>
+                    <h1 class="test-header__title" data-i18n="testsTitle">Testlar</h1>
+                    <p class="test-header__subtitle" data-i18n="testsSubtitle">Professional baholash markazi</p>
                 </div>
             </header>
 
             <section id="tests-catalog" class="tests-grid">
                 <article class="test-card">
-                    <div class="test-card__icon test-card__icon--navy" aria-hidden="true">??</div>
-                    <h2 class="test-card__title">G'afur G'ulom hayoti</h2>
-                    <p class="test-card__desc">Shoir hayoti, tug'ilgan yili, oilasi va ijodiy yo'li bo'yicha bilimlaringizni sinab ko'ring.</p>
+                    <div class="test-card__icon test-card__icon--navy" aria-hidden="true">📚</div>
+                    <h2 class="test-card__title" data-i18n="testCatHayotTitle">G'afur G'ulom hayoti</h2>
+                    <p class="test-card__desc" data-i18n="testCatHayotDesc">Shoir hayoti, tug'ilgan yili, oilasi va ijodiy yo'li bo'yicha bilimlaringizni sinab ko'ring.</p>
                     <div class="test-card__meta">
-                        <span class="test-card__meta-item"><span data-test-count="hayot">20</span> savol</span>
-                        <span class="test-card__meta-item">15 daqiqa</span>
-                        <span class="test-card__badge test-card__badge--easy">Oson</span>
+                        <span class="test-card__meta-item"><span data-test-count="hayot">20</span> <span data-i18n="testsQuestions">savol</span></span>
+                        <span class="test-card__meta-item">15 <span data-i18n="testsMinutes">daqiqa</span></span>
+                        <span class="test-card__badge test-card__badge--easy" data-i18n="testDiffEasy">Oson</span>
         </div>
-                    <button type="button" class="test-card__btn" onclick="startTestCategory('hayot')">Boshlash</button>
+                    <button type="button" class="test-card__btn" onclick="startTestCategory('hayot')" data-i18n="start">Boshlash</button>
                 </article>
 
                 <article class="test-card">
-                    <div class="test-card__icon test-card__icon--gold" aria-hidden="true">??</div>
-                    <h2 class="test-card__title">G'afur G'ulom asarlari</h2>
-                    <p class="test-card__desc">Romanlar, hikoyalar va dramatik asarlarga oid professional savollar to'plami.</p>
+                    <div class="test-card__icon test-card__icon--gold" aria-hidden="true">📖</div>
+                    <h2 class="test-card__title" data-i18n="testCatAsarlarTitle">G'afur G'ulom asarlari</h2>
+                    <p class="test-card__desc" data-i18n="testCatAsarlarDesc">Romanlar, hikoyalar va dramatik asarlarga oid professional savollar to'plami.</p>
                     <div class="test-card__meta">
-                        <span class="test-card__meta-item"><span data-test-count="asarlar">20</span> savol</span>
-                        <span class="test-card__meta-item">18 daqiqa</span>
-                        <span class="test-card__badge test-card__badge--medium">O'rta</span>
+                        <span class="test-card__meta-item"><span data-test-count="asarlar">20</span> <span data-i18n="testsQuestions">savol</span></span>
+                        <span class="test-card__meta-item">18 <span data-i18n="testsMinutes">daqiqa</span></span>
+                        <span class="test-card__badge test-card__badge--medium" data-i18n="testDiffMedium">O'rta</span>
         </div>
-                    <button type="button" class="test-card__btn" onclick="startTestCategory('asarlar')">Boshlash</button>
+                    <button type="button" class="test-card__btn" onclick="startTestCategory('asarlar')" data-i18n="start">Boshlash</button>
                 </article>
 
                 <article class="test-card">
-                    <div class="test-card__icon test-card__icon--royal" aria-hidden="true">??</div>
-                    <h2 class="test-card__title">She'riyati</h2>
-                    <p class="test-card__desc">She'rlar, to'plamlar va poetik ijodga oid chuqur savollar.</p>
+                    <div class="test-card__icon test-card__icon--royal" aria-hidden="true">✒️</div>
+                    <h2 class="test-card__title" data-i18n="testCatSherTitle">She'riyati</h2>
+                    <p class="test-card__desc" data-i18n="testCatSherDesc">She'rlar, to'plamlar va poetik ijodga oid chuqur savollar.</p>
                     <div class="test-card__meta">
-                        <span class="test-card__meta-item"><span data-test-count="sheriyat">15</span> savol</span>
-                        <span class="test-card__meta-item">12 daqiqa</span>
-                        <span class="test-card__badge test-card__badge--medium">O'rta</span>
+                        <span class="test-card__meta-item"><span data-test-count="sheriyat">15</span> <span data-i18n="testsQuestions">savol</span></span>
+                        <span class="test-card__meta-item">12 <span data-i18n="testsMinutes">daqiqa</span></span>
+                        <span class="test-card__badge test-card__badge--medium" data-i18n="testDiffMedium">O'rta</span>
         </div>
-                    <button type="button" class="test-card__btn" onclick="startTestCategory('sheriyat')">Boshlash</button>
+                    <button type="button" class="test-card__btn" onclick="startTestCategory('sheriyat')" data-i18n="start">Boshlash</button>
                 </article>
 
                 <article class="test-card">
-                    <div class="test-card__icon test-card__icon--navy" aria-hidden="true">??</div>
-                    <h2 class="test-card__title">Hikoya va qissalari</h2>
-                    <p class="test-card__desc">Hikoya, qissa va ertaklar bo'yicha bilimlaringizni baholang.</p>
+                    <div class="test-card__icon test-card__icon--navy" aria-hidden="true">📜</div>
+                    <h2 class="test-card__title" data-i18n="testCatHikoyaTitle">Hikoya va qissalari</h2>
+                    <p class="test-card__desc" data-i18n="testCatHikoyaDesc">Hikoya, qissa va ertaklar bo'yicha bilimlaringizni baholang.</p>
                     <div class="test-card__meta">
-                        <span class="test-card__meta-item"><span data-test-count="hikoya">15</span> savol</span>
-                        <span class="test-card__meta-item">14 daqiqa</span>
-                        <span class="test-card__badge test-card__badge--hard">Qiyin</span>
+                        <span class="test-card__meta-item"><span data-test-count="hikoya">15</span> <span data-i18n="testsQuestions">savol</span></span>
+                        <span class="test-card__meta-item">14 <span data-i18n="testsMinutes">daqiqa</span></span>
+                        <span class="test-card__badge test-card__badge--hard" data-i18n="testDiffHard">Qiyin</span>
         </div>
-                    <button type="button" class="test-card__btn" onclick="startTestCategory('hikoya')">Boshlash</button>
+                    <button type="button" class="test-card__btn" onclick="startTestCategory('hikoya')" data-i18n="start">Boshlash</button>
                 </article>
 
                 <article class="test-card">
-                    <div class="test-card__icon test-card__icon--gold" aria-hidden="true">??</div>
-                    <h2 class="test-card__title">Ilmiy bilimlar</h2>
-                    <p class="test-card__desc">Adabiyotshunoslik va ilmiy-ma'rifiy bilimlar bo'yicha maxsus test.</p>
+                    <div class="test-card__icon test-card__icon--gold" aria-hidden="true">🔬</div>
+                    <h2 class="test-card__title" data-i18n="testCatIlmiyTitle">Ilmiy bilimlar</h2>
+                    <p class="test-card__desc" data-i18n="testCatIlmiyDesc">Adabiyotshunoslik va ilmiy-ma'rifiy bilimlar bo'yicha maxsus test.</p>
                     <div class="test-card__meta">
-                        <span class="test-card__meta-item"><span data-test-count="ilmiy">6</span> savol</span>
-                        <span class="test-card__meta-item">10 daqiqa</span>
-                        <span class="test-card__badge test-card__badge--hard">Qiyin</span>
+                        <span class="test-card__meta-item"><span data-test-count="ilmiy">6</span> <span data-i18n="testsQuestions">savol</span></span>
+                        <span class="test-card__meta-item">10 <span data-i18n="testsMinutes">daqiqa</span></span>
+                        <span class="test-card__badge test-card__badge--hard" data-i18n="testDiffHard">Qiyin</span>
         </div>
-                    <button type="button" class="test-card__btn" onclick="startTestCategory('ilmiy')">Boshlash</button>
+                    <button type="button" class="test-card__btn" onclick="startTestCategory('ilmiy')" data-i18n="start">Boshlash</button>
                 </article>
 
                 <article class="test-card test-card--featured">
-                    <div class="test-card__icon test-card__icon--royal" aria-hidden="true">??</div>
-                    <h2 class="test-card__title">Yakuniy test</h2>
-                    <p class="test-card__desc">Barcha mavzularni qamrab oluvchi yakuniy baholash testi.</p>
+                    <div class="test-card__icon test-card__icon--royal" aria-hidden="true">🏆</div>
+                    <h2 class="test-card__title" data-i18n="testCatYakuniyTitle">Yakuniy test</h2>
+                    <p class="test-card__desc" data-i18n="testCatYakuniyDesc">Barcha mavzularni qamrab oluvchi yakuniy baholash testi.</p>
                     <div class="test-card__meta">
-                        <span class="test-card__meta-item"><span data-test-count="yakuniy">20</span> savol</span>
-                        <span class="test-card__meta-item">25 daqiqa</span>
-                        <span class="test-card__badge test-card__badge--mixed">Aralash</span>
+                        <span class="test-card__meta-item"><span data-test-count="yakuniy">20</span> <span data-i18n="testsQuestions">savol</span></span>
+                        <span class="test-card__meta-item">25 <span data-i18n="testsMinutes">daqiqa</span></span>
+                        <span class="test-card__badge test-card__badge--mixed" data-i18n="testDiffMixed">Aralash</span>
         </div>
-                    <button type="button" class="test-card__btn test-card__btn--featured" onclick="startTestCategory('yakuniy')">Boshlash</button>
+                    <button type="button" class="test-card__btn test-card__btn--featured" onclick="startTestCategory('yakuniy')" data-i18n="start">Boshlash</button>
                 </article>
     </section>
 
     <section id="quiz-game" class="game-screen">
-                <button class="btn-outline" onclick="backToTests()" style="margin-bottom: 2rem;">< Orqaga</button>
+                <button class="btn-outline" onclick="backToTests()" style="margin-bottom: 2rem;" data-i18n="back">← Orqaga</button>
         
         <div id="quiz-start" class="start-screen">
                     <h2 id="quiz-start-title">Test</h2>
-                    <p id="quiz-start-desc" class="text-light" style="font-size: 1.125rem;">Savollarga javob bering va bilimingizni baholang.</p>
-            <input type="text" id="quiz-player-name" placeholder="Ismingizni kiriting" maxlength="30">
-            <button class="btn-primary" style="width: 100%; padding: 1.5rem;" onclick="startQuizGame()">
+                    <p id="quiz-start-desc" class="text-light" style="font-size: 1.125rem;" data-i18n="testsStartDesc">Savollarga javob bering va bilimingizni baholang.</p>
+            <input type="text" id="quiz-player-name" data-i18n-placeholder="testsPlayerPlaceholder" placeholder="Ismingizni kiriting" maxlength="30">
+            <button class="btn-primary" style="width: 100%; padding: 1.5rem;" onclick="startQuizGame()" data-i18n="start">
                         Boshlash
             </button>
             <div id="quiz-leaderboard-preview" class="leaderboard" style="margin-top: 2rem;"></div>
@@ -121,7 +121,7 @@
         <div id="quiz-playing" style="display: none;">
                     <div class="quiz-session">
                         <div class="quiz-session__toolbar">
-                            <div class="quiz-session__score">? <span id="quiz-score">0</span> ball</div>
+                            <div class="quiz-session__score">★ <span id="quiz-score">0</span> <span data-i18n="testsScorePoints">ball</span></div>
                             <div class="quiz-session__meta">
                                 <div class="question-counter" id="quiz-counter">1 / 20</div>
                                 <div class="quiz-timer-badge" id="quiz-timer-badge">
@@ -143,17 +143,17 @@
                         <div class="quiz-session__footer">
                             <button type="button" class="quiz-nav-btn quiz-nav-btn--ghost" id="quiz-prev-btn" disabled>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
-                                Oldingi
+                                <span data-i18n="prev">Oldingi</span>
                             </button>
                             <button type="button" class="quiz-nav-btn quiz-nav-btn--flag" id="quiz-flag-btn" aria-pressed="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                                Belgilash
+                                <span data-i18n="testsFlag">Belgilash</span>
                             </button>
                             <button type="button" class="quiz-nav-btn quiz-nav-btn--primary" id="quiz-next-btn" disabled>
-                                Keyingi
+                                <span data-i18n="next">Keyingi</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
                             </button>
-                            <button type="button" class="quiz-nav-btn quiz-nav-btn--submit" id="quiz-submit-btn" style="display: none;" disabled>
+                            <button type="button" class="quiz-nav-btn quiz-nav-btn--submit" id="quiz-submit-btn" style="display: none;" disabled data-i18n="testsFinish">
                                 Yakunlash
                             </button>
                         </div>
@@ -161,12 +161,12 @@
         </div>
         
         <div id="quiz-result" class="result-screen" style="display: none;">
-                    <h2>?? Test tugadi!</h2>
+                    <h2 data-i18n="testsQuizFinished">Test tugadi!</h2>
             <div class="result-stars" id="quiz-result-stars"></div>
-            <div class="result-score"><span id="quiz-final-score">0</span> ball</div>
+            <div class="result-score"><span id="quiz-final-score">0</span> <span data-i18n="testsScorePoints">ball</span></div>
             <p id="quiz-result-message" style="font-size: 1.25rem; margin: 2rem 0;"></p>
             <div id="quiz-high-score" style="font-size: 1.125rem; color: var(--secondary); margin-bottom: 2rem;"></div>
-            <button class="btn-primary" onclick="restartQuizGame()">Qaytadan o'ynash</button>
+            <button class="btn-primary" onclick="restartQuizGame()" data-i18n="gamePlayAgain">Qaytadan o'ynash</button>
         </div>
     </section>
         </div>
@@ -178,6 +178,6 @@
     <script src="/components/footer.js"></script>
     <script src="/assets/js/data.js"></script>
     <script src="/assets/js/app.js"></script>
-    <script src="/pages/interaktiv-page.js?v=2"></script>
+    <script src="/pages/interaktiv-page.js?v=4"></script>
 </body>
 </html>

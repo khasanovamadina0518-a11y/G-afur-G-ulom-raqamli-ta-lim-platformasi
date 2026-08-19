@@ -387,6 +387,12 @@
     margin-top: 0.35rem;
 }
 
+.page-asarlar .library-item__tag--pdf {
+    background: rgba(180, 30, 30, 0.12);
+    color: #9b1c1c;
+    border: 1px solid rgba(180, 30, 30, 0.22);
+}
+
 .page-asarlar .library-item__tag {
     display: inline-block;
     padding: 0.15rem 0.45rem;
@@ -901,6 +907,12 @@ body.dark-mode.page-asarlar .library-list--grid .library-item {
 
 body.dark-mode.page-asarlar .library-item__desc {
     color: var(--text-light);
+}
+
+body.dark-mode.page-asarlar .library-item__tag--pdf {
+    background: rgba(248, 113, 113, 0.14);
+    color: #fca5a5;
+    border-color: rgba(248, 113, 113, 0.28);
 }
 
 body.dark-mode.page-asarlar .library-item__tag {

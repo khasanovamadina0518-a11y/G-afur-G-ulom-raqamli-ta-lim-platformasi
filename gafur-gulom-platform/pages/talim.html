@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/assets/css/components.css?v=9">
     <link rel="stylesheet" href="/assets/css/responsive.css?v=9">
     <link rel="stylesheet" href="/assets/css/platform-buttons.css?v=9">
-    <link rel="stylesheet" href="/pages/talim.css?v=12">
+    <link rel="stylesheet" href="/pages/talim.css?v=17">
 </head>
 <body class="page-talim">
     <div id="header-container"></div>
@@ -26,25 +26,25 @@
             <span class="tl-hero__grid"></span>
         </div>
         <div class="tl-hero__inner">
-            <p class="tl-hero__kicker"><span class="tl-hero__kicker-dot" aria-hidden="true"></span>O'quv markazi</p>
-            <h1 class="tl-hero__title" id="tl-hero-title">Ta'lim resurslari</h1>
-            <p class="tl-hero__text">Dars rejalar, viktorina va savol banki — o'qituvchilar va o'quvchilar uchun G'afur G'ulom bo'yicha strukturali ta'lim.</p>
-            <div class="tl-hero__stats" id="tl-hero-stats" aria-label="Ta'lim statistikasi"></div>
+            <p class="tl-hero__kicker"><span class="tl-hero__kicker-dot" aria-hidden="true"></span><span data-i18n="talimKicker">O'quv markazi</span></p>
+            <h1 class="tl-hero__title" id="tl-hero-title" data-i18n="talimTitle">Ta'lim resurslari</h1>
+            <p class="tl-hero__text" data-i18n="talimHeroLead">Dars rejalar, viktorina va savol banki — o'qituvchilar va o'quvchilar uchun G'afur G'ulom bo'yicha strukturali ta'lim.</p>
+            <div class="tl-hero__stats" id="tl-hero-stats" data-i18n-aria="talimStatsAria" aria-label="Ta'lim statistikasi"></div>
         </div>
         <div class="tl-hero__tabs-shell">
             <div class="tl-hero__tabs-inner">
-                <nav class="tl-tabs tl-tabs--premium" aria-label="Ta'lim bo'limlari">
+                <nav class="tl-tabs tl-tabs--premium" data-i18n-aria="talimTabsAria" aria-label="Ta'lim bo'limlari">
                     <button class="tab-btn active" type="button" data-tab="dars">
                         <span class="tab-btn__icon" aria-hidden="true">📖</span>
-                        <span>Darslar</span>
+                        <span data-i18n="talimLessons">Darslar</span>
                     </button>
                     <button class="tab-btn" type="button" data-tab="quiz">
                         <span class="tab-btn__icon" aria-hidden="true">🏆</span>
-                        <span>Viktorina</span>
+                        <span data-i18n="talimQuiz">Viktorina</span>
                     </button>
                     <button class="tab-btn" type="button" data-tab="bank">
                         <span class="tab-btn__icon" aria-hidden="true">📋</span>
-                        <span>Savol Banki</span>
+                        <span data-i18n="talimQuestionBank">Savol Banki</span>
                     </button>
                 </nav>
             </div>
@@ -63,29 +63,43 @@
             <!-- Viktorina -->
             <div class="tab-content" data-tab="quiz">
                 <div class="quiz-start" id="quiz-start">
-                    <h2>Viktorinani boshlash</h2>
-                    <input type="text" id="user-name" placeholder="Ismingizni kiriting" maxlength="50">
-                    <h3>Sinf darajasi:</h3>
-                    <div class="class-selector">
-                        <button class="class-btn quiz-class-btn active" type="button" data-quiz-class="6">6-sinf</button>
-                        <button class="class-btn quiz-class-btn" type="button" data-quiz-class="8">8-sinf</button>
+                    <header class="quiz-start__head">
+                        <h2 class="quiz-start__title" data-i18n="talimQuizTitle">G'afur G'ulom bo'yicha viktorina</h2>
+                        <p class="quiz-start__subtitle" data-i18n="talimQuizSubtitle">Bilimingizni sinab ko'ring va natijangizni ko'ring.</p>
+                    </header>
+
+                    <div class="quiz-start__field">
+                        <label class="quiz-start__label" for="user-name" data-i18n="talimYourName">Ismingiz</label>
+                        <input type="text" id="user-name" class="quiz-start__input" data-i18n-placeholder="talimNamePlaceholder" placeholder="Ismingizni kiriting" maxlength="50" autocomplete="name">
                     </div>
-                    <h3>Qiyinlik darajasi:</h3>
-                    <div class="difficulty-btns">
-                        <button class="difficulty-btn active" type="button" data-level="oson">
-                            <div style="font-size: 1.75rem; margin-bottom: 0.35rem;">😊</div>
-                            <div>Oson</div>
-                        </button>
-                        <button class="difficulty-btn" type="button" data-level="orta">
-                            <div style="font-size: 1.75rem; margin-bottom: 0.35rem;">🤔</div>
-                            <div>O'rta</div>
-                        </button>
-                        <button class="difficulty-btn" type="button" data-level="qiyin">
-                            <div style="font-size: 1.75rem; margin-bottom: 0.35rem;">🔥</div>
-                            <div>Qiyin</div>
-                        </button>
+
+                    <div class="quiz-start__section">
+                        <p class="quiz-start__section-label" data-i18n="talimClassLevel">Sinf darajasi</p>
+                        <div class="class-selector quiz-start__class-grid">
+                            <button class="class-btn quiz-class-btn active" type="button" data-quiz-class="6" data-i18n="talimGrade6Btn">6-SINF</button>
+                            <button class="class-btn quiz-class-btn" type="button" data-quiz-class="8" data-i18n="talimGrade8Btn">8-SINF</button>
+                        </div>
                     </div>
-                    <button class="tl-btn-primary tl-btn-navy" type="button" style="width:100%; padding: 1rem;" onclick="startQuiz()">Boshlash</button>
+
+                    <div class="quiz-start__section">
+                        <p class="quiz-start__section-label" data-i18n="talimDifficultyLevel">Qiyinlik darajasi</p>
+                        <div class="difficulty-btns quiz-start__difficulty-grid">
+                            <button class="difficulty-btn active" type="button" data-level="oson">
+                                <span class="quiz-start__diff-icon" aria-hidden="true">😊</span>
+                                <span class="quiz-start__diff-label" data-i18n="talimDiffEasy">Oson</span>
+                            </button>
+                            <button class="difficulty-btn" type="button" data-level="orta">
+                                <span class="quiz-start__diff-icon" aria-hidden="true">🤔</span>
+                                <span class="quiz-start__diff-label" data-i18n="talimDiffMedium">O'rta</span>
+                            </button>
+                            <button class="difficulty-btn" type="button" data-level="qiyin">
+                                <span class="quiz-start__diff-icon" aria-hidden="true">🔥</span>
+                                <span class="quiz-start__diff-label" data-i18n="talimDiffHard">Qiyin</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="tl-btn-primary tl-btn-navy quiz-start__submit" type="button" onclick="startQuiz()" data-i18n="talimStartQuiz">Viktorinani boshlash →</button>
                 </div>
 
                 <div class="quiz-question" id="quiz-question" style="display: none;">
@@ -98,28 +112,29 @@
                     <p style="text-align: center; color: var(--tl-muted);" id="question-number"></p>
                     <div class="question-text" id="question-text"></div>
                     <div class="answers-grid" id="answers-container"></div>
-                    <button class="tl-btn-primary tl-btn-navy" type="button" id="next-btn" style="display: none; width: 100%;" onclick="nextQuestion()">Keyingi savol →</button>
+                    <button class="tl-btn-primary tl-btn-navy" type="button" id="next-btn" style="display: none; width: 100%;" onclick="nextQuestion()" data-i18n="talimNextQuestion">Keyingi savol →</button>
                 </div>
 
                 <div class="quiz-result" id="quiz-result" style="display: none;">
-                    <h2>Viktorina yakunlandi!</h2>
+                    <h2 data-i18n="talimQuizFinished">Viktorina yakunlandi!</h2>
                     <div class="stars" id="stars"></div>
                     <div class="score-display" id="score-display"></div>
                     <p id="result-message" style="font-size: 1.125rem; margin: 1.25rem 0;"></p>
                     <div id="wrong-answers" style="text-align: left; margin: 1.25rem 0;"></div>
                     <div class="tl-quiz-actions">
-                        <button class="tl-btn-primary tl-btn-navy" type="button" onclick="restartQuiz()">Qaytadan urinish</button>
-                        <button class="tl-btn-outline" type="button" onclick="newQuiz()">Boshqa test</button>
-                        <button class="tl-btn-primary" type="button" id="cert-btn" style="display: none;" onclick="showCertificate()">Sertifikat</button>
+                        <button class="tl-btn-primary tl-btn-navy" type="button" onclick="restartQuiz()" data-i18n="talimTryAgain">Qaytadan urinish</button>
+                        <button class="tl-btn-outline" type="button" onclick="newQuiz()" data-i18n="talimAnotherTest">Boshqa test</button>
+                        <button class="tl-btn-primary" type="button" id="cert-btn" style="display: none;" onclick="showCertificate()" data-i18n="talimCertificate">Sertifikat</button>
                     </div>
                 </div>
             </div>
 
             <!-- Savol Banki -->
             <div class="tab-content" data-tab="bank">
-                <section class="tl-card">
-                    <h2 class="tl-card__title">Savol banki</h2>
-                    <div id="bank-container" class="lessons-grid"></div>
+                <section class="tl-bank-panel" aria-labelledby="tl-bank-title">
+                    <h2 class="tl-bank-panel__title" id="tl-bank-title" data-i18n="talimBankTitle">Savol banki</h2>
+                    <div id="bank-container" class="tl-bank-grid tl-bank-grid--main"></div>
+                    <div id="bank-custom-section" class="tl-bank-custom" hidden></div>
                 </section>
             </div>
             </div>
@@ -128,25 +143,80 @@
 
     <div class="modal" id="cert-modal">
         <div class="modal-content">
-            <button class="modal-close" type="button" onclick="closeCertModal()">×</button>
-            <h2 style="text-align: center; margin-bottom: 1.25rem;">Tabriklaymiz!</h2>
+            <button class="modal-close" type="button" onclick="closeCertModal()" data-i18n-aria="close" aria-label="Yopish">×</button>
+            <h2 style="text-align: center; margin-bottom: 1.25rem;" data-i18n="talimCongrats">Tabriklaymiz!</h2>
             <canvas id="certificate-canvas" width="800" height="600"></canvas>
             <div style="text-align: center; margin-top: 1.25rem;">
-                <button class="tl-btn-primary tl-btn-navy" type="button" onclick="downloadCertificate()">PNG yuklab olish</button>
+                <button class="tl-btn-primary tl-btn-navy" type="button" onclick="downloadCertificate()" data-i18n="talimDownloadPng">PNG yuklab olish</button>
             </div>
         </div>
     </div>
 
     <div class="modal tl-pdf-modal" id="tl-pdf-modal" aria-hidden="true">
         <div class="modal-content tl-pdf-modal__content">
-            <button class="modal-close" type="button" id="tl-pdf-close" aria-label="Yopish">×</button>
+            <button class="modal-close" type="button" id="tl-pdf-close" data-i18n-aria="close" aria-label="Yopish">×</button>
             <h2 class="tl-pdf-modal__title" id="tl-pdf-title"></h2>
             <div class="tl-pdf-modal__frame-wrap">
-                <iframe class="tl-pdf-modal__frame" id="tl-pdf-frame" title="PDF o'qish"></iframe>
+                <iframe class="tl-pdf-modal__frame" id="tl-pdf-frame" data-i18n-title="talimPdfFrameTitle" title="PDF o'qish"></iframe>
             </div>
             <p class="tl-pdf-modal__hint">
-                <a class="tl-pdf-modal__external" id="tl-pdf-external" href="#" target="_blank" rel="noopener noreferrer">PDF ni yangi oynada ochish</a>
+                <a class="tl-pdf-modal__external" id="tl-pdf-external" href="#" target="_blank" rel="noopener noreferrer" data-i18n="talimOpenPdf">PDF ni yangi oynada ochish</a>
             </p>
+        </div>
+    </div>
+
+    <div class="modal tl-bank-modal" id="bank-add-modal" aria-hidden="true" role="dialog" aria-labelledby="bank-modal-title" aria-modal="true">
+        <div class="modal-content tl-bank-modal__content">
+            <button class="modal-close" type="button" id="bank-modal-close" data-i18n-aria="close" aria-label="Yopish">×</button>
+            <h2 class="tl-bank-modal__title" id="bank-modal-title" data-i18n="talimAddQuestion">Yangi savol qo'shish</h2>
+            <p class="tl-bank-modal__error" id="bank-modal-error" role="alert" hidden></p>
+            <form id="bank-question-form" class="tl-bank-form" novalidate>
+                <fieldset class="tl-bank-form__group">
+                    <legend class="tl-bank-form__label" data-i18n="talimSelectClass">Sinfni tanlash</legend>
+                    <div class="tl-bank-form__radios">
+                        <label class="tl-bank-form__radio"><input type="radio" name="bank-sinf" value="6" checked> <span data-i18n="talimGrade6">6-sinf</span></label>
+                        <label class="tl-bank-form__radio"><input type="radio" name="bank-sinf" value="8"> <span data-i18n="talimGrade8">8-sinf</span></label>
+                        <label class="tl-bank-form__radio"><input type="radio" name="bank-sinf" value="umumiy"> <span data-i18n="talimGradeGeneral">Umumiy</span></label>
+                    </div>
+                </fieldset>
+
+                <div class="tl-bank-form__group">
+                    <label class="tl-bank-form__label" for="bank-savol" data-i18n="talimQuestionText">Savol matni</label>
+                    <textarea id="bank-savol" class="tl-bank-form__textarea" rows="3" data-i18n-placeholder="talimQuestionPlaceholder" placeholder="Savolni kiriting..." required></textarea>
+                </div>
+
+                <div class="tl-bank-form__group">
+                    <span class="tl-bank-form__label" data-i18n="talimAnswerOptions">Javob variantlari</span>
+                    <label class="tl-bank-form__option" for="bank-opt-a"><span class="tl-bank-form__option-letter">A.</span><input type="text" id="bank-opt-a" class="tl-bank-form__input" placeholder="A varianti" required></label>
+                    <label class="tl-bank-form__option" for="bank-opt-b"><span class="tl-bank-form__option-letter">B.</span><input type="text" id="bank-opt-b" class="tl-bank-form__input" placeholder="B varianti" required></label>
+                    <label class="tl-bank-form__option" for="bank-opt-c"><span class="tl-bank-form__option-letter">C.</span><input type="text" id="bank-opt-c" class="tl-bank-form__input" placeholder="C varianti" required></label>
+                    <label class="tl-bank-form__option" for="bank-opt-d"><span class="tl-bank-form__option-letter">D.</span><input type="text" id="bank-opt-d" class="tl-bank-form__input" placeholder="D varianti" required></label>
+                </div>
+
+                <fieldset class="tl-bank-form__group">
+                    <legend class="tl-bank-form__label" data-i18n="talimCorrectAnswer">To'g'ri javob</legend>
+                    <div class="tl-bank-form__radios tl-bank-form__radios--inline">
+                        <label class="tl-bank-form__radio"><input type="radio" name="bank-togri" value="0" checked> A</label>
+                        <label class="tl-bank-form__radio"><input type="radio" name="bank-togri" value="1"> B</label>
+                        <label class="tl-bank-form__radio"><input type="radio" name="bank-togri" value="2"> C</label>
+                        <label class="tl-bank-form__radio"><input type="radio" name="bank-togri" value="3"> D</label>
+                    </div>
+                </fieldset>
+
+                <fieldset class="tl-bank-form__group">
+                    <legend class="tl-bank-form__label" data-i18n="talimDifficultyLevel">Qiyinlik darajasi</legend>
+                    <div class="tl-bank-form__radios">
+                        <label class="tl-bank-form__radio"><input type="radio" name="bank-daraja" value="oson" checked> <span data-i18n="talimDiffEasy">Oson</span></label>
+                        <label class="tl-bank-form__radio"><input type="radio" name="bank-daraja" value="orta"> <span data-i18n="talimDiffMedium">O'rta</span></label>
+                        <label class="tl-bank-form__radio"><input type="radio" name="bank-daraja" value="qiyin"> <span data-i18n="talimDiffHard">Qiyin</span></label>
+                    </div>
+                </fieldset>
+
+                <div class="tl-bank-form__actions">
+                    <button class="tl-bank-form__submit" type="submit" data-i18n="talimSaveQuestion">Savolni saqlash</button>
+                    <button class="tl-bank-form__cancel" type="button" id="bank-modal-cancel" data-i18n="talimCancel">Bekor qilish</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -156,6 +226,6 @@
     <script src="/components/footer.js"></script>
     <script src="/assets/js/data.js"></script>
     <script src="/assets/js/app.js"></script>
-    <script src="/pages/talim-page.js?v=15"></script>
+    <script src="/pages/talim-page.js?v=19"></script>
 </body>
 </html>

@@ -38,10 +38,10 @@
     
     <!-- CSS Files -->
     <link rel="stylesheet" href="/assets/css/main.css?v=9">
-    <link rel="stylesheet" href="/assets/css/components.css?v=9">
+    <link rel="stylesheet" href="/assets/css/components.css?v=11">
     <link rel="stylesheet" href="/assets/css/responsive.css?v=9">
     <link rel="stylesheet" href="/assets/css/platform-buttons.css?v=9">
-    <link rel="stylesheet" href="/assets/css/home.css?v=9">
+    <link rel="stylesheet" href="/assets/css/home.css?v=11">
     <style>
         /* Homepage section styles (hero, stats → assets/css/home.css) */
         
@@ -160,25 +160,30 @@ body.dark-mode .card-link{
             <div class="home-hero" aria-label="Bosh sahifa hero">
                 <div class="home-hero__inner">
                     <div class="home-hero__content">
-                        <p class="home-hero__kicker">Raqamli ta'lim platformasi</p>
-                        <h1 class="home-hero__title">G'AFUR G'ULOM</h1>
+                        <p class="home-hero__kicker" data-i18n="homeHeroKicker">Raqamli ta'lim platformasi</p>
+                        <h1 class="home-hero__title">
+                            <span class="home-hero__title-inner">
+                                <span class="home-hero__title-line">G'afur</span>
+                                <span class="home-hero__title-line">G'ulom</span>
+                            </span>
+                        </h1>
                         <blockquote class="home-hero__quotation">
-                            <p>«Ilm – inson kamolotining yo'lidir»</p>
+                            <p data-i18n="homeHeroQuote">«Ilm – inson kamolotining yo'lidir»</p>
                         </blockquote>
-                        <p class="home-hero__lead">
+                        <p class="home-hero__lead" data-i18n="homeHeroLead">
                             O'zbekiston xalq shoiri G'afur G'ulom (1903–1966) merosini o'rganing — she'rlar,
                             hayot tarixi, ilmiy arxiv va interaktiv ta'lim resurslari bir joyda.
                         </p>
                         <div class="home-hero__actions">
                             <a href="/pages/asarlar.html" class="home-hero__btn home-hero__btn--primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                                Kutubxonaga kirish
+                                <span data-i18n="enterLibrary">Kutubxonaga kirish</span>
                             </a>
                             <a href="/pages/multimedia.html" class="home-hero__btn home-hero__btn--secondary">
                                 <span class="home-hero__btn-play" aria-hidden="true">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                                 </span>
-                                Videolarni ko'rish
+                                <span data-i18n="watchVideos">Videolarni ko'rish</span>
                             </a>
                         </div>
                     </div>
@@ -197,31 +202,36 @@ body.dark-mode .card-link{
             </div>
 
             <div class="home-stats" aria-label="Platform statistikasi">
-                <div class="home-stats__inner">
+                <div class="home-stats__inner" id="home-stats-panel">
                     <div class="home-stats__item">
                         <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                        <div class="home-stats__value stat-number" id="poems-count" data-target="500" data-suffix="+">0</div>
-                        <div class="home-stats__label">She'r</div>
+                        <div class="home-stats__value stat-number" data-stat-key="poems">—</div>
+                        <div class="home-stats__label" data-i18n="homeStatsPoems">She'rlar</div>
                     </div>
                     <div class="home-stats__item">
-                        <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8"></path><path d="M12 17v4"></path></svg>
-                        <div class="home-stats__value stat-number" id="doston-count" data-target="12">0</div>
-                        <div class="home-stats__label">Doston</div>
+                        <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        <div class="home-stats__value stat-number" data-stat-key="stories">—</div>
+                        <div class="home-stats__label" data-i18n="homeStatsStories">Hikoyalar</div>
                     </div>
                     <div class="home-stats__item">
-                        <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                        <div class="home-stats__value stat-number" data-target="60" data-suffix="+">0</div>
-                        <div class="home-stats__label">Yil meros</div>
+                        <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><path d="M8 7h8"></path><path d="M8 11h6"></path></svg>
+                        <div class="home-stats__value stat-number" data-stat-key="qissalar">—</div>
+                        <div class="home-stats__label" data-i18n="homeStatsQissalar">Qissalar</div>
                     </div>
                     <div class="home-stats__item">
-                        <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
-                        <div class="home-stats__value stat-number" data-target="4">0</div>
-                        <div class="home-stats__label">Foydalanuvchi toifasi</div>
+                        <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        <div class="home-stats__value stat-number" data-stat-key="translations">—</div>
+                        <div class="home-stats__label" data-i18n="homeStatsTranslations">Tarjimalar</div>
                     </div>
                     <div class="home-stats__item">
-                        <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                        <div class="home-stats__value stat-number" id="quiz-count" data-target="50">0</div>
-                        <div class="home-stats__label">Viktorina savoli</div>
+                        <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><path d="M8 7h8"></path><path d="M8 11h5"></path><path d="M8 15h3"></path></svg>
+                        <div class="home-stats__value stat-number" data-stat-key="selectedWorks">—</div>
+                        <div class="home-stats__label" data-i18n="homeStatsSelected">Tanlangan asarlar</div>
+                    </div>
+                    <div class="home-stats__item">
+                        <svg class="home-stats__icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0 0-14h-1"></path><path d="M9 14h2"></path><path d="M9 12a2 2 0 0 1 2-2h2"></path></svg>
+                        <div class="home-stats__value stat-number" data-stat-key="scientificTotal">—</div>
+                        <div class="home-stats__label" data-i18n="homeStatsScientific">Ilmiy materiallar</div>
                     </div>
                 </div>
             </div>
@@ -231,46 +241,46 @@ body.dark-mode .card-link{
 
     <!-- User Categories -->
     <section class="user-categories">
-        <h2 class="section-title">Foydalanuvchi toifalari</h2>
+        <h2 class="section-title" data-i18n="homeUserCategories">Foydalanuvchi toifalari</h2>
         <div class="categories-grid">
             <div class="category-card">
                 <span class="category-icon">👨‍🎓</span>
-                <h3>O'quvchilar</h3>
-                <p class="text-light" style="margin-bottom: 1rem;">5-11 sinf</p>
+                <h3 data-i18n="homeStudents">O'quvchilar</h3>
+                <p class="text-light" style="margin-bottom: 1rem;" data-i18n="homeCatStudentsGrade">5-11 sinf</p>
                 <ul class="category-list">
-                    <li>She'rlar tahlili</li>
-                    <li>Interaktiv testlar</li>
-                    <li>Videolar</li>
+                    <li data-i18n="homeCatStudentsItem1">She'rlar tahlili</li>
+                    <li data-i18n="homeCatStudentsItem2">Interaktiv testlar</li>
+                    <li data-i18n="homeCatStudentsItem3">Videolar</li>
                 </ul>
             </div>
             <div class="category-card">
                 <span class="category-icon">👨‍🏫</span>
-                <h3>O'qituvchilar</h3>
-                <p class="text-light" style="margin-bottom: 1rem;">Dars materiallari</p>
+                <h3 data-i18n="homeTeachers">O'qituvchilar</h3>
+                <p class="text-light" style="margin-bottom: 1rem;" data-i18n="homeCatTeachersSub">Dars materiallari</p>
                 <ul class="category-list">
-                    <li>Dars ishlanmalari</li>
-                    <li>Prezentatsiyalar</li>
-                    <li>Metodikalar</li>
+                    <li data-i18n="homeCatTeachersItem1">Dars ishlanmalari</li>
+                    <li data-i18n="homeCatTeachersItem2">Prezentatsiyalar</li>
+                    <li data-i18n="homeCatTeachersItem3">Metodikalar</li>
                 </ul>
             </div>
             <div class="category-card">
                 <span class="category-icon">🎓</span>
-                <h3>Talabalar</h3>
-                <p class="text-light" style="margin-bottom: 1rem;">Ilmiy ish</p>
+                <h3 data-i18n="homeUniversity">Talabalar</h3>
+                <p class="text-light" style="margin-bottom: 1rem;" data-i18n="homeCatUniversitySub">Ilmiy ish</p>
                 <ul class="category-list">
-                    <li>Ilmiy maqolalar</li>
-                    <li>Dissertatsiyalar</li>
-                    <li>Adabiy tanqid</li>
+                    <li data-i18n="homeCatUniversityItem1">Ilmiy maqolalar</li>
+                    <li data-i18n="homeCatUniversityItem2">Dissertatsiyalar</li>
+                    <li data-i18n="homeCatUniversityItem3">Adabiy tanqid</li>
                 </ul>
             </div>
             <div class="category-card">
                 <span class="category-icon">🔍</span>
-                <h3>Tadqiqotchilar</h3>
-                <p class="text-light" style="margin-bottom: 1rem;">Arxiv</p>
+                <h3 data-i18n="homeResearchers">Tadqiqotchilar</h3>
+                <p class="text-light" style="margin-bottom: 1rem;" data-i18n="homeCatResearchersSub">Arxiv</p>
                 <ul class="category-list">
-                    <li>To'liq arxiv</li>
-                    <li>Qo'lyozmalar</li>
-                    <li>Tarixiy hujjatlar</li>
+                    <li data-i18n="homeCatResearchersItem1">To'liq arxiv</li>
+                    <li data-i18n="homeCatResearchersItem2">Qo'lyozmalar</li>
+                    <li data-i18n="homeCatResearchersItem3">Tarixiy hujjatlar</li>
                 </ul>
             </div>
         </div>
@@ -303,10 +313,10 @@ body.dark-mode .card-link{
             }
         });
     </script>
-    <script src="/components/header.js?v=8"></script>
+    <script src="/components/header.js?v=9"></script>
     <script src="/components/footer.js"></script>
-    <script src="/assets/js/data.js?v=8"></script>
-    <script src="/assets/js/app.js?v=8"></script>
+    <script src="/assets/js/data.js?v=14"></script>
+    <script src="/assets/js/app.js?v=10"></script>
     
     <!-- Service Worker Registration -->
     <script>

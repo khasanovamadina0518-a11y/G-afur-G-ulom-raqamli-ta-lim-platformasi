@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/assets/css/components.css?v=9">
     <link rel="stylesheet" href="/assets/css/responsive.css?v=9">
     <link rel="stylesheet" href="/assets/css/platform-buttons.css?v=9">
-    <link rel="stylesheet" href="/pages/ilmiy.css?v=3">
+    <link rel="stylesheet" href="/pages/ilmiy.css?v=4">
 </head>
 <body class="page-ilmiy">
     <div id="header-container"></div>
@@ -26,9 +26,9 @@
             <span class="ilm-hero__grid"></span>
         </div>
         <div class="ilm-hero__inner">
-            <p class="ilm-hero__kicker"><span class="ilm-hero__kicker-dot" aria-hidden="true"></span>Ilmiy tadqiqotlar markazi</p>
-            <h1 class="ilm-hero__title" id="ilm-hero-title">Ilmiy arxiv</h1>
-            <p class="ilm-hero__text">G'afur G'ulom ijodi bo'yicha ilmiy maqolalar, dissertatsiyalar, ilmiy tadqiqotlar, atamalar lug'ati va bibliografiya generatori.</p>
+            <p class="ilm-hero__kicker"><span class="ilm-hero__kicker-dot" aria-hidden="true"></span><span data-i18n="ilmiyKicker">Ilmiy tadqiqotlar markazi</span></p>
+            <h1 class="ilm-hero__title" id="ilm-hero-title" data-i18n="ilmiyArchive">Ilmiy arxiv</h1>
+            <p class="ilm-hero__text" data-i18n="ilmiyHeroLead">G'afur G'ulom ijodi bo'yicha ilmiy maqolalar, dissertatsiyalar, ilmiy tadqiqotlar, atamalar lug'ati va bibliografiya generatori.</p>
             <div class="ilm-hero__stats" id="ilm-hero-stats" aria-label="Arxiv statistikasi"></div>
         </div>
         <div class="ilm-hero__tabs-shell">
@@ -36,23 +36,23 @@
                 <nav class="ilm-tabs ilm-tabs--premium" aria-label="Ilmiy arxiv bo'limlari">
                     <button class="tab-btn active" type="button" data-tab="maqolalar">
                         <span class="tab-btn__icon" aria-hidden="true">📄</span>
-                        <span>Maqolalar</span>
+                        <span data-i18n="articles">Maqolalar</span>
                     </button>
                     <button class="tab-btn" type="button" data-tab="dissertatsiyalar">
                         <span class="tab-btn__icon" aria-hidden="true">🎓</span>
-                        <span>Dissertatsiyalar</span>
+                        <span data-i18n="dissertations">Dissertatsiyalar</span>
                     </button>
                     <button class="tab-btn" type="button" data-tab="tadqiqotlar">
                         <span class="tab-btn__icon" aria-hidden="true">🔬</span>
-                        <span>Ilmiy tadqiqotlar</span>
+                        <span data-i18n="research">Ilmiy tadqiqotlar</span>
                     </button>
                     <button class="tab-btn" type="button" data-tab="lugat">
                         <span class="tab-btn__icon" aria-hidden="true">📖</span>
-                        <span>Atamalar lug'ati</span>
+                        <span data-i18n="glossary">Atamalar lug'ati</span>
                     </button>
                     <button class="tab-btn" type="button" data-tab="bibliografiya">
                         <span class="tab-btn__icon" aria-hidden="true">📚</span>
-                        <span>Bibliografiya</span>
+                        <span data-i18n="bibliography">Bibliografiya</span>
                     </button>
                 </nav>
             </div>
@@ -65,33 +65,33 @@
             <!-- Maqolalar Tab -->
             <div class="tab-content active" data-tab="maqolalar">
                 <div class="filter-panel">
-                    <h2 class="filter-panel__title">Qidiruv va filtr</h2>
+                    <h2 class="filter-panel__title" data-i18n="ilmiyFilterTitle">Qidiruv va filtr</h2>
                     <div class="filter-row">
                         <div class="filter-group">
-                            <label for="search-input">Qidiruv</label>
-                            <input type="text" id="search-input" placeholder="Sarlavha yoki muallif...">
+                            <label for="search-input" data-i18n="ilmiySearchLabel">Qidiruv</label>
+                            <input type="text" id="search-input" placeholder="Sarlavha yoki muallif..." data-i18n-placeholder="ilmiySearchPlaceholder">
                         </div>
                         <div class="filter-group">
-                            <label for="filter-lang">Til</label>
+                            <label for="filter-lang" data-i18n="ilmiyLangLabel">Til</label>
                             <select id="filter-lang">
-                                <option value="all">Hammasi</option>
-                                <option value="o'zbek">O'zbek</option>
-                                <option value="rus">Rus</option>
-                                <option value="ingliz">Ingliz</option>
+                                <option value="all" data-i18n="ilmiyLangAll">Hammasi</option>
+                                <option value="o'zbek" data-i18n="ilmiyLangUz">O'zbek</option>
+                                <option value="rus" data-i18n="ilmiyLangRu">Rus</option>
+                                <option value="ingliz" data-i18n="ilmiyLangEn">Ingliz</option>
                             </select>
                         </div>
                         <div class="filter-group">
-                            <label for="filter-year-from">Yil (dan)</label>
+                            <label for="filter-year-from" data-i18n="ilmYearFrom">Yil (dan)</label>
                             <input type="number" id="filter-year-from" min="1960" max="2024" placeholder="1960">
                         </div>
                         <div class="filter-group">
-                            <label for="filter-year-to">Yil (gacha)</label>
+                            <label for="filter-year-to" data-i18n="ilmYearTo">Yil (gacha)</label>
                             <input type="number" id="filter-year-to" min="1960" max="2024" placeholder="2024">
                         </div>
                     </div>
                     <div class="filter-actions">
-                        <button class="ilm-btn-primary" type="button" onclick="applyFilters()">Qidirish</button>
-                        <button class="ilm-btn-outline" type="button" onclick="resetFilters()">Tozalash</button>
+                        <button class="ilm-btn-primary" type="button" onclick="applyFilters()" data-i18n="ilmSearchBtn">Qidirish</button>
+                        <button class="ilm-btn-outline" type="button" onclick="resetFilters()" data-i18n="ilmClearBtn">Tozalash</button>
                     </div>
                 </div>
 
@@ -101,10 +101,10 @@
             <!-- Dissertatsiyalar Tab -->
             <div class="tab-content" data-tab="dissertatsiyalar">
                 <div class="filter-panel">
-                    <h2 class="filter-panel__title">Qidiruv</h2>
+                    <h2 class="filter-panel__title" data-i18n="ilmiySearchLabel">Qidiruv</h2>
                     <div class="filter-group">
-                        <label for="diss-search">Muallif yoki sarlavha</label>
-                        <input type="text" id="diss-search" placeholder="Muallif yoki sarlavha...">
+                        <label for="diss-search" data-i18n="ilmDissSearchLabel">Muallif yoki sarlavha</label>
+                        <input type="text" id="diss-search" placeholder="Muallif yoki sarlavha..." data-i18n-placeholder="ilmDissSearchPlaceholder">
                     </div>
                 </div>
 
@@ -114,10 +114,10 @@
             <!-- Ilmiy tadqiqotlar Tab -->
             <div class="tab-content" data-tab="tadqiqotlar">
                 <div class="filter-panel">
-                    <h2 class="filter-panel__title">Qidiruv</h2>
+                    <h2 class="filter-panel__title" data-i18n="ilmiySearchLabel">Qidiruv</h2>
                     <div class="filter-group">
-                        <label for="research-search">Muallif yoki sarlavha</label>
-                        <input type="text" id="research-search" placeholder="Muallif yoki sarlavha...">
+                        <label for="research-search" data-i18n="ilmDissSearchLabel">Muallif yoki sarlavha</label>
+                        <input type="text" id="research-search" placeholder="Muallif yoki sarlavha..." data-i18n-placeholder="ilmDissSearchPlaceholder">
                     </div>
                 </div>
 
@@ -127,10 +127,10 @@
             <!-- Atamalar lug'ati Tab -->
             <div class="tab-content" data-tab="lugat">
                 <div class="filter-panel">
-                    <h2 class="filter-panel__title">Qidiruv</h2>
+                    <h2 class="filter-panel__title" data-i18n="ilmiySearchLabel">Qidiruv</h2>
                     <div class="filter-group">
-                        <label for="term-search">Atama qidirish</label>
-                        <input type="text" id="term-search" placeholder="Atama qidirish...">
+                        <label for="term-search" data-i18n="ilmTermSearchLabel">Atama qidirish</label>
+                        <input type="text" id="term-search" placeholder="Atama qidirish..." data-i18n-placeholder="ilmTermSearchPlaceholder">
                     </div>
                 </div>
 
@@ -144,14 +144,12 @@
                 <div class="ilm-papers" id="bibliografiya-container"></div>
 
                 <div class="bibliography-section">
-                    <h2>Bibliografiya generatori</h2>
-                    <p>Maqolalar bo'limidan kerakli manbalarni tanlang, so'ngra format tanlang va iqtiboslarni generatsiya qiling.</p>
+                    <h2 data-i18n="ilmBibGenerator">Bibliografiya generatori</h2>
+                    <p data-i18n="ilmBibDesc">Maqolalar bo'limidan kerakli manbalarni tanlang, so'ngra format tanlang va iqtiboslarni generatsiya qiling.</p>
 
-                    <div id="selected-count">
-                        Tanlangan manbalar: <span id="count">0</span>
-                    </div>
+                    <div id="selected-count"></div>
 
-                    <h3 style="margin-bottom: 0.75rem; font-size: 1rem; color: var(--ilm-navy);">Format tanlang:</h3>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1rem; color: var(--ilm-navy);" data-i18n="ilmFormatChoose">Format tanlang:</h3>
                     <div class="format-selector">
                         <button class="format-btn active" type="button" data-format="apa">APA</button>
                         <button class="format-btn" type="button" data-format="mla">MLA</button>
@@ -159,13 +157,13 @@
                         <button class="format-btn" type="button" data-format="uzbek">O'zbekcha akademik</button>
                     </div>
 
-                    <button class="ilm-btn-primary" type="button" onclick="generateBibliography()">Generatsiya qilish</button>
+                    <button class="ilm-btn-primary" type="button" onclick="generateBibliography()" data-i18n="ilmGenerate">Generatsiya qilish</button>
 
                     <div id="bibliography-output" class="bibliography-output" style="display: none;"></div>
 
                     <div id="bibliography-actions" style="display: none; margin-top: 1rem;">
-                        <button class="ilm-btn-primary" type="button" onclick="copyToClipboard()">Hammasini nusxa olish</button>
-                        <button class="ilm-btn-outline" type="button" onclick="exportToWord()" style="margin-left: 0.75rem;">Word ga eksport</button>
+                        <button class="ilm-btn-primary" type="button" onclick="copyToClipboard()" data-i18n="ilmCopyAll">Hammasini nusxa olish</button>
+                        <button class="ilm-btn-outline" type="button" onclick="exportToWord()" style="margin-left: 0.75rem;" data-i18n="ilmExportWord">Word ga eksport</button>
                     </div>
                 </div>
             </div>
@@ -178,13 +176,13 @@
     <div class="ilm-pdf-modal" id="ilm-pdf-modal" aria-hidden="true">
         <div class="ilm-pdf-modal__backdrop" id="ilm-pdf-backdrop"></div>
         <div class="ilm-pdf-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="ilm-pdf-title">
-            <button class="ilm-pdf-modal__close" type="button" id="ilm-pdf-close" aria-label="Yopish">×</button>
+            <button class="ilm-pdf-modal__close" type="button" id="ilm-pdf-close" data-i18n-aria="close">×</button>
             <h2 class="ilm-pdf-modal__title" id="ilm-pdf-title"></h2>
             <div class="ilm-pdf-modal__frame-wrap">
-                <iframe class="ilm-pdf-modal__frame" id="ilm-pdf-frame" title="PDF o'qish"></iframe>
+                <iframe class="ilm-pdf-modal__frame" id="ilm-pdf-frame" title="PDF o'qish" data-i18n-title="ilmReadPdf"></iframe>
             </div>
             <p class="ilm-pdf-modal__hint">
-                <a class="ilm-pdf-modal__external" id="ilm-pdf-external" href="#" target="_blank" rel="noopener noreferrer">PDF ni yangi oynada ochish</a>
+                <a class="ilm-pdf-modal__external" id="ilm-pdf-external" href="#" target="_blank" rel="noopener noreferrer" data-i18n="ilmOpenPdfLink">PDF ni yangi oynada ochish</a>
             </p>
         </div>
     </div>
@@ -193,6 +191,6 @@
     <script src="/components/footer.js"></script>
     <script src="/assets/js/data.js"></script>
     <script src="/assets/js/app.js"></script>
-    <script src="/pages/ilmiy-page.js?v=4"></script>
+    <script src="/pages/ilmiy-page.js?v=5"></script>
 </body>
 </html>

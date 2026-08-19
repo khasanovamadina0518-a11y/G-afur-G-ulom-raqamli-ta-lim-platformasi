@@ -1,51 +1,66 @@
 {
-  "manba": "Karimov, Naim. G'afur G'ulom: Shoir hayoti va she'riy ijodiga bir nazar. — T.: G'. G'ulom nomidagi nashriyot-matbaa ijodiy mehnati, 2003. — 64 b.",
+  "manba": {
+    "uz": "Karimov, Naim. G'afur G'ulom: Shoir hayoti va she'riy ijodiga bir nazar. — T.: G'. G'ulom nomidagi nashriyot-matbaa ijodiy mehnati, 2003. — 64 b.",
+    "en": "Karimov, Naim. G'afur G'ulom: A glance at the poet's life and poetry. — Tashkent: G'. G'ulom Publishing House, 2003. — 64 pp."
+  },
   "hero": {
-    "kicker": "Akademik biografiya",
+    "kicker": {
+      "uz": "Akademik biografiya",
+      "en": "Academic biography"
+    },
     "yillar": "1903–1928",
-    "intro": "G'afur G'ulom kindik qoni to'kilgan joy — Toshkent shahri Shayxovandtahur dahasidagi Qo'rg'ontegi mahallasi. Ushbu biografiya bo'limi Karimov N. tomonidan yoritilgan hayot yo'lining 1903-yil tug'ilishidan 1928-yilgacha bo'lgan davrini qamrab oladi.",
-    "iqtibos": "Agar shoirni idrok etmoqchi bo'lsang, uning vataniga bor.",
-    "iqtibosManba": "Gyote (Karimov, 2003)"
+    "intro": {
+      "uz": "G'afur G'ulom kindik qoni to'kilgan joy — Toshkent shahri Shayxovandtahur dahasidagi Qo'rg'ontegi mahallasi. Ushbu biografiya bo'limi Karimov N. tomonidan yoritilgan hayot yo'lining 1903-yil tug'ilishidan 1928-yilgacha bo'lgan davrini qamrab oladi.",
+      "en": "G'afur G'ulom was born in Qo'rg'ontegi neighbourhood of Shayxovandtahur district in Tashkent. This biography section covers the period from his birth in 1903 to 1928, as described by Karimov N."
+    },
+    "iqtibos": {
+      "uz": "Agar shoirni idrok etmoqchi bo'lsang, uning vataniga bor.",
+      "en": "If you wish to understand a poet, go to his homeland."
+    },
+    "iqtibosManba": {
+      "uz": "Gyote (Karimov, 2003)",
+      "en": "Goethe (Karimov, 2003)"
+    }
   },
   "overview": [
     {
       "id": "tugilish",
-      "label": "Tug'ilish",
+      "label": { "uz": "Tug'ilish", "en": "Birth" },
       "title": "Qo'rg'ontegi, 1903",
       "text": "1903-yil 10-may, juma kuni, ertalab soat 6 da Toshkentning Qo'rg'ontegi mahallasida tug'ilgan.",
       "scrollTo": "hy-event-1903"
     },
     {
       "id": "oila",
-      "label": "Oila",
+      "label": { "uz": "Oila", "en": "Family" },
       "title": "G'ulom Mirza va Toshbibi",
       "text": "Otasi G'ulom Mirza Orif o'g'li xatli-savodli mirza; onasi Toshbibi Shoyusuf qizi zehnli ayol.",
       "scrollTo": "hy-event-1912"
     },
     {
       "id": "talim",
-      "label": "Ta'lim",
+      "label": { "uz": "Ta'lim", "en": "Education" },
       "title": "Maktab va madrasa",
       "text": "Hasanboy domla maktabida Bedildan «Maslak»gacha; madrasada fors-tojik tilini o'rgangan.",
       "scrollTo": "hy-bolalik"
     },
     {
       "id": "mehnat",
-      "label": "Mehnat",
+      "label": { "uz": "Mehnat", "en": "Work" },
       "title": "1918 — qiyin yillar",
       "text": "Kosibchilik, tunukasozlik, aravakashlik va harf terish — tirikchilik yo'li.",
       "scrollTo": "hy-event-1918"
     },
     {
       "id": "oqituvchilik",
-      "label": "O'qituvchilik",
+      "label": { "uz": "O'qituvchilik", "en": "Teaching" },
       "title": "1920 — muallim",
       "text": "1920-yil 3-martda «Cho'lpon» maktabiga muallim etib tayinlangan.",
       "scrollTo": "hy-event-1920-03"
     },
     {
       "id": "gazetachilik",
-      "label": "Gazetachilik",
+      "label": { "uz": "Gazetachilik", "en": "Journalism" },
       "title": "1924–1928",
       "text": "1924-yildan gazetalarda muntazam chop etish; 1928-yil 15-sentabr «Qizil O'zbekiston» gazetasiga.",
       "scrollTo": "hy-event-1928"
@@ -54,27 +69,27 @@
   "bosqichlar": {
     "tugilish_oila": {
       "yillar": "1903–1912",
-      "sarlavha": "Tug'ilish va oila",
+      "sarlavha": { "uz": "Tug'ilish va oila", "en": "Birth and family" },
       "matn": "G'afur G'ulom 1903-yil 10-may kuni Qo'rg'ontegi mahallasida dunyoga kelgan. Tug'ilgan paytda otasi G'ulom Mirza Orif o'g'li 35 yoshda, onasi Toshbibi Shoyusuf qizi 21 yoshda bo'lgan. Tanglayini buvisi Xayriniso ko'targan.\n\nOtasi 1908-yilgacha shahar dumaxonasining mahalliy bo'limida mirzalik qilgan, so'ng Qoplonbek mavzesidagi yerlarida dehqonchilik bilan shug'ullangan. 1912 yil bahorida G'ulom Mirza 44 yoshida vafot etib, oltita yetimni qoldirgan."
     },
     "yetimlik": {
       "yillar": "1912–1918",
-      "sarlavha": "Yetimlik va qiyinchiliklar",
+      "sarlavha": { "uz": "Yetimlik va qiyinchiliklar", "en": "Orphanhood and hardship" },
       "matn": "Otasi vafotidan keyin Rixsi qori yetimlarga murabbiy bo'lib qolgan. Birinchi jahon urushi boshlanishi bilan narx-navo ko'tarilib, oila turmushi og'irlashgan.\n\nG'afur G'ulom «Hayot» maktabida o'qigan, keyin butun oila tirikchilik uchun mehnat qilgan. O'rik, olma, bodring sotish, tamaki fabrikasida ishlash, ochlik va qimmatchilik yillari boshlangan. Onasi vafot etgan, akasi kasallangan."
     },
     "mehnat_kasb": {
       "yillar": "1918–1920",
-      "sarlavha": "Mehnat va kasb o'rganish",
+      "sarlavha": { "uz": "Mehnat va kasb o'rganish", "en": "Work and learning a trade" },
       "matn": "1918-yilda G'afur G'ulom usta Mirazizga shogird bo'lib kosibchilikni o'rgangan. Kosibchilik tirikchilikka yetmagach, akasi bilan tunukasozlik, keyin aravakashlik va harf terish bilan shug'ullangan.\n\nHarf terishni o'rgatgan bosmaxona ishchisi Abdurahmon Sahiboev unga o'qituvchilarni tayyorlash kurslariga borishni maslahat bergan. Bir necha kundan so'ng u sakkiz oylik kursga qatnashgan."
     },
     "oqituvchilik": {
       "yillar": "1920–1924",
-      "sarlavha": "O'qituvchilik boshlanishi",
+      "sarlavha": { "uz": "O'qituvchilik boshlanishi", "en": "Beginning of teaching" },
       "matn": "Muallimlarni tayyorlash kursini tugatgach, 1920-yil 3-martda Bodak mahallasidagi «Cho'lpon» maktabiga muallim etib tayinlangan.\n\n1920-yilda 3-boqimsiz bolalar uyiga mudir, yetti yillik «Urfon» maktabiga mudir etib tayinlangan. 1924-yil avgustida «Hayot» maktabiga muallim bo'lib o'tgan, undan «Umid» musiqa texnikumiga ko'chgan."
     },
     "gazetachilik": {
       "yillar": "1924–1928",
-      "sarlavha": "Gazetachilik va dastlabki ijod",
+      "sarlavha": { "uz": "Gazetachilik va dastlabki ijod", "en": "Journalism and early creative work" },
       "matn": "1924 yildan boshlab turli gazetalarda muntazam chop etish boshlangan. «Shoirlik nosqovog'idan bir otim» maqolasi «Mushtum»ga yuborilgan va chop etilgan.\n\n1928-yil 15-sentabrdan «Qizil O'zbekiston» gazetasiga ishga o'tgan va «Kambag'al dehqon» gazetasining mas'ul kotibi etib belgilangan."
     }
   },
@@ -155,7 +170,7 @@
   ],
   "bolalik": {
     "sarlavha": "Bolalik va ta'lim",
-    "lead": "Qo'rg'ontegi mahallasi, maktablar va dastlabki ta'lim",
+    "lead": { "uz": "Qo'rg'ontegi mahallasi, maktablar va dastlabki ta'lim", "en": "Qo'rg'ontegi neighbourhood, schools and early education" },
     "bolimlar": [
       {
         "sarlavha": "Qo'rg'ontegi mahallasi",
@@ -181,7 +196,7 @@
   },
   "oila": {
     "sarlavha": "Oila va adabiy muhit",
-    "lead": "Oilaviy shajara, ota-onasi va mahalladagi intellektual muhit",
+    "lead": { "uz": "Oilaviy shajara, ota-onasi va mahalladagi intellektual muhit", "en": "Family lineage, parents and the intellectual environment of the neighbourhood" },
     "bolimlar": [
       {
         "sarlavha": "Ota-onasi",
@@ -211,7 +226,7 @@
   },
   "mehnat": {
     "sarlavha": "Mehnat va o'qituvchilik",
-    "lead": "1918-yildagi kasblar va 1920-yillardagi pedagogik faoliyat",
+    "lead": { "uz": "1918-yildagi kasblar va 1920-yillardagi pedagogik faoliyat", "en": "Trades in 1918 and pedagogical activity in the 1920s" },
     "bolimlar": [
       {
         "sarlavha": "1918 — kasblar",
@@ -233,7 +248,7 @@
   },
   "ijod": {
     "sarlavha": "Dastlabki ijod va gazetachilik",
-    "lead": "1924–1928 yillardagi matbuot faoliyati",
+    "lead": { "uz": "1924–1928 yillardagi matbuot faoliyati", "en": "Press activity in 1924–1928" },
     "bolimlar": [
       {
         "sarlavha": "1924-yildan muntazam chop etish",

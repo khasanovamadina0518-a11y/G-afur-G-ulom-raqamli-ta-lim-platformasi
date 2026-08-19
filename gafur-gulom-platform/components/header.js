@@ -17,7 +17,9 @@ window.toggleDarkMode = function () {
         const icon = drawerDarkBtn.querySelector('.drawer-btn-icon');
         const text = drawerDarkBtn.querySelector('.drawer-btn-text');
         if (icon) icon.textContent = isDark ? '☀️' : '🌙';
-        if (text) text.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+        if (text) text.textContent = isDark
+            ? (window.PlatformI18n?.t('lightMode') || 'Light Mode')
+            : (window.PlatformI18n?.t('darkMode') || 'Dark Mode');
     }
 };
 
@@ -57,7 +59,7 @@ function renderHeader() {
                 onerror="this.style.display='none'">
             <span class="brand-lockup__text">
                 <span class="brand-lockup__title">G'AFUR G'ULOM</span>
-                <span class="brand-lockup__subtitle">RAQAMLI TA'LIM PLATFORMASI</span>
+                <span class="brand-lockup__subtitle" data-i18n="brandSubtitle">RAQAMLI TA'LIM PLATFORMASI</span>
             </span>
         </a>
 
@@ -68,15 +70,15 @@ function renderHeader() {
         <!-- Desktop Navigation — original platform IA (visual layout only modernized) -->
         <nav class="main-nav desktop-nav" aria-label="Asosiy navigatsiya">
             <ul class="nav-menu">
-                <li><a href="${platformHref('index.html')}">Bosh sahifa</a></li>
-                <li><a href="${platformHref('pages/hayot.html')}">Hayoti</a></li>
-                <li><a href="${platformHref('pages/asarlar.html')}">Asarlari</a></li>
-                <li><a href="${platformHref('pages/multimedia.html')}">Videolar</a></li>
-                <li><a href="${platformHref('pages/interaktiv-oyinlar.html')}">Interaktiv</a></li>
-                <li><a href="${platformHref('pages/interaktiv.html')}">Testlar</a></li>
-                <li><a href="${platformHref('pages/ai-yordamchi.html')}">AI yordamchi</a></li>
-                <li><a href="${platformHref('pages/ilmiy.html')}">Ilmiy</a></li>
-                <li><a href="${platformHref('pages/talim.html')}">Ta'lim</a></li>
+                <li><a href="${platformHref('index.html')}" data-i18n="home">Bosh sahifa</a></li>
+                <li><a href="${platformHref('pages/hayot.html')}" data-i18n="life">Hayoti</a></li>
+                <li><a href="${platformHref('pages/asarlar.html')}" data-i18n="works">Asarlari</a></li>
+                <li><a href="${platformHref('pages/multimedia.html')}" data-i18n="videos">Videolar</a></li>
+                <li><a href="${platformHref('pages/interaktiv-oyinlar.html')}" data-i18n="interactive">Interaktiv</a></li>
+                <li><a href="${platformHref('pages/interaktiv.html')}" data-i18n="tests">Testlar</a></li>
+                <li><a href="${platformHref('pages/ai-yordamchi.html')}" data-i18n="aiAssistant">AI yordamchi</a></li>
+                <li><a href="${platformHref('pages/ilmiy.html')}" data-i18n="scientific">Ilmiy</a></li>
+                <li><a href="${platformHref('pages/talim.html')}" data-i18n="education">Ta'lim</a></li>
             </ul>
         </nav>
 
@@ -90,7 +92,8 @@ function renderHeader() {
                     type="button"
                     aria-label="Qidirish"
                     aria-expanded="false"
-                    aria-controls="searchInput">
+                    aria-controls="searchInput"
+                    data-i18n-aria="search">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
                 </button>
                 <div class="search-box" id="searchBox">
@@ -99,24 +102,26 @@ function renderHeader() {
                         id="searchInput"
                         placeholder="Qidirish..."
                         autocomplete="off"
-                        aria-label="Qidirish">
-                    <div id="searchResults" class="search-results"></div>
+                        aria-label="Qidirish"
+                        data-i18n-placeholder="searchPlaceholder"
+                        data-i18n-aria="search">
+                    <div id="searchResults" class="search-results" role="listbox" aria-label="Qidiruv natijalari"></div>
                 </div>
             </div>
 
             <div class="lang-switch lang-switch--compact">
-                <button class="lang-picker" type="button" aria-label="Tilni tanlash">
+                <button class="lang-picker" type="button" aria-label="Tilni tanlash" data-i18n-aria="langLabel">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
                     <span class="lang-picker__label">UZ</span>
                     <svg class="lang-picker__chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
                 </button>
-                <div class="lang-switch__options">
-                    <button class="lang-btn active" type="button" data-lang="uz">O'Z</button>
-                    <button class="lang-btn" type="button" data-lang="en">EN</button>
+                <div class="lang-switch__options" role="listbox" aria-label="Til tanlash">
+                    <button class="lang-btn active" type="button" data-lang="uz">🇺🇿 <span data-i18n="langUz">O'zbek</span></button>
+                    <button class="lang-btn" type="button" data-lang="en">🇬🇧 <span data-i18n="langEn">English</span></button>
                 </div>
             </div>
 
-            <button type="button" class="login-btn" id="header-auth-btn" data-auth-open="login" data-auth-action="login">Kirish</button>
+            <button type="button" class="login-btn" id="header-auth-btn" data-auth-open="login" data-auth-action="login" data-i18n="login">Kirish</button>
 
             <button
                 class="header-icon-btn dark-mode-toggle"
@@ -137,71 +142,71 @@ function renderHeader() {
     <div class="drawer-overlay" id="drawerOverlay"></div>
     <div class="drawer-content">
         <div class="drawer-header">
-            <h3>Menyu</h3>
-            <button class="drawer-close" id="drawerClose" type="button" aria-label="Menyuni yopish">✕</button>
+            <h3 data-i18n="menu">Menyu</h3>
+            <button class="drawer-close" id="drawerClose" type="button" aria-label="Menyuni yopish" data-i18n-aria="closeMenu">✕</button>
         </div>
         <div class="drawer-menu">
             <a href="${platformHref('index.html')}" class="drawer-item">
                 <div class="drawer-icon">🏠</div>
                 <div class="drawer-text">
-                    <div class="drawer-title">Bosh sahifa</div>
-                    <div class="drawer-desc">Asosiy sahifa</div>
+                    <div class="drawer-title" data-i18n="home">Bosh sahifa</div>
+                    <div class="drawer-desc" data-i18n="drawerHomeDesc">Asosiy sahifa</div>
                 </div>
             </a>
             <a href="${platformHref('pages/hayot.html')}" class="drawer-item">
                 <div class="drawer-icon">👤</div>
                 <div class="drawer-text">
-                    <div class="drawer-title">Hayoti</div>
-                    <div class="drawer-desc">Hayot va ijodi</div>
+                    <div class="drawer-title" data-i18n="life">Hayoti</div>
+                    <div class="drawer-desc" data-i18n="drawerLifeDesc">Hayot va ijodi</div>
                 </div>
             </a>
             <a href="${platformHref('pages/asarlar.html')}" class="drawer-item">
                 <div class="drawer-icon">📚</div>
                 <div class="drawer-text">
-                    <div class="drawer-title">Asarlari</div>
-                    <div class="drawer-desc">Asarlari</div>
+                    <div class="drawer-title" data-i18n="works">Asarlari</div>
+                    <div class="drawer-desc" data-i18n="drawerWorksDesc">She'rlar, qissalar, tarjimalar</div>
                 </div>
             </a>
             <a href="${platformHref('pages/multimedia.html')}" class="drawer-item">
                 <div class="drawer-icon">🎬</div>
                 <div class="drawer-text">
-                    <div class="drawer-title">Videolar</div>
-                    <div class="drawer-desc">Video va audio</div>
+                    <div class="drawer-title" data-i18n="videos">Videolar</div>
+                    <div class="drawer-desc" data-i18n="drawerVideosDesc">Video va audio</div>
                 </div>
             </a>
             <a href="${platformHref('pages/interaktiv-oyinlar.html')}" class="drawer-item">
                 <div class="drawer-icon">🎮</div>
                 <div class="drawer-text">
-                    <div class="drawer-title">Interaktiv</div>
-                    <div class="drawer-desc">Viktorinalar va o'yinlar</div>
+                    <div class="drawer-title" data-i18n="interactive">Interaktiv</div>
+                    <div class="drawer-desc" data-i18n="drawerInteractiveDesc">Viktorinalar va o'yinlar</div>
                 </div>
             </a>
             <a href="${platformHref('pages/interaktiv.html')}" class="drawer-item">
                 <div class="drawer-icon">📝</div>
                 <div class="drawer-text">
-                    <div class="drawer-title">Testlar</div>
-                    <div class="drawer-desc">O'yinlar va testlar</div>
+                    <div class="drawer-title" data-i18n="tests">Testlar</div>
+                    <div class="drawer-desc" data-i18n="drawerTestsDesc">O'yinlar va testlar</div>
                 </div>
             </a>
             <a href="${platformHref('pages/ai-yordamchi.html')}" class="drawer-item">
                 <div class="drawer-icon">🤖</div>
                 <div class="drawer-text">
-                    <div class="drawer-title">AI yordamchi</div>
-                    <div class="drawer-desc">Sun'iy intellekt yordam</div>
+                    <div class="drawer-title" data-i18n="aiAssistant">AI yordamchi</div>
+                    <div class="drawer-desc" data-i18n="drawerAiDesc">Sun'iy intellekt yordam</div>
                 </div>
             </a>
             <a href="${platformHref('pages/ilmiy.html')}" class="drawer-item">
                 <div class="drawer-icon">🔬</div>
                 <div class="drawer-text">
-                    <div class="drawer-title">Ilmiy</div>
-                    <div class="drawer-desc">Ilmiy maqolalar</div>
+                    <div class="drawer-title" data-i18n="scientific">Ilmiy</div>
+                    <div class="drawer-desc" data-i18n="drawerScientificDesc">Ilmiy maqolalar</div>
                 </div>
             </a>
             <a href="${platformHref('pages/talim.html')}" class="drawer-item">
                 <div class="drawer-icon">🎓</div>
                 <div class="drawer-text">
-                    <div class="drawer-title">Ta'lim</div>
-                    <div class="drawer-desc">Dars materiallari</div>
+                    <div class="drawer-title" data-i18n="education">Ta'lim</div>
+                    <div class="drawer-desc" data-i18n="drawerEducationDesc">Dars materiallari</div>
                 </div>
             </a>
         </div>
@@ -211,13 +216,13 @@ function renderHeader() {
                 <span class="drawer-btn-text">Dark Mode</span>
             </button>
             <div class="drawer-lang">
-                <span class="drawer-lang-label">Til:</span>
-                <button class="drawer-lang-btn active" type="button">O'Z</button>
-                <button class="drawer-lang-btn" type="button">EN</button>
+                <span class="drawer-lang-label" data-i18n="language">Til:</span>
+                <button class="drawer-lang-btn active" type="button" data-lang="uz">🇺🇿 UZ</button>
+                <button class="drawer-lang-btn" type="button" data-lang="en">🇬🇧 EN</button>
             </div>
             <button type="button" class="drawer-login-btn" id="drawer-auth-btn" data-auth-open="login" data-auth-action="login">
                 <span>👤</span>
-                <span class="drawer-auth-label">Kirish</span>
+                <span class="drawer-auth-label" data-i18n="login">Kirish</span>
             </button>
         </div>
     </div>
@@ -227,23 +232,23 @@ function renderHeader() {
 <nav class="mobile-bottom-nav">
     <a href="${platformHref('index.html')}" class="bottom-nav-item" data-page="home">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-        <span>Bosh sahifa</span>
+        <span data-i18n="home">Bosh sahifa</span>
     </a>
     <a href="${platformHref('pages/asarlar.html')}" class="bottom-nav-item" data-page="asarlar">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-        <span>Asarlari</span>
+        <span data-i18n="works">Asarlari</span>
     </a>
     <a href="${platformHref('pages/talim.html')}" class="bottom-nav-item" data-page="talim">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-        <span>Ta'lim</span>
+        <span data-i18n="education">Ta'lim</span>
     </a>
     <a href="${platformHref('pages/multimedia.html')}" class="bottom-nav-item" data-page="multimedia">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-        <span>Videolar</span>
+        <span data-i18n="videos">Videolar</span>
     </a>
     <a href="${platformHref('pages/ai-yordamchi.html')}" class="bottom-nav-item" data-page="ai-yordamchi">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-        <span>AI yordamchi</span>
+        <span data-i18n="aiAssistant">AI yordamchi</span>
     </a>
 </nav>
 `;
@@ -266,9 +271,9 @@ function renderHeader() {
         if (drawerText) drawerText.textContent = isDarkTheme ? 'Light Mode' : 'Dark Mode';
     }
 
-    initHeaderSearchExpand();
-    setActiveNavLink();
     initLangPicker();
+    setActiveNavLink();
+    initPlatformEnhancements();
 
     // Mobil drawer
     const menuBtn = document.getElementById('menuToggle');
@@ -338,46 +343,42 @@ function loadAuthUI() {
     document.body.appendChild(script);
 }
 
-function initHeaderSearchExpand() {
-    const expand = document.getElementById('searchExpand');
-    const toggle = document.getElementById('searchToggle');
-    const input = document.getElementById('searchInput');
-    const box = document.getElementById('searchBox');
-
-    if (!expand || !toggle || !input) return;
-
-    function openSearch() {
-        expand.classList.add('is-open');
-        toggle.setAttribute('aria-expanded', 'true');
-        input.focus();
+function loadScriptOnce(src, marker) {
+    const fullSrc = platformHref(src);
+    if (document.querySelector(`script[${marker}]`)) {
+        return Promise.resolve();
     }
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = fullSrc;
+        script.setAttribute(marker, '');
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error(`Failed to load ${src}`));
+        document.body.appendChild(script);
+    });
+}
 
-    function closeSearch() {
-        expand.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-    }
-
-    toggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (expand.classList.contains('is-open')) {
-            closeSearch();
-        } else {
-            openSearch();
+async function initPlatformEnhancements() {
+    try {
+        if (!window.PlatformI18n) {
+            await loadScriptOnce('assets/js/i18n-messages.js?v=3', 'data-platform-i18n-messages');
+            await loadScriptOnce('assets/js/i18n.js?v=4', 'data-platform-i18n');
         }
-    });
+        window.PlatformI18n?.refreshAll();
 
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.search-expand')) {
-            closeSearch();
+        await loadScriptOnce('assets/js/search-utils.js?v=1', 'data-search-utils');
+        await loadScriptOnce('assets/js/global-search.js?v=2', 'data-global-search');
+        await loadScriptOnce('assets/js/search-landing.js?v=1', 'data-search-landing');
+
+        if (window.platformDataReady) {
+            await window.platformDataReady;
         }
-    });
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeSearch();
-    });
-
-    if (box) {
-        box.addEventListener('click', (e) => e.stopPropagation());
+        if (typeof window.initGlobalSearch === 'function') {
+            window.initGlobalSearch();
+        }
+    } catch (err) {
+        console.error('Platform enhancements failed:', err);
     }
 }
 
@@ -408,8 +409,8 @@ function setActiveNavLink() {
 function initLangPicker() {
     const wrap = document.querySelector('.lang-switch--compact');
     const picker = document.querySelector('.lang-picker');
-    const label = document.querySelector('.lang-picker__label');
-    const buttons = document.querySelectorAll('.lang-switch__options .lang-btn');
+    const headerButtons = document.querySelectorAll('.lang-switch__options .lang-btn');
+    const drawerButtons = document.querySelectorAll('.drawer-lang-btn');
 
     if (!wrap || !picker) return;
 
@@ -418,15 +419,29 @@ function initLangPicker() {
         wrap.classList.toggle('is-open');
     });
 
-    buttons.forEach(btn => {
+    function selectLang(lang) {
+        if (window.PlatformI18n) {
+            window.PlatformI18n.setLang(lang);
+        } else {
+            localStorage.setItem('language', lang);
+            document.querySelectorAll('.lang-picker__label').forEach(el => {
+                el.textContent = lang === 'en' ? 'EN' : 'UZ';
+            });
+        }
+        wrap.classList.remove('is-open');
+    }
+
+    headerButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
-            buttons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            if (label) {
-                label.textContent = btn.dataset.lang === 'en' ? 'EN' : 'UZ';
-            }
-            wrap.classList.remove('is-open');
+            selectLang(btn.dataset.lang || 'uz');
+        });
+    });
+
+    drawerButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            selectLang(btn.dataset.lang || 'uz');
         });
     });
 

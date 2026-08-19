@@ -22,6 +22,12 @@ const BOOKMARK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height=
 let activeLibraryAudioEl = null;
 let activeLibraryAudioKey = null;
 
+const platformTranslate = window.PlatformI18n?.t || null;
+
+const uiT = (key, fallback, vars) => {
+    return platformTranslate ? platformTranslate(key, fallback, vars) : (fallback ?? key);
+};
+
 function getLibraryAudioParts(prefix, id) {
     return {
         audio: document.getElementById(`${prefix}-audio-${id}`),
@@ -43,7 +49,7 @@ function resetLibraryAudioButton(prefix, id, title, workType) {
     const icon = btn.querySelector('.library-item__audio-icon');
     const label = btn.querySelector('.library-item__audio-label');
     if (icon) icon.textContent = '🔊';
-    if (label) label.textContent = 'Audio';
+    if (label) label.textContent = uiT('listenAudio');
     btn.setAttribute('aria-label', `${title} ${workType}ini tinglash`);
     btn.setAttribute('aria-pressed', 'false');
     btn.classList.remove('is-playing');
@@ -62,7 +68,7 @@ function updateLibraryAudioButton(audioEl) {
     const icon = btn.querySelector('.library-item__audio-icon');
     const label = btn.querySelector('.library-item__audio-label');
     if (icon) icon.textContent = playing ? '⏸' : '🔊';
-    if (label) label.textContent = playing ? 'Pause' : 'Audio';
+    if (label) label.textContent = playing ? uiT('pauseAudio') : uiT('listenAudio');
     btn.setAttribute('aria-label', playing ? `${title} ${workType}ini to'xtatish` : `${title} ${workType}ini tinglash`);
     btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
     btn.classList.toggle('is-playing', playing);
@@ -203,6 +209,14 @@ function buildPoemAudioParts(poem) {
     return buildLibraryAudioParts('poem', poem, "she'r");
 }
 
+function isPdfPoem(poem) {
+    return Boolean(poem && poem.pdf);
+}
+
+function buildPdfPoemTags() {
+    return `<div class="library-item__tags"><span class="library-item__tag library-item__tag--pdf">PDF</span></div>`;
+}
+
 function buildQissaAudioParts(qissa) {
     return buildLibraryAudioParts('qissa', qissa, 'qissa');
 }
@@ -268,12 +282,12 @@ function getCoverVariant(id) {
     return variants[id % 3];
 }
 
-function buildLibraryItem({ id, title, category, description, coverVariant, rasm = '', coverType = 'book', readAction, audioAction = '', audioPanel = '', showBookmark = true, tagsHtml = '' }) {
+function buildLibraryItem({ id, domId = '', title, category, description, coverVariant, rasm = '', coverType = 'book', readAction, audioAction = '', audioPanel = '', showBookmark = true, tagsHtml = '' }) {
     const favActive = isFavorite(id);
     const bookmark = showBookmark ? `
                 <button class="library-item__bookmark favorite-btn ${favActive ? 'active' : ''}"
                         type="button"
-                        aria-label="${favActive ? 'Sevimlilardan olib tashlash' : 'Sevimlilarga qo\'shish'}"
+                        aria-label="${favActive ? uiT('bookmarkRemove') : uiT('bookmarkAdd')}"
                         onclick="toggleFavorite(${id}); event.stopPropagation();">
                     ${BOOKMARK_SVG}
                 </button>` : '';
@@ -281,7 +295,7 @@ function buildLibraryItem({ id, title, category, description, coverVariant, rasm
     const coverInner = buildCoverImg(title, rasm, coverType);
 
     return `
-        <article class="library-item" data-id="${id}">
+        <article class="library-item" data-id="${id}"${domId ? ` id="${domId}"` : ''}>
             <div class="library-item__cover ${coverVariant}" aria-hidden="true">
                 ${coverInner}
             </div>
@@ -321,13 +335,30 @@ document.addEventListener('DOMContentLoaded', async function() {
     initTanlanganAsarlarFilters();
     initTanlanganAsarlarLoadMore();
     checkUrlParams();
+    window.PlatformI18n?.registerRefresh?.('asarlar', refreshAsarlarUI);
 });
+
+function refreshAsarlarUI() {
+    displayPoems();
+    displayQissalar();
+    displayTarjimalar();
+    displayTanlanganAsarlar();
+    renderQissalarCategoryChips();
+}
 
 // ===================================
 // Check URL Parameters
 // ===================================
 function checkUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
+    const highlight = urlParams.get('highlight');
+
+    function afterContentOpen(delayMs = 900) {
+        if (highlight && window.PlatformSearchLanding) {
+            setTimeout(() => window.PlatformSearchLanding.highlight(highlight), delayMs);
+        }
+    }
+
     const tab = urlParams.get('tab');
     if (tab && ['sherlar', 'dostonlar', 'qissalar', 'tarjimalar', 'tanlangan-asarlar'].includes(tab)) {
         switchTab(tab, false);
@@ -336,11 +367,15 @@ function checkUrlParams() {
     const poemId = urlParams.get('id') || urlParams.get('poem');
     
     if (poemId) {
-        const id = parseInt(poemId);
+        const id = parseInt(poemId, 10);
         const poem = allPoems.find(p => p.id === id);
         if (poem) {
             switchTab('sherlar', false);
-            setTimeout(() => openPoemModal(id), 500);
+            setTimeout(() => {
+                openPoemModal(id);
+                afterContentOpen(600);
+            }, 500);
+            return;
         }
     }
 
@@ -348,21 +383,48 @@ function checkUrlParams() {
     if (qissaId) {
         const id = parseInt(qissaId, 10);
         switchTab('qissalar', false);
-        setTimeout(() => openQissaRead(id), 500);
+        setTimeout(() => {
+            openQissaRead(id);
+            afterContentOpen(700);
+        }, 500);
+        return;
     }
 
     const dostonId = urlParams.get('doston');
     if (dostonId) {
         const id = parseInt(dostonId, 10);
         switchTab('dostonlar', false);
-        setTimeout(() => openDostonRead(id), 500);
+        setTimeout(() => {
+            openDostonRead(id);
+            afterContentOpen(700);
+        }, 500);
+        return;
     }
 
     const tarjimaId = urlParams.get('tarjima');
     if (tarjimaId) {
         const id = parseInt(tarjimaId, 10);
         switchTab('tarjimalar', false);
-        setTimeout(() => openTarjimaRead(id), 500);
+        setTimeout(() => {
+            openTarjimaRead(id);
+            afterContentOpen(700);
+        }, 500);
+        return;
+    }
+
+    const tanlanganId = urlParams.get('tanlangan');
+    if (tanlanganId) {
+        const id = parseInt(tanlanganId, 10);
+        switchTab('tanlangan-asarlar', false);
+        setTimeout(() => {
+            openTanlanganRead(id);
+            afterContentOpen(700);
+        }, 500);
+        return;
+    }
+
+    if (highlight) {
+        afterContentOpen(1200);
     }
 }
 
@@ -389,7 +451,7 @@ function displayPoems() {
     if (!container) return;
 
     if (filteredPoems.length === 0) {
-        container.innerHTML = `<p class="library-empty">Hech qanday she'r topilmadi. Filtrlarni o'zgartiring.</p>`;
+        container.innerHTML = `<p class="library-empty">${uiT('asarlarEmpty')}</p>`;
         updateLoadMoreButton();
         return;
     }
@@ -397,19 +459,25 @@ function displayPoems() {
     const visiblePoems = filteredPoems.slice(0, displayLimit);
 
     container.innerHTML = visiblePoems.map(poem => {
-        const category = `${poem.mavzu[0] || 'She\'r'} · She'r · ${poem.yil}`;
-        const readAction = `<button class="library-item__read" type="button" onclick="openPoemModal(${poem.id})">O'qish</button>`;
+        const pdfPoem = isPdfPoem(poem);
+        const category = pdfPoem
+            ? (poem.muallif || "G'afur G'ulom")
+            : `${poem.mavzu[0] || 'She\'r'} · She'r · ${poem.yil}`;
+        const readLabel = pdfPoem ? uiT('readPdf') : uiT('read');
+        const readAction = `<button class="library-item__read" type="button" onclick="openPoemModal(${poem.id})">${readLabel}</button>`;
         const { audioAction, audioPanel } = buildPoemAudioParts(poem);
 
         return buildLibraryItem({
             id: poem.id,
+            domId: `poem-card-${poem.id}`,
             title: poem.sarlavha,
             category,
-            description: poem.qisqa,
+            description: poem.qisqa || '',
             coverVariant: getCoverVariant(poem.id),
             readAction,
             audioAction,
-            audioPanel
+            audioPanel,
+            tagsHtml: pdfPoem ? buildPdfPoemTags() : ''
         });
     }).join('');
 
@@ -491,15 +559,21 @@ function applyFilters() {
     
     filteredPoems = allPoems.filter(poem => {
         // Search filter
-        const matchesSearch = poem.sarlavha.toLowerCase().includes(searchQuery) ||
-                            poem.matn.toLowerCase().includes(searchQuery);
+        const searchBlob = [
+            poem.sarlavha,
+            poem.matn,
+            poem.qisqa,
+            poem.muallif,
+            poem.nota
+        ].filter(Boolean).join(' ').toLowerCase();
+        const matchesSearch = !searchQuery || searchBlob.includes(searchQuery);
         
         // Mavzu filter
         let matchesMavzu = true;
         if (activeMavzu === 'favorites') {
             matchesMavzu = isFavorite(poem.id);
         } else if (activeMavzu !== 'all') {
-            matchesMavzu = poem.mavzu.includes(activeMavzu);
+            matchesMavzu = (poem.mavzu || []).includes(activeMavzu);
         }
         
         // Year filter
@@ -519,7 +593,11 @@ function applyFilters() {
 
 function updateResultsCount() {
     const count = document.getElementById('results-count');
-    count.textContent = `${allPoems.length} ta she'rdan ${filteredPoems.length} ta ko'rsatilmoqda`;
+    if (!count) return;
+    count.textContent = uiT('asarlarResultsPoems', '{total} ta she\'rdan {shown} ta ko\'rsatilmoqda', {
+        total: allPoems.length,
+        shown: filteredPoems.length
+    });
 }
 
 // ===================================
@@ -586,6 +664,14 @@ function openPoemModal(poemId) {
     const poem = allPoems.find(p => p.id === poemId);
     if (!poem) return;
 
+    if (isPdfPoem(poem)) {
+        openQissaPdfReader({
+            ...poem,
+            mavzu: poem.mavzu || (poem.muallif ? [poem.muallif] : [])
+        });
+        return;
+    }
+
     currentPoemId = poemId;
 
     const poemModal = document.getElementById('poem-modal');
@@ -620,9 +706,9 @@ function closeModal() {
 function updateFavoriteButton() {
     const btn = document.getElementById('favorite-modal-btn');
     if (isFavorite(currentPoemId)) {
-        btn.textContent = '❤️ Sevimlilardan olib tashlash';
+        btn.textContent = '❤️ ' + uiT('bookmarkRemove');
     } else {
-        btn.textContent = "❤️ Sevimlilarga qo'shish";
+        btn.textContent = '❤️ ' + uiT('bookmarkAdd');
     }
 }
 
@@ -801,12 +887,13 @@ async function loadDostonlar() {
             const janr = doston.janr || 'Doston';
             const category = `${author} · ${janr}${doston.yil ? ` · ${doston.yil}` : ''}`;
             const readAction = doston.pdf || doston.matn
-                ? `<button class="library-item__read" type="button" onclick="openDostonRead(${doston.id})">O'qish</button>`
+                ? `<button class="library-item__read" type="button" onclick="openDostonRead(${doston.id})">${uiT('read')}</button>`
                 : '';
             const { audioAction, audioPanel } = buildDostonAudioParts(doston);
 
             return buildLibraryItem({
                 id: doston.id,
+                domId: `doston-card-${doston.id}`,
                 title: doston.sarlavha,
                 category,
                 description: doston.qisqa,
@@ -870,7 +957,7 @@ function renderQissalarCategoryChips() {
         allQissalar.flatMap(q => Array.isArray(q.mavzu) ? q.mavzu : [])
     )].sort();
 
-    chips.innerHTML = `<button class="filter-btn active" type="button" data-qissa-mavzu="all">Barchasi</button>` +
+    chips.innerHTML = `<button class="filter-btn active" type="button" data-qissa-mavzu="all">${uiT('filterAll')}</button>` +
         categories.map(cat =>
             `<button class="filter-btn" type="button" data-qissa-mavzu="${cat}">${cat}</button>`
         ).join('');
@@ -883,7 +970,7 @@ function displayQissalar() {
     if (filteredQissalar.length === 0) {
         const message = allQissalar.length === 0
             ? 'Qissalar hozircha qo\'shilmagan.'
-            : 'Hech qanday qissa topilmadi. Filtrlarni o\'zgartiring.';
+            : uiT('asarlarEmptyQissa');
         container.innerHTML = `<p class="library-empty">${message}</p>`;
         updateQissalarLoadMoreButton();
         return;
@@ -894,11 +981,12 @@ function displayQissalar() {
     container.innerHTML = visible.map(qissa => {
         const author = qissa.muallif || "G'afur G'ulom";
         const category = `${author} · Qissa · ${qissa.yil || ''}`.replace(/ · $/, '');
-        const readAction = `<button class="library-item__read" type="button" onclick="openQissaRead(${qissa.id})">O'qish</button>`;
+        const readAction = `<button class="library-item__read" type="button" onclick="openQissaRead(${qissa.id})">${uiT('read')}</button>`;
         const { audioAction, audioPanel } = buildQissaAudioParts(qissa);
 
         return buildLibraryItem({
             id: qissa.id,
+            domId: `qissa-card-${qissa.id}`,
             title: qissa.sarlavha,
             category,
             description: qissa.qisqa || '',
@@ -1029,11 +1117,14 @@ function updateQissalarResultsCount() {
     if (!count) return;
 
     if (allQissalar.length === 0) {
-        count.textContent = '0 ta qissa topildi';
+        count.textContent = uiT('asarlarResultsEmptyQissas', '0 ta qissa topildi');
         return;
     }
 
-    count.textContent = `${allQissalar.length} ta qissadan ${filteredQissalar.length} ta ko'rsatilmoqda`;
+    count.textContent = uiT('asarlarResultsQissas', '{total} ta qissadan {shown} ta ko\'rsatilmoqda', {
+        total: allQissalar.length,
+        shown: filteredQissalar.length
+    });
 }
 
 function openQissaRead(qissaId) {
@@ -1083,7 +1174,7 @@ function openQissaPdfReader(qissa, startPage) {
             <iframe class="qissa-reader__frame" src="${pdfUrl}#page=${page}" title="${qissa.sarlavha} — PDF"></iframe>
         </div>
         <p class="qissa-reader__hint">
-            <a class="qissa-reader__external" href="${pdfUrl}" target="_blank" rel="noopener noreferrer">PDF ni yangi oynada ochish</a>
+            <a class="qissa-reader__external" href="${pdfUrl}" target="_blank" rel="noopener noreferrer">${uiT('openPdfNewTab')}</a>
         </p>`;
 
     modalText.querySelectorAll('.qissa-reader__chapter-btn').forEach(btn => {
@@ -1160,7 +1251,7 @@ function displayTarjimalar() {
     if (filteredTarjimalar.length === 0) {
         const message = allTarjimalar.length === 0
             ? 'Tarjimalar hozircha qo\'shilmagan.'
-            : 'Hech qanday tarjima topilmadi. Qidiruvni o\'zgartiring.';
+            : uiT('asarlarEmptyTarjima');
         container.innerHTML = `<p class="library-empty">${message}</p>`;
         updateTarjimalarLoadMoreButton();
         return;
@@ -1172,10 +1263,11 @@ function displayTarjimalar() {
         const author = tarjima.muallif || "G'afur G'ulom";
         const asl = tarjima.aslMuallif ? ` · ${tarjima.aslMuallif}` : '';
         const category = `${author} · Tarjima${asl}${tarjima.yil ? ` · ${tarjima.yil}` : ''}`;
-        const readAction = `<button class="library-item__read" type="button" onclick="openTarjimaRead(${tarjima.id})">O'qish</button>`;
+        const readAction = `<button class="library-item__read" type="button" onclick="openTarjimaRead(${tarjima.id})">${uiT('read')}</button>`;
 
         return buildLibraryItem({
             id: tarjima.id,
+            domId: `tarjima-card-${tarjima.id}`,
             title: tarjima.sarlavha,
             category,
             description: tarjima.qisqa || '',
@@ -1244,11 +1336,14 @@ function updateTarjimalarResultsCount() {
     if (!count) return;
 
     if (allTarjimalar.length === 0) {
-        count.textContent = '0 ta tarjima topildi';
+        count.textContent = uiT('asarlarResultsEmptyTarjima', '0 ta tarjima topildi');
         return;
     }
 
-    count.textContent = `${allTarjimalar.length} ta tarjimadan ${filteredTarjimalar.length} ta ko'rsatilmoqda`;
+    count.textContent = uiT('asarlarResultsTarjima', '{total} ta tarjimadan {shown} ta ko\'rsatilmoqda', {
+        total: allTarjimalar.length,
+        shown: filteredTarjimalar.length
+    });
 }
 
 function openTarjimaRead(tarjimaId) {
@@ -1297,7 +1392,7 @@ function displayTanlanganAsarlar() {
     if (filteredTanlanganAsarlar.length === 0) {
         const message = allTanlanganAsarlar.length === 0
             ? 'Tanlangan asarlar hozircha qo\'shilmagan.'
-            : 'Hech qanday asar topilmadi. Qidiruvni o\'zgartiring.';
+            : uiT('asarlarEmptyTanlangan');
         container.innerHTML = `<p class="library-empty">${message}</p>`;
         updateTanlanganAsarlarLoadMoreButton();
         return;
@@ -1311,10 +1406,11 @@ function displayTanlanganAsarlar() {
             ? [asar.nashr, asar.joy, asar.yil]
             : [asar.nashriyot, asar.joy, asar.yil]
         ).filter(Boolean).join(' · ');
-        const readAction = `<button class="library-item__read" type="button" onclick="openTanlanganRead(${asar.id})">O'qish</button>`;
+        const readAction = `<button class="library-item__read" type="button" onclick="openTanlanganRead(${asar.id})">${uiT('read')}</button>`;
 
         return buildLibraryItem({
             id: asar.id,
+            domId: `tanlangan-card-${asar.id}`,
             title: asar.sarlavha,
             category,
             description,
@@ -1384,11 +1480,14 @@ function updateTanlanganAsarlarResultsCount() {
     if (!count) return;
 
     if (allTanlanganAsarlar.length === 0) {
-        count.textContent = '0 ta asar topildi';
+        count.textContent = uiT('asarlarResultsEmptyTanlangan', '0 ta asar topildi');
         return;
     }
 
-    count.textContent = `${allTanlanganAsarlar.length} ta asardan ${filteredTanlanganAsarlar.length} ta ko'rsatilmoqda`;
+    count.textContent = uiT('asarlarResultsTanlangan', '{total} ta asardan {shown} ta ko\'rsatilmoqda', {
+        total: allTanlanganAsarlar.length,
+        shown: filteredTanlanganAsarlar.length
+    });
 }
 
 function openTanlanganRead(asarId) {

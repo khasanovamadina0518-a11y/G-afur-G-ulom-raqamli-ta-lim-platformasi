@@ -22,18 +22,18 @@
     <main class="library-page">
         <div class="library-page__inner">
             <header class="library-header">
-                <a href="/index.html" class="library-header__back" aria-label="Bosh sahifaga qaytish">
+                <a href="/index.html" class="library-header__back" aria-label="Bosh sahifaga qaytish" data-i18n-aria="backHome">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
                 </a>
-                <h1 class="library-header__title">Asarlari</h1>
+                <h1 class="library-header__title" data-i18n="works">Asarlari</h1>
             </header>
 
             <div class="tabs-nav library-tabs">
-                <button class="tab-btn active" type="button" data-tab="sherlar">She'rlar</button>
-                <button class="tab-btn" type="button" data-tab="dostonlar">Hikoyalar</button>
-                <button class="tab-btn" type="button" data-tab="qissalar">Qissalar</button>
-                <button class="tab-btn" type="button" data-tab="tarjimalar">Tarjimalar</button>
-                <button class="tab-btn" type="button" data-tab="tanlangan-asarlar">Tanlangan asarlar</button>
+                <button class="tab-btn active" type="button" data-tab="sherlar" data-i18n="poems">She'rlar</button>
+                <button class="tab-btn" type="button" data-tab="dostonlar" data-i18n="stories">Hikoyalar</button>
+                <button class="tab-btn" type="button" data-tab="qissalar" data-i18n="qissalar">Qissalar</button>
+                <button class="tab-btn" type="button" data-tab="tarjimalar" data-i18n="translations">Tarjimalar</button>
+                <button class="tab-btn" type="button" data-tab="tanlangan-asarlar" data-i18n="selectedWorks">Tanlangan asarlar</button>
             </div>
 
             <!-- She'rlar -->
@@ -42,18 +42,18 @@
                     <div class="library-search-row">
                         <label class="library-search" for="search-input">
                             <svg class="library-search__icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-                            <input type="search" class="search-input" id="search-input" placeholder="Qidiruv..." autocomplete="off">
+                            <input type="search" class="search-input" id="search-input" placeholder="Qidiruv..." autocomplete="off" data-i18n-placeholder="searchPlaceholder">
                         </label>
                         <button class="library-filter-btn" type="button" id="filter-toggle" aria-expanded="false" aria-controls="filter-panel">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
-                            Filtr
+                            <span data-i18n="filter">Filtr</span>
                         </button>
                     </div>
                     
                     <div class="library-filter-panel" id="filter-panel">
-                        <label for="year-filter" class="visually-hidden">Yil bo'yicha filtr</label>
+                        <label for="year-filter" class="visually-hidden" data-i18n="yearFilterLabel">Yil bo'yicha filtr</label>
                         <select class="year-select" id="year-filter">
-                            <option value="all">Barcha yillar</option>
+                            <option value="all" data-i18n="filterAllYears">Barcha yillar</option>
                             <option value="1920-1930">1920-1930</option>
                             <option value="1930-1940">1930-1940</option>
                             <option value="1940-1950">1940-1950</option>
@@ -62,30 +62,30 @@
                     </div>
 
                     <div class="library-chips filter-group">
-                        <button class="filter-btn active" type="button" data-mavzu="all">Barchasi</button>
+                        <button class="filter-btn active" type="button" data-mavzu="all" data-i18n="filterAll">Barchasi</button>
                         <button class="filter-btn" type="button" data-mavzu="Vatan">Vatan</button>
                         <button class="filter-btn" type="button" data-mavzu="Mehnat">Mehnat</button>
                         <button class="filter-btn" type="button" data-mavzu="Tabiat">Tabiat</button>
                         <button class="filter-btn" type="button" data-mavzu="Muhabbat">Muhabbat</button>
                         <button class="filter-btn" type="button" data-mavzu="Sevgi">Sevgi</button>
                         <button class="filter-btn" type="button" data-mavzu="Bilim">Bilim</button>
-                        <button class="filter-btn" type="button" data-mavzu="favorites">Sevimlilar</button>
+                        <button class="filter-btn" type="button" data-mavzu="favorites" data-i18n="filterFavorites">Sevimlilar</button>
                     </div>
 
                     <div class="library-meta-row">
                         <span class="results-count" id="results-count">0 ta she'r topildi</span>
                         <div class="view-toggle">
-                            <button class="view-btn" type="button" data-view="grid" title="Panjara">⊞</button>
-                            <button class="view-btn active" type="button" data-view="list" title="Ro'yxat">☰</button>
+                            <button class="view-btn" type="button" data-view="grid" data-i18n-title="viewGrid" title="Panjara">⊞</button>
+                            <button class="view-btn active" type="button" data-view="list" data-i18n-title="viewList" title="Ro'yxat">☰</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="library-list" id="poems-grid"></div>
 
-                <button class="library-load-more is-hidden" type="button" id="load-more-btn" aria-label="Ko'proq asarlarni yuklash">
+                <button class="library-load-more is-hidden" type="button" id="load-more-btn" data-i18n-aria="loadMorePoemsAria">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
-                    Yana yuklash
+                    <span data-i18n="asarlarLoadMoreBtn">Yana yuklash</span>
                 </button>
             </div>
 
@@ -100,18 +100,18 @@
                     <div class="library-search-row">
                         <label class="library-search" for="qissalar-search-input">
                             <svg class="library-search__icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-                            <input type="search" class="search-input" id="qissalar-search-input" placeholder="Qidiruv..." autocomplete="off">
+                            <input type="search" class="search-input" id="qissalar-search-input" placeholder="Qidiruv..." autocomplete="off" data-i18n-placeholder="searchPlaceholder">
                         </label>
                         <button class="library-filter-btn" type="button" id="qissalar-filter-toggle" aria-expanded="false" aria-controls="qissalar-filter-panel">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
-                            Filtr
+                            <span data-i18n="filter">Filtr</span>
                         </button>
                     </div>
 
                     <div class="library-filter-panel" id="qissalar-filter-panel">
-                        <label for="qissalar-year-filter" class="visually-hidden">Yil bo'yicha filtr</label>
+                        <label for="qissalar-year-filter" class="visually-hidden" data-i18n="yearFilterLabel">Yil bo'yicha filtr</label>
                         <select class="year-select" id="qissalar-year-filter">
-                            <option value="all">Barcha yillar</option>
+                            <option value="all" data-i18n="filterAllYears">Barcha yillar</option>
                             <option value="1920-1930">1920-1930</option>
                             <option value="1930-1940">1930-1940</option>
                             <option value="1940-1950">1940-1950</option>
@@ -126,17 +126,17 @@
                     <div class="library-meta-row">
                         <span class="results-count" id="qissalar-results-count">0 ta qissa topildi</span>
                         <div class="view-toggle">
-                            <button class="view-btn" type="button" data-qissa-view="grid" title="Panjara">⊞</button>
-                            <button class="view-btn active" type="button" data-qissa-view="list" title="Ro'yxat">☰</button>
+                            <button class="view-btn" type="button" data-qissa-view="grid" data-i18n-title="viewGrid" title="Panjara">⊞</button>
+                            <button class="view-btn active" type="button" data-qissa-view="list" data-i18n-title="viewList" title="Ro'yxat">☰</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="library-list" id="qissalar-grid"></div>
 
-                <button class="library-load-more is-hidden" type="button" id="qissalar-load-more-btn" aria-label="Ko'proq qissalarni yuklash">
+                <button class="library-load-more is-hidden" type="button" id="qissalar-load-more-btn" data-i18n-aria="loadMoreQissasAria">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
-                    Yana yuklash
+                    <span data-i18n="asarlarLoadMoreBtn">Yana yuklash</span>
                 </button>
             </div>
 
@@ -146,7 +146,7 @@
                     <div class="library-search-row">
                         <label class="library-search" for="tarjimalar-search-input">
                             <svg class="library-search__icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-                            <input type="search" class="search-input" id="tarjimalar-search-input" placeholder="Qidiruv..." autocomplete="off">
+                            <input type="search" class="search-input" id="tarjimalar-search-input" placeholder="Qidiruv..." autocomplete="off" data-i18n-placeholder="searchPlaceholder">
                         </label>
                     </div>
 
@@ -157,9 +157,9 @@
 
                 <div class="library-list" id="tarjimalar-grid"></div>
 
-                <button class="library-load-more is-hidden" type="button" id="tarjimalar-load-more-btn" aria-label="Ko'proq tarjimalarni yuklash">
+                <button class="library-load-more is-hidden" type="button" id="tarjimalar-load-more-btn" data-i18n-aria="loadMoreTarjimaAria">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
-                    Yana yuklash
+                    <span data-i18n="asarlarLoadMoreBtn">Yana yuklash</span>
                 </button>
             </div>
 
@@ -169,7 +169,7 @@
                     <div class="library-search-row">
                         <label class="library-search" for="tanlangan-asarlar-search-input">
                             <svg class="library-search__icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-                            <input type="search" class="search-input" id="tanlangan-asarlar-search-input" placeholder="Qidiruv..." autocomplete="off">
+                            <input type="search" class="search-input" id="tanlangan-asarlar-search-input" placeholder="Qidiruv..." autocomplete="off" data-i18n-placeholder="searchPlaceholder">
                         </label>
                     </div>
 
@@ -180,9 +180,9 @@
 
                 <div class="library-list" id="tanlangan-asarlar-grid"></div>
 
-                <button class="library-load-more is-hidden" type="button" id="tanlangan-asarlar-load-more-btn" aria-label="Ko'proq tanlangan asarlarni yuklash">
+                <button class="library-load-more is-hidden" type="button" id="tanlangan-asarlar-load-more-btn" data-i18n-aria="loadMoreTanlanganAria">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
-                    Yana yuklash
+                    <span data-i18n="asarlarLoadMoreBtn">Yana yuklash</span>
                 </button>
             </div>
         </div>
@@ -191,7 +191,7 @@
     <!-- Modal -->
     <div class="modal" id="poem-modal">
         <div class="modal-content">
-            <button class="modal-close" id="modal-close" type="button" aria-label="Yopish">×</button>
+            <button class="modal-close" id="modal-close" type="button" data-i18n-aria="close">×</button>
             <div class="modal-header">
                 <h2 class="modal-title" id="modal-title"></h2>
                 <div class="modal-meta">
@@ -201,11 +201,11 @@
             </div>
             <div class="modal-text" id="modal-text"></div>
             <div class="modal-actions">
-                <button class="modal-btn modal-btn-primary" id="share-btn" type="button">Ulashish</button>
-                <button class="modal-btn modal-btn-primary" id="copy-btn" type="button">Nusxa olish</button>
-                <button class="modal-btn modal-btn-primary" id="print-btn" type="button">Chop etish</button>
-                <button class="modal-btn modal-btn-primary" id="favorite-modal-btn" type="button">Sevimlilar</button>
-                <button class="modal-btn modal-btn-secondary" id="close-btn" type="button">Yopish</button>
+                <button class="modal-btn modal-btn-primary" id="share-btn" type="button" data-i18n="share">Ulashish</button>
+                <button class="modal-btn modal-btn-primary" id="copy-btn" type="button" data-i18n="copy">Nusxa olish</button>
+                <button class="modal-btn modal-btn-primary" id="print-btn" type="button" data-i18n="print">Chop etish</button>
+                <button class="modal-btn modal-btn-primary" id="favorite-modal-btn" type="button" data-i18n="favorites">Sevimlilar</button>
+                <button class="modal-btn modal-btn-secondary" id="close-btn" type="button" data-i18n="close">Yopish</button>
             </div>
         </div>
     </div>
@@ -247,6 +247,6 @@
     <script src="/assets/js/data.js?v=11"></script>
     <script src="/assets/js/app.js?v=9"></script>
     <script src="/assets/js/thumbnails.js?v=3"></script>
-    <script src="/pages/asarlar-page.js?v=26"></script>
+    <script src="/pages/asarlar-page.js?v=28"></script>
 </body>
 </html>

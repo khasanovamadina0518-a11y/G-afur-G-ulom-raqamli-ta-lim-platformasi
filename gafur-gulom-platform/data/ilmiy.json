@@ -1,116 +1,19 @@
 {
   "maqolalar": [
     {
-      "id": 1,
-      "sarlavha": "G'afur G'ulom she'riyatida Vatan mavzusi",
-      "mualliflar": ["Karimov A."],
-      "nashriyot": "O'zbekiston adabiyoti va san'ati",
-      "yil": 2020,
+      "id": 11,
+      "sarlavha": "Professor Hotam Umurov shoir G'afur G'ulomning SamDU qopqasida bir qizni ko'rdim sheʼrining yaratilish tarixi haqida",
+      "mualliflar": ["Professor Hotam Umurov"],
+      "tur": "Maqola",
+      "nashriyot": "Samarqand davlat universiteti (SamDU)",
+      "yil": 2025,
       "til": "o'zbek",
-      "kalitSozlar": ["Vatan", "she'riyat", "vatanparvarlik", "badiiy obraz"],
-      "annotatsiya": "Ushbu maqolada G'afur G'ulom ijodida Vatan mavzusining badiiy talqini va shoirning vatanparvarlik g'oyalari tahlil qilinadi.",
-      "pdfHavola": "#"
-    },
-    {
-      "id": 2,
-      "sarlavha": "'Shum bola' dostonining g'oyaviy-badiiy xususiyatlari",
-      "mualliflar": ["Rahimova M.", "Qodirov S."],
-      "nashriyot": "Fan va turmush",
-      "yil": 2019,
-      "til": "o'zbek",
-      "kalitSozlar": ["doston", "bola obrazi", "sovet davri", "realizm"],
-      "annotatsiya": "Maqolada G'afur G'ulomning mashhur 'Shum bola' dostoni tahlil qilinib, uning g'oyaviy mazmuni va badiiy xususiyatlari ochib berilgan.",
-      "pdfHavola": "#"
-    },
-    {
-      "id": 3,
-      "sarlavha": "G'afur G'ulom she'rlarida tabiat tasvirlari",
-      "mualliflar": ["Yusupova N."],
-      "nashriyot": "Adabiyot va san'at",
-      "yil": 2021,
-      "til": "o'zbek",
-      "kalitSozlar": ["tabiat", "lirika", "badiiy tasvir", "she'riyat"],
-      "annotatsiya": "Tadqiqotda shoirning she'rlarida tabiat tasvirlarining o'rni va ahamiyati, tabiiy manzaralarning badiiy ifodasi ko'rib chiqiladi.",
-      "pdfHavola": "#"
-    },
-    {
-      "id": 4,
-      "sarlavha": "G'afur G'ulomning ijod yo'li",
-      "mualliflar": ["Mahmudov I."],
-      "nashriyot": "Toshkent: Fan",
-      "yil": 2018,
-      "til": "o'zbek",
-      "kalitSozlar": ["biografiya", "ijod bosqichlari", "adabiy meros"],
-      "annotatsiya": "Monografiyada G'afur G'ulomning hayoti va ijod yo'li, uning adabiyotga qo'shgan hissasi keng yoritilgan.",
-      "pdfHavola": "#"
-    },
-    {
-      "id": 5,
-      "sarlavha": "O'zbek türk adabiyotida G'afur G'ulomning o'rni",
-      "mualliflar": ["Ergashev T."],
-      "nashriyot": "Toshkent davlat universiteti",
-      "yil": 2017,
-      "til": "o'zbek",
-      "kalitSozlar": ["o'zbek adabiyoti", "XX asr", "adabiy jarayon"],
-      "annotatsiya": "Maqolada G'afur G'ulomning o'zbek va turkiy adabiyotdagi o'rni, uning ijodining milliy va xalqaro ahamiyati baholanadi.",
-      "pdfHavola": "#"
-    },
-    {
-      "id": 6,
-      "sarlavha": "G'afur G'ulom asarlarida bolalar tarbiyasi",
-      "mualliflar": ["Saidova G."],
-      "nashriyot": "Pedagogika jurnali",
-      "yil": 2022,
-      "til": "o'zbek",
-      "kalitSozlar": ["bolalar adabiyoti", "tarbiya", "axloq"],
-      "annotatsiya": "Maqolada shoirning bolalar uchun yozgan asarlari va ularning tarbiyaviy ahamiyati ko'rib chiqiladi.",
-      "pdfHavola": "#"
-    },
-    {
-      "id": 7,
-      "sarlavha": "Gafur Gulom's Poetry in Russian Translation",
-      "mualliflar": ["Ivanov P."],
-      "nashriyot": "Moscow Literary Review",
-      "yil": 2016,
-      "til": "ingliz",
-      "kalitSozlar": ["translation", "Russian", "poetry"],
-      "annotatsiya": "This article examines the challenges and achievements in translating Gafur Gulom's works into Russian.",
-      "pdfHavola": "#"
-    },
-    {
-      "id": 8,
-      "sarlavha": "G'afur G'ulom va klassik she'riyat an'analari",
-      "mualliflar": ["Normatov U."],
-      "nashriyot": "Sharq yulduzi",
-      "yil": 2023,
-      "til": "o'zbek",
-      "kalitSozlar": ["klassik adabiyot", "an'ana", "modernizm"],
-      "annotatsiya": "Tadqiqotda shoirning klassik adabiyot an'analarini davom ettirishi va yangicha talqin qilishi muhokama qilinadi.",
-      "pdfHavola": "#"
-    },
-    {
-      "id": 9,
-      "sarlavha": "Языковые особенности поэзии Гафура Гуляма",
-      "mualliflar": ["Петров В."],
-      "nashriyot": "Москва: Наука",
-      "yil": 2015,
-      "til": "rus",
-      "kalitSozlar": ["til", "uslub", "she'riy til"],
-      "annotatsiya": "Maqolada G'afur G'ulom she'rlarining til xususiyatlari rus tilida tahlil qilingan.",
-      "pdfHavola": "#"
-    },
-    {
-      "id": 10,
-      "sarlavha": "G'afur G'ulom va folklor",
-      "mualliflar": ["Tursunov O."],
-      "nashriyot": "Folklor tadqiqotlari",
-      "yil": 2024,
-      "til": "o'zbek",
-      "kalitSozlar": ["folklor", "xalq og'zaki ijodi", "maqol"],
-      "annotatsiya": "Ushbu maqolada shoirning folklor unsurlaridan foydalanishi va xalq og'zaki ijodiga munosabati o'rganiladi.",
-      "pdfHavola": "#"
+      "kalitSozlar": ["SamDU qopqasida bir qizni ko'rdim", "she'r tarixi", "G'afur G'ulom", "Hotam Umurov"],
+      "annotatsiya": "G'afur G'ulomning \"SamDU qopqasida bir qizni ko'rdim\" she'rining yaratilish tarixi haqida ilmiy maqola.",
+      "manba": "https://www.samdu.uz/uz/news/52392",
+      "pdf": "assets/pdf/maqolalar/Professor Hotam Umurov shoir G\u2018afur G\u2018ulomning SamDU qopqasida bir qizni ko\u2018rdim she\u02bcrining yaratilish tarixi haqida.pdf"
     }
-    ],
+  ],
   "dissertatsiyalar": [
     {
       "id": 1,

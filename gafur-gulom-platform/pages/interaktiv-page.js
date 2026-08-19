@@ -2,6 +2,44 @@
 // Interaktiv O'yinlar - JavaScript
 // ===================================
 
+const platformTranslate = window.PlatformI18n?.t || null;
+
+const uiT = (key, fallback, vars) => {
+    return platformTranslate ? platformTranslate(key, fallback, vars) : (fallback ?? key);
+};
+
+function getCatTitle(cat) {
+    return cat.titleKey ? uiT(cat.titleKey, cat.title) : cat.title;
+}
+
+function getCatDesc(cat) {
+    return cat.descKey ? uiT(cat.descKey, cat.description) : cat.description;
+}
+
+function getCatDiff(cat) {
+    return cat.diffKey ? uiT(cat.diffKey, cat.difficulty) : cat.difficulty;
+}
+
+function refreshInteraktivUI() {
+    updateTestCardCounts();
+    if (activeTestCategory && TEST_CATEGORIES[activeTestCategory]) {
+        const category = TEST_CATEGORIES[activeTestCategory];
+        const pool = quizQuestionPool || filterQuestionsByCategory(activeTestCategory);
+        const titleEl = document.getElementById('quiz-start-title');
+        const descEl = document.getElementById('quiz-start-desc');
+        if (titleEl) titleEl.textContent = getCatTitle(category);
+        if (descEl && pool.length) {
+            const count = Math.min(20, pool.length);
+            descEl.textContent = uiT('testsMetaLine', '{count} ta savol · {duration} · {difficulty}', {
+                count,
+                duration: category.duration,
+                difficulty: getCatDiff(category)
+            });
+        }
+    }
+    window.PlatformI18n?.apply(document);
+}
+
 // Global o'zgaruvchilar
 let quizData = [];
 let currentGame = null;
@@ -12,47 +50,65 @@ let activeTestCategory = null;
 const TEST_CATEGORIES = {
     hayot: {
         title: "G'afur G'ulom hayoti",
+        titleKey: 'testCatHayotTitle',
         description: "Shoir hayoti, tug'ilgan yili, oilasi va ijodiy yo'li bo'yicha bilimlaringizni sinab ko'ring.",
+        descKey: 'testCatHayotDesc',
         mavzu: ['hayot'],
         difficulty: 'Oson',
+        diffKey: 'testDiffEasy',
         duration: '15 daqiqa'
     },
     asarlar: {
         title: "G'afur G'ulom asarlari",
+        titleKey: 'testCatAsarlarTitle',
         description: "Romanlar, hikoyalar va dramatik asarlarga oid professional savollar to'plami.",
+        descKey: 'testCatAsarlarDesc',
         mavzu: ['asarlar'],
         difficulty: "O'rta",
+        diffKey: 'testDiffMedium',
         duration: '18 daqiqa'
     },
     sheriyat: {
         title: "She'riyati",
+        titleKey: 'testCatSherTitle',
         description: "She'rlar, to'plamlar va poetik ijodga oid chuqur savollar.",
+        descKey: 'testCatSherDesc',
         mavzu: ['asarlar', 'umumiy'],
         keywords: ["she'r", "She'r", "she'rlar", "She'rlar", "Yillar sadosi", "to'plam"],
         difficulty: "O'rta",
+        diffKey: 'testDiffMedium',
         duration: '12 daqiqa'
     },
     hikoya: {
         title: "Hikoya va qissalari",
+        titleKey: 'testCatHikoyaTitle',
         description: "Hikoya, qissa va ertaklar bo'yicha bilimlaringizni baholang.",
+        descKey: 'testCatHikoyaDesc',
         mavzu: ['asarlar'],
         keywords: ['hikoya', 'qissa', 'roman', 'Shum bola', 'Ikki eshik', 'ertak'],
         difficulty: 'Qiyin',
+        diffKey: 'testDiffHard',
         duration: '14 daqiqa'
     },
     ilmiy: {
         title: "Ilmiy bilimlar",
+        titleKey: 'testCatIlmiyTitle',
         description: "Adabiyotshunoslik va ilmiy-ma'rifiy bilimlar bo'yicha maxsus test.",
+        descKey: 'testCatIlmiyDesc',
         mavzu: ['umumiy'],
         difficulty: 'Qiyin',
+        diffKey: 'testDiffHard',
         duration: '10 daqiqa'
     },
     yakuniy: {
         title: 'Yakuniy test',
+        titleKey: 'testCatYakuniyTitle',
         description: "Barcha mavzularni qamrab oluvchi yakuniy baholash testi.",
+        descKey: 'testCatYakuniyDesc',
         mavzu: ['hayot', 'asarlar', 'umumiy'],
         all: true,
         difficulty: 'Aralash',
+        diffKey: 'testDiffMixed',
         duration: '25 daqiqa'
     }
 };
@@ -81,7 +137,7 @@ function startTestCategory(categoryId) {
 
     const pool = filterQuestionsByCategory(categoryId);
     if (pool.length === 0) {
-        alert('Bu test uchun savollar topilmadi. Iltimos, keyinroq urinib ko\'ring.');
+        alert(uiT('testsNoQuestions', 'Bu test uchun savollar topilmadi. Iltimos, keyinroq urinib ko\'ring.'));
         return;
     }
 
@@ -100,10 +156,14 @@ function startTestCategory(categoryId) {
 
     const titleEl = document.getElementById('quiz-start-title');
     const descEl = document.getElementById('quiz-start-desc');
-    if (titleEl) titleEl.textContent = category.title;
+    if (titleEl) titleEl.textContent = getCatTitle(category);
     if (descEl) {
         const count = Math.min(20, pool.length);
-        descEl.textContent = `${count} ta savol · ${category.duration} · ${category.difficulty} daraja`;
+        descEl.textContent = uiT('testsMetaLine', '{count} ta savol · {duration} · {difficulty}', {
+            count,
+            duration: category.duration,
+            difficulty: getCatDiff(category)
+        });
     }
 
     resetQuizGame();
@@ -121,67 +181,218 @@ let quizTimeLeft = 20;
 // Memory game variables
 let selectedPoem = null;
 let memoryStage = 1;
+let poemLines = [];
 let poemWords = [];
 let userAnswers = [];
+let memoryPoems = [];
+let memoryPoemsLoaded = false;
+let memoryPoemsLoadFailed = false;
+let memoryDifficulty = 'oson';
+let lastMemoryPoemId = null;
+let memoryCountdownTimer = null;
 
-// Timeline game variables
-let timelineEvents = [];
-let draggedElement = null;
+const MEMORY_DIFFICULTY = {
+    'oson': { interval: 5, label: 'Oson' },
+    'o\'rta': { interval: 3, label: 'O\'rta' },
+    'qiyin': { interval: 2, label: 'Qiyin' }
+};
+
+function parsePoemLines(matn) {
+    return String(matn ?? '').split('\n');
+}
+
+function escapeMemoryHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/"/g, '&quot;');
+}
+
+function normalizeMemoryPoem(sher) {
+    if (!sher || !sher.sarlavha || sher.matn == null || sher.matn === '') return null;
+    const matn = String(sher.matn);
+    return {
+        id: sher.id,
+        title: sher.sarlavha,
+        matn,
+        lines: parsePoemLines(matn),
+        yil: sher.yil,
+        mavzu: Array.isArray(sher.mavzu) ? sher.mavzu.slice() : [],
+        qisqa: sher.qisqa || ''
+    };
+}
+
+function buildMemoryWordList(lines) {
+    const words = [];
+    lines.forEach(function (line) {
+        if (!line.trim()) return;
+        line.split(/\s+/).filter(Boolean).forEach(function (word) {
+            words.push(word);
+        });
+    });
+    return words;
+}
+
+function clearMemoryCountdown() {
+    if (memoryCountdownTimer) {
+        clearInterval(memoryCountdownTimer);
+        memoryCountdownTimer = null;
+    }
+}
+
+function clearMemoryPoemState() {
+    clearMemoryCountdown();
+    selectedPoem = null;
+    poemLines = [];
+    poemWords = [];
+    userAnswers = [];
+    memoryStage = 1;
+}
+
+function prepareSelectedPoemForGame(poem) {
+    selectedPoem = poem;
+    poemLines = poem.lines.slice();
+    poemWords = buildMemoryWordList(poemLines);
+    userAnswers = [];
+    memoryStage = 1;
+}
+
+function renderMemoryLineBreak() {
+    return '<div class="poem-line poem-line--break" aria-hidden="true">&nbsp;</div>';
+}
+
+function renderMemoryPoemHtml(renderWord) {
+    let wordIndex = 0;
+
+    return poemLines.map(function (line) {
+        if (!line.trim()) {
+            return renderMemoryLineBreak();
+        }
+
+        const parts = line.split(/\s+/).filter(Boolean).map(function (word) {
+            const globalIndex = wordIndex;
+            wordIndex += 1;
+            return renderWord(word, globalIndex);
+        });
+
+        return '<div class="poem-line">' + parts.join(' ') + '</div>';
+    }).join('');
+}
+
+async function ensureMemoryPoemsLoaded() {
+    if (memoryPoemsLoaded) {
+        return memoryPoems.length > 0;
+    }
+
+    if (typeof getSherlar !== 'function') {
+        console.error('She\'r yodlash: getSherlar() funksiyasi topilmadi. data.js yuklanganini tekshiring.');
+        memoryPoemsLoadFailed = true;
+        return false;
+    }
+
+    try {
+        const sherlar = await getSherlar();
+        memoryPoems = (Array.isArray(sherlar) ? sherlar : [])
+            .map(normalizeMemoryPoem)
+            .filter(Boolean);
+        memoryPoemsLoaded = true;
+        memoryPoemsLoadFailed = memoryPoems.length === 0;
+
+        if (memoryPoems.length === 0) {
+            console.error('She\'r yodlash: Asarlar → She\'rlar manbasida o\'ynash uchun she\'r topilmadi.');
+        } else {
+            console.log(`She'r yodlash: ${memoryPoems.length} ta she'r yuklandi (Asarlar → She'rlar manbasi).`);
+        }
+
+        return memoryPoems.length > 0;
+    } catch (error) {
+        memoryPoemsLoadFailed = true;
+        console.error('She\'r yodlash: she\'rlar yuklanmadi.', error);
+        return false;
+    }
+}
+
+function pickRandomMemoryPoem() {
+    if (!memoryPoems.length) return null;
+    if (memoryPoems.length === 1) {
+        lastMemoryPoemId = memoryPoems[0].id;
+        return memoryPoems[0];
+    }
+
+    let poem = null;
+    let attempts = 0;
+    const maxAttempts = Math.max(10, memoryPoems.length * 2);
+
+    do {
+        poem = memoryPoems[Math.floor(Math.random() * memoryPoems.length)];
+        attempts++;
+    } while (poem.id === lastMemoryPoemId && attempts < maxAttempts);
+
+    lastMemoryPoemId = poem.id;
+    return poem;
+}
+
+function getMemoryHideInterval() {
+    return MEMORY_DIFFICULTY[memoryDifficulty]?.interval || MEMORY_DIFFICULTY['o\'rta'].interval;
+}
+
+function shouldHideMemoryWord(index) {
+    const interval = getMemoryHideInterval();
+    return interval > 0 && (index + 1) % interval === 0;
+}
+
+function getMemoryPoemMetaLine(poem) {
+    if (!poem) return '';
+    const parts = [];
+    if (poem.mavzu?.length) parts.push(poem.mavzu.join(', '));
+    if (poem.yil) parts.push(String(poem.yil));
+    return parts.join(' · ');
+}
+
+function setMemoryStartEnabled(enabled) {
+    const startBtn = document.querySelector('#memory-start .btn-primary');
+    if (startBtn) startBtn.disabled = !enabled;
+}
+
+// Year match game variables (Yilni moslang — Hayoti manbasi)
+let timelineAllEvents = [];
+let matchRoundEvents = [];
+let matchShuffledEvents = [];
+let matchShuffledYears = [];
+let matchPairs = {};
+let matchSelectedEventId = null;
+let matchSelectedYearSlotId = null;
+let matchChecked = false;
+let timelineEventsLoaded = false;
+let timelineEventsLoadFailed = false;
+let matchDragPayload = null;
+
+const MATCH_ROUND_SIZE = 8;
+const MATCH_MIN_ROUND_SIZE = 6;
 
 // Word search variables
 let wordGrid = [];
 let wordsToFind = [];
 let foundWords = [];
-let selectedCells = [];
+let wordSearchPool = [];
+let wordSearchPoolLoaded = false;
+let wordSearchScore = 0;
+let wordSearchGridSize = 12;
+let wordPlacements = {};
 let wordSearchTimer = null;
 let wordSearchTimeLeft = 300;
-
-// Poems data
-const poems = [
-    {
-        id: 1,
-        title: "O'zbekiston",
-        level: "oson",
-        text: "O'zbekiston mening Vatanım, Sen beqiyos go'zal yurtsan. Jonimdan ham aziz ekan, Seni sevib qolgan qalbim."
-    },
-    {
-        id: 2,
-        title: "Ona",
-        level: "oson",
-        text: "Onam mening g'azalim, Onam mening o'g'lim. Onam mening havolam, Onam mening to'g'rim."
-    },
-    {
-        id: 3,
-        title: "Bahor",
-        level: "o'rta",
-        text: "Bahor keldi, gulshan ochildi, Ko'klamning sofi havosi keldi. Bulbullar sayrab, gul-gulzor, Tabiat uyg'ondi, quvonch bor."
-    },
-    {
-        id: 4,
-        title: "Mehnat",
-        level: "o'rta",
-        text: "Mehnat qilsang topiladi, Ishla, tinma, dod yoqiladi. Oltin qo'llar, ishchi xalq, Baxtga etadi mehnat orqali."
-    },
-    {
-        id: 5,
-        title: "Kitob",
-        level: "qiyin",
-        text: "Kitob - bilim dengizi, cheksiz, Kitob - ma'rifat yo'li, beamal. O'qishga odatlaning har kecha, Kitobsiz umr o'tar besamar."
-    }
-];
-
-// Timeline events
-const timelineEventsData = [
-    { year: 1903, text: "G'afur G'ulom Toshkentda tug'ilgan" },
-    { year: 1908, text: "Birinchi she'rini yozgan" },
-    { year: 1915, text: "Jadid maktabini tamomla gan" },
-    { year: 1920, text: "Birinchi she'rlar to'plami nashr etilgan" },
-    { year: 1925, text: "'Yillar sadosi' to'plami chiqdi" },
-    { year: 1930, text: "O'zbekiston Yozuvchilar uyushmasiga a'zo bo'ldi" },
-    { year: 1939, text: "'Shum bola' romani yozilgan" },
-    { year: 1945, text: "O'zbekiston Xalq shoiri unvoni berildi" },
-    { year: 1950, text: "Davlat mukofotiga sazovor bo'ldi" },
-    { year: 1966, text: "Vafot etdi" }
+let wordSearchGameActive = false;
+let wordSearchEnded = false;
+let wordSearchSelecting = false;
+let wordSearchSelectAnchor = null;
+let wordSearchTapStart = null;
+let wordSearchCurrentCells = [];
+const WORD_SEARCH_ROUND_SIZE = 10;
+const WORD_SEARCH_POINTS = 10;
+const WORD_SEARCH_FILL_LETTERS = 'ABDEFGHIJKLMNOPQRSTUVXYZ';
+const WORD_SEARCH_DIRECTIONS = [
+    [0, 1], [0, -1], [1, 0], [-1, 0],
+    [1, 1], [1, -1], [-1, 1], [-1, -1]
 ];
 
 // ===================================
@@ -218,8 +429,10 @@ function showGame(gameName) {
             loadQuizLeaderboard();
         } else if (gameName === 'memory') {
             loadPoemSelector();
+        } else if (gameName === 'timeline') {
+            prepareTimelineGame();
         } else if (gameName === 'wordsearch') {
-            startWordSearchGame();
+            prepareWordSearchGame();
         } else if (gameName === 'leaderboard') {
             loadGlobalLeaderboard();
         }
@@ -235,6 +448,7 @@ function backToMenu() {
     resetQuizGame();
     resetMemoryGame();
     resetTimelineGame();
+    resetWordSearchGame();
     quizQuestionPool = null;
     activeTestCategory = null;
     
@@ -547,91 +761,129 @@ function updateTestCardCounts() {
 
 function loadPoemSelector() {
     const container = document.getElementById('poem-selector');
-    
-    const grouped = {
-        'oson': poems.filter(p => p.level === 'oson'),
-        'o\'rta': poems.filter(p => p.level === 'o\'rta'),
-        'qiyin': poems.filter(p => p.level === 'qiyin')
-    };
-    
-    container.innerHTML = '<h3 style="margin-bottom: 1rem;">She\'r tanlang:</h3>' +
-        Object.keys(grouped).map(level => `
-            <div style="margin-bottom: 1.5rem;">
-                <h4 style="color: var(--secondary); margin-bottom: 0.5rem;">${level.charAt(0).toUpperCase() + level.slice(1)} daraja</h4>
-                ${grouped[level].map(poem => `
+    if (!container) return;
+
+    container.innerHTML = '<p class="text-light">She\'rlar yuklanmoqda...</p>';
+    setMemoryStartEnabled(false);
+
+    ensureMemoryPoemsLoaded().then(function (loaded) {
+        if (!loaded) {
+            container.innerHTML = `
+                <p style="color: #c0392b; margin-bottom: 1rem;">
+                    She'rlar yuklanmadi. Asarlar → She'rlar manbasiga ulanib bo'lmadi. Keyinroq qayta urinib ko'ring.
+                </p>
+            `;
+            return;
+        }
+
+        setMemoryStartEnabled(true);
+        container.innerHTML = `
+            <h3 style="margin-bottom: 1rem;">Qiyinlik darajasini tanlang:</h3>
+            ${Object.keys(MEMORY_DIFFICULTY).map(function (level, index) {
+                const config = MEMORY_DIFFICULTY[level];
+                return `
                     <label style="display: block; padding: 0.75rem; background: var(--bg); border-radius: 8px; margin-bottom: 0.5rem; cursor: pointer;">
-                        <input type="radio" name="poem" value="${poem.id}" style="margin-right: 0.5rem;">
-                        ${poem.title}
+                        <input type="radio" name="memory-difficulty" value="${level}" style="margin-right: 0.5rem;" ${index === 0 ? 'checked' : ''}>
+                        ${config.label} — ${level === 'oson' ? 'kamroq' : level === 'qiyin' ? 'yanada ko\'proq' : 'ko\'proq'} so'z yashiriladi
                     </label>
-                `).join('')}
-            </div>
-        `).join('');
+                `;
+            }).join('')}
+            <p class="text-light" style="margin-top: 1rem;">
+                ${memoryPoems.length} ta she'r mavjud. O'yin boshlanganda tasodifiy she'r tanlanadi.
+            </p>
+        `;
+    });
 }
 
 function startMemoryGame() {
-    const selected = document.querySelector('input[name="poem"]:checked');
-    
-    if (!selected) {
-        alert('Iltimos, she\'r tanlang!');
+    const difficultyInput = document.querySelector('input[name="memory-difficulty"]:checked');
+
+    if (!difficultyInput) {
+        alert('Iltimos, qiyinlik darajasini tanlang!');
         return;
     }
-    
-    selectedPoem = poems.find(p => p.id == selected.value);
-    memoryStage = 1;
-    poemWords = selectedPoem.text.split(/\s+/);
-    userAnswers = [];
-    
+
+    if (!memoryPoems.length) {
+        alert('She\'rlar hozircha mavjud emas. Keyinroq qayta urinib ko\'ring.');
+        console.error('She\'r yodlash: she\'rlar ro\'yxati bo\'sh.');
+        return;
+    }
+
+    memoryDifficulty = difficultyInput.value;
+    const poem = pickRandomMemoryPoem();
+
+    if (!poem) {
+        alert('She\'r tanlab bo\'lmadi. Qayta urinib ko\'ring.');
+        return;
+    }
+
+    prepareSelectedPoemForGame(poem);
+
     document.getElementById('memory-start').style.display = 'none';
     document.getElementById('memory-playing').style.display = 'block';
-    
+    document.getElementById('memory-result').style.display = 'none';
+    document.getElementById('poem-display').innerHTML = '';
+
     showMemoryStage();
 }
 
 function showMemoryStage() {
+    if (!selectedPoem || !poemLines.length) {
+        console.error('She\'r yodlash: tanlangan she\'r yoki satrlar mavjud emas.');
+        return;
+    }
+
     document.getElementById('memory-stage').textContent = memoryStage;
-    document.getElementById('memory-poem-title').textContent = selectedPoem.title;
-    
+    const metaLine = getMemoryPoemMetaLine(selectedPoem);
+    document.getElementById('memory-poem-title').innerHTML = metaLine
+        ? `${escapeMemoryHtml(selectedPoem.title)}<br><span style="font-size: 0.875rem; font-weight: 400; opacity: 0.85;">${escapeMemoryHtml(metaLine)}</span>`
+        : escapeMemoryHtml(selectedPoem.title);
+
     const display = document.getElementById('poem-display');
-    
+    clearMemoryCountdown();
+
     if (memoryStage === 1) {
-        // Stage 1: Show full poem
-        display.innerHTML = '<p style="font-style: italic;">' + poemWords.join(' ') + '</p>';
+        display.innerHTML = poemLines.map(function (line) {
+            if (!line.trim()) {
+                return renderMemoryLineBreak();
+            }
+            return '<div class="poem-line">' + escapeMemoryHtml(line) + '</div>';
+        }).join('');
+
         document.getElementById('memory-timer').textContent = '30 soniya';
         document.getElementById('memory-next-btn').style.display = 'block';
-        
-        // Start 30 second countdown
+        document.getElementById('memory-next-btn').textContent = uiT('gameNextStage', 'Keyingi bosqich →');
+
         let timeLeft = 30;
-        const timer = setInterval(() => {
-            timeLeft--;
+        memoryCountdownTimer = setInterval(function () {
+            timeLeft -= 1;
             document.getElementById('memory-timer').textContent = timeLeft + ' soniya';
             if (timeLeft <= 0) {
-                clearInterval(timer);
-                document.getElementById('memory-next-btn').textContent = 'Keyingi bosqich ✓';
+                clearMemoryCountdown();
+                document.getElementById('memory-next-btn').textContent = uiT('gameNextStageDone', 'Keyingi bosqich ✓');
             }
         }, 1000);
-        
+
     } else if (memoryStage === 2) {
-        // Stage 2: Hide every 3rd word
-        display.innerHTML = poemWords.map((word, index) => {
-            if ((index + 1) % 3 === 0) {
-                return '<span class="poem-word hidden" data-word="' + word + '">' + word + '</span>';
+        display.innerHTML = renderMemoryPoemHtml(function (word, index) {
+            if (shouldHideMemoryWord(index)) {
+                return '<span class="poem-word hidden" data-word="' + escapeMemoryHtml(word) + '">' + escapeMemoryHtml(word) + '</span>';
             }
-            return '<span class="poem-word">' + word + '</span>';
-        }).join(' ');
-        
+            return '<span class="poem-word">' + escapeMemoryHtml(word) + '</span>';
+        });
+
         document.getElementById('memory-timer').textContent = '';
-        document.getElementById('memory-next-btn').textContent = 'Keyingi bosqich →';
-        
+        document.getElementById('memory-next-btn').textContent = uiT('gameNextStage', 'Keyingi bosqich →');
+
     } else if (memoryStage === 3) {
-        // Stage 3: Input fields for hidden words
-        display.innerHTML = poemWords.map((word, index) => {
-            if ((index + 1) % 3 === 0) {
-                return '<span class="poem-word"><input type="text" data-correct="' + word.toLowerCase() + '" data-index="' + index + '" placeholder="___"></span>';
+        display.innerHTML = renderMemoryPoemHtml(function (word, index) {
+            if (shouldHideMemoryWord(index)) {
+                return '<span class="poem-word"><input type="text" data-correct="' + escapeMemoryHtml(word.toLowerCase()) + '" data-index="' + index + '" placeholder="___"></span>';
             }
-            return '<span class="poem-word">' + word + '</span>';
-        }).join(' ');
-        
-        document.getElementById('memory-next-btn').textContent = 'Tekshirish ✓';
+            return '<span class="poem-word">' + escapeMemoryHtml(word) + '</span>';
+        });
+
+        document.getElementById('memory-next-btn').textContent = uiT('gameCheck', 'Tekshirish ✓');
     }
 }
 
@@ -692,134 +944,507 @@ function checkMemoryAnswers() {
 }
 
 function resetMemoryGame() {
-    memoryStage = 1;
-    selectedPoem = null;
-    poemWords = [];
-    userAnswers = [];
+    clearMemoryPoemState();
     document.getElementById('memory-start').style.display = 'block';
     document.getElementById('memory-playing').style.display = 'none';
     document.getElementById('memory-result').style.display = 'none';
+    const display = document.getElementById('poem-display');
+    if (display) display.innerHTML = '';
+    setMemoryStartEnabled(memoryPoems.length > 0 && !memoryPoemsLoadFailed);
+}
+
+function playAnotherMemoryPoem() {
+    document.getElementById('memory-result').style.display = 'none';
+    startMemoryGame();
 }
 
 // ===================================
-// TIMELINE GAME: XRONOLOGIYA
+// YEAR MATCH GAME: YILNI MOSLANG
 // ===================================
+
+function escapeMatchHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/"/g, '&quot;');
+}
+
+function normalizeHayotTimelineEvent(voqea, sortIndex) {
+    if (!voqea || voqea.yil == null || !voqea.sarlavha) return null;
+    const matn = voqea.qisqa ? String(voqea.qisqa).trim() : String(voqea.sarlavha).trim();
+    if (!matn) return null;
+    return {
+        id: String(voqea.id || `${voqea.yil}-${sortIndex}`),
+        yil: Number(voqea.yil),
+        sarlavha: String(voqea.sarlavha).trim(),
+        matn: matn,
+        bosqich: voqea.bosqich || '',
+        sortIndex: sortIndex
+    };
+}
+
+async function ensureTimelineEventsLoaded(forceRefresh) {
+    if (timelineEventsLoaded && !forceRefresh) {
+        return timelineAllEvents.length > 0;
+    }
+
+    if (typeof getHayotFull !== 'function') {
+        console.error('Yilni moslang: getHayotFull() topilmadi. data.js yuklanganini tekshiring.');
+        timelineEventsLoadFailed = true;
+        return false;
+    }
+
+    try {
+        const hayot = await getHayotFull();
+        const voqealar = Array.isArray(hayot?.voqealar) ? hayot.voqealar : [];
+        timelineAllEvents = voqealar
+            .map(function (voqea, index) { return normalizeHayotTimelineEvent(voqea, index); })
+            .filter(Boolean);
+        timelineEventsLoaded = true;
+        timelineEventsLoadFailed = timelineAllEvents.length === 0;
+
+        if (timelineAllEvents.length === 0) {
+            console.error('Yilni moslang: «Hayoti» sahifasidagi voqealar (data/hayot.json) topilmadi.');
+        } else {
+            console.log(`Yilni moslang: «Hayoti» sahifasidan ${timelineAllEvents.length} ta voqea yuklandi.`);
+        }
+
+        return timelineAllEvents.length > 0;
+    } catch (error) {
+        timelineEventsLoadFailed = true;
+        console.error('Yilni moslang: «Hayoti» ma\'lumotlari yuklanmadi.', error);
+        return false;
+    }
+}
+
+function pickMatchRoundEvents() {
+    const pool = timelineAllEvents;
+    const roundSize = Math.min(
+        MATCH_ROUND_SIZE,
+        Math.max(MATCH_MIN_ROUND_SIZE, pool.length)
+    );
+
+    if (pool.length <= roundSize) {
+        return pool.slice();
+    }
+
+    return shuffleArray(pool.slice()).slice(0, roundSize);
+}
+
+function isMatchTouchUi() {
+    return window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window;
+}
+
+function getYearSlotById(slotId) {
+    return matchShuffledYears.find(function (slot) { return slot.slotId === slotId; });
+}
+
+function getEventById(eventId) {
+    return matchRoundEvents.find(function (event) { return event.id === eventId; });
+}
+
+function getYearSlotForEvent(eventId) {
+    const slotId = matchPairs[eventId];
+    return slotId ? getYearSlotById(slotId) : null;
+}
+
+function isEventPaired(eventId) {
+    return Boolean(matchPairs[eventId]);
+}
+
+function isYearSlotUsed(slotId) {
+    return Object.values(matchPairs).includes(slotId);
+}
+
+function clearMatchSelection() {
+    matchSelectedEventId = null;
+    matchSelectedYearSlotId = null;
+    document.querySelectorAll('.year-match-card.is-selected').forEach(function (el) {
+        el.classList.remove('is-selected');
+    });
+}
+
+function resetMatchRoundState() {
+    matchPairs = {};
+    matchSelectedEventId = null;
+    matchSelectedYearSlotId = null;
+    matchChecked = false;
+    matchDragPayload = null;
+}
+
+function pairEventWithYear(eventId, yearSlotId) {
+    if (matchChecked || !eventId || !yearSlotId) return;
+
+    Object.keys(matchPairs).forEach(function (key) {
+        if (matchPairs[key] === yearSlotId) {
+            delete matchPairs[key];
+        }
+    });
+
+    matchPairs[eventId] = yearSlotId;
+    clearMatchSelection();
+    renderYearMatchBoard();
+}
+
+function unpairEvent(eventId) {
+    if (matchChecked) return;
+    delete matchPairs[eventId];
+    clearMatchSelection();
+    renderYearMatchBoard();
+}
+
+function handleMatchEventClick(eventId) {
+    if (matchChecked) return;
+
+    if (matchSelectedEventId === eventId) {
+        clearMatchSelection();
+        return;
+    }
+
+    if (isEventPaired(eventId) && !matchSelectedYearSlotId) {
+        unpairEvent(eventId);
+        return;
+    }
+
+    if (matchSelectedYearSlotId) {
+        pairEventWithYear(eventId, matchSelectedYearSlotId);
+        return;
+    }
+
+    clearMatchSelection();
+    matchSelectedEventId = eventId;
+    const card = document.querySelector(`.year-match-card--event[data-event-id="${CSS.escape(eventId)}"]`);
+    if (card) card.classList.add('is-selected');
+}
+
+function handleMatchYearClick(slotId) {
+    if (matchChecked) return;
+
+    if (matchSelectedYearSlotId === slotId) {
+        clearMatchSelection();
+        return;
+    }
+
+    if (matchSelectedEventId) {
+        pairEventWithYear(matchSelectedEventId, slotId);
+        return;
+    }
+
+    if (isYearSlotUsed(slotId)) {
+        const pairedEventId = Object.keys(matchPairs).find(function (key) {
+            return matchPairs[key] === slotId;
+        });
+        if (pairedEventId) unpairEvent(pairedEventId);
+        return;
+    }
+
+    clearMatchSelection();
+    matchSelectedYearSlotId = slotId;
+    const card = document.querySelector(`.year-match-card--year[data-slot-id="${CSS.escape(slotId)}"]`);
+    if (card) card.classList.add('is-selected');
+}
+
+function renderYearMatchBoard() {
+    const eventsEl = document.getElementById('match-events');
+    const yearsEl = document.getElementById('match-years');
+    const pairsPanel = document.getElementById('match-pairs-panel');
+    const pairsList = document.getElementById('match-pairs-list');
+    const pairedCountEl = document.getElementById('match-paired-count');
+    const totalCountEl = document.getElementById('match-total-count');
+    const checkBtn = document.getElementById('match-check-btn');
+    const touchUi = isMatchTouchUi();
+    const draggable = !touchUi && !matchChecked;
+
+    if (!eventsEl || !yearsEl) return;
+
+    eventsEl.innerHTML = matchShuffledEvents.map(function (event) {
+        const pairedSlot = getYearSlotForEvent(event.id);
+        const pairedClass = pairedSlot ? ' is-paired' : '';
+        const selectedClass = matchSelectedEventId === event.id ? ' is-selected' : '';
+        const statusClass = matchChecked ? (pairedSlot && pairedSlot.eventId === event.id ? ' is-correct' : ' is-wrong') : '';
+        const pairedYearHtml = pairedSlot
+            ? `<span class="year-match-card__paired-year">${pairedSlot.yil}</span>`
+            : '';
+        const correctHint = matchChecked && (!pairedSlot || pairedSlot.eventId !== event.id)
+            ? `<span class="year-match-card__correct-hint">To'g'ri yil: ${event.yil}</span>`
+            : '';
+
+        return `
+            <button type="button"
+                class="year-match-card year-match-card--event${pairedClass}${selectedClass}${statusClass}"
+                data-event-id="${escapeMatchHtml(event.id)}"
+                draggable="${draggable ? 'true' : 'false'}"
+                aria-pressed="${matchSelectedEventId === event.id ? 'true' : 'false'}">
+                <span class="year-match-card__label">${escapeMatchHtml(event.sarlavha)}</span>
+                ${pairedYearHtml}
+                ${correctHint}
+            </button>
+        `;
+    }).join('');
+
+    yearsEl.innerHTML = matchShuffledYears.map(function (slot) {
+        const used = isYearSlotUsed(slot.slotId);
+        const selectedClass = matchSelectedYearSlotId === slot.slotId ? ' is-selected' : '';
+        const usedClass = used ? ' is-used' : '';
+
+        let checkClass = '';
+        if (matchChecked && used) {
+            const eventId = Object.keys(matchPairs).find(function (key) { return matchPairs[key] === slot.slotId; });
+            checkClass = eventId && eventId === slot.eventId ? ' is-correct' : ' is-wrong';
+        }
+
+        return `
+            <button type="button"
+                class="year-match-card year-match-card--year${usedClass}${selectedClass}${checkClass}"
+                data-slot-id="${escapeMatchHtml(slot.slotId)}"
+                data-year="${slot.yil}"
+                draggable="${draggable && !used ? 'true' : 'false'}"
+                aria-pressed="${matchSelectedYearSlotId === slot.slotId ? 'true' : 'false'}">
+                <span class="year-match-card__year">${slot.yil}</span>
+            </button>
+        `;
+    }).join('');
+
+    bindYearMatchInteractions(eventsEl, yearsEl, draggable);
+
+    const pairedCount = Object.keys(matchPairs).length;
+    const total = matchRoundEvents.length;
+    if (pairedCountEl) pairedCountEl.textContent = String(pairedCount);
+    if (totalCountEl) totalCountEl.textContent = String(total);
+    if (checkBtn) checkBtn.disabled = pairedCount !== total || matchChecked;
+
+    if (pairsPanel && pairsList) {
+        const entries = Object.keys(matchPairs).map(function (eventId) {
+            const event = getEventById(eventId);
+            const slot = getYearSlotForEvent(eventId);
+            if (!event || !slot) return '';
+            return `<li class="year-match-pairs__item"><span>${escapeMatchHtml(event.sarlavha)}</span><span class="year-match-pairs__arrow">→</span><span>${slot.yil}</span></li>`;
+        }).filter(Boolean);
+
+        if (entries.length > 0) {
+            pairsPanel.hidden = false;
+            pairsList.innerHTML = entries.join('');
+        } else {
+            pairsPanel.hidden = true;
+            pairsList.innerHTML = '';
+        }
+    }
+}
+
+function bindYearMatchInteractions(eventsEl, yearsEl, draggable) {
+    eventsEl.querySelectorAll('.year-match-card--event').forEach(function (card) {
+        card.addEventListener('click', function () {
+            handleMatchEventClick(card.dataset.eventId);
+        });
+
+        if (draggable) {
+            card.addEventListener('dragstart', handleMatchDragStart);
+            card.addEventListener('dragend', handleMatchDragEnd);
+            card.addEventListener('dragover', handleMatchDragOver);
+            card.addEventListener('dragleave', handleMatchDragLeave);
+            card.addEventListener('drop', handleMatchDropOnEvent);
+        }
+    });
+
+    yearsEl.querySelectorAll('.year-match-card--year').forEach(function (card) {
+        card.addEventListener('click', function () {
+            handleMatchYearClick(card.dataset.slotId);
+        });
+
+        if (draggable) {
+            card.addEventListener('dragstart', handleMatchDragStart);
+            card.addEventListener('dragend', handleMatchDragEnd);
+            card.addEventListener('dragover', handleMatchDragOver);
+            card.addEventListener('dragleave', handleMatchDragLeave);
+            card.addEventListener('drop', handleMatchDropOnYear);
+        }
+    });
+}
+
+function handleMatchDragStart(e) {
+    if (matchChecked) {
+        e.preventDefault();
+        return;
+    }
+
+    const isEvent = this.classList.contains('year-match-card--event');
+    matchDragPayload = {
+        type: isEvent ? 'event' : 'year',
+        id: isEvent ? this.dataset.eventId : this.dataset.slotId
+    };
+    this.classList.add('is-dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', matchDragPayload.id || '');
+}
+
+function handleMatchDragOver(e) {
+    e.preventDefault();
+    if (!matchDragPayload || matchChecked) return;
+    this.classList.add('is-drop-target');
+    e.dataTransfer.dropEffect = 'move';
+}
+
+function handleMatchDragLeave() {
+    this.classList.remove('is-drop-target');
+}
+
+function handleMatchDropOnYear(e) {
+    e.preventDefault();
+    this.classList.remove('is-drop-target');
+    if (!matchDragPayload || matchDragPayload.type !== 'event') return;
+    pairEventWithYear(matchDragPayload.id, this.dataset.slotId);
+}
+
+function handleMatchDropOnEvent(e) {
+    e.preventDefault();
+    this.classList.remove('is-drop-target');
+    if (!matchDragPayload || matchDragPayload.type !== 'year') return;
+    pairEventWithYear(this.dataset.eventId, matchDragPayload.id);
+}
+
+function handleMatchDragEnd() {
+    this.classList.remove('is-dragging');
+    matchDragPayload = null;
+    document.querySelectorAll('.year-match-card.is-drop-target').forEach(function (el) {
+        el.classList.remove('is-drop-target');
+    });
+}
+
+function setYearMatchFeedback(message, type) {
+    const feedback = document.getElementById('timeline-feedback');
+    if (!feedback) return;
+    feedback.hidden = false;
+    feedback.textContent = message;
+    feedback.className = 'year-match-feedback year-match-feedback--' + (type || 'info');
+}
+
+function clearYearMatchFeedback() {
+    const feedback = document.getElementById('timeline-feedback');
+    if (feedback) {
+        feedback.hidden = true;
+        feedback.textContent = '';
+        feedback.className = 'year-match-feedback';
+    }
+}
+
+async function prepareTimelineGame() {
+    const startScreen = document.querySelector('#timeline-game .year-match-start');
+    const playing = document.getElementById('timeline-playing');
+    const result = document.getElementById('timeline-result');
+    const startBtn = document.getElementById('timeline-start-btn');
+
+    if (startBtn) startBtn.disabled = true;
+
+    const loaded = await ensureTimelineEventsLoaded(true);
+    if (!loaded) {
+        if (startScreen) {
+            startScreen.querySelector('.year-match-start__error')?.remove();
+            const error = document.createElement('p');
+            error.className = 'year-match-start__error';
+            error.textContent = uiT('gameEventsLoadError', 'Voqealar yuklanmadi. Keyinroq qayta urinib ko\'ring.');
+            startScreen.appendChild(error);
+        }
+        if (startBtn) startBtn.disabled = true;
+        return;
+    }
+
+    if (startBtn) startBtn.disabled = false;
+    if (startScreen) startScreen.style.display = 'block';
+    if (playing) playing.style.display = 'none';
+    if (result) result.style.display = 'none';
+}
 
 function startTimelineGame() {
-    // Shuffle events
-    timelineEvents = shuffleArray([...timelineEventsData]);
-    
-    const container = document.getElementById('timeline-items');
-    container.innerHTML = timelineEvents.map((event, index) => `
-        <div class="timeline-item" draggable="true" data-year="${event.year}" data-index="${index}">
-            <strong>${event.year}</strong> — ${event.text}
-        </div>
-    `).join('');
-    
-    // Add drag and drop listeners
-    const items = container.querySelectorAll('.timeline-item');
-    items.forEach(item => {
-        item.addEventListener('dragstart', handleDragStart);
-        item.addEventListener('dragover', handleDragOver);
-        item.addEventListener('drop', handleDrop);
-        item.addEventListener('dragend', handleDragEnd);
-    });
-    
-    document.querySelector('#timeline-game .start-screen').style.display = 'none';
+    if (!timelineAllEvents.length) {
+        alert('Voqealar hozircha mavjud emas. Keyinroq qayta urinib ko\'ring.');
+        return;
+    }
+
+    resetMatchRoundState();
+    clearYearMatchFeedback();
+
+    matchRoundEvents = pickMatchRoundEvents();
+    matchShuffledEvents = shuffleArray(matchRoundEvents.slice());
+    matchShuffledYears = shuffleArray(matchRoundEvents.map(function (event) {
+        return {
+            slotId: 'ys-' + event.id,
+            yil: event.yil,
+            eventId: event.id
+        };
+    }));
+
+    renderYearMatchBoard();
+
+    document.querySelector('#timeline-game .year-match-start').style.display = 'none';
     document.getElementById('timeline-playing').style.display = 'block';
+    document.getElementById('timeline-result').style.display = 'none';
 }
 
-function handleDragStart(e) {
-    draggedElement = this;
-    this.classList.add('dragging');
-    e.dataTransfer.effectAllowed = 'move';
-}
+function checkYearMatch() {
+    const total = matchRoundEvents.length;
+    if (!total || Object.keys(matchPairs).length !== total) return;
 
-function handleDragOver(e) {
-    if (e.preventDefault) {
-        e.preventDefault();
-    }
-    this.classList.add('dragover');
-    e.dataTransfer.dropEffect = 'move';
-    return false;
-}
+    matchChecked = true;
+    let correctCount = 0;
 
-function handleDrop(e) {
-    if (e.stopPropagation) {
-        e.stopPropagation();
-    }
-    
-    if (draggedElement !== this) {
-        const container = this.parentNode;
-        const allItems = [...container.children];
-        const draggedIndex = allItems.indexOf(draggedElement);
-        const targetIndex = allItems.indexOf(this);
-        
-        if (draggedIndex < targetIndex) {
-            container.insertBefore(draggedElement, this.nextSibling);
-        } else {
-            container.insertBefore(draggedElement, this);
-        }
-    }
-    
-    this.classList.remove('dragover');
-    return false;
-}
-
-function handleDragEnd(e) {
-    this.classList.remove('dragging');
-    document.querySelectorAll('.timeline-item').forEach(item => {
-        item.classList.remove('dragover');
-    });
-}
-
-function checkTimeline() {
-    const items = document.querySelectorAll('.timeline-item');
-    let score = 0;
-    const sortedYears = [...timelineEventsData].sort((a, b) => a.year - b.year);
-    
-    items.forEach((item, index) => {
-        const year = parseInt(item.dataset.year);
-        const correctYear = sortedYears[index].year;
-        
-        if (year === correctYear) {
-            item.classList.add('correct-position');
-            score += 10;
-        } else {
-            item.classList.add('wrong-position');
+    matchRoundEvents.forEach(function (event) {
+        const slot = getYearSlotForEvent(event.id);
+        if (slot && slot.eventId === event.id) {
+            correctCount += 1;
         }
     });
-    
-    // Show result after delay
-    setTimeout(() => {
+
+    renderYearMatchBoard();
+
+    const checkBtn = document.getElementById('match-check-btn');
+    if (checkBtn) checkBtn.disabled = true;
+
+    if (correctCount === total) {
+        setYearMatchFeedback('Ajoyib! Barcha voqealarni to\'g\'ri yillar bilan moslashtirdingiz.', 'success');
+    } else {
+        setYearMatchFeedback(
+            `${total - correctCount} ta juftlik noto\'g\'ri. Qizil belgilangan voqealar uchun to\'g\'ri yil ko\'rsatildi.`,
+            'warning'
+        );
+    }
+
+    const scorePercent = Math.round((correctCount / total) * 100);
+    document.getElementById('timeline-final-score').textContent = String(correctCount);
+    document.getElementById('timeline-final-total').textContent = String(total);
+    document.getElementById('timeline-result-message').textContent =
+        `${total} ta voqeadan ${correctCount} tasini to'g'ri moslashtirdingiz.`;
+
+    setTimeout(function () {
         document.getElementById('timeline-playing').style.display = 'none';
         document.getElementById('timeline-result').style.display = 'block';
-        
-        document.getElementById('timeline-score').textContent = score;
-        
-        let message = '';
-        if (score === 100) {
-            message = 'Mukammal! Barcha voqealar to\'g\'ri joylashtirildi! 🏆';
-        } else if (score >= 70) {
-            message = 'Yaxshi natija! Tarixni yaxshi bilasiz! 👍';
-        } else if (score >= 50) {
-            message = 'O\'rtacha. Ko\'proq o\'rganing! 📚';
-        } else {
-            message = 'Tarixni chuqurroq o\'rganishingiz kerak! 💪';
-        }
-        document.getElementById('timeline-result-message').textContent = message;
-        
-        // Save to leaderboard
-        saveToLeaderboard('timeline', playerName || 'Anonim', score);
-    }, 2000);
+        saveToLeaderboard('timeline', playerName || 'Anonim', scorePercent);
+    }, correctCount === total ? 900 : 1800);
+}
+
+function restartTimelineGame() {
+    startTimelineGame();
 }
 
 function resetTimelineGame() {
-    timelineEvents = [];
-    draggedElement = null;
-    document.querySelector('#timeline-game .start-screen').style.display = 'block';
-    document.getElementById('timeline-playing').style.display = 'none';
-    document.getElementById('timeline-result').style.display = 'none';
+    resetMatchRoundState();
+    matchRoundEvents = [];
+    matchShuffledEvents = [];
+    matchShuffledYears = [];
+
+    const playing = document.getElementById('timeline-playing');
+    const result = document.getElementById('timeline-result');
+    const startScreen = document.querySelector('#timeline-game .year-match-start');
+    const eventsEl = document.getElementById('match-events');
+    const yearsEl = document.getElementById('match-years');
+    const pairsPanel = document.getElementById('match-pairs-panel');
+
+    if (startScreen) startScreen.style.display = 'block';
+    if (playing) playing.style.display = 'none';
+    if (result) result.style.display = 'none';
+    if (eventsEl) eventsEl.innerHTML = '';
+    if (yearsEl) yearsEl.innerHTML = '';
+    if (pairsPanel) pairsPanel.hidden = true;
+    clearYearMatchFeedback();
 }
 
 
@@ -827,213 +1452,607 @@ function resetTimelineGame() {
 // WORD SEARCH GAME: SO'Z TOPISH
 // ===================================
 
-const wordSearchWords = [
-    'SHUMBOLA', 'YODGOR', 'BAHOR', 'VATAN', 'MEHNAT',
-    'KITOB', 'DOSTON', 'SHOIR', 'TOSHKENT', 'OZBEK'
-];
-
-function startWordSearchGame() {
-    foundWords = [];
-    selectedCells = [];
-    wordsToFind = [...wordSearchWords];
-    
-    // Generate grid
-    generateWordSearchGrid();
-    
-    // Display words to find
-    displayWordsToFind();
-    
-    // Start timer
-    wordSearchTimeLeft = 300; // 5 minutes
-    updateWordSearchTimer();
-    
-    if (wordSearchTimer) clearInterval(wordSearchTimer);
-    wordSearchTimer = setInterval(() => {
-        wordSearchTimeLeft--;
-        updateWordSearchTimer();
-        
-        if (wordSearchTimeLeft <= 0) {
-            clearInterval(wordSearchTimer);
-            endWordSearchGame();
-        }
-    }, 1000);
-    
-    document.getElementById('wordsearch-playing').style.display = 'block';
-    document.getElementById('wordsearch-result').style.display = 'none';
+function normalizeWordSearchToken(value) {
+    return String(value || '')
+        .toUpperCase()
+        .replace(/O[''`ʻʼ]/g, 'O')
+        .replace(/G[''`ʻʼ]/g, 'G')
+        .replace(/[''`ʻʼ]/g, '')
+        .replace(/[^A-Z]/g, '');
 }
 
-function generateWordSearchGrid() {
-    const gridSize = 8;
-    wordGrid = Array(gridSize).fill(null).map(() => Array(gridSize).fill(''));
-    
-    // Place words in grid
-    wordsToFind.forEach(word => {
-        let placed = false;
-        let attempts = 0;
-        
-        while (!placed && attempts < 100) {
-            const direction = Math.random() > 0.5 ? 'horizontal' : 'vertical';
-            const row = Math.floor(Math.random() * gridSize);
-            const col = Math.floor(Math.random() * gridSize);
-            
-            if (canPlaceWord(word, row, col, direction, gridSize)) {
-                placeWord(word, row, col, direction);
-                placed = true;
-            }
-            attempts++;
-        }
-    });
-    
-    // Fill empty cells with random letters
-    const letters = 'ABDEFGHIKLMNOPQRSTUVXYZ';
-    for (let i = 0; i < gridSize; i++) {
-        for (let j = 0; j < gridSize; j++) {
-            if (wordGrid[i][j] === '') {
-                wordGrid[i][j] = letters[Math.floor(Math.random() * letters.length)];
-            }
-        }
+function addWordSearchCandidates(set, value) {
+    const word = normalizeWordSearchToken(value);
+    if (word.length >= 4 && word.length <= 12) {
+        set.add(word);
     }
-    
-    // Render grid
-    const container = document.getElementById('word-grid');
-    container.innerHTML = wordGrid.map((row, i) => `
-        <div class="word-grid-row">
-            ${row.map((cell, j) => `
-                <div class="word-cell" data-row="${i}" data-col="${j}" onclick="selectCell(${i}, ${j})">
-                    ${cell}
-                </div>
-            `).join('')}
-        </div>
-    `).join('');
 }
 
-function canPlaceWord(word, row, col, direction, gridSize) {
-    if (direction === 'horizontal') {
-        if (col + word.length > gridSize) return false;
-        for (let i = 0; i < word.length; i++) {
-            if (wordGrid[row][col + i] !== '' && wordGrid[row][col + i] !== word[i]) {
-                return false;
-            }
+async function loadWordSearchPool(forceRefresh) {
+    if (wordSearchPoolLoaded && !forceRefresh && wordSearchPool.length) {
+        return wordSearchPool.length > 0;
+    }
+
+    const pool = new Set();
+
+    try {
+        if (typeof getSherlar === 'function') {
+            const sherlar = await getSherlar();
+            (Array.isArray(sherlar) ? sherlar : []).forEach(function (sher) {
+                addWordSearchCandidates(pool, sher.sarlavha);
+                (sher.mavzu || []).forEach(function (m) { addWordSearchCandidates(pool, m); });
+            });
         }
-    } else {
-        if (row + word.length > gridSize) return false;
-        for (let i = 0; i < word.length; i++) {
-            if (wordGrid[row + i][col] !== '' && wordGrid[row + i][col] !== word[i]) {
-                return false;
-            }
+
+        if (typeof getAsarlarList === 'function') {
+            const asarlar = await getAsarlarList();
+            (Array.isArray(asarlar) ? asarlar : []).forEach(function (asar) {
+                addWordSearchCandidates(pool, asar.nomi);
+                (asar.kalitSozlar || []).forEach(function (k) { addWordSearchCandidates(pool, k); });
+            });
+        }
+
+        if (typeof getHayotFull === 'function') {
+            const hayot = await getHayotFull();
+            (hayot?.voqealar || []).forEach(function (v) { addWordSearchCandidates(pool, v.sarlavha); });
+            Object.values(hayot?.bosqichlar || {}).forEach(function (b) {
+                addWordSearchCandidates(pool, b.sarlavha);
+            });
+            (hayot?.overview || []).forEach(function (item) {
+                addWordSearchCandidates(pool, item.title);
+                addWordSearchCandidates(pool, item.label);
+            });
+        }
+
+        if (typeof getDostonlar === 'function') {
+            const dostonlar = await getDostonlar();
+            (Array.isArray(dostonlar) ? dostonlar : []).forEach(function (d) {
+                addWordSearchCandidates(pool, d.sarlavha);
+            });
+        }
+    } catch (error) {
+        console.error('So\'z topish: ma\'lumotlar yuklanmadi.', error);
+    }
+
+    wordSearchPool = Array.from(pool);
+    wordSearchPoolLoaded = wordSearchPool.length > 0;
+
+    if (!wordSearchPoolLoaded) {
+        console.error('So\'z topish: platforma ma\'lumotlaridan so\'zlar topilmadi.');
+    }
+
+    return wordSearchPoolLoaded;
+}
+
+function pickWordSearchRoundWords() {
+    const shuffled = shuffleArray(wordSearchPool.slice());
+    const size = Math.min(WORD_SEARCH_ROUND_SIZE, shuffled.length);
+    return shuffled.slice(0, size);
+}
+
+function calculateWordSearchGridSize(words) {
+    const maxLen = words.reduce(function (max, word) {
+        return Math.max(max, word.length);
+    }, 4);
+    const base = Math.max(10, maxLen + 3);
+    return Math.min(14, base);
+}
+
+function canPlaceWordInGrid(word, row, col, dir, gridSize) {
+    const dRow = dir[0];
+    const dCol = dir[1];
+    const endRow = row + dRow * (word.length - 1);
+    const endCol = col + dCol * (word.length - 1);
+
+    if (endRow < 0 || endCol < 0 || endRow >= gridSize || endCol >= gridSize) {
+        return false;
+    }
+
+    for (let i = 0; i < word.length; i += 1) {
+        const r = row + dRow * i;
+        const c = col + dCol * i;
+        const existing = wordGrid[r][c];
+        if (existing !== '' && existing !== word[i]) {
+            return false;
         }
     }
+
     return true;
 }
 
-function placeWord(word, row, col, direction) {
-    if (direction === 'horizontal') {
-        for (let i = 0; i < word.length; i++) {
-            wordGrid[row][col + i] = word[i];
+function placeWordInGrid(word, row, col, dir) {
+    const cells = [];
+    const dRow = dir[0];
+    const dCol = dir[1];
+
+    for (let i = 0; i < word.length; i += 1) {
+        const r = row + dRow * i;
+        const c = col + dCol * i;
+        wordGrid[r][c] = word[i];
+        cells.push({ row: r, col: c });
+    }
+
+    wordPlacements[word] = cells;
+}
+
+function buildWordSearchGrid(words) {
+    let gridSize = calculateWordSearchGridSize(words);
+    let placedWords = [];
+    let attempt = 0;
+
+    while (attempt < 6) {
+        wordSearchGridSize = gridSize;
+        wordGrid = Array(gridSize).fill(null).map(function () {
+            return Array(gridSize).fill('');
+        });
+        wordPlacements = {};
+        placedWords = [];
+
+        const sortedWords = words.slice().sort(function (a, b) { return b.length - a.length; });
+
+        sortedWords.forEach(function (word) {
+            let placed = false;
+            for (let tries = 0; tries < 250 && !placed; tries += 1) {
+                const dir = WORD_SEARCH_DIRECTIONS[Math.floor(Math.random() * WORD_SEARCH_DIRECTIONS.length)];
+                const row = Math.floor(Math.random() * gridSize);
+                const col = Math.floor(Math.random() * gridSize);
+                if (canPlaceWordInGrid(word, row, col, dir, gridSize)) {
+                    placeWordInGrid(word, row, col, dir);
+                    placedWords.push(word);
+                    placed = true;
+                }
+            }
+        });
+
+        if (placedWords.length === words.length) {
+            break;
         }
-    } else {
-        for (let i = 0; i < word.length; i++) {
-            wordGrid[row + i][col] = word[i];
+
+        gridSize += 1;
+        attempt += 1;
+    }
+
+    wordsToFind = placedWords.slice();
+
+    for (let r = 0; r < wordSearchGridSize; r += 1) {
+        for (let c = 0; c < wordSearchGridSize; c += 1) {
+            if (wordGrid[r][c] === '') {
+                wordGrid[r][c] = WORD_SEARCH_FILL_LETTERS[
+                    Math.floor(Math.random() * WORD_SEARCH_FILL_LETTERS.length)
+                ];
+            }
         }
     }
+}
+
+function renderWordSearchGrid() {
+    const container = document.getElementById('word-grid');
+    if (!container) return;
+
+    container.style.setProperty('--ws-cols', String(wordSearchGridSize));
+    container.innerHTML = '';
+
+    for (let r = 0; r < wordSearchGridSize; r += 1) {
+        for (let c = 0; c < wordSearchGridSize; c += 1) {
+            const cell = document.createElement('button');
+            cell.type = 'button';
+            cell.className = 'word-cell';
+            cell.dataset.row = String(r);
+            cell.dataset.col = String(c);
+            cell.setAttribute('role', 'gridcell');
+            cell.setAttribute('aria-label', wordGrid[r][c]);
+            cell.textContent = wordGrid[r][c];
+            container.appendChild(cell);
+        }
+    }
+
+    bindWordSearchGridEvents(container);
+}
+
+function bindWordSearchGridEvents(container) {
+    container.onmousedown = handleWordSearchMouseDown;
+    container.onmousemove = handleWordSearchMouseMove;
+    container.onmouseup = handleWordSearchMouseUp;
+
+    container.ontouchstart = handleWordSearchTouchStart;
+    container.ontouchmove = handleWordSearchTouchMove;
+    container.ontouchend = handleWordSearchTouchEnd;
+    container.ontouchcancel = handleWordSearchTouchEnd;
+
+    if (!window.__wordSearchDocMouseUpBound) {
+        document.addEventListener('mouseup', handleWordSearchMouseUp);
+        window.__wordSearchDocMouseUpBound = true;
+    }
+}
+
+function getWordSearchCellFromPoint(clientX, clientY) {
+    const element = document.elementFromPoint(clientX, clientY);
+    if (!element || !element.classList.contains('word-cell')) return null;
+    return {
+        row: Number(element.dataset.row),
+        col: Number(element.dataset.col),
+        element: element
+    };
+}
+
+function getWordSearchCellElement(row, col) {
+    return document.querySelector(`.word-cell[data-row="${row}"][data-col="${col}"]`);
+}
+
+function getCellsOnWordSearchLine(start, end) {
+    if (!start || !end) return null;
+
+    const dr = end.row - start.row;
+    const dc = end.col - start.col;
+    const steps = Math.max(Math.abs(dr), Math.abs(dc));
+
+    if (steps === 0) {
+        return [{ row: start.row, col: start.col }];
+    }
+
+    if (dr !== 0 && dc !== 0 && Math.abs(dr) !== Math.abs(dc)) {
+        return null;
+    }
+
+    const stepR = dr === 0 ? 0 : dr / Math.abs(dr);
+    const stepC = dc === 0 ? 0 : dc / Math.abs(dc);
+    const cells = [];
+
+    for (let i = 0; i <= steps; i += 1) {
+        cells.push({
+            row: start.row + stepR * i,
+            col: start.col + stepC * i
+        });
+    }
+
+    return cells;
+}
+
+function clearWordSearchSelectionHighlight() {
+    document.querySelectorAll('.word-cell.is-selecting').forEach(function (cell) {
+        cell.classList.remove('is-selecting');
+    });
+    wordSearchCurrentCells = [];
+}
+
+function highlightWordSearchCells(cells) {
+    clearWordSearchSelectionHighlight();
+    if (!cells) return;
+
+    wordSearchCurrentCells = cells;
+    cells.forEach(function (cell) {
+        const element = getWordSearchCellElement(cell.row, cell.col);
+        if (element && !element.classList.contains('found')) {
+            element.classList.add('is-selecting');
+        }
+    });
+}
+
+function getSelectedWordFromCells(cells) {
+    if (!cells || !cells.length) return '';
+    return cells.map(function (cell) {
+        return wordGrid[cell.row][cell.col];
+    }).join('');
+}
+
+function markWordSearchWordFound(word, cells) {
+    if (foundWords.includes(word)) return;
+
+    foundWords.push(word);
+    wordSearchScore += WORD_SEARCH_POINTS;
+
+    cells.forEach(function (cell) {
+        const element = getWordSearchCellElement(cell.row, cell.col);
+        if (element) {
+            element.classList.remove('is-selecting');
+            element.classList.add('found');
+        }
+    });
+
+    updateWordSearchUi();
+
+    if (foundWords.length === wordsToFind.length) {
+        endWordSearchGame(true);
+    }
+}
+
+function validateWordSearchSelection(cells) {
+    if (!cells || cells.length < 4) return;
+
+    const selectedWord = getSelectedWordFromCells(cells);
+    const reversedWord = selectedWord.split('').reverse().join('');
+
+    let matchedWord = wordsToFind.find(function (word) {
+        return !foundWords.includes(word) && (word === selectedWord || word === reversedWord);
+    });
+
+    if (!matchedWord) return;
+
+    markWordSearchWordFound(matchedWord, cells);
+}
+
+function finishWordSearchSelection(endCell) {
+    if (!wordSearchSelectAnchor || !endCell) return;
+
+    const cells = getCellsOnWordSearchLine(wordSearchSelectAnchor, endCell);
+    highlightWordSearchCells(cells);
+    validateWordSearchSelection(cells);
+    clearWordSearchSelectionHighlight();
+}
+
+function handleWordSearchMouseDown(event) {
+    if (!wordSearchGameActive || wordSearchEnded) return;
+    if (event.button !== 0) return;
+
+    const cell = getWordSearchCellFromPoint(event.clientX, event.clientY);
+    if (!cell || cell.element.classList.contains('found')) return;
+
+    event.preventDefault();
+    wordSearchSelecting = true;
+    wordSearchSelectAnchor = { row: cell.row, col: cell.col };
+    highlightWordSearchCells([wordSearchSelectAnchor]);
+}
+
+function handleWordSearchMouseMove(event) {
+    if (!wordSearchSelecting || !wordSearchSelectAnchor) return;
+
+    const cell = getWordSearchCellFromPoint(event.clientX, event.clientY);
+    if (!cell) return;
+
+    const cells = getCellsOnWordSearchLine(wordSearchSelectAnchor, cell);
+    highlightWordSearchCells(cells);
+}
+
+function handleWordSearchMouseUp(event) {
+    if (!wordSearchSelecting) return;
+
+    const cell = getWordSearchCellFromPoint(event.clientX, event.clientY);
+    if (cell) {
+        finishWordSearchSelection({ row: cell.row, col: cell.col });
+    } else {
+        clearWordSearchSelectionHighlight();
+    }
+
+    wordSearchSelecting = false;
+    wordSearchSelectAnchor = null;
+}
+
+function handleWordSearchTouchStart(event) {
+    if (!wordSearchGameActive || wordSearchEnded) return;
+
+    const touch = event.changedTouches[0];
+    const cell = getWordSearchCellFromPoint(touch.clientX, touch.clientY);
+    if (!cell || cell.element.classList.contains('found')) return;
+
+    if (wordSearchTapStart &&
+        wordSearchTapStart.row === cell.row &&
+        wordSearchTapStart.col === cell.col) {
+        wordSearchTapStart = null;
+        clearWordSearchSelectionHighlight();
+        return;
+    }
+
+    if (wordSearchTapStart) {
+        event.preventDefault();
+        finishWordSearchSelection({ row: cell.row, col: cell.col });
+        wordSearchTapStart = null;
+        wordSearchSelecting = false;
+        wordSearchSelectAnchor = null;
+        return;
+    }
+
+    event.preventDefault();
+    wordSearchSelecting = true;
+    wordSearchSelectAnchor = { row: cell.row, col: cell.col };
+    wordSearchTapStart = { row: cell.row, col: cell.col };
+    highlightWordSearchCells([wordSearchSelectAnchor]);
+}
+
+function handleWordSearchTouchMove(event) {
+    if (!wordSearchSelecting || !wordSearchSelectAnchor) return;
+
+    event.preventDefault();
+    const touch = event.changedTouches[0];
+    const cell = getWordSearchCellFromPoint(touch.clientX, touch.clientY);
+    if (!cell) return;
+
+    wordSearchTapStart = null;
+    const cells = getCellsOnWordSearchLine(wordSearchSelectAnchor, cell);
+    highlightWordSearchCells(cells);
+}
+
+function handleWordSearchTouchEnd(event) {
+    if (!wordSearchSelecting) return;
+
+    const touch = event.changedTouches[0];
+    const cell = getWordSearchCellFromPoint(touch.clientX, touch.clientY);
+
+    if (cell && !wordSearchTapStart) {
+        finishWordSearchSelection({ row: cell.row, col: cell.col });
+    }
+
+    wordSearchSelecting = false;
+    wordSearchSelectAnchor = null;
 }
 
 function displayWordsToFind() {
     const container = document.getElementById('words-to-find');
-    container.innerHTML = wordsToFind.map(word => `
-        <div class="word-item" data-word="${word}">${word}</div>
-    `).join('');
-    
-    document.getElementById('words-found').textContent = foundWords.length;
+    if (!container) return;
+
+    container.innerHTML = wordsToFind.map(function (word) {
+        const isFound = foundWords.includes(word);
+        return `
+            <li class="word-item${isFound ? ' found' : ''}" data-word="${word}">
+                <span class="word-item__mark" aria-hidden="true">${isFound ? '✓' : '○'}</span>
+                <span class="word-item__text">${word}</span>
+            </li>
+        `;
+    }).join('');
 }
 
-function selectCell(row, col) {
-    const cell = document.querySelector(`.word-cell[data-row="${row}"][data-col="${col}"]`);
-    
-    if (cell.classList.contains('found')) return;
-    
-    if (cell.classList.contains('selected')) {
-        // Deselect
-        cell.classList.remove('selected');
-        selectedCells = selectedCells.filter(c => !(c.row === row && c.col === col));
-    } else {
-        // Select
-        cell.classList.add('selected');
-        selectedCells.push({ row, col, letter: wordGrid[row][col] });
-        
-        // Check if we found a word
-        checkForWord();
-    }
-}
+function updateWordSearchUi() {
+    const foundEl = document.getElementById('words-found');
+    const totalEl = document.getElementById('words-total');
+    const scoreEl = document.getElementById('wordsearch-score-live');
 
-function checkForWord() {
-    if (selectedCells.length < 3) return;
-    
-    const selectedWord = selectedCells.map(c => c.letter).join('');
-    
-    // Check if selected word matches any word in the list
-    const foundWord = wordsToFind.find(word => 
-        word === selectedWord || word === selectedWord.split('').reverse().join('')
-    );
-    
-    if (foundWord) {
-        // Mark cells as found
-        selectedCells.forEach(cell => {
-            const cellElement = document.querySelector(`.word-cell[data-row="${cell.row}"][data-col="${cell.col}"]`);
-            cellElement.classList.remove('selected');
-            cellElement.classList.add('found');
-        });
-        
-        // Mark word as found
-        const wordElement = document.querySelector(`.word-item[data-word="${foundWord}"]`);
-        if (wordElement) {
-            wordElement.classList.add('found');
-        }
-        
-        // Add to found words
-        foundWords.push(foundWord);
-        wordsToFind = wordsToFind.filter(w => w !== foundWord);
-        
-        document.getElementById('words-found').textContent = foundWords.length;
-        
-        // Clear selection
-        selectedCells = [];
-        
-        // Check if all words found
-        if (foundWords.length === wordSearchWords.length) {
-            clearInterval(wordSearchTimer);
-            setTimeout(() => endWordSearchGame(), 1000);
-        }
-    }
+    if (foundEl) foundEl.textContent = String(foundWords.length);
+    if (totalEl) totalEl.textContent = String(wordsToFind.length);
+    if (scoreEl) scoreEl.textContent = String(wordSearchScore);
+
+    displayWordsToFind();
 }
 
 function updateWordSearchTimer() {
+    const timerEl = document.getElementById('wordsearch-timer');
+    if (!timerEl) return;
+
     const minutes = Math.floor(wordSearchTimeLeft / 60);
     const seconds = wordSearchTimeLeft % 60;
-    document.getElementById('wordsearch-timer').textContent = 
-        `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-function endWordSearchGame() {
+function stopWordSearchTimer() {
+    if (wordSearchTimer) {
+        clearInterval(wordSearchTimer);
+        wordSearchTimer = null;
+    }
+}
+
+async function prepareWordSearchGame() {
+    const startScreen = document.querySelector('#wordsearch-game .wordsearch-start');
+    const playing = document.getElementById('wordsearch-playing');
+    const result = document.getElementById('wordsearch-result');
+    const startBtn = document.getElementById('wordsearch-start-btn');
+
+    if (startBtn) startBtn.disabled = true;
+
+    const loaded = await loadWordSearchPool(true);
+    if (!loaded) {
+        if (startScreen) {
+            startScreen.querySelector('.wordsearch-start__error')?.remove();
+            const error = document.createElement('p');
+            error.className = 'wordsearch-start__error';
+            error.textContent = uiT('gameWordsLoadError', 'So\'zlar yuklanmadi. Keyinroq qayta urinib ko\'ring.');
+            startScreen.appendChild(error);
+        }
+        if (startBtn) startBtn.disabled = true;
+        return;
+    }
+
+    if (startBtn) startBtn.disabled = false;
+    if (startScreen) startScreen.style.display = 'block';
+    if (playing) playing.style.display = 'none';
+    if (result) result.style.display = 'none';
+}
+
+function startWordSearchGame() {
+    if (!wordSearchPool.length) {
+        alert('So\'zlar hozircha mavjud emas. Keyinroq qayta urinib ko\'ring.');
+        return;
+    }
+
+    stopWordSearchTimer();
+    wordSearchGameActive = true;
+    wordSearchEnded = false;
+    foundWords = [];
+    wordSearchScore = 0;
+    wordSearchSelecting = false;
+    wordSearchSelectAnchor = null;
+    wordSearchTapStart = null;
+
+    const roundWords = pickWordSearchRoundWords();
+    buildWordSearchGrid(roundWords);
+    renderWordSearchGrid();
+    updateWordSearchUi();
+
+    wordSearchTimeLeft = 300;
+    updateWordSearchTimer();
+    wordSearchTimer = setInterval(function () {
+        wordSearchTimeLeft -= 1;
+        updateWordSearchTimer();
+        if (wordSearchTimeLeft <= 0) {
+            stopWordSearchTimer();
+            endWordSearchGame(false);
+        }
+    }, 1000);
+
+    document.querySelector('#wordsearch-game .wordsearch-start').style.display = 'none';
+    document.getElementById('wordsearch-playing').style.display = 'block';
+    document.getElementById('wordsearch-result').style.display = 'none';
+}
+
+function endWordSearchGame(completed) {
+    if (wordSearchEnded) return;
+
+    wordSearchEnded = true;
+    wordSearchGameActive = false;
+    stopWordSearchTimer();
+    clearWordSearchSelectionHighlight();
+
+    const total = wordsToFind.length;
+    const found = foundWords.length;
+    const allFound = completed || found === total;
+
     document.getElementById('wordsearch-playing').style.display = 'none';
     document.getElementById('wordsearch-result').style.display = 'block';
-    
-    document.getElementById('wordsearch-score').textContent = foundWords.length;
-    
-    let message = '';
-    if (foundWords.length === 10) {
-        message = 'Mukammal! Barcha so\'zlarni topdingiz! 🏆';
-    } else if (foundWords.length >= 7) {
-        message = 'Yaxshi natija! Ko\'p so\'z topdingiz! 👍';
-    } else if (foundWords.length >= 5) {
-        message = 'O\'rtacha. Ko\'proq mashq qiling! 📚';
+
+    document.getElementById('wordsearch-result-title').textContent = allFound
+        ? `🎉 ${uiT('gameCongratulations', 'Tabriklaymiz!')}`
+        : `⏱ ${uiT('gameTimeUp', 'Vaqt tugadi!')}`;
+    document.getElementById('wordsearch-score').textContent = String(found);
+    document.getElementById('wordsearch-score-total').textContent = String(total);
+    document.getElementById('wordsearch-final-ball').textContent = String(wordSearchScore);
+
+    const messageEl = document.getElementById('wordsearch-result-message');
+    const missedList = document.getElementById('wordsearch-missed-list');
+
+    if (allFound) {
+        messageEl.textContent = uiT('gameAllWordsFound', 'Barcha so\'zlarni topdingiz.');
     } else {
-        message = 'Ko\'proq diqqat qiling! 💪';
+        messageEl.textContent = `${total} ta so'zdan ${found} tasini topdingiz.`;
     }
-    document.getElementById('wordsearch-result-message').textContent = message;
-    
-    // Save to leaderboard
-    saveToLeaderboard('wordsearch', playerName || 'Anonim', foundWords.length * 10);
+
+    const missed = wordsToFind.filter(function (word) {
+        return !foundWords.includes(word);
+    });
+
+    if (missedList) {
+        if (missed.length > 0 && !allFound) {
+            missedList.hidden = false;
+            missedList.innerHTML = missed.map(function (word) {
+                return `<li>${word}</li>`;
+            }).join('');
+        } else {
+            missedList.hidden = true;
+            missedList.innerHTML = '';
+        }
+    }
+
+    saveToLeaderboard('wordsearch', playerName || 'Anonim', wordSearchScore);
+}
+
+function resetWordSearchGame() {
+    stopWordSearchTimer();
+    wordSearchGameActive = false;
+    wordSearchEnded = false;
+    foundWords = [];
+    wordsToFind = [];
+    wordSearchScore = 0;
+    wordSearchSelecting = false;
+    wordSearchSelectAnchor = null;
+    wordSearchTapStart = null;
+    wordPlacements = {};
+    wordGrid = [];
+
+    const startScreen = document.querySelector('#wordsearch-game .wordsearch-start');
+    const playing = document.getElementById('wordsearch-playing');
+    const result = document.getElementById('wordsearch-result');
+    const grid = document.getElementById('word-grid');
+
+    if (startScreen) startScreen.style.display = 'block';
+    if (playing) playing.style.display = 'none';
+    if (result) result.style.display = 'none';
+    if (grid) grid.innerHTML = '';
 }
 
 // ===================================
@@ -1073,7 +2092,7 @@ function loadGlobalLeaderboard() {
     const games = [
         { key: 'quiz', name: '🎯 Kim ko\'p biladi?', maxScore: 200 },
         { key: 'memory', name: '📝 She\'r yodlash', maxScore: 100 },
-        { key: 'timeline', name: '⏱ Xronologiya', maxScore: 100 },
+        { key: 'timeline', name: '📅 Yilni moslang', maxScore: 100 },
         { key: 'wordsearch', name: '🔍 So\'z topish', maxScore: 100 }
     ];
     
@@ -1148,6 +2167,7 @@ function shuffleArray(array) {
 // ===================================
 
 document.addEventListener('DOMContentLoaded', async function() {
+    window.PlatformI18n?.registerRefresh?.('interaktiv', refreshInteraktivUI);
     console.log('Interaktiv o\'yinlar sahifasi yuklandi');
     
     // Load quiz data

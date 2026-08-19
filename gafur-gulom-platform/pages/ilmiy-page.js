@@ -17,18 +17,47 @@ function escapeHtml(str) {
 
 function resolveAssetPath(path) {
     if (!path || path === '#') return '';
-    return (window.platformUrl || function (r) { return r; })(path);
+    if (/^(https?:)?\/\//i.test(path)) return path;
+    const relative = String(path).trim().replace(/^\/+/, '');
+    const encoded = relative.split('/').map(encodeURIComponent).join('/');
+    return (window.platformUrl || function (r) { return r; })(encoded);
+}
+
+const platformTranslate = window.PlatformI18n?.t || null;
+
+const uiT = (key, fallback, vars) => {
+    return platformTranslate ? platformTranslate(key, fallback, vars) : (fallback ?? key);
+};
+
+function refreshIlmiyUI() {
+    renderHeroStats();
+    const activeTab = document.querySelector('.tab-btn.active')?.dataset.tab;
+    if (activeTab === 'maqolalar') displayArticles(ilmiyData.maqolalar);
+    else if (activeTab === 'dissertatsiyalar') displayDissertations(ilmiyData.dissertatsiyalar);
+    else if (activeTab === 'tadqiqotlar') displayResearch(ilmiyData.tadqiqotlar || []);
+    else if (activeTab === 'lugat') { displayTerms(ilmiyData.atamalar); createAlphabetNav(); }
+    else if (activeTab === 'bibliografiya') displayBibliography(ilmiyData.bibliografiya || []);
+    updateSelectedCount();
+    window.PlatformI18n?.apply(document);
+}
+
+function updateSelectedCount() {
+    const el = document.getElementById('selected-count');
+    if (el) {
+        el.textContent = uiT('ilmSelectedSources', 'Tanlangan manbalar: {count}', { count: selectedArticles.length });
+    }
 }
 
 function renderHeroStats() {
     const el = document.getElementById('ilm-hero-stats');
     if (!el) return;
 
+    const t = (k) => window.PlatformI18n?.t(k) ?? k;
     const chips = [
-        { num: ilmiyData.maqolalar.length, label: 'maqola', icon: '📄' },
-        { num: ilmiyData.dissertatsiyalar.length, label: 'dissertatsiya', icon: '🎓' },
-        { num: (ilmiyData.tadqiqotlar || []).length, label: 'tadqiqot', icon: '🔬' },
-        { num: ilmiyData.atamalar.length, label: 'atama', icon: '📖' }
+        { num: ilmiyData.maqolalar.length, label: t('ilmStatArticle'), icon: '📄' },
+        { num: ilmiyData.dissertatsiyalar.length, label: t('ilmStatDiss'), icon: '🎓' },
+        { num: (ilmiyData.tadqiqotlar || []).length, label: t('ilmStatResearch'), icon: '🔬' },
+        { num: ilmiyData.atamalar.length, label: t('ilmStatTerm'), icon: '📖' }
     ];
 
     el.innerHTML = chips.map(chip => `
@@ -45,6 +74,12 @@ function renderHeroStats() {
 // ===================================
 // TABS
 // ===================================
+
+function activateIlmiyTab(tab) {
+    const btn = document.querySelector(`.tab-btn[data-tab="${tab}"]`);
+    if (!btn) return;
+    btn.click();
+}
 
 document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -80,12 +115,23 @@ function displayArticles(articles) {
     if (!container) return;
 
     if (!articles.length) {
-        container.innerHTML = '<p class="ilm-empty">Maqola topilmadi.</p>';
+        container.innerHTML = `<p class="ilm-empty">${uiT('ilmEmptyArticle', 'Maqola topilmadi.')}</p>`;
         return;
     }
 
-    container.innerHTML = articles.map(article => `
-        <article class="ilm-paper">
+    container.innerHTML = articles.map(article => {
+        const pdfUrl = article.pdf ? resolveAssetPath(article.pdf) : '';
+        const hasPdf = Boolean(article.pdf || (article.pdfHavola && article.pdfHavola !== '#'));
+        const typeBadge = escapeHtml(article.tur || article.til);
+        const manbaHtml = article.manba
+            ? `<p class="ilm-paper__source">🔗 <a class="ilm-paper__source-link" href="${escapeHtml(article.manba)}" target="_blank" rel="noopener noreferrer">Rasmiy manba (samdu.uz)</a></p>`
+            : '';
+        const downloadAction = pdfUrl
+            ? `<a class="ilm-btn-outline" href="${escapeHtml(pdfUrl)}" download target="_blank" rel="noopener noreferrer">Yuklab olish</a>`
+            : '';
+
+        return `
+        <article class="ilm-paper" id="ilm-article-${article.id}">
             <div class="ilm-paper__head">
                 <h3 class="ilm-paper__title">${escapeHtml(article.sarlavha)}</h3>
                 <label class="ilm-paper__select">
@@ -100,30 +146,38 @@ function displayArticles(articles) {
                 <span class="ilm-paper__meta-item">👤 <strong>${escapeHtml(article.mualliflar.join(', '))}</strong></span>
                 <span class="ilm-paper__meta-item">🏛 ${escapeHtml(article.nashriyot)}</span>
                 <span class="ilm-paper__meta-item">📅 ${article.yil}</span>
-                <span class="ilm-badge">${escapeHtml(article.til)}</span>
+                <span class="ilm-badge">${typeBadge}</span>
             </div>
 
             <p class="ilm-paper__abstract">${escapeHtml(article.annotatsiya)}</p>
+            ${manbaHtml}
 
             <div class="ilm-paper__keywords">
                 ${article.kalitSozlar.map(kw => `<span class="ilm-keyword">${escapeHtml(kw)}</span>`).join('')}
             </div>
 
             <div class="ilm-paper__actions">
-                <button class="ilm-btn-primary" type="button" onclick="openPdf(${article.id})">PDF</button>
+                <button class="ilm-btn-primary" type="button" onclick="openPdf(${article.id})" ${hasPdf ? '' : 'disabled'}>${hasPdf ? 'PDFni ochish' : 'PDF'}</button>
+                ${downloadAction}
                 <button class="ilm-btn-outline ilm-btn-gold" type="button" onclick="quickCite(${article.id})">Iqtibos</button>
                 <button class="ilm-btn-outline" type="button" onclick="shareArticle(${article.id})">Ulashish</button>
             </div>
         </article>
-    `).join('');
+    `;
+    }).join('');
 }
 
 function openPdf(id) {
     const article = ilmiyData.maqolalar.find(a => a.id === id);
     if (!article) return;
 
+    if (article.pdf) {
+        openIlmPdfModal(article);
+        return;
+    }
+
     if (article.pdfHavola && article.pdfHavola !== '#') {
-        window.open(article.pdfHavola, '_blank', 'noopener');
+        window.open(article.pdfHavola, '_blank', 'noopener,noreferrer');
     } else {
         alert('PDF hozircha mavjud emas. Tez kunda qo\'shiladi.');
     }
@@ -187,6 +241,7 @@ function toggleArticleSelection(id) {
 function updateSelectedCount() {
     const countEl = document.getElementById('count');
     if (countEl) countEl.textContent = selectedArticles.length;
+    updateSelectedCount();
 }
 
 function quickCite(id) {
@@ -213,7 +268,7 @@ function displayDissertations(dissertations) {
     if (!container) return;
 
     if (!dissertations.length) {
-        container.innerHTML = '<p class="ilm-empty">Dissertatsiya topilmadi.</p>';
+        container.innerHTML = `<p class="ilm-empty">${uiT('ilmEmptyDiss', 'Dissertatsiya topilmadi.')}</p>`;
         return;
     }
 
@@ -226,7 +281,7 @@ function displayDissertations(dissertations) {
             : '';
 
         return `
-        <article class="ilm-paper">
+        <article class="ilm-paper" id="ilm-dissertation-${diss.id}">
             <h3 class="ilm-paper__title">${escapeHtml(diss.sarlavha)}</h3>
             <div class="ilm-paper__meta">
                 <span class="ilm-paper__meta-item">👤 <strong>${escapeHtml(diss.muallif)}</strong></span>
@@ -267,7 +322,7 @@ function displayResearch(items) {
     if (!container) return;
 
     if (!items.length) {
-        container.innerHTML = '<p class="ilm-empty">Ilmiy tadqiqot topilmadi.</p>';
+        container.innerHTML = `<p class="ilm-empty">${uiT('ilmEmptyResearch', 'Ilmiy tadqiqot topilmadi.')}</p>`;
         return;
     }
 
@@ -280,7 +335,7 @@ function displayResearch(items) {
             : '';
 
         return `
-        <article class="ilm-paper">
+        <article class="ilm-paper" id="ilm-research-${item.id}">
             <h3 class="ilm-paper__title">${escapeHtml(item.sarlavha)}</h3>
             <div class="ilm-paper__meta">
                 ${authorMeta}
@@ -401,12 +456,12 @@ function displayTerms(terms) {
     if (!container) return;
 
     if (!terms.length) {
-        container.innerHTML = '<p class="ilm-empty">Atama topilmadi.</p>';
+        container.innerHTML = `<p class="ilm-empty">${uiT('ilmEmptyTerm', 'Atama topilmadi.')}</p>`;
         return;
     }
 
     container.innerHTML = terms.map(term => `
-        <article class="term-card">
+        <article class="term-card" id="ilm-term-${term.id}">
             <h3 class="term-title">${escapeHtml(term.atama)}</h3>
             <p class="term-pronunciation">[${escapeHtml(term.talaffuz)}]</p>
             <p class="term-definition">${escapeHtml(term.tarif)}</p>
@@ -456,7 +511,7 @@ function displayBibliography(items) {
             : '';
 
         return `
-        <article class="ilm-paper">
+        <article class="ilm-paper" id="ilm-biblio-${item.id}">
             <h3 class="ilm-paper__title">${escapeHtml(item.sarlavha)}</h3>
             <div class="ilm-paper__meta">
                 ${authorMeta}
@@ -532,9 +587,9 @@ function copyToClipboard() {
     const text = document.getElementById('bibliography-output').textContent;
 
     navigator.clipboard.writeText(text).then(() => {
-        alert('Bibliografiya nusxa olindi!');
+        alert(uiT('ilmPdfCopied', 'Bibliografiya nusxa olindi!'));
     }).catch(() => {
-        alert('Nusxa olishda xatolik yuz berdi.');
+        alert(uiT('ilmCopyError', 'Nusxa olishda xatolik yuz berdi.'));
     });
 }
 
@@ -547,7 +602,7 @@ function exportToWord() {
     link.click();
     URL.revokeObjectURL(link.href);
 
-    alert('Fayl yuklab olindi: bibliografiya.txt');
+    alert(uiT('ilmFileDownloaded', 'Fayl yuklab olindi: bibliografiya.txt'));
 }
 
 // ===================================
@@ -556,7 +611,7 @@ function exportToWord() {
 
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        const response = await fetch((window.platformUrl || function (r) { return r; })('data/ilmiy.json'));
+        const response = await fetch((window.platformUrl || function (r) { return r; })('data/ilmiy.json?v=20260819b'));
         ilmiyData = await response.json();
         ilmiyData.tadqiqotlar = ilmiyData.tadqiqotlar || [];
         ilmiyData.bibliografiya = ilmiyData.bibliografiya || [];
@@ -565,9 +620,54 @@ document.addEventListener('DOMContentLoaded', async function() {
         initResearchPdfModal();
         displayArticles(ilmiyData.maqolalar);
         displayBibliography(ilmiyData.bibliografiya);
+
+        const tabParam = new URLSearchParams(window.location.search).get('tab');
+        if (tabParam) {
+            activateIlmiyTab(tabParam);
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const articleId = params.get('article');
+        const dissId = params.get('dissertation');
+        const researchId = params.get('research');
+        const termId = params.get('term');
+        const biblioId = params.get('biblio');
+
+        if (articleId) {
+            activateIlmiyTab('maqolalar');
+            setTimeout(() => {
+                document.getElementById(`ilm-article-${articleId}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 400);
+        } else if (dissId) {
+            activateIlmiyTab('dissertatsiyalar');
+            setTimeout(() => {
+                document.getElementById(`ilm-dissertation-${dissId}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 400);
+        } else if (researchId) {
+            activateIlmiyTab('tadqiqotlar');
+            setTimeout(() => {
+                document.getElementById(`ilm-research-${researchId}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 400);
+        } else if (termId) {
+            activateIlmiyTab('lugat');
+            setTimeout(() => {
+                document.getElementById(`ilm-term-${termId}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 400);
+        } else if (biblioId) {
+            activateIlmiyTab('bibliografiya');
+            setTimeout(() => {
+                document.getElementById(`ilm-biblio-${biblioId}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 400);
+        }
+
+        if (window.PlatformI18n) {
+            window.PlatformI18n.apply(document);
+            window.PlatformI18n.registerRefresh('ilmiy', refreshIlmiyUI);
+        }
+        updateSelectedCount();
     } catch (error) {
         console.error('Ma\'lumotlarni yuklashda xatolik:', error);
-        alert('Ma\'lumotlar yuklanmadi. Iltimos, sahifani qayta yuklang.');
+        alert(uiT('ilmDataLoadError', 'Ma\'lumotlar yuklanmadi. Iltimos, sahifani qayta yuklang.'));
     }
 });
 

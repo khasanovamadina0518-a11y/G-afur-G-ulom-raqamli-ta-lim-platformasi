@@ -6,6 +6,23 @@
 let hayotData = null;
 let activeFilter = 'all';
 
+function uiKey(key, fallback) {
+    const value = window.PlatformI18n?.t(key);
+    return value && value !== key ? value : fallback;
+}
+
+async function waitForI18n(timeout = 8000) {
+    if (window.PlatformI18n) return;
+    const started = Date.now();
+    while (!window.PlatformI18n && Date.now() - started < timeout) {
+        await new Promise(resolve => setTimeout(resolve, 40));
+    }
+}
+
+function loc(value) {
+    return window.PlatformI18n?.loc(value) ?? (typeof value === 'string' ? value : (value?.uz || ''));
+}
+
 function escapeHtml(str) {
     return String(str)
         .replace(/&/g, '&amp;')
@@ -15,13 +32,15 @@ function escapeHtml(str) {
 }
 
 function firstParagraph(text) {
-    if (!text) return '';
-    return text.split('\n\n')[0].trim();
+    const resolved = loc(text);
+    if (!resolved) return '';
+    return resolved.split('\n\n')[0].trim();
 }
 
 function allParagraphs(text) {
-    if (!text) return '';
-    return text.split('\n\n').map(p => `<p>${escapeHtml(p.trim())}</p>`).join('');
+    const resolved = loc(text);
+    if (!resolved) return '';
+    return resolved.split('\n\n').map(p => `<p>${escapeHtml(p.trim())}</p>`).join('');
 }
 
 function getVoqeaById(id) {
@@ -40,25 +59,25 @@ function renderHero() {
     const hero = hayotData.hero || {};
 
     const kickerEl = document.getElementById('hy-hero-kicker');
-    if (kickerEl && hero.kicker) kickerEl.textContent = hero.kicker;
+    if (kickerEl && hero.kicker) kickerEl.textContent = loc(hero.kicker);
 
     const yearsEl = document.getElementById('hy-hero-years');
     if (yearsEl && hero.yillar) yearsEl.textContent = hero.yillar;
 
     const introEl = document.getElementById('hy-hero-intro');
-    if (introEl && hero.intro) introEl.textContent = hero.intro;
+    if (introEl && hero.intro) introEl.textContent = loc(hero.intro);
 
     const quoteEl = document.getElementById('hy-hero-quote');
     if (quoteEl && hero.iqtibos) {
         quoteEl.innerHTML = `
-            ${escapeHtml(hero.iqtibos)}
-            ${hero.iqtibosManba ? `<cite>— ${escapeHtml(hero.iqtibosManba)}</cite>` : ''}
+            ${escapeHtml(loc(hero.iqtibos))}
+            ${hero.iqtibosManba ? `<cite>— ${escapeHtml(loc(hero.iqtibosManba))}</cite>` : ''}
         `;
     }
 
     const sourceEl = document.getElementById('hy-hero-source');
     if (sourceEl && hayotData.manba) {
-        sourceEl.textContent = 'Manba: ' + hayotData.manba;
+        sourceEl.textContent = uiKey('hayotSourcePrefix', 'Manba:') + ' ' + loc(hayotData.manba);
     }
 }
 
@@ -72,9 +91,9 @@ function renderOverview() {
 
     grid.innerHTML = (hayotData.overview || []).map(card => `
         <button type="button" class="hy-overview-card" data-scroll-to="${escapeHtml(card.scrollTo)}">
-            <div class="hy-overview-card__label">${escapeHtml(card.label)}</div>
-            <h3 class="hy-overview-card__title">${escapeHtml(card.title)}</h3>
-            <p class="hy-overview-card__text">${escapeHtml(card.text)}</p>
+            <div class="hy-overview-card__label">${escapeHtml(loc(card.label))}</div>
+            <h3 class="hy-overview-card__title">${escapeHtml(loc(card.title))}</h3>
+            <p class="hy-overview-card__text">${escapeHtml(loc(card.text))}</p>
         </button>
     `).join('');
 
@@ -99,14 +118,14 @@ function renderFilters() {
     const container = document.getElementById('hy-timeline-filters');
     if (!container) return;
 
-    const buttons = [{ key: 'all', label: 'Barchasi' }];
+    const buttons = [{ key: 'all', label: uiKey('hayotFilterAll', 'Barchasi') }];
     getBosqichOrder().forEach(key => {
         const b = hayotData.bosqichlar[key];
-        if (b) buttons.push({ key, label: b.sarlavha });
+        if (b) buttons.push({ key, label: loc(b.sarlavha) });
     });
 
     container.innerHTML = buttons.map(({ key, label }) => `
-        <button type="button" class="hy-filter-btn ${key === 'all' ? 'active' : ''}"
+        <button type="button" class="hy-filter-btn ${key === activeFilter ? 'active' : ''}"
                 data-filter="${key}" role="tab">${escapeHtml(label)}</button>
     `).join('');
 
@@ -136,15 +155,17 @@ function renderStageSeparator(key) {
     const bosqich = hayotData.bosqichlar[key];
     if (!bosqich) return '';
 
+    const isOpen = document.getElementById(`hy-stage-full-${key}`)?.classList.contains('is-open');
+
     return `
         <div class="hy-stage" data-bosqich="${key}" id="hy-stage-${key}">
             <div class="hy-stage-sep">
                 <span class="hy-stage-sep__marker" aria-hidden="true"></span>
                 <div class="hy-stage-sep__body">
-                    <h3 class="hy-stage-sep__title">${escapeHtml(bosqich.sarlavha)}</h3>
+                    <h3 class="hy-stage-sep__title">${escapeHtml(loc(bosqich.sarlavha))}</h3>
                     <p class="hy-stage-sep__years">${escapeHtml(bosqich.yillar)}</p>
                     <p class="hy-stage-sep__excerpt">${escapeHtml(firstParagraph(bosqich.matn))}</p>
-                    <button type="button" class="hy-stage-toggle" data-stage="${key}">Batafsil</button>
+                    <button type="button" class="hy-stage-toggle" data-stage="${key}">${isOpen ? uiKey('hayotStageLess', 'Yopish') : uiKey('hayotStageMore', 'Batafsil')}</button>
                     <div class="hy-stage-full" id="hy-stage-full-${key}">
                         ${allParagraphs(bosqich.matn)}
                     </div>
@@ -161,13 +182,13 @@ function renderEventCard(voqea) {
                 <button type="button" class="hy-event__head" aria-expanded="false">
                     <span class="hy-event__year">${voqea.yil}</span>
                     <div class="hy-event__summary">
-                        <h4 class="hy-event__title">${escapeHtml(voqea.sarlavha)}</h4>
-                        <p class="hy-event__qisqa">${escapeHtml(voqea.qisqa)}</p>
+                        <h4 class="hy-event__title">${escapeHtml(loc(voqea.sarlavha))}</h4>
+                        <p class="hy-event__qisqa">${escapeHtml(loc(voqea.qisqa))}</p>
                     </div>
                     <span class="hy-event__chevron" aria-hidden="true">▾</span>
                 </button>
                 <div class="hy-event__body">
-                    <p class="hy-event__batafsil">${escapeHtml(voqea.batafsil)}</p>
+                    <p class="hy-event__batafsil">${escapeHtml(loc(voqea.batafsil))}</p>
                 </div>
             </div>
         </article>
@@ -204,7 +225,7 @@ function renderTimeline() {
             const full = document.getElementById(`hy-stage-full-${btn.dataset.stage}`);
             if (full) {
                 full.classList.toggle('is-open');
-                btn.textContent = full.classList.contains('is-open') ? 'Yopish' : 'Batafsil';
+                btn.textContent = full.classList.contains('is-open') ? uiKey('hayotStageLess', 'Yopish') : uiKey('hayotStageMore', 'Batafsil');
             }
         });
     });
@@ -221,11 +242,11 @@ function renderInfoSection(sectionKey, gridId, leadId) {
 
     if (!section || !grid) return;
 
-    if (leadEl && section.lead) leadEl.textContent = section.lead;
+    if (leadEl && section.lead) leadEl.textContent = loc(section.lead);
 
     grid.innerHTML = (section.bolimlar || []).map(bolim => `
         <article class="hy-info-card">
-            <h3 class="hy-info-card__title">${escapeHtml(bolim.sarlavha)}</h3>
+            <h3 class="hy-info-card__title">${escapeHtml(loc(bolim.sarlavha))}</h3>
             <div class="hy-info-card__body">${allParagraphs(bolim.matn)}</div>
         </article>
     `).join('');
@@ -242,7 +263,7 @@ function renderSanalar() {
     grid.innerHTML = (hayotData.sanalar || []).map(item => `
         <article class="hy-date-card">
             <time class="hy-date-card__sana">${escapeHtml(item.sana)}</time>
-            <p class="hy-date-card__matn">${escapeHtml(item.matn)}</p>
+            <p class="hy-date-card__matn">${escapeHtml(loc(item.matn))}</p>
         </article>
     `).join('');
 }
@@ -256,18 +277,18 @@ function renderXotiralar() {
     if (!grid) return;
 
     const typeLabels = {
-        xotira: 'Xotira',
-        iqtibos: 'Iqtibos',
-        sher: 'She\'r'
+        xotira: uiKey('hayotMemoryType', 'Xotira'),
+        iqtibos: uiKey('hayotQuoteType', 'Iqtibos'),
+        sher: uiKey('hayotPoemType', 'She\'r')
     };
 
-    grid.innerHTML = (hayotData.xotiralar || []).map(x => `
-        <blockquote class="hy-quote-card">
+    grid.innerHTML = (hayotData.xotiralar || []).map((x, idx) => `
+        <blockquote class="hy-quote-card" id="hy-xotira-${x.id ?? idx + 1}">
             <p class="hy-quote-card__type">${escapeHtml(typeLabels[x.turi] || x.turi || '')}</p>
-            <p class="hy-quote-card__text">${escapeHtml(x.matn)}</p>
+            <p class="hy-quote-card__text">${escapeHtml(loc(x.matn))}</p>
             <footer>
-                <p class="hy-quote-card__author">${escapeHtml(x.muallif)}</p>
-                ${x.manba ? `<p class="hy-quote-card__source">${escapeHtml(x.manba)}</p>` : ''}
+                <p class="hy-quote-card__author">${escapeHtml(loc(x.muallif))}</p>
+                ${x.manba ? `<p class="hy-quote-card__source">${escapeHtml(loc(x.manba))}</p>` : ''}
             </footer>
         </blockquote>
     `).join('');
@@ -282,9 +303,25 @@ function renderXulosa() {
     if (!el) return;
 
     el.innerHTML = `
-        <p class="hy-conclusion__text">${escapeHtml(hayotData.xulosa || '')}</p>
-        <p class="hy-conclusion__source">Manba: ${escapeHtml(hayotData.manba || '')}</p>
+        <p class="hy-conclusion__text">${escapeHtml(loc(hayotData.xulosa))}</p>
+        <p class="hy-conclusion__source">${escapeHtml(uiKey('hayotSourcePrefix', 'Manba:'))} ${escapeHtml(loc(hayotData.manba))}</p>
     `;
+}
+
+function renderAllHayot() {
+    if (!hayotData) return;
+    renderHero();
+    renderOverview();
+    renderFilters();
+    renderTimeline();
+    renderInfoSection('bolalik', 'hy-bolalik-grid', 'hy-bolalik-lead');
+    renderInfoSection('oila', 'hy-oila-grid', 'hy-oila-lead');
+    renderInfoSection('mehnat', 'hy-mehnat-grid', 'hy-mehnat-lead');
+    renderInfoSection('ijod', 'hy-ijod-grid', 'hy-ijod-lead');
+    renderSanalar();
+    renderXotiralar();
+    renderXulosa();
+    window.PlatformI18n?.apply(document);
 }
 
 // ===================================
@@ -293,21 +330,19 @@ function renderXulosa() {
 
 async function loadHayotData() {
     try {
-        const response = await fetch((window.platformUrl || function (r) { return r; })('data/hayot.json?v=20260815'));
+        const response = await fetch((window.platformUrl || function (r) { return r; })('data/hayot.json?v=20260819i18n2'));
         if (!response.ok) throw new Error('Ma\'lumotlarni yuklashda xatolik');
         hayotData = await response.json();
 
-        renderHero();
-        renderOverview();
-        renderFilters();
-        renderTimeline();
-        renderInfoSection('bolalik', 'hy-bolalik-grid', 'hy-bolalik-lead');
-        renderInfoSection('oila', 'hy-oila-grid', 'hy-oila-lead');
-        renderInfoSection('mehnat', 'hy-mehnat-grid', 'hy-mehnat-lead');
-        renderInfoSection('ijod', 'hy-ijod-grid', 'hy-ijod-lead');
-        renderSanalar();
-        renderXotiralar();
-        renderXulosa();
+        await waitForI18n();
+        renderAllHayot();
+        window.PlatformI18n?.registerRefresh?.('hayot', renderAllHayot);
+
+        const params = new URLSearchParams(window.location.search);
+        const eventId = params.get('event');
+        if (eventId && window.PlatformSearchLanding) {
+            setTimeout(() => window.PlatformSearchLanding.openHayotEvent?.(eventId), 500);
+        }
     } catch (error) {
         console.error('Hayot sahifasi xatolik:', error);
     }
@@ -317,5 +352,6 @@ document.addEventListener('DOMContentLoaded', loadHayotData);
 
 window.HayotBiografiya = {
     loadHayotData,
-    getVoqeaById
+    getVoqeaById,
+    renderAllHayot
 };

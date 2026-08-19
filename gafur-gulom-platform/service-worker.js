@@ -27,6 +27,8 @@ const CACHE_URLS = [
   './data/ilmiy.json',
   './data/dostonlar.json',
   './data/qissalar.json',
+  './data/tarjimalar.json',
+  './data/tanlangan-asarlar.json',
   './assets/pdf/qissalar/shum-bola.pdf',
   './assets/images/gafur-gulom.jpg',
   './offline.html',

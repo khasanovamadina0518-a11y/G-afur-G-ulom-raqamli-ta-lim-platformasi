@@ -12,8 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Hero portrait
     setupHeroPortrait();
 
-    // Statistics
-    if (document.querySelector('.stat-number')) {
+    // Statistics — bosh sahifa dinamik statistikasi
+    if (document.getElementById('home-stats-panel')) {
+        initHomeStatistics();
+    } else if (document.querySelector('.stat-number')) {
         animateStats();
         loadStatistics();
     }
@@ -35,9 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Smooth scroll
     initSmoothScroll();
-
-    // Global qidiruv
-    initSearch();
 
 });
 
@@ -103,15 +102,17 @@ async function loadFeaturedPoems() {
 // ===================================
 // Statistics Counter Animation
 // ===================================
-function animateStats() {
-    const statNumbers = document.querySelectorAll('.stat-number');
+function animateStats(root) {
+    const statNumbers = (root || document).querySelectorAll('.stat-number');
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const target = parseInt(entry.target.getAttribute('data-target'))
-                    || parseInt(entry.target.textContent)
-                    || 0;
+                const target = parseInt(entry.target.getAttribute('data-target'), 10);
+                if (Number.isNaN(target)) {
+                    observer.unobserve(entry.target);
+                    return;
+                }
                 animateCounter(entry.target, target);
                 observer.unobserve(entry.target);
             }
@@ -123,10 +124,15 @@ function animateStats() {
 
 function animateCounter(element, target) {
     let current = 0;
-    const increment = target / 50;
+    const increment = target > 0 ? target / 50 : 0;
     const duration = 2000;
     const stepTime = duration / 50;
-    const suffix = element.getAttribute('data-suffix') || (target >= 60 ? '+' : '');
+    const suffix = element.getAttribute('data-suffix') || '';
+
+    if (target <= 0) {
+        element.textContent = String(target) + suffix;
+        return;
+    }
 
     const timer = setInterval(() => {
         current += increment;
@@ -139,6 +145,43 @@ function animateCounter(element, target) {
     }, stepTime);
 }
 
+async function initHomeStatistics() {
+    const panel = document.getElementById('home-stats-panel');
+    if (!panel) return;
+
+    panel.querySelectorAll('.stat-number').forEach(function (el) {
+        el.textContent = '—';
+        el.removeAttribute('data-target');
+        el.removeAttribute('data-suffix');
+    });
+
+    try {
+        if (typeof getPlatformStatistics !== 'function') {
+            throw new Error('getPlatformStatistics() mavjud emas');
+        }
+
+        const stats = await getPlatformStatistics();
+        if (!stats) {
+            throw new Error('Statistika ma\'lumotlari qaytmadi');
+        }
+
+        panel.querySelectorAll('.stat-number[data-stat-key]').forEach(function (el) {
+            const key = el.getAttribute('data-stat-key');
+            const value = Number(stats[key]);
+            const safeValue = Number.isFinite(value) ? value : 0;
+            el.setAttribute('data-target', String(safeValue));
+            el.textContent = '0';
+        });
+
+        animateStats(panel);
+    } catch (error) {
+        console.error('Bosh sahifa statistikasi yuklanmadi:', error);
+        panel.querySelectorAll('.stat-number').forEach(function (el) {
+            el.textContent = '—';
+        });
+    }
+}
+
 // ===================================
 // Today's Poem Widget
 // ===================================
@@ -147,11 +190,11 @@ let todaysPoems = [];
 
 async function loadTodaysPoem() {
     try {
-        todaysPoems = await getSherlar();
+        todaysPoems = (await getSherlar()).filter(poem => poem.matn);
 
-if (todaysPoems.length > 0) {
-    displayRandomPoem();
-}
+        if (todaysPoems.length > 0) {
+            displayRandomPoem();
+        }
     } catch (error) {
         console.error('Bugungi she\'rni yuklashda xatolik:', error);
         document.getElementById('poem-title').textContent = 'Xatolik yuz berdi';
@@ -311,96 +354,4 @@ window.scrollToTop = scrollToTop;
 window.showLoading = showLoading;
 window.showError = showError;
 window.showSuccess = showSuccess;
-// ===================================
-// Global Search
-// ===================================
-
-function getAsarlarSearchUrl(itemId) {
-    return `pages/asarlar.html?id=${encodeURIComponent(itemId)}`;
-}
-
-async function initSearch() {
-
-    const input = document.getElementById("searchInput");
-    const results = document.getElementById("searchResults");
-
-    if (!input || !results) return;
-
-    input.addEventListener("input", async function () {
-
-        const query = this.value.trim();
-
-        if (query.length < 2) {
-            results.style.display = "none";
-            results.innerHTML = "";
-            return;
-        }
-
-        if (typeof searchContent !== 'function') {
-            results.innerHTML = `
-                <div class="search-item">
-                    Qidiruv hozircha mavjud emas
-                </div>
-            `;
-            results.style.display = "block";
-            return;
-        }
-
-        let data;
-        try {
-            data = await searchContent(query);
-        } catch (err) {
-            console.error('Qidiruv xatoligi:', err);
-            results.innerHTML = `
-                <div class="search-item">
-                    Qidiruv vaqtida xatolik yuz berdi
-                </div>
-            `;
-            results.style.display = "block";
-            return;
-        }
-
-        let html = "";
-
-        data.sherlar.forEach(item => {
-    html += `
-        <div class="search-item"
-             onclick="window.location.href='${getAsarlarSearchUrl(item.id)}'">
-            <div class="search-title">${item.sarlavha}</div>
-            <div class="search-type">📖 She'r</div>
-        </div>
-    `;
-});
-
-        data.dostonlar.forEach(item => {
-    html += `
-        <div class="search-item"
-             onclick="window.location.href='${getAsarlarSearchUrl(item.id)}'">
-            <div class="search-title">${item.sarlavha}</div>
-            <div class="search-type">📚 Doston</div>
-        </div>
-    `;
-});
-
-        if (html === "") {
-            html = `
-                <div class="search-item">
-                    Hech narsa topilmadi
-                </div>
-            `;
-        }
-
-        results.innerHTML = html;
-        results.style.display = "block";
-
-    });
-
-    document.addEventListener("click", function(e){
-
-        if(!e.target.closest(".search-box") && !e.target.closest(".search-expand")){
-            results.style.display="none";
-        }
-
-    });
-
-}
+// Global Search — global-search.js da (header orqali yuklanadi)

@@ -758,7 +758,7 @@
     }
 
     .search-expand.is-open .search-box {
-        width: min(200px, 50vw);
+        width: min(280px, calc(100vw - 5rem));
         right: 0;
     }
 

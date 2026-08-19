@@ -22,16 +22,16 @@
     <main class="video-page">
         <div class="video-page__inner">
             <header class="video-header">
-                <a href="/index.html" class="video-header__back" aria-label="Bosh sahifaga qaytish">
+                <a href="/index.html" class="video-header__back" aria-label="Bosh sahifaga qaytish" data-i18n-aria="backHome">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
                 </a>
                 <div class="video-header__text">
-                    <h1 class="video-header__title">Videolar</h1>
-                    <p class="video-intro__lead">G'afur G'ulom hayoti va ijodiga oid videodarslarni tomosha qiling. Darslarni ketma-ket yoki o'zingizga kerakli mavzu bo'yicha tanlashingiz mumkin.</p>
+                    <h1 class="video-header__title" data-i18n="multimediaTitle">Videolar</h1>
+                    <p class="video-intro__lead" data-i18n="multimediaLead">G'afur G'ulom hayoti va ijodiga oid videodarslarni tomosha qiling. Darslarni ketma-ket yoki o'zingizga kerakli mavzu bo'yicha tanlashingiz mumkin.</p>
                 </div>
             </header>
 
-            <nav class="video-category-nav" id="category-nav" aria-label="Video kategoriyalari"></nav>
+            <nav class="video-category-nav" id="category-nav" data-i18n-aria="mmCategoryNav"></nav>
 
             <div class="video-layout">
                 <div class="video-player" id="video-player">
@@ -57,7 +57,7 @@
                         <h2 class="video-player__overlay-title" id="player-overlay-title">1. G'afur G'ulom hayoti va ijodi</h2>
                     </div>
                     <div class="video-player__controls">
-                        <button class="video-player__play" id="player-play" type="button" aria-label="Ijro etish" aria-pressed="false">
+                        <button class="video-player__play" id="player-play" type="button" data-i18n-aria="mmPlay" aria-pressed="false">
                             <svg class="icon-play" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                             <svg class="icon-pause" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
                         </button>
@@ -72,63 +72,63 @@
                             <span id="player-total">18:45</span>
                         </div>
                         <div class="video-player__tools">
-                            <button class="video-player__tool" type="button" aria-label="Sozlamalar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <button class="video-player__tool" type="button" data-i18n-aria="mmSettings">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                             </button>
-                            <button class="video-player__tool" type="button" aria-label="Subtitrlar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M7 15h4M7 11h2M13 15h4M13 11h2"></path></svg>
+                            <button class="video-player__tool" type="button" data-i18n-aria="mmSubtitles">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M7 15h4M7 11h2M13 15h4M13 11h2"></path></svg>
                             </button>
-                            <button class="video-player__tool" type="button" aria-label="To'liq ekran">
+                            <button class="video-player__tool" type="button" data-i18n-aria="mmFullscreen">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <aside class="video-sidebar" aria-label="Dars ma'lumotlari">
+                <aside class="video-sidebar" data-i18n-aria="mmSidebarAria">
                     <div class="video-sidebar__head">
-                        <span class="video-sidebar__badge" id="lesson-badge">Dars</span>
-                        <span class="video-sidebar__now" id="lesson-now">Hoziroq ko'rilmoqda</span>
+                        <span class="video-sidebar__badge" id="lesson-badge" data-i18n="mmLesson">Dars</span>
+                        <span class="video-sidebar__now" id="lesson-now" data-i18n="mmWatchingNow">Hoziroq ko'rilmoqda</span>
                     </div>
-                    <h2 class="video-sidebar__title" id="lesson-title">Video dars</h2>
+                    <h2 class="video-sidebar__title" id="lesson-title" data-i18n="mmLessonDefault">Video dars</h2>
                     <p class="video-sidebar__desc" id="lesson-desc"></p>
                     <dl class="video-sidebar__meta">
                         <div class="video-sidebar__meta-row">
-                            <dt>Davomiyligi</dt>
+                            <dt data-i18n="mmDuration">Davomiyligi</dt>
                             <dd id="lesson-duration">—</dd>
                         </div>
                         <div class="video-sidebar__meta-row">
-                            <dt>Mavzu</dt>
+                            <dt data-i18n="mmTopic">Mavzu</dt>
                             <dd id="lesson-topic">—</dd>
                         </div>
                     </dl>
                     <div class="video-sidebar__nav">
-                        <button class="video-btn video-btn--ghost" type="button" id="prev-lesson" aria-label="Oldingi dars">Oldingi</button>
-                        <button class="video-btn video-btn--ghost" type="button" id="next-lesson" aria-label="Keyingi dars">Keyingi</button>
+                        <button class="video-btn video-btn--ghost" type="button" id="prev-lesson" data-i18n-aria="prev" data-i18n="prev">Oldingi</button>
+                        <button class="video-btn video-btn--ghost" type="button" id="next-lesson" data-i18n-aria="next" data-i18n="next">Keyingi</button>
                     </div>
                     <div class="video-sidebar__actions">
-                        <a href="#" class="video-btn video-btn--primary" id="continue-btn">Darsni davom ettirish</a>
+                        <a href="#" class="video-btn video-btn--primary" id="continue-btn" data-i18n="mmContinueLesson">Darsni davom ettirish</a>
                         <a href="#" class="video-btn video-btn--secondary" id="download-btn" hidden>
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            Yuklab olish
+                            <span data-i18n="download">Yuklab olish</span>
                         </a>
                     </div>
                 </aside>
             </div>
 
-            <div class="video-catalog" id="video-catalog" aria-label="Video kategoriyalari bo'yicha katalog"></div>
+            <div class="video-catalog" id="video-catalog" data-i18n-aria="mmCatalogAria"></div>
 
-            <div class="video-tabs" role="tablist" aria-label="Qo'shimcha bo'limlar">
-                <button class="tab-btn active" type="button" role="tab" aria-selected="true" data-tab="materiallar">Qo'shimcha materiallar</button>
-                <button class="tab-btn" type="button" role="tab" aria-selected="false" id="tab-comments" data-tab="izohlar">Izohlar</button>
+            <div class="video-tabs" role="tablist" data-i18n-aria="mmExtraTabs">
+                <button class="tab-btn active" type="button" role="tab" aria-selected="true" data-tab="materiallar" data-i18n="mmExtraMaterials">Qo'shimcha materiallar</button>
+                <button class="tab-btn" type="button" role="tab" aria-selected="false" id="tab-comments" data-tab="izohlar" data-i18n="mmComments">Izohlar</button>
             </div>
 
             <div class="video-tab-panel active" data-tab="materiallar" role="tabpanel">
-                <div class="video-materials-grid" id="materials-list" aria-label="Qo'shimcha o'quv materiallari"></div>
+                <div class="video-materials-grid" id="materials-list" data-i18n-aria="mmMaterialsAria"></div>
             </div>
 
             <div class="video-tab-panel" data-tab="izohlar" role="tabpanel">
-                <p class="video-comments-empty">Izohlar tez orada qo'shiladi.</p>
+                <p class="video-comments-empty" data-i18n="mmCommentsSoon">Izohlar tez orada qo'shiladi.</p>
             </div>
         </div>
     </main>
@@ -161,6 +161,6 @@
     <script src="/assets/js/data.js"></script>
     <script src="/assets/js/app.js"></script>
     <script src="/assets/js/thumbnails.js?v=3"></script>
-    <script src="/pages/multimedia-page.js?v=13"></script>
+    <script src="/pages/multimedia-page.js?v=14"></script>
 </body>
 </html>

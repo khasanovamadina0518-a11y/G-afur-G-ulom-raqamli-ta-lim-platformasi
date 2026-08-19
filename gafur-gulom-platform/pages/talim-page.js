@@ -4,8 +4,10 @@
 // ===================================
 
 const PROGRESS_KEY = 'talim-progress';
+const CUSTOM_QUESTIONS_KEY = 'gafurGulomCustomQuestions';
 
 let quizData = [];
+let baseQuizData = [];
 let currentQuiz = [];
 let currentQuestionIndex = 0;
 let score = 0;
@@ -60,20 +62,7 @@ const darsRejalari = {
             mavzular: ["She'rni o'qish", "Obrazlar tahlili", "Til xususiyatlari", "Yodlash"]
         }
     ],
-    6: [
-        {
-            sarlavha: "G'afur G'ulomning birinchi she'rlari",
-            maqsad: "Shoirning ijod yo'liga kirishi haqida ma'lumot",
-            vaqt: "45 daqiqa",
-            mavzular: ["Birinchi she'rlar", "Yoshlik davri", "Adabiy muhit", "Ilk ijodlar"]
-        },
-        {
-            sarlavha: "'Ona' she'ri tahlili",
-            maqsad: "Ona obrazi va ona sevgisi mavzusini o'rganish",
-            vaqt: "45 daqiqa",
-            mavzular: ["She'r mazmuni", "Ona obrazi", "Badiiy tasvirlar", "Yodlash"]
-        }
-    ],
+    6: [],
     7: [
         {
             sarlavha: "G'afur G'ulomning Vatan mavzuidagi she'rlari",
@@ -88,20 +77,7 @@ const darsRejalari = {
             mavzular: ["Obrazli tizim", "Ramzlar", "Badiiy vositalar", "Taqqoslash"]
         }
     ],
-    8: [
-        {
-            sarlavha: "'Shum bola' romani bilan tanishish",
-            maqsad: "Romanning g'oyasi va qahramonlari bilan tanishish",
-            vaqt: "45 daqiqa",
-            mavzular: ["Roman syujeti", "Bosh qahramon", "Voqealar rivojlanishi", "Xulosa"]
-        },
-        {
-            sarlavha: "Mehnat mavzusidagi she'rlar",
-            maqsad: "Mehnat ulug'lanishi va ahamiyatini anglash",
-            vaqt: "45 daqiqa",
-            mavzular: ["Mehnat she'rlari", "Obrazlar", "G'oyaviy mazmun", "Muhokama"]
-        }
-    ],
+    8: [],
     9: [
         {
             sarlavha: "G'afur G'ulom dostonlari",
@@ -169,6 +145,22 @@ const oquvMateriallari = {
 // HELPERS
 // ===================================
 
+const platformTranslate = window.PlatformI18n?.t || null;
+
+const uiT = (key, fallback, vars) => {
+    return platformTranslate ? platformTranslate(key, fallback, vars) : (fallback ?? key);
+};
+
+function refreshTalimUI() {
+    renderHeroStats();
+    if (activeTab === 'dars') loadLessons();
+    else if (activeTab === 'bank') loadSavolBanki();
+    if (document.getElementById('quiz-question')?.style.display === 'block' && currentQuiz.length) {
+        showQuestion();
+    }
+    window.PlatformI18n?.apply(document);
+}
+
 function escapeHtml(str) {
     return String(str)
         .replace(/&/g, '&amp;')
@@ -183,7 +175,7 @@ function resolveAssetPath(path) {
 }
 
 function getTotalLessons() {
-    return MODULE_CLASSES.reduce((sum, cls) => sum + (darsRejalari[cls]?.length || 0), 0);
+    return MODULE_CLASSES.reduce((sum, cls) => sum + (oquvMateriallari[cls]?.length || 0), 0);
 }
 
 function filterQuestionsByDifficulty(pool, difficulty) {
@@ -257,9 +249,9 @@ function renderHeroStats() {
     const quizCount = quizData.length || '—';
 
     const chips = [
-        { num: classCount, label: 'sinf', icon: '🎓' },
-        { num: lessonCount, label: 'dars', icon: '📚' },
-        { num: quizCount, label: 'viktorina savoli', icon: '✦' }
+        { num: classCount, label: uiT('talimStatGrade', 'sinf'), icon: '🎓' },
+        { num: lessonCount, label: uiT('talimStatsLessons', 'dars'), icon: '📚' },
+        { num: quizCount, label: uiT('talimStatQuiz', 'viktorina savoli'), icon: '✦' }
     ];
 
     el.innerHTML = chips.map(chip => `
@@ -393,73 +385,40 @@ function renderLessonRow(classNum, lesson, index, progress) {
     `;
 }
 
-function renderMaterialRow(classNum, material) {
-    const theme = GRADE_META[classNum]?.theme || '6';
+function renderPdfMaterialCard(classNum, material) {
+    const gradeLabel = `${classNum}-SINF`;
 
     return `
-        <article class="tl-lesson-row tl-lesson-row--${theme} tl-lesson-row--material" data-class="${escapeHtml(classNum)}" data-material="${escapeHtml(material.sarlavha)}">
-            <div class="tl-lesson-row__num">PDF</div>
-            <div class="tl-lesson-row__body">
-                <h3 class="tl-lesson-row__title">${escapeHtml(material.sarlavha)} — ${escapeHtml(material.sinf)}</h3>
-                <ul class="tl-lesson-row__meta">
-                    <li><span class="tl-lesson-row__icon" aria-hidden="true">☰</span><span>${escapeHtml(material.qisqa)}</span></li>
-                </ul>
-            </div>
-            <button class="tl-lesson-row__btn tl-pdf-btn" type="button" data-pdf="${escapeHtml(material.pdf)}" data-title="${escapeHtml(material.sarlavha)}">PDFni o'qish →</button>
+        <article class="tl-material-card tl-material-card--${escapeHtml(classNum)}">
+            <h2 class="tl-material-card__grade">${gradeLabel}</h2>
+            <p class="tl-material-card__desc">${escapeHtml(material.qisqa)}</p>
+            <button class="tl-material-card__btn tl-btn-primary tl-pdf-btn" type="button" data-pdf="${escapeHtml(material.pdf)}" data-title="${escapeHtml(material.sinf)}">${uiT('talimReadPdfBtn', 'PDFni o\'qish')}</button>
         </article>
     `;
-}
-
-function renderGradeSection(classNum, progress) {
-    const lessons = darsRejalari[classNum];
-    const meta = GRADE_META[classNum];
-    if (!lessons || !meta) return '';
-
-    const rows = lessons.map((lesson, idx) => renderLessonRow(classNum, lesson, idx, progress)).join('');
-    const materials = (oquvMateriallari[String(classNum)] || [])
-        .map(m => renderMaterialRow(classNum, m))
-        .join('');
-
-    return `
-        <section class="tl-grade-section" id="tl-grade-${escapeHtml(classNum)}">
-            <header class="tl-grade-section__head">
-                <h2 class="tl-grade-section__title tl-grade-section__title--${meta.theme}">${escapeHtml(meta.title)}</h2>
-                <p class="tl-grade-section__desc">${escapeHtml(meta.desc)}</p>
-            </header>
-            <div class="tl-lesson-list">
-                ${rows}
-                ${materials}
-            </div>
-        </section>
-    `;
-}
-
-function bindLessonRowEvents(container) {
-    container.querySelectorAll('.tl-view-btn[data-action="view"]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const row = btn.closest('[data-lesson]');
-            if (!row) return;
-            showLessonModal(row.dataset.class, row.dataset.lesson);
-        });
-    });
 }
 
 function loadLessons() {
     const container = document.getElementById('lessons-container');
     if (!container) return;
 
-    const progress = getProgress();
-    container.innerHTML = MODULE_CLASSES
-        .map(classNum => renderGradeSection(classNum, progress))
+    const cards = MODULE_CLASSES
+        .map(classNum => {
+            const material = oquvMateriallari[String(classNum)]?.[0];
+            if (!material) return '';
+            return renderPdfMaterialCard(classNum, material);
+        })
+        .filter(Boolean)
         .join('');
 
-    bindLessonRowEvents(container);
+    container.innerHTML = cards
+        ? `<div class="tl-materials-grid">${cards}</div>`
+        : `<p class="tl-materials-empty">${uiT('talimMaterialsEmpty', 'Dars materiallari hozircha mavjud emas.')}</p>`;
 }
 
 function loadLessonsForClass(classNum) {
     activeClass = String(classNum);
     loadLessons();
-    document.getElementById(`tl-grade-${classNum}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelector(`.tl-material-card--${classNum}`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 function openTalimPdfModal(title, pdfPath) {
@@ -599,7 +558,10 @@ function showQuestion() {
     const progress = ((currentQuestionIndex + 1) / currentQuiz.length) * 100;
 
     document.getElementById('progress-fill').style.width = progress + '%';
-    document.getElementById('question-number').textContent = `Savol ${currentQuestionIndex + 1} / ${currentQuiz.length}`;
+    document.getElementById('question-number').textContent = uiT('talimQuestionOf', 'Savol {current} / {total}', {
+        current: currentQuestionIndex + 1,
+        total: currentQuiz.length
+    });
     document.getElementById('question-text').textContent = question.savol;
 
     const answersContainer = document.getElementById('answers-container');
@@ -724,7 +686,7 @@ function showResult() {
             `).join('')}
         `;
     } else {
-        document.getElementById('wrong-answers').innerHTML = '<p style="color: #059669; font-size: 1.125rem;">🎉 Barcha javoblar to\'g\'ri!</p>';
+        document.getElementById('wrong-answers').innerHTML = `<p style="color: #059669; font-size: 1.125rem;">🎉 ${uiT('talimAllCorrect', 'Barcha javoblar to\'g\'ri!')}</p>`;
     }
 
     const certBtn = document.getElementById('cert-btn');
@@ -825,11 +787,122 @@ function downloadCertificate() {
 // SAVOL BANKI
 // ===================================
 
+let editingCustomQuestionId = null;
+
+function loadCustomQuestionsFromStorage() {
+    try {
+        const raw = localStorage.getItem(CUSTOM_QUESTIONS_KEY);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch {
+        return [];
+    }
+}
+
+function saveCustomQuestionsToStorage(questions) {
+    try {
+        localStorage.setItem(CUSTOM_QUESTIONS_KEY, JSON.stringify(questions));
+    } catch (error) {
+        console.error('Custom savollarni saqlashda xatolik:', error);
+    }
+}
+
+function mergeQuizData() {
+    const custom = loadCustomQuestionsFromStorage();
+    quizData = [...baseQuizData, ...custom];
+}
+
+function getCustomQuestions() {
+    return loadCustomQuestionsFromStorage();
+}
+
+function getSinfLabel(sinf) {
+    if (sinf === 'umumiy') return 'Umumiy';
+    return `${sinf}-sinf`;
+}
+
+function getDarajaLabel(daraja) {
+    if (daraja === 'orta' || daraja === "o'rta") return "O'rta";
+    if (daraja === 'qiyin') return 'Qiyin';
+    return 'Oson';
+}
+
+function renderBankCard(options) {
+    const {
+        icon,
+        title,
+        meta,
+        btnLabel,
+        btnClass = 'tl-bank-card__btn--primary',
+        onclick,
+        modifier = ''
+    } = options;
+
+    return `
+        <article class="tl-bank-card${modifier ? ' ' + modifier : ''}">
+            <div class="tl-bank-card__accent" aria-hidden="true"></div>
+            <div class="tl-bank-card__main">
+                <span class="tl-bank-card__icon" aria-hidden="true">${icon}</span>
+                <div class="tl-bank-card__text">
+                    <h3 class="tl-bank-card__title">${title}</h3>
+                    <p class="tl-bank-card__meta">${meta}</p>
+                </div>
+            </div>
+            <div class="tl-bank-card__footer">
+                <button class="tl-bank-card__btn ${btnClass}" type="button" onclick="${onclick}">${btnLabel}</button>
+            </div>
+        </article>
+    `;
+}
+
+function renderCustomQuestionsSection() {
+    const section = document.getElementById('bank-custom-section');
+    if (!section) return;
+
+    const custom = getCustomQuestions();
+    if (custom.length === 0) {
+        section.hidden = true;
+        section.innerHTML = '';
+        return;
+    }
+
+    section.hidden = false;
+    section.innerHTML = `
+        <h3 class="tl-bank-custom__title">Men qo'shgan savollar</h3>
+        <div class="tl-bank-custom__list">
+            ${custom.map(q => {
+                const safeId = String(q.id).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                return `
+                <article class="tl-bank-custom-item" data-id="${escapeHtml(String(q.id))}">
+                    <div class="tl-bank-custom-item__body">
+                        <p class="tl-bank-custom-item__q">${escapeHtml(q.savol)}</p>
+                        <div class="tl-bank-custom-item__meta">
+                            <span class="tl-bank-custom-item__tag">${escapeHtml(getSinfLabel(q.sinf))}</span>
+                            <span class="tl-bank-custom-item__tag">${escapeHtml(getDarajaLabel(q.daraja))}</span>
+                        </div>
+                    </div>
+                    <div class="tl-bank-custom-item__actions">
+                        <button class="tl-bank-custom-item__btn" type="button" onclick="editCustomQuestion('${safeId}')">Tahrirlash</button>
+                        <button class="tl-bank-custom-item__btn tl-bank-custom-item__btn--danger" type="button" onclick="deleteCustomQuestion('${safeId}')">O'chirish</button>
+                    </div>
+                </article>
+            `;
+            }).join('')}
+        </div>
+    `;
+}
+
+function hideCustomQuestionsSection() {
+    const section = document.getElementById('bank-custom-section');
+    if (section) section.hidden = true;
+}
+
 function loadSavolBanki() {
     const container = document.getElementById('bank-container');
 
     if (quizData.length === 0) {
-        container.innerHTML = '<p class="tl-empty">Savollar yuklanmoqda...</p>';
+        container.innerHTML = `<p class="tl-empty">${uiT('talimQuestionsLoading', 'Savollar yuklanmoqda...')}</p>`;
         return;
     }
 
@@ -837,36 +910,44 @@ function loadSavolBanki() {
     const count8 = filterQuestionsForBank('8').length;
     const countUmumiy = filterQuestionsForBank('umumiy').length;
 
-    container.innerHTML = `
-        <article class="lesson-card">
-            <h3>6-sinf savollari</h3>
-            <p class="lesson-card__meta">Jami: ${count6} ta savol</p>
-            <div class="lesson-card__actions">
-                <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankLevels('6')">Ko'rish</button>
-            </div>
-        </article>
-        <article class="lesson-card">
-            <h3>8-sinf savollari</h3>
-            <p class="lesson-card__meta">Jami: ${count8} ta savol</p>
-            <div class="lesson-card__actions">
-                <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankLevels('8')">Ko'rish</button>
-            </div>
-        </article>
-        <article class="lesson-card">
-            <h3>Umumiy savollar</h3>
-            <p class="lesson-card__meta">Jami: ${countUmumiy} ta savol</p>
-            <div class="lesson-card__actions">
-                <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankLevels('umumiy')">Ko'rish</button>
-            </div>
-        </article>
-        <article class="lesson-card">
-            <h3>➕ O'z savolingizni qo'shing</h3>
-            <p class="lesson-card__meta">O'qituvchilar uchun</p>
-            <div class="lesson-card__actions">
-                <button class="tl-btn-outline" type="button" onclick="showAddQuestionForm()">Savol qo'shish</button>
-            </div>
-        </article>
-    `;
+    container.className = 'tl-bank-grid tl-bank-grid--main';
+    container.innerHTML = [
+        renderBankCard({
+            icon: '6',
+            title: '6-sinf savollari',
+            meta: `Jami: ${count6} ta savol`,
+            btnLabel: "Ko'rish →",
+            onclick: "showBankLevels('6')",
+            modifier: 'tl-bank-card--grade-6'
+        }),
+        renderBankCard({
+            icon: '✦',
+            title: 'Umumiy savollar',
+            meta: `Jami: ${countUmumiy} ta savol`,
+            btnLabel: "Ko'rish →",
+            onclick: "showBankLevels('umumiy')",
+            modifier: 'tl-bank-card--general'
+        }),
+        renderBankCard({
+            icon: '8',
+            title: '8-sinf savollari',
+            meta: `Jami: ${count8} ta savol`,
+            btnLabel: "Ko'rish →",
+            onclick: "showBankLevels('8')",
+            modifier: 'tl-bank-card--grade-8'
+        }),
+        renderBankCard({
+            icon: '＋',
+            title: "O'z savolingizni qo'shing",
+            meta: "O'qituvchilar uchun",
+            btnLabel: "Savol qo'shish →",
+            btnClass: 'tl-bank-card__btn--outline',
+            onclick: 'showAddQuestionForm()',
+            modifier: 'tl-bank-card--action'
+        })
+    ].join('');
+
+    renderCustomQuestionsSection();
 }
 
 function showBankLevels(classKey) {
@@ -876,33 +957,41 @@ function showBankLevels(classKey) {
     const orta = filterQuestionsByDifficulty(pool, 'orta');
     const qiyin = filterQuestionsByDifficulty(pool, 'qiyin');
 
+    document.getElementById('bank-container').className = 'tl-bank-detail-wrap';
+    hideCustomQuestionsSection();
     document.getElementById('bank-container').innerHTML = `
         <div class="tl-bank-detail">
-            <h2 class="tl-card__title">${escapeHtml(label)} savollari (${pool.length} ta)</h2>
-            <div class="lessons-grid" style="margin-top: 1rem;">
-                <article class="lesson-card">
-                    <h3>😊 Oson darajadagi savollar</h3>
-                    <p class="lesson-card__meta">Jami: ${oson.length} ta savol</p>
-                    <div class="lesson-card__actions">
-                        <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankQuestions('${classKey}', 'oson')">Ko'rish</button>
-                    </div>
-                </article>
-                <article class="lesson-card">
-                    <h3>🤔 O'rta darajadagi savollar</h3>
-                    <p class="lesson-card__meta">Jami: ${orta.length} ta savol</p>
-                    <div class="lesson-card__actions">
-                        <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankQuestions('${classKey}', 'orta')">Ko'rish</button>
-                    </div>
-                </article>
-                <article class="lesson-card">
-                    <h3>🔥 Qiyin darajadagi savollar</h3>
-                    <p class="lesson-card__meta">Jami: ${qiyin.length} ta savol</p>
-                    <div class="lesson-card__actions">
-                        <button class="tl-btn-primary tl-btn-navy" type="button" onclick="showBankQuestions('${classKey}', 'qiyin')">Ko'rish</button>
-                    </div>
-                </article>
+            <header class="tl-bank-detail__head">
+                <h2 class="tl-bank-detail__title">${escapeHtml(label)} savollari</h2>
+                <p class="tl-bank-detail__count">${pool.length} ta savol</p>
+            </header>
+            <div class="tl-bank-grid tl-bank-grid--levels">
+                ${renderBankCard({
+                    icon: '😊',
+                    title: 'Oson darajadagi savollar',
+                    meta: `Jami: ${oson.length} ta savol`,
+                    btnLabel: "Ko'rish →",
+                    onclick: `showBankQuestions('${classKey}', 'oson')`,
+                    modifier: 'tl-bank-card--level tl-bank-card--easy'
+                })}
+                ${renderBankCard({
+                    icon: '🤔',
+                    title: "O'rta darajadagi savollar",
+                    meta: `Jami: ${orta.length} ta savol`,
+                    btnLabel: "Ko'rish →",
+                    onclick: `showBankQuestions('${classKey}', 'orta')`,
+                    modifier: 'tl-bank-card--level tl-bank-card--medium'
+                })}
+                ${renderBankCard({
+                    icon: '🔥',
+                    title: 'Qiyin darajadagi savollar',
+                    meta: `Jami: ${qiyin.length} ta savol`,
+                    btnLabel: "Ko'rish →",
+                    onclick: `showBankQuestions('${classKey}', 'qiyin')`,
+                    modifier: 'tl-bank-card--level tl-bank-card--hard'
+                })}
             </div>
-            <button class="tl-btn-outline" type="button" onclick="loadSavolBanki()" style="margin-top: 1rem;">← Orqaga</button>
+            <button class="tl-bank-back" type="button" onclick="loadSavolBanki()">← Orqaga</button>
         </div>
     `;
 }
@@ -915,8 +1004,11 @@ function showBankQuestions(classKey, daraja) {
 
     let html = `
         <div class="tl-bank-detail">
-            <h2 class="tl-card__title">${escapeHtml(classLabel)} — ${escapeHtml(label)} darajadagi savollar (${filtered.length} ta)</h2>
-            <div style="margin-top: 1rem;">
+            <header class="tl-bank-detail__head">
+                <h2 class="tl-bank-detail__title">${escapeHtml(classLabel)} — ${escapeHtml(label)} darajadagi savollar</h2>
+                <p class="tl-bank-detail__count">${filtered.length} ta savol</p>
+            </header>
+            <div class="tl-bank-questions">
     `;
 
     filtered.forEach((q, index) => {
@@ -937,15 +1029,214 @@ function showBankQuestions(classKey, daraja) {
 
     html += `
             </div>
-            <button class="tl-btn-outline" type="button" onclick="showBankLevels('${classKey}')" style="margin-top: 1rem;">← Orqaga</button>
+            <button class="tl-bank-back" type="button" onclick="showBankLevels('${classKey}')">← Orqaga</button>
         </div>
     `;
 
-    document.getElementById('bank-container').innerHTML = html;
+    const bankContainer = document.getElementById('bank-container');
+    bankContainer.className = 'tl-bank-detail-wrap';
+    hideCustomQuestionsSection();
+    bankContainer.innerHTML = html;
+}
+
+function showBankModalError(message) {
+    const errorEl = document.getElementById('bank-modal-error');
+    if (!errorEl) return;
+    if (message) {
+        errorEl.textContent = message;
+        errorEl.hidden = false;
+    } else {
+        errorEl.textContent = '';
+        errorEl.hidden = true;
+    }
+}
+
+function resetBankQuestionForm() {
+    const form = document.getElementById('bank-question-form');
+    if (!form) return;
+    form.reset();
+    const sinf6 = form.querySelector('input[name="bank-sinf"][value="6"]');
+    const togriA = form.querySelector('input[name="bank-togri"][value="0"]');
+    const darajaOson = form.querySelector('input[name="bank-daraja"][value="oson"]');
+    if (sinf6) sinf6.checked = true;
+    if (togriA) togriA.checked = true;
+    if (darajaOson) darajaOson.checked = true;
+    showBankModalError('');
+}
+
+function openBankQuestionModal(mode, question) {
+    const modal = document.getElementById('bank-add-modal');
+    const titleEl = document.getElementById('bank-modal-title');
+    if (!modal) return;
+
+    editingCustomQuestionId = mode === 'edit' && question ? question.id : null;
+    resetBankQuestionForm();
+
+    if (titleEl) {
+        titleEl.textContent = mode === 'edit'
+            ? uiT('talimEditQuestion', 'Savolni tahrirlash')
+            : uiT('talimAddQuestion', "Yangi savol qo'shish");
+    }
+
+    if (question) {
+        const sinfVal = String(question.sinf);
+        const sinfInput = document.querySelector(`input[name="bank-sinf"][value="${sinfVal}"]`);
+        if (sinfInput) sinfInput.checked = true;
+
+        document.getElementById('bank-savol').value = question.savol || '';
+        document.getElementById('bank-opt-a').value = question.variantlar?.[0] || '';
+        document.getElementById('bank-opt-b').value = question.variantlar?.[1] || '';
+        document.getElementById('bank-opt-c').value = question.variantlar?.[2] || '';
+        document.getElementById('bank-opt-d').value = question.variantlar?.[3] || '';
+
+        const togriInput = document.querySelector(`input[name="bank-togri"][value="${question.togri}"]`);
+        if (togriInput) togriInput.checked = true;
+
+        const darajaVal = question.daraja === "o'rta" ? 'orta' : question.daraja;
+        const darajaInput = document.querySelector(`input[name="bank-daraja"][value="${darajaVal}"]`);
+        if (darajaInput) darajaInput.checked = true;
+    }
+
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+    document.getElementById('bank-savol')?.focus();
+}
+
+function closeBankQuestionModal() {
+    const modal = document.getElementById('bank-add-modal');
+    if (!modal) return;
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    editingCustomQuestionId = null;
+    showBankModalError('');
+}
+
+function validateBankQuestionForm() {
+    const sinf = document.querySelector('input[name="bank-sinf"]:checked');
+    const savol = document.getElementById('bank-savol')?.value.trim();
+    const opts = [
+        document.getElementById('bank-opt-a')?.value.trim(),
+        document.getElementById('bank-opt-b')?.value.trim(),
+        document.getElementById('bank-opt-c')?.value.trim(),
+        document.getElementById('bank-opt-d')?.value.trim()
+    ];
+    const togri = document.querySelector('input[name="bank-togri"]:checked');
+    const daraja = document.querySelector('input[name="bank-daraja"]:checked');
+
+    if (!sinf) {
+        showBankModalError('Iltimos, sinfni tanlang.');
+        return null;
+    }
+    if (!savol) {
+        showBankModalError('Iltimos, savol matnini kiriting.');
+        document.getElementById('bank-savol')?.focus();
+        return null;
+    }
+    if (opts.some(opt => !opt)) {
+        showBankModalError('Iltimos, barcha 4 ta javob variantini kiriting.');
+        return null;
+    }
+    if (!togri) {
+        showBankModalError("Iltimos, to'g'ri javobni tanlang.");
+        return null;
+    }
+    if (!daraja) {
+        showBankModalError('Iltimos, qiyinlik darajasini tanlang.');
+        return null;
+    }
+
+    showBankModalError('');
+    const sinfVal = sinf.value === 'umumiy' ? 'umumiy' : Number(sinf.value);
+
+    return {
+        id: editingCustomQuestionId || `custom-${Date.now()}`,
+        savol,
+        variantlar: opts,
+        togri: Number(togri.value),
+        daraja: daraja.value,
+        mavzu: 'custom',
+        sinf: sinfVal,
+        source: 'custom',
+        createdAt: editingCustomQuestionId
+            ? (getCustomQuestions().find(q => q.id === editingCustomQuestionId)?.createdAt || new Date().toISOString())
+            : new Date().toISOString()
+    };
+}
+
+function saveBankQuestionFromForm(event) {
+    if (event) event.preventDefault();
+
+    const question = validateBankQuestionForm();
+    if (!question) return;
+
+    const custom = getCustomQuestions();
+    const existingIndex = custom.findIndex(q => q.id === question.id);
+
+    if (existingIndex >= 0) {
+        custom[existingIndex] = question;
+    } else {
+        custom.push(question);
+    }
+
+    saveCustomQuestionsToStorage(custom);
+    mergeQuizData();
+    renderHeroStats();
+    closeBankQuestionModal();
+
+    const bankTab = document.querySelector('.tab-content[data-tab="bank"]');
+    if (bankTab?.classList.contains('active')) {
+        loadSavolBanki();
+    }
 }
 
 function showAddQuestionForm() {
-    alert('Bu funksiya tez orada qo\'shiladi!\n\nO\'qituvchilar o\'z savollarini qo\'shish imkoniyatiga ega bo\'ladi.');
+    openBankQuestionModal('add');
+}
+
+function editCustomQuestion(id) {
+    const question = getCustomQuestions().find(q => String(q.id) === String(id));
+    if (!question) return;
+    openBankQuestionModal('edit', question);
+}
+
+function deleteCustomQuestion(id) {
+    if (!confirm('Bu savolni o\'chirishni xohlaysizmi?')) return;
+
+    const custom = getCustomQuestions().filter(q => String(q.id) !== String(id));
+    saveCustomQuestionsToStorage(custom);
+    mergeQuizData();
+    renderHeroStats();
+    loadSavolBanki();
+}
+
+function initBankQuestionModal() {
+    const modal = document.getElementById('bank-add-modal');
+    const form = document.getElementById('bank-question-form');
+    const closeBtn = document.getElementById('bank-modal-close');
+    const cancelBtn = document.getElementById('bank-modal-cancel');
+
+    if (form) {
+        form.addEventListener('submit', saveBankQuestionFromForm);
+    }
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeBankQuestionModal);
+    }
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', closeBankQuestionModal);
+    }
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeBankQuestionModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal?.style.display === 'flex') {
+            closeBankQuestionModal();
+        }
+    });
 }
 
 // ===================================
@@ -953,6 +1244,7 @@ function showAddQuestionForm() {
 // ===================================
 
 document.addEventListener('DOMContentLoaded', async function() {
+    window.PlatformI18n?.registerRefresh?.('talim', refreshTalimUI);
     renderCourseOverview();
     renderLearningPath();
     renderMaterials();
@@ -963,13 +1255,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     try {
         const response = await fetch((window.platformUrl || function (r) { return r; })('data/quiz.json'));
         const data = await response.json();
-        quizData = data.savollar;
+        baseQuizData = data.savollar;
+        mergeQuizData();
         renderHeroStats();
     } catch (error) {
         console.error('Savollarni yuklashda xatolik:', error);
+        mergeQuizData();
         renderHeroStats();
         alert('Savollar yuklanmadi. Iltimos, sahifani qayta yuklang.');
     }
+
+    initBankQuestionModal();
 
     const modal = document.getElementById('cert-modal');
     if (modal) {

@@ -13,10 +13,12 @@
         quiz: { file: 'quiz.json', optional: false },
         videolar: { file: 'videolar.json', optional: true },
         asarlar: { file: 'asarlar.json', optional: true },
-        qissalar: { file: 'qissalar.json', optional: false }
+        qissalar: { file: 'qissalar.json', optional: false },
+        tarjimalar: { file: 'tarjimalar.json', optional: true },
+        tanlanganAsarlar: { file: 'tanlangan-asarlar.json', optional: true }
     };
 
-    const DATA_CACHE_VERSION = '20260812';
+    const DATA_CACHE_VERSION = '20260819';
 
     const EVENTS = ['dataUpdated', 'progressChanged', 'contentAdded'];
 
@@ -51,14 +53,19 @@
 
     function textBlob(item) {
         if (!item || typeof item !== 'object') return '';
-        return Object.values(item)
-            .filter(v => typeof v === 'string' || typeof v === 'number')
-            .concat(
-                Array.isArray(item.mavzu) ? item.mavzu : [],
-                Array.isArray(item.kalitSozlar) ? item.kalitSozlar : [],
-                Array.isArray(item.mualliflar) ? item.mualliflar : []
-            )
-            .join(' ');
+        const parts = Object.values(item)
+            .filter(v => typeof v === 'string' || typeof v === 'number');
+        if (Array.isArray(item.mavzu)) parts.push(...item.mavzu);
+        if (Array.isArray(item.kalitSozlar)) parts.push(...item.kalitSozlar);
+        if (Array.isArray(item.mualliflar)) parts.push(...item.mualliflar);
+        if (Array.isArray(item.teglar)) parts.push(...item.teglar);
+        if (item.muallif) parts.push(item.muallif);
+        if (item.tarif) parts.push(item.tarif);
+        if (item.annotatsiya) parts.push(item.annotatsiya);
+        if (item.atama) parts.push(item.atama);
+        if (item.qisqa) parts.push(item.qisqa);
+        if (item.qisqaSarlavha) parts.push(item.qisqaSarlavha);
+        return parts.join(' ');
     }
 
     const PlatformDataService = {
@@ -133,12 +140,14 @@
             );
 
             this._cache = Object.fromEntries(results.filter(([, v]) => v != null));
+            this._cachedSearchItems = null;
             this.emit('dataUpdated', { sources: Object.keys(this._cache), statistics: this.getStatistics() });
             return this._cache;
         },
 
         async reload() {
             this._loadPromise = null;
+            this._cachedSearchItems = null;
             await this.ensureLoaded(true);
             this.emit('dataUpdated', { sources: Object.keys(this._cache), statistics: this.getStatistics() });
             return this._cache;
@@ -181,13 +190,37 @@
             return this.getSource('qissalar')?.qissalar || [];
         },
 
+        getTarjimalar() {
+            return this.getSource('tarjimalar')?.tarjimalar || [];
+        },
+
+        getTanlanganAsarlar() {
+            return this.getSource('tanlanganAsarlar')?.tanlanganAsarlar || [];
+        },
+
+        getHikoyalar() {
+            return this.getDostonlar().filter(function (item) {
+                return String(item.janr || '').trim().toLowerCase() === 'hikoya';
+            });
+        },
+
         getScientificArticles() {
             const ilmiy = this.getSource('ilmiy');
-            if (!ilmiy) return { maqolalar: [], dissertatsiyalar: [], atamalar: [] };
+            if (!ilmiy) {
+                return {
+                    maqolalar: [],
+                    dissertatsiyalar: [],
+                    tadqiqotlar: [],
+                    atamalar: [],
+                    bibliografiya: []
+                };
+            }
             return {
                 maqolalar: ilmiy.maqolalar || [],
                 dissertatsiyalar: ilmiy.dissertatsiyalar || [],
-                atamalar: ilmiy.atamalar || []
+                tadqiqotlar: ilmiy.tadqiqotlar || [],
+                atamalar: ilmiy.atamalar || [],
+                bibliografiya: ilmiy.bibliografiya || []
             };
         },
 
@@ -203,18 +236,46 @@
             const bio = this.getBiography();
             const ilmiy = this.getScientificArticles();
             const videos = this.getVideos();
+            const poems = this.getPoems();
+            const hikoyalar = this.getHikoyalar();
+            const qissalar = this.getQissalar();
+            const tarjimalar = this.getTarjimalar();
+            const tanlanganAsarlar = this.getTanlanganAsarlar();
+
+            const scientificTotal =
+                ilmiy.maqolalar.length +
+                ilmiy.dissertatsiyalar.length +
+                ilmiy.tadqiqotlar.length +
+                ilmiy.atamalar.length +
+                ilmiy.bibliografiya.length;
+
+            const totalWorks =
+                poems.length +
+                hikoyalar.length +
+                qissalar.length +
+                tarjimalar.length +
+                tanlanganAsarlar.length;
 
             return {
-                poems: this.getPoems().length,
-                dostonlar: this.getDostonlar().length,
-                asarlar: this.getAsarlar().length,
-                qissalar: this.getQissalar().length,
-                books: this.getBooks().length,
-                works: this.getPoems().length + this.getDostonlar().length + this.getAsarlar().length + this.getQissalar().length,
+                poems: poems.length,
+                stories: hikoyalar.length,
+                qissalar: qissalar.length,
+                translations: tarjimalar.length,
+                selectedWorks: tanlanganAsarlar.length,
+                totalWorks: totalWorks,
+                totalScientific: scientificTotal,
+
                 scientificArticles: ilmiy.maqolalar.length,
                 dissertations: ilmiy.dissertatsiyalar.length,
+                research: ilmiy.tadqiqotlar.length,
                 terms: ilmiy.atamalar.length,
-                scientificTotal: ilmiy.maqolalar.length + ilmiy.dissertatsiyalar.length + ilmiy.atamalar.length,
+                bibliography: ilmiy.bibliografiya.length,
+                scientificTotal: scientificTotal,
+
+                dostonlar: hikoyalar.length,
+                asarlar: this.getAsarlar().length,
+                books: this.getBooks().length,
+                works: totalWorks,
                 quizQuestions: this.getQuizQuestions().length,
                 lifeEvents: (bio.voqealar || []).length,
                 lifeStages: Object.keys(bio.bosqichlar || {}).length,
@@ -231,41 +292,172 @@
                     type,
                     source,
                     item,
-                    title: item[titleField] || item.nomi || item.savol || item.sarlavha || '',
+                    title: item[titleField] || item.nomi || item.savol || item.sarlavha || item.atama || '',
                     text: textBlob(item)
                 });
             };
 
             this.getPoems().forEach(p => push('poem', 'sherlar', p));
-            this.getDostonlar().forEach(d => push('doston', 'dostonlar', d));
+            this.getDostonlar().forEach(d => {
+                const isStory = String(d.janr || '').trim().toLowerCase() === 'hikoya';
+                push(isStory ? 'hikoya' : 'doston', 'dostonlar', d);
+            });
             this.getAsarlar().forEach(a => push('book', 'asarlar', a, 'nomi'));
             this.getQissalar().forEach(q => push('qissa', 'qissalar', q));
-            this.getBiography().voqealar?.forEach(v => push('lifeEvent', 'hayot', v));
-            Object.entries(this.getBiography().bosqichlar || {}).forEach(([key, b]) => {
+            this.getTarjimalar().forEach(t => push('tarjima', 'tarjimalar', t));
+            this.getTanlanganAsarlar().forEach(t => push('tanlangan', 'tanlangan-asarlar', t));
+
+            const bio = this.getBiography();
+            bio.voqealar?.forEach(v => push('lifeEvent', 'hayot', v));
+            Object.entries(bio.bosqichlar || {}).forEach(([key, b]) => {
                 push('lifeStage', 'hayot', { ...b, key }, 'sarlavha');
             });
-            this.getScientificArticles().maqolalar.forEach(m => push('article', 'ilmiy', m));
+            (bio.xotiralar || []).forEach((x, idx) => push('memory', 'hayot', { ...x, id: x.id ?? idx + 1 }));
+
+            const ilmiy = this.getScientificArticles();
+            ilmiy.maqolalar.forEach(m => push('article', 'ilmiy', m));
+            ilmiy.dissertatsiyalar.forEach(d => push('dissertation', 'ilmiy', d));
+            ilmiy.tadqiqotlar.forEach(t => push('research', 'ilmiy', t));
+            ilmiy.atamalar.forEach(a => push('term', 'ilmiy', a, 'atama'));
+            ilmiy.bibliografiya.forEach(b => push('bibliography', 'ilmiy', b));
+
             this.getQuizQuestions().forEach(q => push('quiz', 'quiz', q, 'savol'));
-            (this.getVideos().darslar || []).forEach(v => push('video', 'videolar', v));
+
+            const videos = this.getVideos();
+            (videos.darslar || []).forEach(v => push('video', 'videolar', v));
+            (videos.materiallar || []).forEach(v => push('videoMaterial', 'videolar', v));
+            if (videos.kurs) push('videoCourse', 'videolar', videos.kurs);
+
+            this._getStaticSearchEntries().forEach(entry => items.push(entry));
 
             return items;
         },
 
-        searchAll(query, limit = 20) {
-            const q = normalizeQuery(query);
-            if (!q) return [];
+        _getStaticSearchEntries() {
+            return [
+                { type: 'interactive', source: 'interaktiv', item: { id: 'quiz', sarlavha: "Kim ko'p biladi?" }, title: "Kim ko'p biladi?", text: "viktorina savol javob interaktiv o'yin test" },
+                { type: 'interactive', source: 'interaktiv', item: { id: 'memory', sarlavha: "She'r yodlash" }, title: "She'r yodlash", text: "she'r yodlash interaktiv o'yin" },
+                { type: 'interactive', source: 'interaktiv', item: { id: 'timeline', sarlavha: 'Yilni moslang' }, title: 'Yilni moslang', text: "xronologiya yil hayot voqea interaktiv o'yin" },
+                { type: 'interactive', source: 'interaktiv', item: { id: 'wordsearch', sarlavha: "So'z topish" }, title: "So'z topish", text: "so'z topish interaktiv o'yin" },
+                { type: 'test', source: 'interaktiv', item: { id: 'tests', sarlavha: 'Testlar' }, title: 'Testlar', text: 'test viktorina bilim sinash interaktiv' },
+                { type: 'education', source: 'talim', item: { id: 'talim', sarlavha: "Ta'lim resurslari" }, title: "Ta'lim resurslari", text: "dars reja sinf o'quv material ta'lim viktorina" },
+                { type: 'education', source: 'talim', item: { id: '6-sinf', sarlavha: "6-sinf dars materiallari" }, title: "6-sinf dars materiallari", text: "6 sinf darslik gafur gulom ta'lim" },
+                { type: 'education', source: 'talim', item: { id: '8-sinf', sarlavha: "8-sinf dars materiallari" }, title: "8-sinf dars materiallari", text: "8 sinf darslik shum bola ta'lim" }
+            ];
+        },
 
-            return this._allSearchableItems()
-                .map(entry => {
-                    const hay = normalizeQuery(`${entry.title} ${entry.text}`);
-                    let score = 0;
-                    if (hay.includes(q)) score += 10;
-                    q.split(' ').forEach(t => {
-                        if (t.length > 1 && hay.includes(t)) score += 2;
+        _cachedSearchItems: null,
+
+        _searchFieldsForType(type, item) {
+            const common = [
+                { key: 'sarlavha', label: 'Sarlavha' },
+                { key: 'matn', label: 'Matn' },
+                { key: 'qisqa', label: 'Qisqa' },
+                { key: 'nota', label: 'Nota' },
+                { key: 'muallif', label: 'Muallif' },
+                { key: 'annotatsiya', label: 'Annotatsiya' },
+                { key: 'tarif', label: 'Tarif' },
+                { key: 'batafsil', label: 'Batafsil' },
+                { key: 'savol', label: 'Savol' },
+                { key: 'javob', label: 'Javob' },
+                { key: 'atama', label: 'Atama' },
+                { key: 'nomi', label: 'Nomi' },
+                { key: 'tavsif', label: 'Tavsif' }
+            ];
+
+            if (type === 'term') return [{ key: 'atama', label: 'Atama' }, { key: 'tarif', label: 'Tarif' }, { key: 'misol', label: 'Misol' }];
+            if (type === 'quiz') return [{ key: 'savol', label: 'Savol' }, { key: 'javob', label: 'Javob' }];
+            if (type === 'lifeEvent') return [{ key: 'sarlavha', label: 'Sarlavha' }, { key: 'qisqa', label: 'Qisqa' }, { key: 'batafsil', label: 'Batafsil' }];
+            if (type === 'lifeStage') return [{ key: 'sarlavha', label: 'Sarlavha' }, { key: 'matn', label: 'Matn' }];
+            if (type === 'memory') return [{ key: 'matn', label: 'Xotira' }, { key: 'muallif', label: 'Muallif' }];
+            if (type === 'interactive' || type === 'test' || type === 'education') {
+                return [{ key: 'sarlavha', label: 'Sarlavha' }];
+            }
+            return common;
+        },
+
+        _getCachedSearchItems() {
+            if (this._cachedSearchItems) return this._cachedSearchItems;
+            this._cachedSearchItems = this._allSearchableItems();
+            return this._cachedSearchItems;
+        },
+
+        searchAll(query, limit = 30) {
+            const utils = global.PlatformSearchUtils;
+            const rawQuery = String(query || '').trim();
+            const q = normalizeQuery(rawQuery);
+            if (!q || q.length < 2) return [];
+
+            const results = [];
+            const items = this._getCachedSearchItems();
+
+            items.forEach(entry => {
+                const item = entry.item || {};
+                const itemId = item.id ?? item.key ?? entry.title;
+                const title = entry.title || item.sarlavha || item.atama || item.nomi || item.savol || '';
+                const fields = this._searchFieldsForType(entry.type, item);
+                let itemMatched = false;
+
+                fields.forEach(field => {
+                    const text = item[field.key];
+                    if (!text || typeof text !== 'string') return;
+
+                    const ranges = utils
+                        ? utils.findMatchRanges(text, q, 4)
+                        : [{ start: 0, end: Math.min(text.length, q.length), match: q }];
+
+                    if (!ranges.length) {
+                        const hay = normalizeQuery(text);
+                        if (!hay.includes(q) && !q.split(' ').some(t => t.length > 1 && hay.includes(t))) return;
+                        ranges.push({ start: 0, end: 0, match: q });
+                    }
+
+                    ranges.forEach((range, occurrenceIndex) => {
+                        const snippet = utils
+                            ? utils.buildSnippet(text, q, range)
+                            : text.slice(0, 120);
+                        const score = utils
+                            ? utils.scoreMatch(title, field.key, text, q, range, occurrenceIndex)
+                            : 10;
+
+                        results.push({
+                            ...entry,
+                            resultId: `${entry.type}-${itemId}-${field.key}-${occurrenceIndex}`,
+                            itemId,
+                            matchField: field.key,
+                            matchFieldLabel: field.label,
+                            occurrenceIndex,
+                            snippet,
+                            score,
+                            highlight: rawQuery
+                        });
+                        itemMatched = true;
                     });
-                    return { ...entry, score };
-                })
-                .filter(r => r.score > 0)
+                });
+
+                if (!itemMatched) {
+                    const blob = normalizeQuery(`${title} ${entry.text || ''}`);
+                    const tokens = q.split(' ').filter(t => t.length > 1);
+                    const partial = tokens.length
+                        ? tokens.some(t => blob.includes(t))
+                        : blob.includes(q);
+                    if (partial || blob.includes(q)) {
+                        results.push({
+                            ...entry,
+                            resultId: `${entry.type}-${itemId}-meta-0`,
+                            itemId,
+                            matchField: 'meta',
+                            matchFieldLabel: 'Umumiy',
+                            occurrenceIndex: 0,
+                            snippet: utils ? utils.escapeHtml(title) : title,
+                            score: blob.includes(q) ? 8 : 4,
+                            highlight: rawQuery
+                        });
+                    }
+                }
+            });
+
+            return results
                 .sort((a, b) => b.score - a.score)
                 .slice(0, limit);
         },
