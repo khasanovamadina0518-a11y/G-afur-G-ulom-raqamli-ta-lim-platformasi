@@ -1,4 +1,8 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
+  "buildCommand": "",
+  "installCommand": "",
+  "framework": null,
   "outputDirectory": "gafur-gulom-platform"
 }
