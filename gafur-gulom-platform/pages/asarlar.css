@@ -934,6 +934,87 @@ body.dark-mode.page-asarlar .library-filter-panel {
     border-color: var(--border-strong);
 }
 
+/* Modal — poem reader (dark mode contrast) */
+body.dark-mode.page-asarlar .modal-content {
+    background: var(--card-bg);
+    color: var(--text);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
+    scrollbar-color: rgba(232, 224, 208, 0.4) rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode.page-asarlar .modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+body.dark-mode.page-asarlar .modal-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+}
+
+body.dark-mode.page-asarlar .modal-content::-webkit-scrollbar-thumb {
+    background: rgba(232, 224, 208, 0.38);
+    border-radius: 4px;
+}
+
+body.dark-mode.page-asarlar .modal-header {
+    border-bottom-color: var(--border-strong);
+}
+
+body.dark-mode.page-asarlar .modal-title {
+    color: var(--text);
+}
+
+body.dark-mode.page-asarlar .modal-text {
+    color: var(--text);
+}
+
+body.dark-mode.page-asarlar .poem-year {
+    color: var(--text-light);
+}
+
+body.dark-mode.page-asarlar .modal-close {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode.page-asarlar .modal-close:hover {
+    background: var(--secondary);
+    color: var(--text-inverse);
+}
+
+body.dark-mode.page-asarlar .modal-actions {
+    border-top-color: var(--border-strong);
+}
+
+body.dark-mode.page-asarlar .modal-btn-secondary {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    border-color: var(--border-strong);
+}
+
+body.dark-mode.page-asarlar .modal-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text);
+}
+
+body.dark-mode.page-asarlar .library-item__category {
+    color: var(--text-light);
+}
+
+body.dark-mode.page-asarlar .library-item__bookmark {
+    color: var(--text-light);
+}
+
+body.dark-mode.page-asarlar .library-item__bookmark:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode.page-asarlar .library-item__bookmark.active {
+    color: var(--secondary);
+}
+
 body.dark-mode.page-asarlar .modal.modal--pdf .modal-content {
     background: var(--card-bg);
 }
