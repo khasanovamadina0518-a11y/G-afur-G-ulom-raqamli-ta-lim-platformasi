@@ -31,7 +31,7 @@ function getLibraryAudioParts(prefix, id) {
 }
 
 function parseLibraryAudioEl(audioEl) {
-    const match = audioEl?.id?.match(/^(poem|qissa)-audio-(.+)$/);
+    const match = audioEl?.id?.match(/^(poem|qissa|doston)-audio-(.+)$/);
     if (!match) return null;
     return { prefix: match[1], id: match[2], key: `${match[1]}-${match[2]}` };
 }
@@ -170,12 +170,21 @@ function onLibraryAudioError(prefix, id) {
     }
 }
 
+function getAudioMimeType(path) {
+    const ext = String(path || '').split('.').pop()?.toLowerCase();
+    if (ext === 'm4a' || ext === 'mp4') return 'audio/mp4';
+    if (ext === 'ogg') return 'audio/ogg';
+    if (ext === 'wav') return 'audio/wav';
+    return 'audio/mpeg';
+}
+
 function buildLibraryAudioParts(prefix, item, workType) {
     if (!item.audio) {
         return { audioAction: '', audioPanel: '' };
     }
 
     const src = resolveAssetPath(item.audio);
+    const mimeType = getAudioMimeType(item.audio);
     const safeTitle = item.sarlavha.replace(/"/g, '&quot;');
     const listenLabel = `${safeTitle} ${workType}ini tinglash`;
 
@@ -184,7 +193,7 @@ function buildLibraryAudioParts(prefix, item, workType) {
         audioPanel: `
             <div class="library-item__audio-panel" id="${prefix}-audio-panel-${item.id}" hidden>
                 <audio class="library-item__audio-player" id="${prefix}-audio-${item.id}" controls preload="none" onplay="onLibraryAudioPlay(this)" onpause="onLibraryAudioPause(this)" onended="onLibraryAudioEnded(this)" onerror="onLibraryAudioError('${prefix}', ${item.id})">
-                    <source src="${src}" type="audio/mpeg">
+                    <source src="${src}" type="${mimeType}">
                 </audio>
             </div>`
     };
@@ -198,6 +207,11 @@ function buildQissaAudioParts(qissa) {
     return buildLibraryAudioParts('qissa', qissa, 'qissa');
 }
 
+function buildDostonAudioParts(doston) {
+    const workType = doston.janr === 'Hikoya' ? 'hikoya' : 'doston';
+    return buildLibraryAudioParts('doston', doston, workType);
+}
+
 /* She'r audio — eski nomlar (HTML onclick mosligi) */
 function togglePoemAudio(id) { toggleLibraryAudio('poem', id); }
 function onPoemAudioPlay(el) { onLibraryAudioPlay(el); }
@@ -206,8 +220,47 @@ function onPoemAudioEnded(el) { onLibraryAudioEnded(el); }
 function onPoemAudioError(id) { onLibraryAudioError('poem', id); }
 
 function resolveAssetPath(path) {
-    if (!path) return '';
-    return (window.platformUrl || function (r) { return r; })(path);
+    if (!path || path === '#') return '';
+    if (/^(https?:)?\/\//i.test(path)) return path;
+    if (window.PlatformThumbnails) {
+        return window.PlatformThumbnails.resolvePlatformAsset(path);
+    }
+    const relative = String(path).trim().replace(/^(\.\/|\.\.\/)+/, '').replace(/^\/+/, '');
+    const encoded = relative.split('/').filter(Boolean).map(encodeURIComponent).join('/');
+    return (window.platformUrl || function (r) { return r; })(encoded);
+}
+
+function getLibraryCoverSrc(rasm, type) {
+    if (window.PlatformThumbnails) {
+        return type === 'tanlangan'
+            ? window.PlatformThumbnails.resolveTanlanganCover(rasm)
+            : window.PlatformThumbnails.resolveBookCover(rasm);
+    }
+    return rasm ? resolveAssetPath(rasm) : '';
+}
+
+function getLibraryCoverFallback(type) {
+    if (!window.PlatformThumbnails) return '';
+    return type === 'tanlangan'
+        ? window.PlatformThumbnails.getTanlanganAsarlarThumbnail()
+        : window.PlatformThumbnails.getBookThumbnail();
+}
+
+function buildCoverImg(title, rasm, type) {
+    const fallback = getLibraryCoverFallback(type);
+    const src = getLibraryCoverSrc(rasm, type) || fallback;
+    const esc = window.PlatformThumbnails?.escapeHtmlAttr || function (v) {
+        return String(v || '').replace(/"/g, '&quot;');
+    };
+
+    if (!src) {
+        return `<span class="library-item__cover-label">${title}</span>`;
+    }
+
+    const safeSrc = esc(src);
+    const safeFallback = esc(fallback || src);
+
+    return `<img class="library-item__cover-img" src="${safeSrc}" alt="" loading="lazy" data-thumb-fallback="${safeFallback}" onerror="window.PlatformThumbnails&&window.PlatformThumbnails.handleImgError(this)">`;
 }
 
 function getCoverVariant(id) {
@@ -215,7 +268,7 @@ function getCoverVariant(id) {
     return variants[id % 3];
 }
 
-function buildLibraryItem({ id, title, category, description, coverVariant, coverSrc, readAction, audioAction = '', audioPanel = '', showBookmark = true, tagsHtml = '' }) {
+function buildLibraryItem({ id, title, category, description, coverVariant, rasm = '', coverType = 'book', readAction, audioAction = '', audioPanel = '', showBookmark = true, tagsHtml = '' }) {
     const favActive = isFavorite(id);
     const bookmark = showBookmark ? `
                 <button class="library-item__bookmark favorite-btn ${favActive ? 'active' : ''}"
@@ -225,9 +278,7 @@ function buildLibraryItem({ id, title, category, description, coverVariant, cove
                     ${BOOKMARK_SVG}
                 </button>` : '';
 
-    const coverInner = coverSrc
-        ? `<img class="library-item__cover-img" src="${coverSrc}" alt="" loading="lazy">`
-        : `<span class="library-item__cover-label">${title}</span>`;
+    const coverInner = buildCoverImg(title, rasm, coverType);
 
     return `
         <article class="library-item" data-id="${id}">
@@ -304,7 +355,7 @@ function checkUrlParams() {
     if (dostonId) {
         const id = parseInt(dostonId, 10);
         switchTab('dostonlar', false);
-        setTimeout(() => openDostonModal(id), 500);
+        setTimeout(() => openDostonRead(id), 500);
     }
 
     const tarjimaId = urlParams.get('tarjima');
@@ -689,6 +740,7 @@ function switchTab(tabName, updateUrl = true) {
 window.openPoemModal = openPoemModal;
 window.toggleFavorite = toggleFavorite;
 window.openDostonModal = openDostonModal;
+window.openDostonRead = openDostonRead;
 // ===================================
 // Doston modalini ochish
 // ===================================
@@ -705,7 +757,7 @@ async function openDostonModal(dostonId) {
     document.getElementById('modal-title').textContent = doston.sarlavha;
     document.getElementById('modal-year').textContent = doston.yil;
     document.getElementById('modal-badges').innerHTML =
-        doston.mavzu.map(m => `<span class="badge">${m}</span>`).join('');
+        (doston.mavzu || []).map(m => `<span class="badge">${m}</span>`).join('');
 
     const modalText = document.getElementById('modal-text');
     modalText.innerHTML = '';
@@ -714,6 +766,24 @@ async function openDostonModal(dostonId) {
     document.getElementById('poem-modal').classList.add('active');
     document.body.style.overflow = 'hidden';
 }
+async function openDostonRead(dostonId) {
+    const dostonlar = await getDostonlar();
+    const doston = dostonlar.find(d => d.id === dostonId);
+    if (!doston) return;
+
+    if (doston.pdf) {
+        openQissaPdfReader(doston);
+        return;
+    }
+
+    if (doston.matn) {
+        openDostonModal(dostonId);
+        return;
+    }
+
+    showNotification('Bu asar uchun hozircha elektron fayl mavjud emas.', 'error');
+}
+
 // ===================================
 // Dostonlarni yuklash
 // ===================================
@@ -727,8 +797,13 @@ async function loadDostonlar() {
         const dostonlar = await getDostonlar();
 
         container.innerHTML = dostonlar.map(doston => {
-            const category = `${doston.mavzu[0] || 'Doston'} · Doston · ${doston.yil}`;
-            const readAction = `<button class="library-item__read" type="button" onclick="openDostonModal(${doston.id})">O'qish</button>`;
+            const author = doston.muallif || "G'afur G'ulom";
+            const janr = doston.janr || 'Doston';
+            const category = `${author} · ${janr}${doston.yil ? ` · ${doston.yil}` : ''}`;
+            const readAction = doston.pdf || doston.matn
+                ? `<button class="library-item__read" type="button" onclick="openDostonRead(${doston.id})">O'qish</button>`
+                : '';
+            const { audioAction, audioPanel } = buildDostonAudioParts(doston);
 
             return buildLibraryItem({
                 id: doston.id,
@@ -737,7 +812,10 @@ async function loadDostonlar() {
                 description: doston.qisqa,
                 coverVariant: getCoverVariant(doston.id + 2),
                 readAction,
-                showBookmark: false
+                audioAction,
+                audioPanel,
+                showBookmark: false,
+                tagsHtml: buildQissaTags(doston.mavzu)
             });
         }).join('');
 
@@ -817,7 +895,6 @@ function displayQissalar() {
         const author = qissa.muallif || "G'afur G'ulom";
         const category = `${author} · Qissa · ${qissa.yil || ''}`.replace(/ · $/, '');
         const readAction = `<button class="library-item__read" type="button" onclick="openQissaRead(${qissa.id})">O'qish</button>`;
-        const coverSrc = qissa.rasm ? resolveAssetPath(qissa.rasm) : '';
         const { audioAction, audioPanel } = buildQissaAudioParts(qissa);
 
         return buildLibraryItem({
@@ -826,7 +903,7 @@ function displayQissalar() {
             category,
             description: qissa.qisqa || '',
             coverVariant: getCoverVariant(qissa.id + 4),
-            coverSrc,
+            rasm: qissa.rasm,
             readAction,
             audioAction,
             audioPanel,
@@ -1096,7 +1173,6 @@ function displayTarjimalar() {
         const asl = tarjima.aslMuallif ? ` · ${tarjima.aslMuallif}` : '';
         const category = `${author} · Tarjima${asl}${tarjima.yil ? ` · ${tarjima.yil}` : ''}`;
         const readAction = `<button class="library-item__read" type="button" onclick="openTarjimaRead(${tarjima.id})">O'qish</button>`;
-        const coverSrc = tarjima.rasm ? resolveAssetPath(tarjima.rasm) : '';
 
         return buildLibraryItem({
             id: tarjima.id,
@@ -1104,7 +1180,7 @@ function displayTarjimalar() {
             category,
             description: tarjima.qisqa || '',
             coverVariant: getCoverVariant(tarjima.id + 6),
-            coverSrc,
+            rasm: tarjima.rasm,
             readAction,
             showBookmark: false,
             tagsHtml: buildTarjimaTags(tarjima.teglar)
@@ -1199,7 +1275,7 @@ async function loadTanlanganAsarlar() {
     if (!container) return;
 
     try {
-        const dataUrl = (window.platformUrl || function (r) { return r; })('data/tanlangan-asarlar.json?v=20260813');
+        const dataUrl = (window.platformUrl || function (r) { return r; })('data/tanlangan-asarlar.json?v=20260819');
         const res = await fetch(dataUrl, { cache: 'no-store' });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
@@ -1236,7 +1312,6 @@ function displayTanlanganAsarlar() {
             : [asar.nashriyot, asar.joy, asar.yil]
         ).filter(Boolean).join(' · ');
         const readAction = `<button class="library-item__read" type="button" onclick="openTanlanganRead(${asar.id})">O'qish</button>`;
-        const coverSrc = asar.rasm ? resolveAssetPath(asar.rasm) : '';
 
         return buildLibraryItem({
             id: asar.id,
@@ -1244,7 +1319,8 @@ function displayTanlanganAsarlar() {
             category,
             description,
             coverVariant: getCoverVariant(asar.id + 8),
-            coverSrc,
+            rasm: asar.rasm,
+            coverType: 'tanlangan',
             readAction,
             showBookmark: false
         });

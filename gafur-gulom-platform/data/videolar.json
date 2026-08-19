@@ -30,7 +30,7 @@
     "kategoriya": "hayoti-ijodi",
     "sarlavha": "1. G'afur G'ulom hayoti va ijodi",
     "tavsif": "Ushbu darsda G'afur G'ulomning hayoti, ijodiy yo'li va adabiyotga qo'shgan hissasi batafsil yoritiladi.",
-    "thumbnail": "assets/images/gafur-gulom.jpg",
+    "thumbnail": "assets/images/video thumbnail.jpg",
     "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/gafur-gulom-hayoti-va-jodi.mp4",
     "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/gafur-gulom-hayoti-va-jodi.mp4",
     "currentTime": "04:35",
@@ -78,7 +78,7 @@
       "mavzu": "G'afur G'ulom hayoti",
       "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/gafur-gulom-haqida-qozogboy-yoldoshev.mp4",
       "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/gafur-gulom-haqida-qozogboy-yoldoshev.mp4",
-      "thumbnail": "assets/images/gafur-gulom.jpg"
+      "thumbnail": "assets/images/video thumbnail.jpg"
     },
     {
       "id": 6,
@@ -91,7 +91,7 @@
       "mavzu": "Shum bola",
       "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/shum-bola-qissasi-tahlili.mp4",
       "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/shum-bola-qissasi-tahlili.mp4",
-      "thumbnail": "assets/images/gafur-gulom.jpg"
+      "thumbnail": "assets/images/video thumbnail.jpg"
     },
     {
       "id": 7,
@@ -104,7 +104,7 @@
       "mavzu": "Shum bola",
       "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/shum-bola-asari-haqida.mp4",
       "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/shum-bola-asari-haqida.mp4",
-      "thumbnail": "assets/images/gafur-gulom.jpg"
+      "thumbnail": "assets/images/video thumbnail.jpg"
     },
     {
       "id": 8,
@@ -117,7 +117,7 @@
       "mavzu": "Shum bola",
       "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/SHUM%20BOLA%20KIM%20-%20G'AFUR%20G'ULOM%20ASARINING%20SIRLARI.mp4",
       "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/SHUM%20BOLA%20KIM%20-%20G'AFUR%20G'ULOM%20ASARINING%20SIRLARI.mp4",
-      "thumbnail": "assets/images/gafur-gulom.jpg"
+      "thumbnail": "assets/images/video thumbnail.jpg"
     },
     {
       "id": 9,
@@ -130,7 +130,7 @@
       "mavzu": "Shum bola",
       "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/G%E2%80%98afur%20G%E2%80%98ulom%20va%20uning%20Shum%20bola%20qissasi%20haqida%20fikrlar.%20Olomon%20hodisasi.mp4",
       "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/G%E2%80%98afur%20G%E2%80%98ulom%20va%20uning%20Shum%20bola%20qissasi%20haqida%20fikrlar.%20Olomon%20hodisasi.mp4",
-      "thumbnail": "assets/images/gafur-gulom.jpg"
+      "thumbnail": "assets/images/video thumbnail.jpg"
     },
     {
       "id": 10,
@@ -142,7 +142,7 @@
       "mavzu": "Shum bola",
       "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/G%E2%80%98afur%20G%E2%80%98ulomning%20Shum%20bola%20asarida%20qo%E2%80%98llangan%20so%E2%80%98zlar%20sharhi.mp4",
       "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/G%E2%80%98afur%20G%E2%80%98ulomning%20Shum%20bola%20asarida%20qo%E2%80%98llangan%20so%E2%80%98zlar%20sharhi.mp4",
-      "thumbnail": "assets/images/gafur-gulom.jpg"
+      "thumbnail": "assets/images/video thumbnail.jpg"
     },
     {
       "id": 11,
@@ -155,7 +155,7 @@
       "mavzu": "Shum bola",
       "videoUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/G%E2%80%98afur%20G%E2%80%98ulom%20%E2%80%94%20Shum%20bola%20asari%20asosida%20booktrailer.mp4",
       "downloadUrl": "https://pub-c7b42c70f3cc4256969aba58bc94e566.r2.dev/G%E2%80%98afur%20G%E2%80%98ulom%20%E2%80%94%20Shum%20bola%20asari%20asosida%20booktrailer.mp4",
-      "thumbnail": "assets/images/gafur-gulom.jpg"
+      "thumbnail": "assets/images/video thumbnail.jpg"
     }
   ],
   "filmlar": [

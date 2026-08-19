@@ -361,11 +361,23 @@
     overflow: hidden;
 }
 
+.page-asarlar .library-item__cover:has(.library-item__cover-img) {
+    padding: 0;
+    display: block;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
 .page-asarlar .library-item__cover-img {
     width: 100%;
     height: 100%;
+    max-width: none;
     object-fit: cover;
+    object-position: center top;
     border-radius: inherit;
+    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 .page-asarlar .library-item__tags {

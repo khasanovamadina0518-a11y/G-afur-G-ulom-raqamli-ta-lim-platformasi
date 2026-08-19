@@ -48,7 +48,26 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 function resolveAssetPath(path) {
     if (!path || path === '#') return '';
-    return (window.platformUrl || function (r) { return r; })(path);
+    if (/^(https?:)?\/\//i.test(path)) return path;
+    if (window.PlatformThumbnails) {
+        return window.PlatformThumbnails.resolvePlatformAsset(String(path).replace(/^\.\.\//, ''));
+    }
+    return (window.platformUrl || function (r) { return r; })(String(path).replace(/^\.\.\//, ''));
+}
+
+function resolveVideoThumb(thumbnail) {
+    const raw = String(thumbnail || '').replace(/^(\.\/|\.\.\/)+/, '').trim();
+    if (window.PlatformThumbnails) {
+        return window.PlatformThumbnails.resolveVideoThumbnail(raw);
+    }
+    return raw ? resolveAssetPath(raw) : resolveAssetPath('assets/images/video thumbnail.jpg');
+}
+
+function getVideoThumbFallback() {
+    if (window.PlatformThumbnails) {
+        return window.PlatformThumbnails.getVideoThumbnail();
+    }
+    return resolveAssetPath('assets/images/video thumbnail.jpg');
 }
 
 function getYouTubeVideoId(url) {
@@ -488,7 +507,13 @@ function renderCatalogCard(item) {
     const isFilm = item.type === 'film';
     const progress = getItemProgress(item.type === 'kurs' ? 'kurs' : item.type, item.type === 'kurs' ? (videoData?.kurs?.id || 'kurs') : item.id);
     const progressWidth = progress ? Math.round(progress.percent * 100) : 0;
-    const thumb = resolveAssetPath((item.thumbnail || '').replace(/^\.\.\//, ''));
+    const thumb = resolveVideoThumb(item.thumbnail);
+    const thumbFallback = getVideoThumbFallback();
+    const esc = window.PlatformThumbnails?.escapeHtmlAttr || function (v) {
+        return String(v || '').replace(/"/g, '&quot;');
+    };
+    const safeThumb = esc(thumb || thumbFallback);
+    const safeFallback = esc(thumbFallback);
     const primaryLabel = isFilm ? 'Tomosha qilish' : 'Davom ettirish';
     const cardClass = `video-card${isFilm ? ' video-card--film' : ''}${isActive ? ' is-active' : ''}`;
 
@@ -510,9 +535,7 @@ function renderCatalogCard(item) {
     return `
         <article class="${cardClass}" data-catalog-key="${item.key}" aria-current="${isActive ? 'true' : 'false'}">
             <div class="video-card__preview">
-                ${thumb
-                    ? `<img src="${thumb}" alt="" class="video-card__thumb" loading="lazy">`
-                    : `<div class="video-card__thumb video-card__thumb--placeholder" aria-hidden="true"></div>`}
+                <img src="${safeThumb}" alt="" class="video-card__thumb" loading="lazy" data-thumb-fallback="${safeFallback}" onerror="window.PlatformThumbnails&&window.PlatformThumbnails.handleImgError(this)">
                 ${isFilm ? '<span class="video-card__badge">Film</span>' : ''}
                 ${isActive ? '<span class="video-card__playing">Hoziroq ko\'rilmoqda</span>' : ''}
                 <span class="video-card__progress" aria-hidden="true"><span style="width:${progressWidth}%"></span></span>
@@ -643,7 +666,7 @@ function renderLesson() {
     if (nowEl) nowEl.hidden = false;
 
     const resolvedVideoUrl = resolveAssetPath(videoUrl);
-    const resolvedPoster = resolveAssetPath((poster || '').replace(/^\.\.\//, ''));
+    const resolvedPoster = resolveVideoThumb(poster);
     const youtubeId = getYouTubeVideoId(videoUrl);
 
     if (setYouTubePlayerMode(youtubeId, displayTitle)) {
