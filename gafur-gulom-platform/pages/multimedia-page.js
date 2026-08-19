@@ -148,9 +148,6 @@ function getDownloadFilename(path) {
     const parts = String(path || '').split('/');
     return parts[parts.length - 1] || 'video.mp4';
 }
-    const parts = String(path || '').split('/');
-    return parts[parts.length - 1] || 'video.mp4';
-}
 
 function getLessonDisplayTitle(lesson) {
     if (!lesson) return '';
